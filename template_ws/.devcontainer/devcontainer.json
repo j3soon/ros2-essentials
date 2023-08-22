@@ -1,3 +1,4 @@
+/* Reference: https://aka.ms/devcontainer.json */
 {
     "name": "ROS 2 Development Container",
     "privileged": true,
@@ -21,7 +22,8 @@
     "containerEnv": {
         "DISPLAY": "unix:0",
         "ROS_LOCALHOST_ONLY": "1",
-        "ROS_DOMAIN_ID": "42"
+        "ROS_DOMAIN_ID": "42",
+        "ROS2_WS": "${containerWorkspaceFolder}",
     },
     "runArgs": [
         "--net=host",
@@ -41,5 +43,5 @@
         // "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
         // "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
     ],
-    "postCreateCommand": "sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y && sudo chown -R user /home/ros2-agv-essentials/"
+    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh",
 }
