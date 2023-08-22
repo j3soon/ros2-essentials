@@ -30,6 +30,8 @@
     "mounts": [
         "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
         "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached",
+        // Mount sound card to prevent Gazebo warning.
+        "source=/dev/snd,target=/dev/snd,type=bind,consistency=cached",
         // Mount Gazebo models directory to reuse models downloaded during first launch.
         // Reference: https://answers.ros.org/question/365658
         "source=${localWorkspaceFolder}/.devcontainer/cache/.gazebo,target=/home/user/.gazebo,type=bind,consistency=cached",
