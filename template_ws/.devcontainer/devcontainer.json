@@ -4,8 +4,8 @@
     "build": {
         "dockerfile": "Dockerfile"
     },
-    "workspaceFolder": "/home/ws",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/home/ws,type=bind",
+    "workspaceFolder": "/home/ros2-agv-essentials/template_ws",
+    "workspaceMount": "source=${localWorkspaceFolder}/..,target=/home/ros2-agv-essentials,type=bind",
     "customizations": {
         "vscode": {
             "extensions":[
@@ -41,5 +41,5 @@
         // "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
         // "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
     ],
-    "postCreateCommand": "sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y && sudo chown -R user /home/ws/"
+    "postCreateCommand": "sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y && sudo chown -R user /home/ros2-agv-essentials/"
 }
