@@ -35,6 +35,12 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
+# Install ROS2 RVIZ and Gazebo
+RUN apt-get update && apt-get install -y \
+    ros-$ROS_DISTRO-gazebo-ros-pkgs \
+    ros-$ROS_DISTRO-rviz2 \
+    && rm -rf /var/lib/apt/lists/*
+
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
 CMD ["/bin/bash"]
