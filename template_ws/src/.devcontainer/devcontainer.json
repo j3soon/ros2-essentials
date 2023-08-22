@@ -30,6 +30,9 @@
     "mounts": [
         "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
         "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached",
+        // Mount Gazebo models directory to reuse models downloaded during first launch.
+        // Reference: https://answers.ros.org/question/365658
+        "source=${localWorkspaceFolder}/.devcontainer/cache/.gazebo,target=/home/user/.gazebo,type=bind,consistency=cached",
         // Mounting the directories will forbid directly deletion.
         // Consider mount these directories only if the build process is slow.
         // "source=${localWorkspaceFolder}/../cache/humble/build,target=/home/ws/build,type=bind",
