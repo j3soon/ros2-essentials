@@ -1,12 +1,8 @@
 {
     "name": "ROS 2 Development Container",
     "privileged": true,
-    "remoteUser": "USERNAME",
     "build": {
-        "dockerfile": "Dockerfile",
-        "args": {
-            "USERNAME": "USERNAME"
-        }
+        "dockerfile": "Dockerfile"
     },
     "workspaceFolder": "/home/ws",
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/ws/src,type=bind",
@@ -40,5 +36,5 @@
         // "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
         // "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
     ],
-    "postCreateCommand": "sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y && sudo chown -R USERNAME /home/ws/"
+    "postCreateCommand": "sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y && sudo chown -R user /home/ws/"
 }
