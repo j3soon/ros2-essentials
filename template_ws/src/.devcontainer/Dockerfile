@@ -23,6 +23,18 @@ ENV SHELL /bin/bash
 # * Anything else you want to do like clean up goes here *
 # ********************************************************
 
+# Install common tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    git-extras \
+    htop \
+    net-tools \
+    tmux \
+    vim \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
 CMD ["/bin/bash"]
