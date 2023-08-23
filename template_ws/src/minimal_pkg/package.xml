@@ -4,7 +4,7 @@
   <name>minimal_pkg</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="j3.soon777@gmail.com">user</maintainer>
+  <maintainer email="yuzhong1214@gmail.com">YuZhong-Chen</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

@@ -1,4 +1,5 @@
 FROM ros:humble
+LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 ARG USERNAME=user
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
