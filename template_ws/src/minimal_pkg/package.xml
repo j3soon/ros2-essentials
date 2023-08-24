@@ -3,7 +3,7 @@
 <package format="3">
   <name>minimal_pkg</name>
   <version>0.0.0</version>
-  <description>Examples of minimal publisher/subscriber using rclcpp</description>
+  <description>Examples of minimal publisher/subscriber using rclcpp/rclpy</description>
   <maintainer email="yuzhong1214@gmail.com">YuZhong-Chen</maintainer>
   <license>Apache License 2.0</license>
 

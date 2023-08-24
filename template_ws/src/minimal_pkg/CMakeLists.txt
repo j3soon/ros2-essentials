@@ -21,12 +21,12 @@ find_package(std_msgs REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 # Include Cpp "include" directory
-# include_directories(include)
+include_directories(include)
 
 # Create Cpp executable
-add_executable(talker src/publisher_member_function.cpp)
+add_executable(talker src/publisher.cpp)
 ament_target_dependencies(talker rclcpp std_msgs)
-add_executable(listener src/subscriber_member_function.cpp)
+add_executable(listener src/subscriber.cpp)
 ament_target_dependencies(listener rclcpp std_msgs)
 
 # Install Cpp executables
@@ -53,8 +53,8 @@ ament_python_install_package(${PROJECT_NAME})
 
 # Install Python executables
 install(PROGRAMS
-  scripts/publisher_member_function.py
-  scripts/subscriber_member_function.py
+  scripts/publisher.py
+  scripts/subscriber.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
