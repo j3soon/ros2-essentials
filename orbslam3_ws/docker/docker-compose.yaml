@@ -1,0 +1,26 @@
+version: '3.0'
+services:
+  # Container-1
+  ros2-orbslam3:
+    # Build or Reference the image
+    build: .
+    image: j3soon/ros2-orbslam3
+    container_name: ros2-orbslam3
+    stdin_open: true
+    tty: true
+    privileged: true
+    command: bash
+    network_mode: host
+    working_dir: /home/ros2-agv-essentials/orbslam3_ws
+
+    # Container Settings
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/tmp/xauth
+    volumes:
+      # Mount local timezone
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      # X-11 mount
+      - ~/.Xauthority:/tmp/xauth
+      - /tmp/.X11-unix:/tmp/.X11-unix
