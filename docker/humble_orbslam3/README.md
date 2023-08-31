@@ -19,6 +19,26 @@ cd ros2_orbslam_docker
 docker pull assume/humble_orbslam3
 ```
 
+### Simple Test With Dataset
+
+- Download dataset
+```bash
+wget -P ~/ http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/vicon_room1/V1_02_medium/V1_02_medium.bag
+```
+- ROS1 bag and ROS2 bag conversion [reference](https://docs.openvins.com/dev-ros1-to-ros2.html)
+```bash
+pip3 install rosbags
+rosbags-convert ~/V1_02_medium.bag
+```
+- Run the bag file
+```bash
+ros2 bag play V1_02_medium/V1_02_medium.db3 --remap /cam0/image_raw:=/camera
+```
+- Run the ORB-SLAM3
+```bash
+ros2 run orbslam3 mono ~/ORB_SLAM3/Vocabulary/ORBvoc.txt ~/ORB_SLAM3/Examples_old/Monocular/EuRoC.yaml false
+```
+
 #### Reference repo or issues
 
 [Solve build failure](https://github.com/UZ-SLAMLab/ORB_SLAM3/issues/566)
