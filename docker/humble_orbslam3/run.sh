@@ -24,5 +24,6 @@ docker run \
     -e XAUTHORITY=/tmp/xauth \
     -v ~/.Xauthority:/tmp/xauth \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
+    --privileged \
     --name $CONTAINER_NAME \
     $IMAGE_NAME
