@@ -1,87 +1,53 @@
 ################################################################################################
+# Setting Base Image
+################################################################################################
+
 # Base Image : Ubuntu 22.04 Jammy Jellyfish
-################################################################################################
+FROM ubuntu:22.04 AS base
 
-FROM ubuntu:22.04
-
-################################################################################################
 # Label
-################################################################################################
-
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
-LABEL description="This image is for ros1_bridge. (noetic <-> humble)"
+LABEL description="ros1_bridge for noetic <-> humble"
 
-################################################################################################
-# Arguments
-################################################################################################
-
-ARG USERNAME=user
-ARG USERID=$UID
-
-################################################################################################
 # Set environment variables
-################################################################################################
-
 ENV TERM=xterm-256color
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
-ENV USERNAME=${USERNAME}
-ENV PATH=$PATH:/home/${USERNAME}/.local/bin/
+
+# Set shell
+SHELL ["/bin/bash", "-c"]
 
 ################################################################################################
-# Install packages
-################################################################################################
-
-RUN apt update && \
-    apt install -y \
-    sudo \
-    vim \
-    curl \
-    wget \
-    git \
-    git-extras \
-    gnupg2 \
-    net-tools
-
-################################################################################################
-# Set timezone (Taipei)
-################################################################################################
-
-RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends tzdata
-RUN TZ=Asia/Taipei && \
-    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo $TZ > /etc/timezone && \
-    dpkg-reconfigure -f noninteractive tzdata 
-
-################################################################################################
-# Add new user (Passwordless with sudo)
-################################################################################################
-
-RUN useradd -ms /bin/bash ${USERNAME} && \
-    sudo adduser ${USERNAME} sudo && \
-    echo "${USERNAME}:ubuntu" | chpasswd && \
-    echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers 
-USER ${USERNAME}
-
-################################################################################################
-# Install ROS Humble from source
+# Build ROS Humble and ros1_bridge from source
 # Reference : 
 # - https://docs.ros.org/en/humble/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html
 # - https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
 ################################################################################################
 
-# Add the ROS 2 apt repository
-RUN sudo apt install -y \
+FROM base AS build
+
+# Install packages
+RUN apt update && \
+    apt install -y \
+    curl \
+    git \
+    locales \
     software-properties-common \
-    lsb-release && \
-    sudo add-apt-repository universe && \
-    sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+    lsb-release
+
+# Set locale
+RUN locale-gen en_US en_US.UTF-8 && \
+    update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+
+# Add the ROS 2 apt repository
+RUN add-apt-repository universe && \
+    curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
 # Install development tools and ROS tools
-RUN sudo apt update && \
-    sudo apt install -y \
+RUN apt update && \
+    apt install -y \
     build-essential \
     cmake \
     python3-flake8 \
@@ -103,8 +69,8 @@ RUN sudo apt update && \
     ros-dev-tools
 
 # Create ros2_humble workspace
-RUN mkdir -p /home/${USERNAME}/ros2_humble/src
-WORKDIR /home/${USERNAME}/ros2_humble
+RUN mkdir -p /ros2_humble/src
+WORKDIR /ros2_humble
 
 # Install colcon from PyPI, rather than apt packages
 RUN pip3 install -U colcon-common-extensions vcstool
@@ -113,35 +79,45 @@ RUN pip3 install -U colcon-common-extensions vcstool
 RUN vcs import --input https://raw.githubusercontent.com/ros2/ros2/humble/ros2.repos src
 
 # Install dependencies
-RUN sudo rosdep init && \
+RUN rosdep init && \
     rosdep update && \
     rosdep install --from-paths src --ignore-src -y --rosdistro humble --skip-keys "fastcdr rti-connext-dds-6.0.1 urdfdom_headers"
 
 # Build the code in the workspace
-RUN colcon build --symlink-install
+RUN colcon build
 
-# Remove the packages.ros.org from sources.list and conflicts packages
-RUN sudo rm -rf /etc/apt/sources.list.d/ros2.list && \
-    sudo apt remove -y \
+# Delete packages.ros.org from sources.list and remove conflicts packages
+RUN rm -rf /etc/apt/sources.list.d/ros2.list && \
+    apt remove -y \
     python3-catkin-pkg \
     python3-catkin-pkg-modules
 
 # Install ROS 1 from Ubuntu packages
-RUN sudo apt update && \
-    sudo apt install -y ros-core-dev
+RUN apt update && \
+    apt install -y ros-core-dev
 
-################################################################################################
 # Build ros1_bridge from source
-################################################################################################
-
 RUN git clone https://github.com/ros2/ros1_bridge src/ros1_bridge
-RUN /bin/bash -c "source install/local_setup.bash && colcon build --packages-select ros1_bridge --cmake-force-configure"
+RUN source install/local_setup.bash && \
+    colcon build --packages-select ros1_bridge --cmake-force-configure
 
 ################################################################################################
-# Final settings
+# Build release
+# Reference :
+# - https://docs.docker.com/build/building/multi-stage/
 ################################################################################################
 
-COPY ./start_bridge.sh /home/${USERNAME}/start_bridge.sh 
-WORKDIR /home/${USERNAME}
-SHELL ["/bin/bash", "-c"]
+FROM base AS release
+
+# Install packages and create user
+RUN apt update && apt install -y ros-core-dev python3-packaging libspdlog-dev && \
+    useradd -ms /bin/bash user
+
+# Copy files from host and build stage
+COPY --from=build /ros2_humble/install /ros2_humble/install
+COPY ./start_bridge.sh /start_bridge.sh 
+
+# Other settings
+USER user
+WORKDIR /
 CMD ["./start_bridge.sh"]
