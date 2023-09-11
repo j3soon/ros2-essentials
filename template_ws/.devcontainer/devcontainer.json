@@ -9,7 +9,7 @@
     "workspaceMount": "source=${localWorkspaceFolder}/..,target=/home/ros2-agv-essentials,type=bind",
     "customizations": {
         "vscode": {
-            "extensions":[
+            "extensions": [
                 "ms-vscode.cpptools",
                 "ms-vscode.cpptools-themes",
                 "twxs.cmake",
@@ -23,11 +23,14 @@
         "DISPLAY": "unix:0",
         "ROS_LOCALHOST_ONLY": "1",
         "ROS_DOMAIN_ID": "42",
-        "ROS2_WS": "${containerWorkspaceFolder}",
+        "ROS2_WS": "${containerWorkspaceFolder}"
     },
     "runArgs": [
         "--net=host",
-        "-e", "DISPLAY=${env:DISPLAY}"
+        // Mount local timezone into container. ( Readonly )
+        "--volume=/etc/timezone:/etc/timezone:ro",
+        "--volume=/etc/localtime:/etc/localtime:ro",
+        "-e DISPLAY=${env:DISPLAY}"
     ],
     "mounts": [
         "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
@@ -36,12 +39,12 @@
         "source=/dev/snd,target=/dev/snd,type=bind,consistency=cached",
         // Mount Gazebo models directory to reuse models downloaded during first launch.
         // Reference: https://answers.ros.org/question/365658
-        "source=${localWorkspaceFolder}/.devcontainer/cache/.gazebo,target=/home/user/.gazebo,type=bind,consistency=cached",
+        "source=${localWorkspaceFolder}/.devcontainer/cache/.gazebo,target=/home/user/.gazebo,type=bind,consistency=cached"
         // Mounting the directories will forbid directly deletion.
         // Consider mount these directories only if the build process is slow.
         // "source=${localWorkspaceFolder}/../cache/humble/build,target=/home/ws/build,type=bind",
         // "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
         // "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
     ],
-    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh",
+    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
 }
