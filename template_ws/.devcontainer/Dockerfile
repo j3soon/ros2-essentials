@@ -1,5 +1,8 @@
-FROM ros:humble
+# Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
+FROM osrf/ros:humble-desktop-full
+
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
+
 ARG USERNAME=user
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
