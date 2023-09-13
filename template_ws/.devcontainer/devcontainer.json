@@ -5,8 +5,10 @@
     "build": {
         "dockerfile": "Dockerfile"
     },
+    // workspace settings
     "workspaceFolder": "/home/ros2-agv-essentials/template_ws",
     "workspaceMount": "source=${localWorkspaceFolder}/..,target=/home/ros2-agv-essentials,type=bind",
+    // Vscode extensions
     "customizations": {
         "vscode": {
             "extensions": [
@@ -21,19 +23,27 @@
     },
     "containerEnv": {
         "DISPLAY": "unix:0",
+        // Set ros2 environment variables.
+        // Reference : 
+        // - https://docs.ros.org/en/humble/Concepts/Intermediate/About-Domain-ID.html
+        // - https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html
         "ROS_LOCALHOST_ONLY": "1",
         "ROS_DOMAIN_ID": "42",
         "ROS2_WS": "${containerWorkspaceFolder}"
     },
     "runArgs": [
         "--net=host",
+        "-e DISPLAY=${env:DISPLAY}",
         // Mount local timezone into container. ( Readonly )
+        // Reference : https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
         "--volume=/etc/timezone:/etc/timezone:ro",
-        "--volume=/etc/localtime:/etc/localtime:ro",
-        "-e DISPLAY=${env:DISPLAY}"
+        "--volume=/etc/localtime:/etc/localtime:ro"
     ],
+    // Docker mount
     "mounts": [
+        // X11 server.
         "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+        // Direct Rendering Infrastructure
         "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached",
         // Mount sound card to prevent Gazebo warning.
         "source=/dev/snd,target=/dev/snd,type=bind,consistency=cached",
@@ -46,5 +56,6 @@
         // "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
         // "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
     ],
+    // Lifecycle scripts
     "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
 }

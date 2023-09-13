@@ -12,6 +12,7 @@ services:
     working_dir: /home/ros2-agv-essentials/template_ws
     environment:
       - DISPLAY=${DISPLAY}
+      # Set ros2 environment variables.
       - ROS_LOCALHOST_ONLY=1
       - ROS_DOMAIN_ID=42
       - ROS2_WS=/home/ros2-agv-essentials/template_ws
