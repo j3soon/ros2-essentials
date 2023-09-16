@@ -10,7 +10,7 @@ ARG USERNAME=user
 # --- Basic setup ---
 RUN apt-get update && \
     apt-get install -y \
-                vim \
+                                vim \
                 curl \
                 tree \
                 && rm -rf /var/lib/apt/lists/*
@@ -47,8 +47,8 @@ RUN mkdir -p /home/${USERNAME}/Pangolin/build && \
 WORKDIR /home/${USERNAME}/Pangolin/build
 
 # build pangolin
-RUN cmake ..
-RUN cmake --build .
+RUN cmake .. && \
+    cmake --build .
 
 
 #############################################
@@ -74,12 +74,18 @@ RUN cd ORB_SLAM3 && \
 RUN cd ORB_SLAM3/Thirdparty/Sophus/build && \ 
     sudo make install
 
-# build ros-orbslam
-RUN mkdir -p /home/${USERNAME}/test_ws/src
-
+#############################################
+# --- Build ROS2-SLAM3
 WORKDIR /home/${USERNAME}/test_ws
 
-RUN colcon build && git clone https://github.com/zang09/ORB_SLAM3_ROS2.git ./src/orbslam3_ros2
+RUN mkdir -p /home/${USERNAME}/test_ws/src && colcon build
+
+RUN mkdir -p src/orbslam3_ros2 && \
+    cd src/orbslam3_ros2 && \
+    git init && \
+    git remote add origin https://github.com/zang09/ORB_SLAM3_ROS2.git && \
+    git pull origin 00c54335ccc010d74c1e24e336aa817604124947 && \
+    git rm -r --cached .
 
 # Fix path error and colcon build error
 # Ref : https://github.com/alsora/ros2-ORB_SLAM2/issues/8#issuecomment-1461570970
@@ -87,9 +93,9 @@ RUN sed -i 's/foxy\/lib\/python3.8/humble\/lib\/python3.10/g' src/orbslam3_ros2/
     sed -i 's/Pangolin)/Pangolin OpenCV)/g' src/orbslam3_ros2/CMakeLists.txt && \
     sed -i 's/Install\/ORB_SLAM\/ORB_SLAM3/ORB_SLAM3/g' src/orbslam3_ros2/CMakeModules/FindORB_SLAM3.cmake
 
-RUN rosdep update
-
-RUN . /opt/ros/humble/setup.sh && colcon build --symlink-install --packages-select orbslam3
+RUN rosdep update && \
+    . /opt/ros/humble/setup.sh && \
+    colcon build --symlink-install --packages-select orbslam3
 
 # Create work directory and went in
 WORKDIR /home/${USERNAME}/ros_ws
