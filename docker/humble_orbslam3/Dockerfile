@@ -44,9 +44,13 @@ RUN apt-get update && apt-get install -y \
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
-# get pangolin sources
-RUN git clone https://github.com/stevenlovegrove/Pangolin.git
-RUN mkdir -p /home/${USERNAME}/Pangolin/build
+# get pangolin sources, certain commit : https://github.com/stevenlovegrove/Pangolin/tree/d484494645cb7361374ac0ef6b27e9ee6feffbd7
+RUN mkdir -p /home/${USERNAME}/Pangolin/build && \
+    cd /home/${USERNAME}/Pangolin && \
+    git init && \
+    git remote add origin https://github.com/stevenlovegrove/Pangolin.git && \
+    git pull origin d484494645cb7361374ac0ef6b27e9ee6feffbd7
+
 WORKDIR /home/${USERNAME}/Pangolin/build
 
 # build pangolin
@@ -58,7 +62,11 @@ RUN cmake --build .
 # --- Build ORB-SLAM3 from source
 WORKDIR /home/${USERNAME}
 
-RUN git clone https://github.com/UZ-SLAMLab/ORB_SLAM3.git ~/ORB_SLAM3
+RUN mkdir -p /home/${USERNAME}/ORB_SLAM3 && \
+    cd /home/${USERNAME}/ORB_SLAM3 && \
+    git init && \
+    git remote add origin https://github.com/UZ-SLAMLab/ORB_SLAM3.git && \
+    git pull origin 4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4
 
 # Change to c++14 for compile error
 # Ref : https://github.com/UZ-SLAMLab/ORB_SLAM3/issues/387
@@ -67,14 +75,14 @@ RUN sed -i 's/++11/++14/g' ORB_SLAM3/CMakeLists.txt && \
     sed -i 's/++11/++14/g' ORB_SLAM3/Thirdparty/g2o/CMakeLists.txt && \
     sed -i 's/++11/++14/g' ORB_SLAM3/Thirdparty/Sophus/CMakeLists.txt
 
-RUN cd ORB_SLAM3 && ./build.sh
+RUN cd ORB_SLAM3 && \
+    ./build.sh
 
-RUN cd ORB_SLAM3/Thirdparty/Sophus/build && sudo make install
+RUN cd ORB_SLAM3/Thirdparty/Sophus/build && \ 
+    sudo make install
 
 # build ros-orbslam
-WORKDIR /home/${USERNAME}
-
-RUN mkdir -p test_ws/src
+RUN mkdir -p /home/${USERNAME}/test_ws/src
 
 WORKDIR /home/${USERNAME}/test_ws
 
