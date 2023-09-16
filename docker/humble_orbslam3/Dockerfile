@@ -10,27 +10,27 @@ ARG USERNAME=user
 # --- Basic setup ---
 RUN apt-get update && \
     apt-get install -y \
-                                vim \
+                # Basic tools
+                vim \
                 curl \
                 tree \
-                && rm -rf /var/lib/apt/lists/*
+                # ORB-SLAM dependencies
+                libopencv-dev \
+                opencv-data \
+                libglew-dev \
+                ffmpeg \
+                libboost-system-dev \
+                libeigen3-dev \
+                # ROS dependencies
+                ros-$ROS_DISTRO-vision-opencv \
+                ros-$ROS_DISTRO-message-filters && \
+                rm -rf /var/lib/apt/lists/*
 
 # add user with default bash
 RUN adduser --disabled-password --gecos '' --shell /bin/bash ${USERNAME} && \
     adduser ${USERNAME} sudo && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-#############################################
-# --- Install required packages ---
-RUN apt-get update && apt-get install -y \ 
-            ros-$ROS_DISTRO-vision-opencv \
-            ros-$ROS_DISTRO-message-filters \
-            libopencv-dev \
-            opencv-data \
-            libglew-dev \
-            ffmpeg \
-            libboost-system-dev \
-            libeigen3-dev
 
 #############################################
 # --- Build Pangolin from source ---
@@ -42,7 +42,8 @@ RUN mkdir -p /home/${USERNAME}/Pangolin/build && \
     cd /home/${USERNAME}/Pangolin && \
     git init && \
     git remote add origin https://github.com/stevenlovegrove/Pangolin.git && \
-    git pull origin d484494645cb7361374ac0ef6b27e9ee6feffbd7
+    git pull origin d484494645cb7361374ac0ef6b27e9ee6feffbd7 && \
+    git rm -r --cached .
 
 WORKDIR /home/${USERNAME}/Pangolin/build
 
@@ -59,7 +60,8 @@ RUN mkdir -p /home/${USERNAME}/ORB_SLAM3 && \
     cd /home/${USERNAME}/ORB_SLAM3 && \
     git init && \
     git remote add origin https://github.com/UZ-SLAMLab/ORB_SLAM3.git && \
-    git pull origin 4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4
+    git pull origin 4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4 && \
+    git rm -r --cached .
 
 # Change to c++14 for compile error
 # Ref : https://github.com/UZ-SLAMLab/ORB_SLAM3/issues/387
@@ -73,6 +75,7 @@ RUN cd ORB_SLAM3 && \
 
 RUN cd ORB_SLAM3/Thirdparty/Sophus/build && \ 
     sudo make install
+
 
 #############################################
 # --- Build ROS2-SLAM3
