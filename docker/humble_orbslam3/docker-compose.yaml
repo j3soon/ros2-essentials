@@ -1,0 +1,41 @@
+version: '3.0'
+services:
+  # Container-1
+  humble-orbslam3:
+    # Build or Reference the image
+    image: assume/humble_orbslam3:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        USERNAME: user
+      labels:
+        org.opencontainers.image.authors: "assume0701@gmail.com"
+        description: "A image for ROS2 humble and ORB-SLAM3 develop environment."
+
+    # Add GPU resources and resources limitations
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    # Container Settings
+    tty: true
+    stdin_open: true
+    container_name: humble-orbslam3
+    command: bash
+    privileged: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/tmp/xauth
+    volumes:
+      # X-11 mount
+      - ~/.Xauthority:/tmp/xauth
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+      # Mount timezone
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
