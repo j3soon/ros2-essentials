@@ -1,6 +1,10 @@
-FROM osrf/ros:humble-desktop
+FROM osrf/ros:humble-desktop-full
 
-ARG USERNAME=assume
+LABEL org.opencontainers.image.authors="assume0701@gmail.com"
+LABEL description = \
+        "A image for ROS2 humble and ORB-SLAM3 develop environment."
+
+ARG USERNAME=user
 
 
 #############################################
