@@ -11,10 +11,10 @@ template_ws
 ├── .devcontainer
 |   ├── cache
 |   |   └── .gazebo
-|   |   |   ├── .gitkeep
-|   |   |   └── ...
+|   |       ├── .gitkeep
+|   |       └── ...
 |   ├── .bashrc
-|   ├── .devcontainer.json
+|   ├── devcontainer.json
 |   ├── postCreateCommand.sh
 |   └── Dockerfile
 ├── install
@@ -22,7 +22,7 @@ template_ws
 ├── log
 ├── src
 |   ├── minimal_pkg
-|   |   └── include
+|   |   ├── include
 |   |   ├── minimal_pkg
 |   |   ├── scripts
 |   |   └── ...
@@ -34,7 +34,7 @@ template_ws
 
 ## 🚩 How to use this template 🚩
 
-Copy the template_ws directory and follow the instructions below.
+Copy the ```template_ws``` directory and follow the instructions below.
 
 ### 0. Update the folder name to match your project's name.
 
@@ -45,22 +45,22 @@ Ensure you update the folder name ( ```template_ws``` ) after copying the folder
 > File path : ```.devcontainer/devcontainer.json```
 
 - Update the ```"name"``` to match your project.
-- Verify that the ```"runArg"``` matches your requirements. 
+- Verify that the ```"runArg"``` matches your requirements.
     - These arguments define the container settings and should align with your ```docker run``` command.
 - Review the ```"containerEnv"``` settings:
     - These are used to configure environment variables. Just so you know,  
       variables set here cannot be changed once the container is built,  
       so avoid putting variables here if you need to modify them frequently.
     - If you wish to set a variable that you want to change after the container is built,  
-      use ```export VARIABLE=/the/value``` in ```.devcontainer/settings/.bashrc```.
+      use ```export VARIABLE=/the/value``` in ```.devcontainer/.bashrc```.
 - Update the path in ```"workspaceFolder"```
     - Replace the ```.../template_ws``` with the name of the folder you set in section 0.
 
 ### 2. Install the tools you want to use in the container
 
-> File path : ```.devcontainer/settings/postCreateCommand.sh```
+> File path : ```.devcontainer/postCreateCommand.sh```
 
-Note that the script will be executed after the container-building process.    
+Note that the script will be executed after the container-building process.  
 Feel free to add any desired commands here !!!
 
 Example:
