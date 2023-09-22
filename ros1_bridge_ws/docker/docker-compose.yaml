@@ -1,13 +1,15 @@
 version: '3'
 services:
-  ros1-bridge:
-    build: .
-    image: j3soon/ros1-bridge
-    container_name: ros1-bridge
+  ros1-bridge-build:
+    build:
+      context: .
+      target: build
+    image: j3soon/ros1-bridge-build
+    container_name: ros1-bridge-build
     stdin_open: true
     tty: true
     privileged: true
-    command: ./start-bridge.sh
+    command: /bin/bash
     network_mode: host
     working_dir: /
     volumes:
@@ -19,3 +21,11 @@ services:
       - /dev/dri:/dev/dri
       # Shared Memory
       - /dev/shm:/dev/shm
+  ros1-bridge:
+    extends: ros1-bridge-build
+    build:
+      context: .
+      target: release
+    image: j3soon/ros1-bridge
+    container_name: ros1-bridge
+    command: ./start-bridge.sh

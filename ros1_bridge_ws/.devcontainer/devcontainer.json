@@ -2,7 +2,10 @@
 {
     "name": "ros1-bridge",
     "dockerComposeFile": "../docker/docker-compose.yaml",
-    "service": "ros1-bridge",
+    "service": "ros1-bridge-build",
+    "runServices": [
+        "ros1-bridge-build"
+    ],
     // workspace settings
     "workspaceFolder": "/",
     // Vscode extensions
