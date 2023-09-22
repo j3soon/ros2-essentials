@@ -40,9 +40,13 @@ Copy the ```template_ws``` directory and follow the instructions below.
 
 Ensure you update the folder name ( ```template_ws``` ) after copying the folder immediately.
 
-### 1. Configure the ```devcontainer.json```
+### 1. Configure `devcontainer`
 
-> File path : ```.devcontainer/devcontainer.json```
+> File paths:
+> - ```.devcontainer/devcontainer.json```
+> - ```docker/docker-compose.yaml```
+
+> TODO: Update the instructions below for docker-compose.
 
 - Update the ```"name"``` to match your project.
 - Verify that the ```"runArg"``` matches your requirements.
@@ -83,6 +87,8 @@ sudo apt-get update && apt-get install -y \
 Spotting the workspace folder within your Explorer indicates that you've selected the wrong folder.  
 You should only observe the ```.devcontainer``` and ```src``` folders there.
 
+**Note**: Alternatively, you can use `docker-compose` instead of `devcontainers` if you are not using VSCode.
+
 ### 4. Build the container
 
 Press ```F1``` and enter ```> Dev Containers: Rebuild Container.```.  
@@ -93,6 +99,8 @@ You should see the output below.
 ```
 Done. Press any key to close the terminal.
 ```
+
+**Note**: To save time, you can pull the pre-built Docker images instead of building them from scratch.
 
 ### 5. Start to develop with ROS
 
