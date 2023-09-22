@@ -2,13 +2,13 @@
 
 This workspace is utilized to create a bridge between ROS1 and ROS2-humble.
 
-# 🌱 Introduction 🌱
+# ◻️ Introduction ◻️
 
 ros1_bridge provides a network bridge that enables the exchange of messages between ROS 1 and ROS 2.  
 You can locate the original repository [here](https://github.com/ros2/ros1_bridge).
 
 Within this workspace, you'll find a Dockerfile specifically crafted to build both ros-humble and ros1_bridge from their source code.  
-This necessity arises due to a version conflict between ```catkin-pkg-modules``` available in the Ubuntu repository and the one in the ROS. 
+This necessity arises due to a version conflict between the `catkin-pkg-modules` available in the Ubuntu repository and the one in the ROS. 
 
 [The official explanation](https://docs.ros.org/en/humble/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html#ros-2-via-debian-packages)
 
@@ -20,60 +20,58 @@ If not, I recommend reading the tutorial provided below first.
 - https://wiki.ros.org/Master
 - https://docs.ros.org/en/humble/Concepts/Basic/About-Discovery.html
 
+## 🌱 Structure 🌱
+
+Here is the structure of this repo:
+
+```
+ros1_bridge_ws
+├── .devcontainer
+|   └── devcontainer.json
+├── docker
+|   ├── compose.yaml
+|   ├── Dockerfile
+|   └── start-bridge.sh
+└── README.md
+```
+
 # 🚩 How to use 🚩
+
+> There are two services in the docker-compose, one is `ros1-bridge`, and the other one is `ros1-bridge-build`.  
+> `ros1-bridge` should be sufficient for normal usage.  
+> `ros1-bridge-build`, which contains all the necessary build tools, is used for debugging purposes.  
+> 
+> If you are not debugging ros1-bridge, it is recommended to use the terminal rather than VScode-devcontainer.  
+> By default, the VScode-devcontainer uses the `ros1-bridge-build` service.
 
 ## 1. Get the docker image
 
-While it is possible to build the image directly from the Dockerfile, it may not be the most efficient choice. 
+While building the image directly from the Dockerfile is possible, it may not be the most efficient choice.  
+To save time, you can pull the image from Dockerhub instead of compiling it from the source:
 
-Compiling ros-humble from source can be time-consuming, and to save time, I've already uploaded the image to Dockerhub.  
-You can find the repository  [here](https://hub.docker.com/r/yuzhong1214/ros1_bridge).
+If you still prefer to build the image yourself, please follow the instructions below:
 
-If you still prefer to build the image yourself, you can open the workspace in VScode,  
-press ```F1```, and enter ```> Dev Containers: Rebuild Container```. 
+- VScode user
+  - Open the workspace in VScode, press `F1`, and enter `> Dev Containers: Rebuild Container`. 
+- Terminal user
+  - Open a terminal, change the directory to the docker folder, and type `docker compose build`.
+ 
+> Just so you know, the building process may take approximately 1 hour to complete.
 
-Please note that this process may take approximately 1 hour to complete.
+## 2. Start the container
 
-## 2. Run the container
-
-If you build the image through the devcontainer,  
-it will automatically start the container so that you can skip this step entirely.
-
-To manually run the container using the command line, you can use the following command:
-
-```bash=
-docker run \
-    -it \
-    --rm \
-    --network=host \
-    -v /dev/shm:/dev/shm \
-    yuzhong1214/ros1_bridge:min
-```
-
-> ⚠️ Mount /dev/shm into container ⚠️
-> 
-> The latest releases of Fast-DDS come with the SharedMemory transport enabled by default.  
-> So, it's very important for you to mount shared memory into every container you intend to communicate with when using Fast-DDS.  
-> This ensures proper communication between containers.
-> 
-> Reference : https://github.com/eProsima/Fast-DDS/issues/1698#issuecomment-778039676
+- VScode user
+  - If you build the image through the devcontainer, it will automatically start the container.  
+    After you get into the container, type `./start-bridge.sh` in the terminal.
+- Terminal user
+  - Open a terminal, change the directory to the docker folder, and type `docker compose run ros1-bridge`.
 
 ## 3. Launch rosmaster in ROS1
 
-As mentioned in https://github.com/ros2/ros1_bridge/issues/391, you should avoid using ```roscore``` in ROS1.  
-Instead, use ```rosmaster --core``` as an alternative.
+As mentioned in https://github.com/ros2/ros1_bridge/issues/391, you should avoid using `roscore` in ROS1 to prevent the issue of not bridging `/rosout`.  
+Instead, use `rosmaster --core` as an alternative.
 
-## 4. Start the bridge
-
-Please execute the following command in the terminal.
-
-```bash=
-./start_bridge.sh
-```
-
-If you are not using devcontainer, you can skip this step entirely.
-
-## 5. Begin communication
+## 4. Begin communication
 
 You have successfully executed all the instructions.  
 Now, you can proceed to initiate communication between ROS1 and ROS2-humble.
@@ -81,37 +79,88 @@ Now, you can proceed to initiate communication between ROS1 and ROS2-humble.
 Please keep in mind that the bridge will be established only when  
 there are matching publisher-subscriber pairs active for a topic on either side of the bridge.
 
+# ✨ Example ✨
+
+## Run the bridge and the example talker and listener
+
+> Before beginning the example, ensure you have three containers ready:
+> 
+> - `ros1_bridge`
+> - `ROS1`
+> - `ROS2`
+>   
+> Furthermore, ensure that you mount `/dev/shm` into both the `ros1_bridge` and `ROS2` containers,  
+> and that all containers share the host network.
+
+### 1. Start the rosmaster in `ROS1` container
+
+```bash
+# In ROS 1 container
+rosmaster --core &
+```
+
+### 2. Start the `ros1_bridge` container
+
+(Same as [here](#2-start-the-container))
+
+- VScode user
+  - After getting into the container, type `./start-bridge.sh` in the terminal.
+- Terminal user
+  - ```bash
+    # In docker folder
+    docker compose run ros1-bridge
+    ```
+
+### 3. Run the talker and listener node
+
+Run the listener node in the `ROS1` container and the talker node in the `ROS2` container.
+
+```bash
+# In ROS 1 container
+rosrun roscpp_tutorials listener
+```
+
+```bash
+# In ROS 2 container
+ros2 run demo_nodes_cpp talker
+```
+
+> You can run the talker node in `ROS1` and the listener node in `ROS2` if you'd like.  
+> To achieve this, simply modify the command provided above.
+
+Certainly, you can try the [example](https://github.com/ros2/ros1_bridge#example-1-run-the-bridge-and-the-example-talker-and-listener) provided by `ros1_bridge`.  
+However, there's no need to source the setup script within the `ros1_bridge` container,  
+simply starting the container will suffice.
+
 # 🔍 Troubleshooting 🔍
+
+> If you are trying to debug ros1_bridge, it is recommended to use the `ros1-bridge-build` service in docker-compose.  
+> It contains all the necessary build tools, which should be helpful for you.
 
 ## Failed to contact master
 
-Before launching the master, make sure you have set the ```ROS_MASTER_URI```.  
+Before launching the master, make sure you have set the `ROS_MASTER_URI`.  
 Execute the following command to configure it.
 
-```bash=
+```bash
 export ROS_MASTER_URI=http://localhost:11311
 ```
 
 You can replace localhost with the actual IP address or hostname of your ROS Master.  
 This command ensures that your ROS nodes know where to find the ROS Master for communication.
 
-If you've modified the default URI, please execute the ```start_bridge.sh``` script with the new URI address  
-to ensure proper configuration and communication.
+If you've modified the default URI, please execute the `start_bridge.sh` script with the new URI address to ensure proper configuration and communication.
 
-For example, if you've changed the default URI to ```127.0.0.1```, you can run the ```start_bridge.sh``` script like this :
+For example, if you've changed the default URI to `127.0.0.1`, you should make the following modification to the `compose.yaml`:
 
-```bash=
-./start_bridge.sh http://127.0.0.1:11311
+```bash
+command: ./start_bridge.sh http://127.0.0.1:11311
 ```
 
-If you are running the container using the command-line interface (CLI), you can use the following command :
+## ROS2 can't receive the topic
 
-```bash=
-docker run \
-    -it \
-    --rm \
-    --network=host \
-    -v /dev/shm:/dev/shm \
-    yuzhong1214/ros1_bridge:min \
-    ./start_bridge.sh http://127.0.0.1:11311
-```
+The latest releases of Fast-DDS come with the SharedMemory transport enabled by default.  
+Therefore, you need to mount shared memory, also known as `/dev/shm`, into every container you intend to communicate with when using Fast-DDS.  
+This ensures proper communication between containers.
+
+Reference: https://github.com/eProsima/Fast-DDS/issues/1698#issuecomment-778039676
