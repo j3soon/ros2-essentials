@@ -1,0 +1,5 @@
+.devcontainer/cache
+.vscode
+build
+install
+log
