@@ -1,27 +1,23 @@
 /* For reference, see https://aka.ms/devcontainer.json */
 {
-    "name": "ros1_bridge",
-    /* Dockerfile settings */
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    /* Docker run arguments */
-    "runArgs": [
-        "-it",
-        "--network=host",
-        "--ipc=host"
-    ],
-    /* Privileged mode */
-    "privileged": true,
-    /* Docker mounts */
-    "mounts": [
-        {
-            // Shared Memory
-            "source": "/dev/shm",
-            "target": "/dev/shm",
-            "type": "bind"
+    "name": "ros1-bridge",
+    "dockerComposeFile": "../docker/docker-compose.yaml",
+    "service": "ros1-bridge",
+    // workspace settings
+    "workspaceFolder": "/",
+    // Vscode extensions
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-themes",
+                "twxs.cmake",
+                "donjayamanne.python-extension-pack",
+                "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
+                "ms-iot.vscode-ros"
+            ]
         }
-    ],
-    /* workspace settings */
-    "workspaceFolder": "/"
+    }
 }

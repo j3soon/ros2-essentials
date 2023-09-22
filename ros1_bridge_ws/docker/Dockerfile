@@ -7,7 +7,7 @@ FROM ubuntu:22.04 AS base
 
 # Label
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
-LABEL description="ros1_bridge for noetic <-> humble"
+LABEL description="ros1-bridge for noetic <-> humble"
 
 # Set environment variables
 ENV TERM=xterm-256color
@@ -19,7 +19,7 @@ ENV LANG=en_US.UTF-8
 SHELL ["/bin/bash", "-c"]
 
 ################################################################################################
-# Build ROS Humble and ros1_bridge from source
+# Build ROS Humble and ros1-bridge from source
 # Reference : 
 # - https://docs.ros.org/en/humble/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html
 # - https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
@@ -115,9 +115,9 @@ RUN apt update && apt install -y ros-core-dev python3-packaging libspdlog-dev &&
 
 # Copy files from host and build stage
 COPY --from=build /ros2_humble/install /ros2_humble/install
-COPY ./start_bridge.sh /start_bridge.sh 
+COPY ./start-bridge.sh /start-bridge.sh 
 
 # Other settings
 USER user
 WORKDIR /
-CMD ["./start_bridge.sh"]
+CMD ["./start-bridge.sh"]
