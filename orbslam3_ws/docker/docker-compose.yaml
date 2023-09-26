@@ -11,6 +11,7 @@ services:
     privileged: true
     command: bash
     network_mode: host
+    working_dir: /home/ros2-agv-essentials/orbslam3_ws
 
     # Container Settings
     environment:
