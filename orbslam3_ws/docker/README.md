@@ -9,7 +9,7 @@ git clone https://github.com/j3soon/ros2-agv-essentials.git
 ```
 
 ```bash
-cd ros2-agv-essentials/docker/humble_orbslam3/
+cd ros2-agv-essentials/orbslam3_ws/docker
 ./run.sh
 ```
 
