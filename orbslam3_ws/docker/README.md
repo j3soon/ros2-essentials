@@ -1,8 +1,6 @@
 # ROS2 ORB-SLAM3
 
-A repo build a docker image with ros2 humble and orb-slam3
-
-### Run with dockerfile
+### Run with docker
 
 ```bash
 git clone https://github.com/j3soon/ros2-agv-essentials.git 
@@ -10,13 +8,8 @@ git clone https://github.com/j3soon/ros2-agv-essentials.git
 
 ```bash
 cd ros2-agv-essentials/orbslam3_ws/docker
-./run.sh
-```
-
-### Use current complete image
-
-```bash
-docker pull assume/humble_orbslam3
+docker-compose pull
+docker-compose up -d --build
 ```
 
 ### Simple Test With Dataset
