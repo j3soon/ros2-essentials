@@ -1,0 +1,6 @@
+[submodule "aws_robotics_worlds_ws/src/aws_worlds/aws_warehouse"]
+	path = aws_robotics_worlds_ws/src/aws_worlds/aws_warehouse
+	url = https://github.com/aws-robotics/aws-robomaker-small-warehouse-world.git
+[submodule "aws_robotics_worlds_ws/src/aws_worlds/aws_hospital"]
+	path = aws_robotics_worlds_ws/src/aws_worlds/aws_hospital
+	url = https://github.com/aws-robotics/aws-robomaker-hospital-world.git
