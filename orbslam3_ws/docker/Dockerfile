@@ -31,7 +31,6 @@ RUN adduser --disabled-password --gecos '' --shell /bin/bash ${USERNAME} && \
     adduser ${USERNAME} sudo && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-
 #############################################
 # --- Build Pangolin from source ---
 USER ${USERNAME}
@@ -50,7 +49,6 @@ WORKDIR /home/${USERNAME}/Pangolin/build
 # build pangolin
 RUN cmake .. && \
     cmake --build .
-
 
 #############################################
 # --- Build ORB-SLAM3 from source
@@ -73,15 +71,16 @@ RUN sed -i 's/++11/++14/g' ORB_SLAM3/CMakeLists.txt && \
 RUN cd ORB_SLAM3 && \
     ./build.sh
 
-RUN cd ORB_SLAM3/Thirdparty/Sophus/build && \ 
+RUN cd ORB_SLAM3/Thirdparty/Sophus/build && \
     sudo make install
-
 
 #############################################
 # --- Build ROS2-SLAM3
+RUN mkdir -p /home/${USERNAME}/test_ws/src
+
 WORKDIR /home/${USERNAME}/test_ws
 
-RUN mkdir -p /home/${USERNAME}/test_ws/src && colcon build
+RUN colcon build
 
 RUN mkdir -p src/orbslam3_ros2 && \
     cd src/orbslam3_ros2 && \
