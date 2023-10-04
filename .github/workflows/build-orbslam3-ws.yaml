@@ -1,12 +1,12 @@
-name: Build Docker Image for template-ws
+name: Build Docker Image for orbslam3-ws
 
 on:
   push:
     branches:
       - "master"
     paths:
-      - .github/workflows/build-template-ws.yaml
-      - template_ws/Dockerfile
+      - .github/workflows/build-orbslam3-ws.yaml
+      - orbslam3_ws/Dockerfile
 
 jobs:
   docker:
@@ -22,8 +22,8 @@ jobs:
         # Ref: https://github.com/docker/metadata-action
         uses: docker/metadata-action@v5
         with:
-          # Link: https://hub.docker.com/repository/docker/j3soon/ros2-template-ws/tags
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/ros2-template-ws
+          # Link: https://hub.docker.com/repository/docker/j3soon/ros2-orbslam3-ws/tags
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/ros2-orbslam3-ws
           tags: |
             type=raw,value={{date 'YYYYMMDD'}}
             type=raw,value=latest
@@ -37,6 +37,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: template_ws/docker
+          context: orbslam3_ws/docker
           push: true
           tags: ${{ steps.meta.outputs.tags }}
