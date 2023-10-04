@@ -6,6 +6,9 @@ LABEL description = \
 
 ARG USERNAME=user
 
+RUN apt-get update && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
+
 #############################################
 # --- Basic setup ---
 RUN apt-get update && \
@@ -14,6 +17,8 @@ RUN apt-get update && \
                 vim \
                 curl \
                 tree \
+                wget \
+                tmux \
                 # ORB-SLAM dependencies
                 libopencv-dev \
                 opencv-data \
@@ -23,7 +28,9 @@ RUN apt-get update && \
                 libeigen3-dev \
                 # ROS dependencies
                 ros-$ROS_DISTRO-vision-opencv \
-                ros-$ROS_DISTRO-message-filters && \
+                ros-$ROS_DISTRO-message-filters \
+                # Python related
+                python3-pip && \
                 rm -rf /var/lib/apt/lists/*
 
 # add user with default bash
