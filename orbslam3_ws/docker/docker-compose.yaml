@@ -16,11 +16,13 @@ services:
     # Container Settings
     environment:
       - DISPLAY=${DISPLAY}
-      - XAUTHORITY=/tmp/xauth
     volumes:
       # Mount local timezone
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       # X-11 mount
-      - ~/.Xauthority:/tmp/xauth
       - /tmp/.X11-unix:/tmp/.X11-unix
+      # Direct Rendering Infrastructure
+      - /dev/dri:/dev/dri
+      # Mount workspace
+      - ..:/home/ros2-agv-essentials/orbslam3_ws
