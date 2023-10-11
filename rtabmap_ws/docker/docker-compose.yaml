@@ -4,8 +4,8 @@ services:
   ros2-rtabmap:
     # Build or Reference the image
     build: .
-    image: j3soon/ros2-rtabmap
-    container_name: ros2-rtabmap
+    image: j3soon/ros2-rtabmap-ws
+    container_name: ros2-rtabmap-ws
     stdin_open: true
     tty: true
     privileged: true
