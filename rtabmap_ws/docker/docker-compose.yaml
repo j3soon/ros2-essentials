@@ -26,5 +26,9 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       # Direct Rendering Infrastructure
       - /dev/dri:/dev/dri
+      # Mount sound card to prevent Gazebo warning.
+      - /dev/snd:/dev/snd
+      # Mount Gazebo models directory
+      - ./cache/.gazebo:/home/user/.gazebo
       # Mount workspace
       - ..:/home/ros2-agv-essentials/rtabmap_ws
