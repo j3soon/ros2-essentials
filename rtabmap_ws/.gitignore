@@ -1,0 +1,7 @@
+docker/cache
+.vscode
+build
+install
+log
+
+!/**/.gitkeep
