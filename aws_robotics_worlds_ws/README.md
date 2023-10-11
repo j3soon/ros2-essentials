@@ -39,7 +39,7 @@ ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False
 The result should be like this:
  - Set the initial pose by clicking the "2D Pose Estimate" button, and then left click the corresponding location in Rviz2 as the robot located in the Gazebo world.
  - Set the target pose by clicking the "Nav2 Goal" button, and then left click the location wherever you want.
-![](https://hackmd.io/_uploads/SJHZrXLa2.png)
+![](ros2-agv-essentials/aws_robotics_worlds_ws/docs/images/image1.png)
 ## Switch to a different worlds
 ### Add the models folder of your world to `GAZEBO_MODEL_PATH`
 ```bash
@@ -50,7 +50,7 @@ export GAZEBO_MODEL_PATH=<models_folder_of_the_desired_world>
 ```
 > If you did not add the desired models to `GAZEBO_MODEL_PATH` before launching, Gazebo will not be able to load the models needed for your world, and ended up not showing anything.
 > 
-> ![](https://hackmd.io/_uploads/ByKhEdLp3.png)
+> ![](ros2-agv-essentials/aws_robotics_worlds_ws/docs/images/image2.png)
 
 ### Add the `world` argument
 The `tb3_simulation_launch.py` has declared lots of useful launch arguments, which makes us easy to customize the result of this launch file. One of them is `world`, which controls the virtual world to be simulated in Gazebo, and allows us to change the "world" by simply adding `world:=<desired_world_file>` at the end of the launch command. (The order of the launch arguments does not matters.)
@@ -63,7 +63,7 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/home/ros2-agv-essentials/aws_roboti
 ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/ros2-agv-essentials/aws_robotics_worlds_ws/src/aws_worlds/aws_warehouse/worlds/small_warehouse.world
 ```
 The result should be like this:
-![](https://hackmd.io/_uploads/Bkx1n_U62.png)
+![](ros2-agv-essentials/aws_robotics_worlds_ws/docs/images/image3.png)
 > If the world does not changed, reopening the container is a good way to try :)
 ## Generating a `.yaml` 2D map
 From the above launching example, you may notice that the 2D map used in Rviz2 is still the default one, and this is not what we wanted. In the following instructions, you will learn how to generate your own 2D map using SLAM (Simultaneous localization and mapping) with the given turtlebot3, saving it, and enjoy navigating in the map!
@@ -76,9 +76,9 @@ ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/r
 The result should be like this:
 - Rviz2 is now showing the turtlebot model itself, and the "vision" of the bot, including the Laser Scan (red dots), Global Planner (color distributions surrounding the walls), etc...
 - Enjoy exploring and scanning the world by simply using the "Nav2 Goal" button!
-![](https://hackmd.io/_uploads/S1WwP8I6h.png)
+![](ros2-agv-essentials/aws_robotics_worlds_ws/docs/images/image4.png)
 - After traversing through the world, you may get a resulting map in Rviz2 looks like this:
-![](https://hackmd.io/_uploads/rJI9TfDa3.png)
+![](ros2-agv-essentials/aws_robotics_worlds_ws/docs/images/image5.png)
 
 >The following instruction will teach you how to save the 2D map you happy with, so DO NOT CLOSE the running program before saving your map.
 
@@ -108,7 +108,7 @@ ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/r
 ```
 > Result:
 > - Again, you can use the built-in navigation method to traverse the map using "2D Pose Estimate" and "Nav2 Goal".
-![](https://hackmd.io/_uploads/SyKZ7Eva3.png)
+![](ros2-agv-essentials/aws_robotics_worlds_ws/docs/images/image6.png)
 
 ## Reference
 [Nav2 - Getting Started](https://navigation.ros.org/getting_started/index.html)
