@@ -24,13 +24,6 @@ RUN apt-get update && \
 # Install Gazebo
 RUN curl -sSL http://get.gazebosim.org | sh
 
-# Set the timezone
-RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends tzdata
-RUN TZ=Asia/Taipei && \
-    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo $TZ > /etc/timezone && \
-    dpkg-reconfigure -f noninteractive tzdata
-
 # add user with default bash
 RUN adduser --disabled-password --gecos '' --shell /bin/bash ${USERNAME} && \
     adduser ${USERNAME} sudo && \
