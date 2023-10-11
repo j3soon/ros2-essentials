@@ -1,0 +1,30 @@
+version: '3.0'
+services:
+  # Container for ROS2 rtabmap
+  ros2-rtabmap:
+    # Build or Reference the image
+    build: .
+    image: j3soon/ros2-rtabmap
+    container_name: ros2-rtabmap
+    stdin_open: true
+    tty: true
+    privileged: true
+    command: bash
+    network_mode: host
+    working_dir: /home/ros2-agv-essentials/rtabmap_ws
+
+    # Container Settings
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_LOCALHOST_ONLY=1
+      - ROS_DOMAIN_ID=42
+    volumes:
+      # Mount local timezone
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      # X-11 mount
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      # Direct Rendering Infrastructure
+      - /dev/dri:/dev/dri
+      # Mount workspace
+      - ..:/home/ros2-agv-essentials/rtabmap_ws
