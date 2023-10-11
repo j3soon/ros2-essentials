@@ -31,9 +31,5 @@ RUN adduser --disabled-password --gecos '' --shell /bin/bash ${USERNAME} && \
 
 # Login with user
 USER ${USERNAME}
-WORKDIR /home/${USERNAME}
-
-# Create work directory and went in
-WORKDIR /home/${USERNAME}/ros_ws
 
 CMD ["bash"]
