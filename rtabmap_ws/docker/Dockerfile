@@ -1,5 +1,9 @@
 FROM introlab3it/rtabmap:jammy
 
+LABEL org.opencontainers.image.authors="assume0701@gmail.com"
+LABEL description = \
+        "A image for ROS2 humble and RTAB-Map develop environment."
+
 ARG USERNAME=user
 
 #############################################
