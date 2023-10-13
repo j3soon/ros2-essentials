@@ -4,7 +4,7 @@
     "dockerComposeFile": "../docker/docker-compose.yaml",
     "service": "ros2",
     // workspace settings
-    "workspaceFolder": "/home/ros2-agv-essentials/aws_robotics_ws",
+    "workspaceFolder": "/home/ros2-agv-essentials/aws_robotics_worlds_ws",
     // Vscode extensions
     "customizations": {
         "vscode": {
