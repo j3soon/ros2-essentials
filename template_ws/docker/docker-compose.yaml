@@ -39,4 +39,4 @@ services:
       # "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
       # "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
       # Mount workspace
-      - ..:/home/ros2-agv-essentials/template_ws
+      - ../..:/home/ros2-agv-essentials
