@@ -21,7 +21,7 @@ def generate_launch_description():
 
     gazebo_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([gazebo_launch]),
-        launch_arguments={'world_path': world_file}.items(),
+        launch_arguments={"world_path": world_file}.items(),
     )
 
     ld = LaunchDescription()
