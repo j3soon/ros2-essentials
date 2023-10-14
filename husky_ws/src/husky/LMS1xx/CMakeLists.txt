@@ -12,36 +12,9 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(laser_geometry REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(sensor_msgs REQUIRED)
-find_package(tf2 REQUIRED)
-find_package(tf2_ros REQUIRED)
+find_package(urdf REQUIRED)
 
-add_executable(${PROJECT_NAME} 
-  src/LMS1xx_node.cpp
-  src/LMS1xx.cpp)
-
-ament_target_dependencies(
-  ${PROJECT_NAME}
-  geometry_msgs
-  laser_geometry
-  rclcpp
-  sensor_msgs
-  tf2
-  tf2_ros
-)
-
-target_include_directories(${PROJECT_NAME} PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-
-install(TARGETS lms1xx
-  DESTINATION lib/${PROJECT_NAME})
-
-install(DIRECTORY config launch meshes urdf
-  DESTINATION share/${PROJECT_NAME}
-)
+install(DIRECTORY meshes DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY urdf   DESTINATION share/${PROJECT_NAME})
 
 ament_package()
