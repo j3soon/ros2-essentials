@@ -28,6 +28,7 @@
       <gazebo reference="${frame}">
         <turnGravityOff>true</turnGravityOff>
         <sensor type="depth" name="${prefix}_realsense_depth">
+          <always_on>1</always_on>
           <update_rate>${update_rate}</update_rate>
           <camera>
             <!-- 75x65 degree FOV for the depth sensor -->
@@ -45,29 +46,12 @@
               <far>50.0</far>
             </clip>
           </camera>
-          <plugin name="kinect_controller" filename="libgazebo_ros_openni_kinect.so">
-            <baseline>0.2</baseline>
-            <alwaysOn>true</alwaysOn>
-            <updateRate>${update_rate}</updateRate>
-            <cameraName>${topic}</cameraName>
-            <imageTopicName>color/image_raw</imageTopicName>
-            <cameraInfoTopicName>color/camera_info</cameraInfoTopicName>
-            <depthImageTopicName>depth/image_rect_raw</depthImageTopicName>
-            <depthImageInfoTopicName>depth/camera_info</depthImageInfoTopicName>
-            <pointCloudTopicName>depth/color/points</pointCloudTopicName>
-            <frameName>${frame}_gazebo</frameName>
-            <pointCloudCutoff>${min_range}</pointCloudCutoff>
-            <pointCloudCutoffMax>${max_range}</pointCloudCutoffMax>
-            <distortionK1>0.00000001</distortionK1>
-            <distortionK2>0.00000001</distortionK2>
-            <distortionK3>0.00000001</distortionK3>
-            <distortionT1>0.00000001</distortionT1>
-            <distortionT2>0.00000001</distortionT2>
-            <CxPrime>0</CxPrime>
-            <Cx>0</Cx>
-            <Cy>0</Cy>
-            <focalLength>0</focalLength>
-            <hackBaseline>0</hackBaseline>
+          <plugin name="depth_camera_controller" filename="libgazebo_ros_camera.so">
+            <camera_name>${topic}</camera_name>
+            <frame_name>${frame}_gazebo</frame_name>
+            <min_depth>${min_range}</min_depth>
+            <max_depth>${max_range}</max_depth>
+            <hack_baseline>0</hack_baseline>
           </plugin>
         </sensor>
       </gazebo>
