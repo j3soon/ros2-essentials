@@ -63,6 +63,11 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-robot-localization \
     ros-$ROS_DISTRO-realsense2-description \
     ros-$ROS_DISTRO-realsense2-camera \
+    ros-$ROS_DISTRO-navigation2 \
+    ros-$ROS_DISTRO-nav2-common \
+    ros-$ROS_DISTRO-nav2-bringup \
+    ros-$ROS_DISTRO-slam-toolbox \
+    ros-$ROS_DISTRO-imu-tools \
     && sudo rm -rf /var/lib/apt/lists/*
 
 COPY .bashrc /home/$USERNAME/.bashrc 
