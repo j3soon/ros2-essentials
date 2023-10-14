@@ -10,7 +10,7 @@ def generate_launch_description():
 
     # The path of .rviz file.
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("husky_viz"), "rviz", "test.rviz"]
+        [FindPackageShare("husky_viz"), "rviz", "slam.rviz"]
     )
 
     # Launch rviz2.
