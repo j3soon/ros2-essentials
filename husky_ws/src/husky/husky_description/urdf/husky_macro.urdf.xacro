@@ -22,7 +22,7 @@
   <xacro:include filename="$(find husky_description)/urdf/wheel.urdf.xacro" />
 
   <xacro:include filename="$(find husky_description)/urdf/accessories/intel_realsense.urdf.xacro"/>
-  <!-- <xacro:include filename="$(find husky_description)/urdf/accessories/sick_lms1xx_mount.urdf.xacro"/> -->
+  <xacro:include filename="$(find husky_description)/urdf/accessories/sick_lms1xx_mount.urdf.xacro"/>
   <xacro:include filename="$(find husky_description)/urdf/accessories/sensor_arch.urdf.xacro"/>
 
   <xacro:property name="M_PI" value="3.14159"/>
@@ -124,31 +124,27 @@
 
     <xacro:husky_decorate />
 
-    <!-- <xacro:if value="$(arg laser_enabled)">
-
-      <xacro:sick_lms1xx_mount prefix="base"/>
-
-      <xacro:sick_lms1xx frame="base_laser" topic="scan" robot_namespace="$(arg robot_namespace)"/>
-
-      <joint name="laser_mount_joint" type="fixed">
-        <origin xyz="$(arg laser_xyz)" rpy="$(arg laser_rpy)" />
-        <parent link="top_plate_link" />
-        <child link="base_laser_mount" />
-      </joint>
-
-    </xacro:if> -->
+    <xacro:if value="$(arg laser_enabled)">
+        <xacro:sick_lms1xx_mount prefix="base"/>
+        <xacro:sick_lms1xx frame="base_laser" topic="scan" robot_namespace="$(arg robot_namespace)"/>
+        <joint name="laser_mount_joint" type="fixed">
+            <origin xyz="$(arg laser_xyz)" rpy="$(arg laser_rpy)" />
+            <parent link="top_plate_link" />
+            <child link="base_laser_mount" />
+        </joint>
+    </xacro:if>
 
     <!--
       top sensor arch; include this if we have realsense enabled
       keep this as a property to make it easier to add multiple conditions, should we need
       the top bar for any additional sensors in the future
     -->
-    <!-- <xacro:property name="topbar_needed_realsense" value="$(arg realsense_enabled)" />
+    <xacro:property name="topbar_needed_realsense" value="$(arg realsense_enabled)" />
     <xacro:if value="${topbar_needed_realsense}">
-      <xacro:sensor_arch prefix="" parent="top_plate_link">
-        <origin xyz="-0.35 0 0.51" rpy="0 0 -3.14"/>
-      </xacro:sensor_arch>
-    </xacro:if> -->
+        <xacro:sensor_arch prefix="" parent="top_plate_link">
+            <origin xyz="-0.35 0 0.51" rpy="0 0 -3.14"/>
+        </xacro:sensor_arch>
+    </xacro:if>
 
     <!-- add the intel realsense to the topbar if needed -->
     <xacro:if value="$(arg realsense_enabled)">
