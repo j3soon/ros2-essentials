@@ -42,7 +42,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="screen",
-        parameters=[robot_description],
+        parameters=[{"use_sim_time": True}, robot_description],
     )
 
     return LaunchDescription(
