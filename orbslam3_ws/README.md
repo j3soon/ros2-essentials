@@ -16,7 +16,7 @@ docker-compose up -d --build
 
 - Attach to the container
   ```sh
-  docker attach ros2-orbslam3
+  docker attach ros2-orbslam3-ws
   cd /home/ros2-agv-essentials/orbslam3_ws
   ```
 - Prepare data, only need to be done once
