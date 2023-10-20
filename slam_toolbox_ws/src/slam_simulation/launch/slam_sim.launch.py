@@ -2,9 +2,9 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution
+from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 
 
 def generate_launch_description():
@@ -34,6 +34,20 @@ def generate_launch_description():
         FindPackageShare("slam_simulation"), 
         "rviz", "slam_sim.rviz"
     ])
+    
+    # SLAM toolbox config file
+    # Ref: https://github.com/SteveMacenski/slam_toolbox/blob/ros2/config/mapper_params_online_async.yaml
+    slam_param_path = PathJoinSubstitution([
+        FindPackageShare("slam_simulation"), 
+        "config", "mapper_online_async.yaml"
+    ])
+    
+    #####################################
+    # Arguments
+    slam_param = LaunchConfiguration("slam_param")
+    slam_params_arg = DeclareLaunchArgument(
+        'slam_param', default_value = slam_param_path
+    )
     
     #####################################
     # Nodes
@@ -95,13 +109,31 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}]
     )
     
+    # SLAM toolbox node
+    # Ref: https://github.com/SteveMacenski/slam_toolbox/blob/ros2/launch/online_async_launch.py
+    slam = Node(
+        parameters=[
+          slam_param,
+          {'use_sim_time': True}
+        ],
+        package='slam_toolbox',
+        executable='async_slam_toolbox_node',
+        name='slam_toolbox'
+    )
+    
     #####################################
     # Launch description
     return LaunchDescription([
+        
+        # Arguments
+        slam_params_arg,
         
         # Simulation and Monitor
         gazebo, spawn_entity, rviz,
         
         # Static TF
         foot_to_link_tf2, link_to_scan_tf2, link_to_imu_tf2,
+        
+        # Mapping
+        slam
     ])
