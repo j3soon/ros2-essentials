@@ -66,10 +66,42 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(gazebo_path)
     )
     
+    # TF Ref: 
+    # https://docs.ros.org/en/humble/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html#the-proper-way-to-publish-static-transforms
+    # Static TF : base_footprint -> base_link
+    foot_to_link_tf2 = Node(
+        package = "tf2_ros",
+        executable = "static_transform_publisher",
+        name = "foot_to_link",
+        arguments = ["0", "0", "0", "0", "0", "0", "base_footprint", "base_link"],
+        parameters=[{'use_sim_time': True}]
+    )
+    
+    # Static TF : base_link -> base_scan
+    link_to_scan_tf2 = Node(
+        package = "tf2_ros",
+        executable = "static_transform_publisher",
+        name = "link_to_scan",
+        arguments = ["0", "0", "0", "0", "0", "0", "base_link", "base_scan"],
+        parameters=[{'use_sim_time': True}]
+    )
+    
+    # Static TF : base_link -> imu
+    link_to_imu_tf2 = Node(
+        package = "tf2_ros",
+        executable = "static_transform_publisher",
+        name = "link_to_imu",
+        arguments = ["0", "0", "0", "0", "0", "0", "base_link", "imu_link"],
+        parameters=[{'use_sim_time': True}]
+    )
+    
     #####################################
     # Launch description
     return LaunchDescription([
         
         # Simulation and Monitor
-        gazebo, spawn_entity, rviz
+        gazebo, spawn_entity, rviz,
+        
+        # Static TF
+        foot_to_link_tf2, link_to_scan_tf2, link_to_imu_tf2,
     ])
