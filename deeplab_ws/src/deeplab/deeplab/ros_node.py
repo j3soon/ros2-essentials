@@ -15,11 +15,11 @@ class DeepLab_Node(Node):
         self.bridge = CvBridge()
 
         # Subscriber
-        self.subscription = self.create_subscription(Image, "/realsense/image_raw", self.callback, 20)
+        self.subscription = self.create_subscription(Image, "/input", self.callback, 20)
         self.subscription  # prevent unused variable warning
 
         # Publisher
-        self.publisher = self.create_publisher(Image, "/DeepLab/result", 20)
+        self.publisher = self.create_publisher(Image, "/output", 20)
 
     def callback(self, msg):
         img = self.bridge.imgmsg_to_cv2(msg, desired_encoding="rgb8")

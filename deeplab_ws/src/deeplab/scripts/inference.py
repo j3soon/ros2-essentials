@@ -9,8 +9,8 @@ def main(args=None):
 
     # Create node
     model_node = DeepLab_Node()
-    print("DeepLab node is ready!")
-    print("Start inference...")
+    model_node.get_logger().info("DeepLab node is ready!")
+    model_node.get_logger().info("Start inference...")
 
     # Spin the node so the callback function is called.
     rclpy.spin(model_node)

@@ -12,4 +12,7 @@ ament_python_install_package(${PROJECT_NAME})
 # Install Python executables
 install(PROGRAMS scripts/inference.py DESTINATION lib/${PROJECT_NAME})
 
+# Install launch files
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+
 ament_package()
