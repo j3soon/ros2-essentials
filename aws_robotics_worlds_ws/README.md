@@ -16,19 +16,21 @@ In this package, you will learn how to generate a 2D map (in `.yaml` file) for y
         > It might took 3-5 minutes to build the container from scratch, so please be patient.
     - Otherwise (i.e. you want to use the existing container you built before): Search and go for `Dev Containers: Reopen in Container`.
     > After the image is successfully built, you should see a terminal showing:
-    > ![](docs/images/imageb.png)
-    >
+    
+    ![](docs/images/imageb.png)
+    
     > Now, you can open a new terminal with `Terminal->New Terminal` (or `Ctrl+Shift+`\`), and the image for ROS2 development is ready!
-    > ![](docs/images/imagec.png)
+    
+    ![](docs/images/imagec.png)
 
     iv. Closing the container (when you need to)
 
-    If you want to close the container, press the "Remote Connection" controll button the on the bottom-left corner in the VS Code window. (The blue button as shown.)
-    
+    - If you want to close the container, press the "Remote Connection" controll button the on the bottom-left corner in the VS Code window. (The blue button as shown.)\
     ![](docs/images/imaged.png)
 
-    You will see some options about the remote connection, choosing `Close Remote Connection` will close the remote connection and the container will also be closed at the same time.
+    - You will see some options about the remote connection, choosing `Close Remote Connection` will close the remote connection and the container will also be closed at the same time.\
     ![](docs/images/imagee.png)
+
 3. Install the required packages
 ```bash
 sudo apt update
@@ -72,9 +74,9 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:<models_folder_of_the_desired_world>
 export GAZEBO_MODEL_PATH=<models_folder_of_the_desired_world>
 # (However, since we need both the turtlebot3 models and the models for the world, we mostly used the above command.)
 ```
-> If you did not add the desired models to `GAZEBO_MODEL_PATH` before launching, Gazebo will not be able to load the models needed for your world, and ended up not showing anything.
-> 
-> ![](docs/images/image2.png)
+> If you did not add the desired models to `GAZEBO_MODEL_PATH` before launching, Gazebo will not be able to load the models needed for your world, and ended up not showing anything:
+
+![](docs/images/image2.png)
 
 ### Add the `world` argument
 The `tb3_simulation_launch.py` has declared lots of useful launch arguments, which makes us easy to customize the result of this launch file. One of them is `world`, which controls the virtual world to be simulated in Gazebo, and allows us to change the "world" by simply adding `world:=<desired_world_file>` at the end of the launch command. (The order of the launch arguments does not matters.)
@@ -89,7 +91,9 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/home/ros2-agv-essentials/aws_roboti
 ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/ros2-agv-essentials/aws_robotics_worlds_ws/src/aws_worlds/aws_warehouse/worlds/small_warehouse.world
 ```
 >The result should be like this:
->![](docs/images/image3.png)
+
+![](docs/images/image3.png)
+
 > (If the world does not changed, reopening the container is a good way to try ^^)
 
 #### Example: Hospital
@@ -100,12 +104,13 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/home/ros2-agv-essentials/aws_roboti
 ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/ros2-agv-essentials/aws_robotics_worlds_ws/src/aws_worlds/aws_hospital/worlds/hospital.world
 ```
 > Result:
-> ![](docs/images/imagef.png)
->
-> (For hospital, the world might be too large/complicated for Gazebo to load that the turtlebot3 may not be spawned when the world is loaded. If this happened, you may need to manually spawn the turtlebot3 by ​dragging a `TurtleBot3(Waffle)` from the left tool bar to the world.)
->
-> ![](docs/images/imageg.png)
-> ![](docs/images/imageh.png)
+
+![](docs/images/imagef.png)
+
+> For hospital, the world might be too large/complicated for Gazebo to load that the turtlebot3 may not be spawned when the world is loaded. If this happened, you may need to manually spawn the turtlebot3 by ​dragging a `TurtleBot3(Waffle)` from the left tool bar to the world.
+
+![](docs/images/imageg.png)
+![](docs/images/imageh.png)
 ## Generating a `.yaml` 2D map
 From the above launching example, you may notice that the 2D map used in Rviz2 is still the default one, and this is not what we wanted. In the following instructions, you will learn how to generate your own 2D map using SLAM (Simultaneous localization and mapping) with the given turtlebot3, saving it, and enjoy navigating in the map!
 
@@ -128,10 +133,12 @@ The result should be like this:
 #### Example: Hospital
 - By similarly changing the `world` launch argument, you could also try scanning the hospital world! Just do not forget the `export` the models you need.
 > As mentioned before, the turtlebot3 might not be spawned even when the world is loaded. At this time, Rviz2 is showing nothing since there is no bot for it to control.
-> ![](docs/images/imagei.png)
+
+![](docs/images/imagei.png)
 >
 > After we manually spawn a turtlebot, Rviz2 will be able to find the bot and therefore you can control it.
-> ![](docs/images/imagej.png)
+
+![](docs/images/imagej.png)
 ## Saving the resulting 2D map
 From now, you have your own scanned 2D map in the running Rviz2, and you are going to save it as `.yaml` file. We will be using another subpackage in Nav2: `nav2_map_server`, which provides nodes that can load or save map for the Nav2 application using topics and services interface ([Learn more](https://github.com/ros-planning/navigation2/tree/main/nav2_map_server)). In general, it allows us to save the desired map by simply using CLI (Command line interface).
 
@@ -159,7 +166,8 @@ ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/r
 ```
 > Result:\
 > Again, you can use the built-in navigation method to traverse the map using "2D Pose Estimate" and "Nav2 Goal".
->![](docs/images/image6.png)
+
+![](docs/images/image6.png)
 
 ## Reference
 [Nav2 - Getting Started](https://navigation.ros.org/getting_started/index.html)
