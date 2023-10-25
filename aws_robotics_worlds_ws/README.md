@@ -17,19 +17,19 @@ In this package, you will learn how to generate a 2D map (in `.yaml` file) for y
     - Otherwise (i.e. you want to use the existing container you built before): Search and go for `Dev Containers: Reopen in Container`.
     > After the image is successfully built, you should see a terminal showing:
     
-    ![](docs/images/imageb.png)
+    ![](docs/images/docker-build-complete.png)
     
     > Now, you can open a new terminal with `Terminal->New Terminal` (or `Ctrl+Shift+`\`), and the image for ROS2 development is ready!
     
-    ![](docs/images/imagec.png)
+    ![](docs/images/new-terminal.png)
 
     iv. Closing the container (when you need to)
 
     - If you want to close the container, press the "Remote Connection" controll button the on the bottom-left corner in the VS Code window. (The blue button as shown.)\
-    ![](docs/images/imaged.png)
+    ![](docs/images/remote-connection-button.png)
 
     - You will see some options about the remote connection, choosing `Close Remote Connection` will close the remote connection and the container will also be closed at the same time.\
-    ![](docs/images/imagee.png)
+    ![](docs/images/remote-connection-window.png)
 
 3. Install the required packages
 ```bash
@@ -59,7 +59,7 @@ ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False
 >Please be patient since it might took some time (1-2 minutes) for Gazebo to load the world for the first time.
 
 The result should be like this:
-![](docs/images/image1.png)
+![](docs/images/launch-default.png)
 >#### How to control the bot?
 > - On Rviz2:
 >   - Set the initial pose by clicking the "2D Pose Estimate" button, and then left click the corresponding location in Rviz2 as the robot located in the Gazebo world.
@@ -76,7 +76,7 @@ export GAZEBO_MODEL_PATH=<models_folder_of_the_desired_world>
 ```
 > If you did not add the desired models to `GAZEBO_MODEL_PATH` before launching, Gazebo will not be able to load the models needed for your world, and ended up not showing anything:
 
-![](docs/images/image2.png)
+![](docs/images/gazebo-failed.png)
 
 ### Add the `world` argument
 The `tb3_simulation_launch.py` has declared lots of useful launch arguments, which makes us easy to customize the result of this launch file. One of them is `world`, which controls the virtual world to be simulated in Gazebo, and allows us to change the "world" by simply adding `world:=<desired_world_file>` at the end of the launch command. (The order of the launch arguments does not matters.)
@@ -92,7 +92,7 @@ ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/r
 ```
 >The result should be like this:
 
-![](docs/images/image3.png)
+![](docs/images/launch-world-as-warehouse.png)
 
 > (If the world does not changed, reopening the container is a good way to try ^^)
 
@@ -105,12 +105,12 @@ ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/r
 ```
 > Result:
 
-![](docs/images/imagef.png)
+![](docs/images/launch-world-as-hospital.png)
 
 > For hospital, the world might be too large/complicated for Gazebo to load that the turtlebot3 may not be spawned when the world is loaded. If this happened, you may need to manually spawn the turtlebot3 by ​dragging a `TurtleBot3(Waffle)` from the left tool bar to the world.
 
-![](docs/images/imageg.png)
-![](docs/images/imageh.png)
+![](docs/images/drag-turtlebot3-model.png)
+![](docs/images/drag-turtlebot3-model-result.png)
 ## Generating a `.yaml` 2D map
 From the above launching example, you may notice that the 2D map used in Rviz2 is still the default one, and this is not what we wanted. In the following instructions, you will learn how to generate your own 2D map using SLAM (Simultaneous localization and mapping) with the given turtlebot3, saving it, and enjoy navigating in the map!
 
@@ -124,9 +124,9 @@ ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/r
 The result should be like this:
 - Rviz2 is now showing the turtlebot model itself, and the "vision" of the bot, including the Laser Scan (red dots), Global Planner (color distributions surrounding the walls), etc...
 - Enjoy exploring and scanning the world by simply using the "Nav2 Goal" button!
-![](docs/images/image4.png)
+![](docs/images/turn-on-slam-warehouse-before.png)
 - After traversing through the world, you may get a resulting map in Rviz2 looks like this:
-![](docs/images/image5.png)
+![](docs/images/turn-on-slam-warehouse-after.png)
 
 > - The following instruction will teach you how to save the 2D map you happy with, so DO NOT CLOSE the running program before saving your map.
 
@@ -134,11 +134,11 @@ The result should be like this:
 - By similarly changing the `world` launch argument, you could also try scanning the hospital world! Just do not forget the `export` the models you need.
 > As mentioned before, the turtlebot3 might not be spawned even when the world is loaded. At this time, Rviz2 is showing nothing since there is no bot for it to control.
 
-![](docs/images/imagei.png)
+![](docs/images/turn-on-slam-hospital-wo-bot.png)
 >
 > After we manually spawn a turtlebot, Rviz2 will be able to find the bot and therefore you can control it.
 
-![](docs/images/imagej.png)
+![](docs/images/turn-on-slam-hospital-w-bot.png)
 ## Saving the resulting 2D map
 From now, you have your own scanned 2D map in the running Rviz2, and you are going to save it as `.yaml` file. We will be using another subpackage in Nav2: `nav2_map_server`, which provides nodes that can load or save map for the Nav2 application using topics and services interface ([Learn more](https://github.com/ros-planning/navigation2/tree/main/nav2_map_server)). In general, it allows us to save the desired map by simply using CLI (Command line interface).
 
@@ -153,7 +153,7 @@ ros2 run nav2_map_server map_saver_cli -f /home/ros2-agv-essentials/aws_robotics
 ```
 > It should generate a `warehouse.pgm` and a `warehouse.yaml` file as follow:
 
-![](docs/images/imagea.png)
+![](docs/images/output-result.png)
 
 ## Navigate in your own map
 After you have created and saved your own 2D map, you can use it in your further exploration in Nav2! To check if your 2D map is well generated, you can again, use the `tb3_simulation_launch.py` file to do it by assigning your map to the launching argument `map`.
@@ -167,7 +167,7 @@ ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False world:=/home/r
 > Result:\
 > Again, you can use the built-in navigation method to traverse the map using "2D Pose Estimate" and "Nav2 Goal".
 
-![](docs/images/image6.png)
+![](docs/images/launch-map-as-warehouse.png)
 
 ## Reference
 [Nav2 - Getting Started](https://navigation.ros.org/getting_started/index.html)
