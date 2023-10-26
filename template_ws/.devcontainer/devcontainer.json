@@ -14,6 +14,8 @@
                 "twxs.cmake",
                 "donjayamanne.python-extension-pack",
                 "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
                 "ms-iot.vscode-ros"
             ]
         }
