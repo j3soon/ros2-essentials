@@ -7,91 +7,77 @@ This template will help you set up a ROS-Humble environment quickly.
 Here is the structure of this template:
 
 ```
-template_ws
-├── .devcontainer
-|   ├── cache
-|   |   └── .gazebo
-|   |       ├── .gitkeep
-|   |       └── ...
-|   ├── .bashrc
-|   ├── devcontainer.json
-|   ├── postCreateCommand.sh
-|   └── Dockerfile
-├── install
-├── build
-├── log
-├── src
-|   ├── minimal_pkg
-|   |   ├── include
+ros2-agv-essentials
+├── scripts
+|   └── create_workspace.sh
+├── template_ws
+|   ├── .devcontainer
+|   |   ├── devcontainer.json
+|   |   └── postCreateCommand.sh
+|   ├── docker
+|   |   ├── cache
+|   |   |   └── .gazebo
+|   |   ├── .bashrc
+|   |   ├── compose.yaml
+|   |   └── Dockerfile
+|   ├── install
+|   ├── build
+|   ├── log
+|   ├── src
 |   |   ├── minimal_pkg
-|   |   ├── scripts
+|   |   |   ├── include
+|   |   |   ├── minimal_pkg
+|   |   |   ├── scripts
+|   |   |   └── ...
 |   |   └── ...
-|   └── ...
-└── README.md
+|   └── README.md
 ```
 
-> ```build``` / ```install``` / ```log``` folders will appear once you've built the packages.
+- `build` / `install` / `log` folders will appear once you've built the packages.
+- `minimal_pkg` is the ROS2 package used to create a publisher and subscriber in both Python and C++. You can remove it if you don't need it.
 
 ## 🚩 How to use this template 🚩
 
-Copy the ```template_ws``` directory and follow the instructions below.
+### 1. Use the script to copy the template workspace.
 
-### 0. Update the folder name to match your project's name.
+We have provided a script to create a new workspace. Please use it to avoid potential issues.  
 
-Ensure you update the folder name ( ```template_ws``` ) after copying the folder immediately.
-
-### 1. Configure `devcontainer`
-
-> File paths:
-> - ```.devcontainer/devcontainer.json```
-> - ```docker/docker-compose.yaml```
-
-> TODO: Update the instructions below for docker-compose.
-
-- Update the ```"name"``` to match your project.
-- Verify that the ```"runArg"``` matches your requirements.
-    - These arguments define the container settings and should align with your ```docker run``` command.
-- Review the ```"containerEnv"``` settings:
-    - These are used to configure environment variables. Just so you know,  
-      variables set here cannot be changed once the container is built,  
-      so avoid putting variables here if you need to modify them frequently.
-    - If you wish to set a variable that you want to change after the container is built,  
-      use ```export VARIABLE=/the/value``` in ```.devcontainer/.bashrc```.
-- Update the path in ```"workspaceFolder"```
-    - Replace the ```.../template_ws``` with the name of the folder you set in section 0.
-
-### 2. Install the tools you want to use in the container
-
-> File path : ```.devcontainer/postCreateCommand.sh```
-
-Note that the script will be executed after the container-building process.  
-Feel free to add any desired commands here !!!
-
-Example:
-
-```bash=
-sudo apt-get update && apt-get install -y \
-    ros-humble-xxx \
-    ros-humble-xxx
+```bash
+# Open a terminal, and change the directory to ros2-agv-essentials.
+./scripts/create_workspace.sh <new_workspace_name>
 ```
 
-> You can include the commands directly in the Dockerfile as well.
+> To unify the naming style, we will modify the string `<new_workspace_name>` in some files.
+
+### 2. Configure Docker settings.
+
+- `docker/Dockerfile`
+    - Check whether the default Dockerfile meets your requirements. If not, feel free to modify the contents. In most cases, you may want to install additional tools for ROS packages.
+- `docker/compose.yaml`
+    - If you want to access the GPU in the container, please uncomment the lines accordingly.
+    - If you want to add any environment variables in the container, you can include them in the `environment` section, or you can use `export VARIABLE=/the/value` in `docker/.bashrc`.
+- `.devcontainer/devcontainer.json`
+    - Update the `name` to match your project.
+    - Add any extensions you want in the `Vscode extensions`.
+    - If you change the service name in `compose.yaml`, please update the setting in the `service` section accordingly. 
+- `.devcontainer/postCreateCommand.sh`
+    - This script will be executed after the container-building process. Feel free to add any desired commands here.
 
 ### 3. Open the workspace folder using Visual Studio Code.
 
 > Haven't set up the devcontainer yet ?
 > 
-> Please refer to the tutorial provided by Visual Studio Code first.
+> Please refer to the tutorial provided by Visual Studio Code first.  
 > You can find it here:  [https://code.visualstudio.com/docs/devcontainers/containers](https://code.visualstudio.com/docs/devcontainers/containers)
 
 Spotting the workspace folder within your Explorer indicates that you've selected the wrong folder.  
-You should only observe the ```.devcontainer``` and ```src``` folders there.
+You should only observe the `.devcontainer`, `docker` and `src` folders there.
 
-**Note**: Alternatively, you can use `docker-compose` instead of `devcontainers` if you are not using VSCode.
+**Note**: Alternatively, you can use `docker-compose` instead of `devcontainer` if you are not using VSCode.
 
-### 4. Build the container
+### 4. Build the container.
 
-Press ```F1``` and enter ```> Dev Containers: Rebuild Container.```.  
+Press `F1` and enter `> Dev Containers: Rebuild Container`.  
 Building the images and container will take some time. Please be patient.
 
 You should see the output below.
@@ -100,14 +86,12 @@ You should see the output below.
 Done. Press any key to close the terminal.
 ```
 
-**Note**: To save time, you can pull the pre-built Docker images instead of building them from scratch.
-
-### 5. Start to develop with ROS
+### 5. Start to develop with ROS.
 
 You've successfully completed all the instructions.  
 Wishing you a productive and successful journey in your ROS development !
 
 ## ⚠️ Warning ⚠️
 
-- Do not place your files in any folder named ```build```, ```install```, or ```log```. These folders will not be tracked by Git.
-- If you encounter an error when opening Gazebo, consider closing the container and deleting the cache folder in the ```.devcontainer```.
+- Do not place your files in any folder named `build`, `install`, or `log`. These folders will not be tracked by Git.
+- If you encounter an error when opening Gazebo, consider closing the container and deleting the cache in the `docker/cache` directory. Please note that you should only delete the files inside the folder and not the entire cache folder.
