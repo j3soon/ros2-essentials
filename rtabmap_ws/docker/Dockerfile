@@ -14,14 +14,15 @@ RUN apt-get update && \
                 vim \
                 curl \
                 tree \
-                # --- 
+                tmux \
+                # ---
                 # Simulation required packages
                 ros-humble-turtlebot3 \
                 ros-humble-turtlebot3-gazebo \
                 ros-humble-gazebo-ros-pkgs \
                 ros-humble-joint-state-publisher-gui \
                 # ---
-                # RTAB-MAP required packages 
+                # RTAB-MAP required packages
                 ros-humble-rtabmap-ros && \
                 rm -rf /var/lib/apt/lists/*
 
