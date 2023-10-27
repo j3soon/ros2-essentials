@@ -1,7 +1,7 @@
 /* Reference: https://aka.ms/devcontainer.json */
 {
     "name": "ROS 2 Development Container",
-    "dockerComposeFile": "../docker/docker-compose.yaml",
+    "dockerComposeFile": "../docker/compose.yaml",
     "service": "ros2",
     // workspace settings
     "workspaceFolder": "/home/ros2-agv-essentials/template_ws",
