@@ -1,0 +1,8 @@
+.vscode
+/build
+/install
+/log
+docker/cache/*
+!docker/cache/.gazebo
+docker/cache/.gazebo/*
+!docker/cache/.gazebo/.gitkeep
