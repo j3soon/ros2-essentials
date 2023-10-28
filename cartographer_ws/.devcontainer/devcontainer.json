@@ -1,0 +1,26 @@
+/* Reference: https://aka.ms/devcontainer.json */
+{
+    "name": "ROS2 and Catorgrapher Container",
+    "dockerComposeFile": "../docker/docker-compose.yaml",
+    "service": "ros2-cartographer",
+
+    // workspace settings
+    "workspaceFolder": "/home/ros2-agv-essentials/cartographer_ws",
+
+    // Vscode extensions
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-themes",
+                "twxs.cmake",
+                "donjayamanne.python-extension-pack",
+                "eamodio.gitlens",
+                "ms-iot.vscode-ros"
+            ]
+        }
+    },
+    
+    // Lifecycle scripts
+    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+}
