@@ -4,8 +4,8 @@ services:
     build:
       context: .
       target: build
-    image: j3soon/ros1-bridge-build
-    container_name: ros1-bridge-build
+    image: j3soon/ros1-bridge-build-ws
+    container_name: ros1-bridge-build-ws
     stdin_open: true
     tty: true
     privileged: true
@@ -26,6 +26,6 @@ services:
     build:
       context: .
       target: release
-    image: j3soon/ros1-bridge
-    container_name: ros1-bridge
+    image: j3soon/ros1-bridge-ws
+    container_name: ros1-bridge-ws
     command: ./start-bridge.sh
