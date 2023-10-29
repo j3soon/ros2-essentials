@@ -30,8 +30,8 @@ COPY ./start-bridge.sh /start-bridge.sh
 FROM base AS build
 
 # Install packages.
-RUN apt update && \
-    apt install -y \
+RUN apt-get update && \
+    apt-get install -y \
     curl \
     git \
     locales \
@@ -48,8 +48,8 @@ RUN add-apt-repository universe && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
 # Install development tools and ROS tools.
-RUN apt update && \
-    apt install -y \
+RUN apt-get update && \
+    apt-get install -y \
     build-essential \
     cmake \
     python3-flake8 \
@@ -90,13 +90,13 @@ RUN colcon build
 
 # Delete packages.ros.org from sources.list and remove conflicts packages.
 RUN rm -rf /etc/apt/sources.list.d/ros2.list && \
-    apt remove -y \
+    apt-get remove -y \
     python3-catkin-pkg \
     python3-catkin-pkg-modules
 
 # Install ROS 1 from Ubuntu packages.
-RUN apt update && \
-    apt install -y ros-core-dev
+RUN apt-get update && \
+    apt-get install -y ros-core-dev
 
 # Build ros1_bridge from source.
 RUN git clone https://github.com/ros2/ros1_bridge src/ros1_bridge
@@ -119,7 +119,7 @@ CMD ["/bin/bash"]
 FROM base AS release
 
 # Install ROS core and packages with their dependencies. 
-RUN apt update && apt install -y ros-core-dev python3-packaging libspdlog-dev
+RUN apt-get update && apt-get install -y ros-core-dev python3-packaging libspdlog-dev
 
 # Copy files from host and build stage
 COPY --from=build /ros2_humble/install /ros2_humble/install
