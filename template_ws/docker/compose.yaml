@@ -16,9 +16,20 @@ services:
       # References:
       # - https://docs.ros.org/en/humble/Concepts/Intermediate/About-Domain-ID.html
       # - https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html
+      # - https://docs.ros.org/en/humble/Tutorials/Demos/Logging-and-logger-configuration.html#console-output-colorizing
       - ROS_LOCALHOST_ONLY=1
       - ROS_DOMAIN_ID=42
       - ROS2_WS=/home/ros2-agv-essentials/template_ws
+      - RCUTILS_COLORIZED_OUTPUT=1
+      # If you want to access GPU, please uncomment the lines below.
+      # Reference : https://docs.docker.com/compose/gpu-support/
+      # deploy:
+      #   resources:
+      #     reservations:
+      #       devices:
+      #         - driver: nvidia
+      #           count: all
+      #           capabilities: [ gpu ]
     volumes:
       # Mount local timezone into container. ( Readonly )
       # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
@@ -39,4 +50,4 @@ services:
       # "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
       # "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
       # Mount workspace
-      - ..:/home/ros2-agv-essentials/template_ws
+      - ../..:/home/ros2-agv-essentials
