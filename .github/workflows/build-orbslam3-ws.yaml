@@ -6,7 +6,7 @@ on:
       - "master"
     paths:
       - .github/workflows/build-orbslam3-ws.yaml
-      - orbslam3_ws/Dockerfile
+      - orbslam3_ws/docker/Dockerfile
 
 jobs:
   docker:
