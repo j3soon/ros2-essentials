@@ -1,15 +1,29 @@
 version: '3'
 services:
-  ros1-bridge-build:
+  ros-core:
+    image: osrf/ros:noetic-desktop-full
+    container_name: ros-core
+    command: "rosmaster --core"
+    network_mode: host
+    healthcheck:
+      # The healthcheck is required for ros1-bridge to wait until roscore is ready.
+      test: /ros_entrypoint.sh bash -c "rostopic list || exit 1"
+      interval: 3s
+      timeout: 10s
+      retries: 5
+  ros1-bridge:
     build:
       context: .
-      target: build
-    image: j3soon/ros1-bridge-build-ws
-    container_name: ros1-bridge-build-ws
+      target: release
+    image: j3soon/ros1-bridge-ws
+    container_name: ros1-bridge-ws
+    depends_on:
+      ros-core:
+        # The healthcheck is required for ros1-bridge to wait until roscore is ready.
+        condition: service_healthy
+    command: ./start-bridge.sh
     stdin_open: true
     tty: true
-    privileged: true
-    command: /bin/bash
     network_mode: host
     working_dir: /
     volumes:
@@ -21,11 +35,21 @@ services:
       - /dev/dri:/dev/dri
       # Shared Memory
       - /dev/shm:/dev/shm
-  ros1-bridge:
-    extends: ros1-bridge-build
-    build:
-      context: .
-      target: release
-    image: j3soon/ros1-bridge-ws
-    container_name: ros1-bridge-ws
-    command: ./start-bridge.sh
+  ros1:
+    image: osrf/ros:noetic-desktop-full
+    container_name: ros1
+    stdin_open: true
+    tty: true
+    network_mode: host
+    depends_on:
+      ros-core:
+        condition: service_healthy
+  ros2:
+    image: osrf/ros:humble-desktop-full
+    container_name: ros2
+    stdin_open: true
+    tty: true
+    network_mode: host
+    volumes:
+      # Shared Memory
+      - /dev/shm:/dev/shm

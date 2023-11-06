@@ -116,13 +116,19 @@ rosmaster --core &
 Run the listener node in the `ROS1` container and the talker node in the `ROS2` container.
 
 ```bash
+docker exec -it ros1 /ros_entrypoint.sh bash
 # In ROS 1 container
 rosrun roscpp_tutorials listener
+# or
+# rosrun roscpp_tutorials talker
 ```
 
 ```bash
+docker exec -it ros2 /ros_entrypoint.sh bash
 # In ROS 2 container
 ros2 run demo_nodes_cpp talker
+# or
+# ros2 run demo_nodes_cpp listener
 ```
 
 > You can run the talker node in `ROS1` and the listener node in `ROS2` if you'd like.  
