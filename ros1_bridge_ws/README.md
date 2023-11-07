@@ -8,7 +8,7 @@ ros1_bridge provides a network bridge that enables the exchange of messages betw
 You can locate the original repository [here](https://github.com/ros2/ros1_bridge).
 
 Within this workspace, you'll find a Dockerfile specifically crafted to build both ros-humble and ros1_bridge from their source code.  
-This necessity arises due to a version conflict between the `catkin-pkg-modules` available in the Ubuntu repository and the one in the ROS. 
+This necessity arises due to a version conflict between the `catkin-pkg-modules` available in the Ubuntu repository and the one in the ROS.
 
 [The official explanation](https://docs.ros.org/en/humble/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html#ros-2-via-debian-packages)
 
@@ -40,7 +40,7 @@ ros1_bridge_ws
 > There are two services in the docker-compose, one is `ros1-bridge`, and the other one is `ros1-bridge-build`.  
 > `ros1-bridge` should be sufficient for normal usage.  
 > `ros1-bridge-build`, which contains all the necessary build tools, is used for debugging purposes.  
-> 
+>
 > If you are not debugging ros1-bridge, it is recommended to use the terminal rather than VScode-devcontainer.  
 > By default, the VScode-devcontainer uses the `ros1-bridge-build` service.
 
@@ -52,10 +52,10 @@ To save time, you can pull the image from Dockerhub instead of compiling it from
 If you still prefer to build the image yourself, please follow the instructions below:
 
 - VScode user
-  - Open the workspace in VScode, press `F1`, and enter `> Dev Containers: Rebuild Container`. 
+  - Open the workspace in VScode, press `F1`, and enter `> Dev Containers: Rebuild Container`.
 - Terminal user
   - Open a terminal, change the directory to the docker folder, and type `docker compose build`.
- 
+
 > Just so you know, the building process may take approximately 1 hour to complete.
 
 ## 2. Start the container
@@ -64,12 +64,14 @@ If you still prefer to build the image yourself, please follow the instructions 
   - If you build the image through the devcontainer, it will automatically start the container.  
     After you get into the container, type `./start-bridge.sh` in the terminal.
 - Terminal user
-  - Open a terminal, change the directory to the docker folder, and type `docker compose run ros1-bridge`.
+  - Open a terminal, change the directory to the docker folder, and type `docker compose up`.
 
 ## 3. Launch rosmaster in ROS1
 
 As mentioned in https://github.com/ros2/ros1_bridge/issues/391, you should avoid using `roscore` in ROS1 to prevent the issue of not bridging `/rosout`.  
 Instead, use `rosmaster --core` as an alternative.
+
+This command is automatically executed when you run `docker compose up`.
 
 ## 4. Begin communication
 
@@ -84,15 +86,19 @@ there are matching publisher-subscriber pairs active for a topic on either side 
 ## Run the bridge and the example talker and listener
 
 > Before beginning the example, ensure you have three containers ready:
-> 
+>
 > - `ros1_bridge`
 > - `ROS1`
 > - `ROS2`
->   
+>
+> All containers are automatically launched when you run `docker compose up`.
+>
 > Furthermore, ensure that you mount `/dev/shm` into both the `ros1_bridge` and `ROS2` containers,  
 > and that all containers share the host network.
 
 ### 1. Start the rosmaster in `ROS1` container
+
+> This container is automatically launched when you run `docker compose up`. No further action is required.
 
 ```bash
 # In ROS 1 container
@@ -100,6 +106,8 @@ rosmaster --core &
 ```
 
 ### 2. Start the `ros1_bridge` container
+
+> This container is automatically launched when you run `docker compose up`. No further action is required.
 
 (Same as [here](#2-start-the-container))
 
@@ -112,6 +120,8 @@ rosmaster --core &
     ```
 
 ### 3. Run the talker and listener node
+
+> These containers are automatically launched when you run `docker compose up`. You only need to execeute the commands below.
 
 Run the listener node in the `ROS1` container and the talker node in the `ROS2` container.
 
@@ -126,6 +136,11 @@ rosrun roscpp_tutorials listener
 ```bash
 docker exec -it ros2 /ros_entrypoint.sh bash
 # In ROS 2 container
+# Use the same UID as ros1_bridge to prevent Fast-DDS Shared Memory permission issues.
+# Ref: https://github.com/j3soon/ros2-agv-essentials/pull/9#issuecomment-1795743063
+useradd -ms /bin/bash user
+su user
+source /ros_entrypoint.sh
 ros2 run demo_nodes_cpp talker
 # or
 # ros2 run demo_nodes_cpp listener
