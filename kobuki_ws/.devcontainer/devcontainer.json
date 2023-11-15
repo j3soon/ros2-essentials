@@ -1,0 +1,25 @@
+/* Reference: https://aka.ms/devcontainer.json */
+{
+    "name": "kobuki_ws",
+    "dockerComposeFile": "../docker/compose.yaml",
+    "service": "kobuki-ws",
+    // workspace settings
+    "workspaceFolder": "/home/ros2-agv-essentials/kobuki_ws",
+    // Vscode extensions
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-themes",
+                "twxs.cmake",
+                "donjayamanne.python-extension-pack",
+                "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
+                "ms-iot.vscode-ros"
+            ]
+        }
+    },
+    // Lifecycle scripts
+    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+}
