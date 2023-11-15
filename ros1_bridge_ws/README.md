@@ -30,6 +30,7 @@ ros1_bridge_ws
 |   └── devcontainer.json
 ├── docker
 |   ├── compose.yaml
+|   ├── compose.debug.yaml
 |   ├── Dockerfile
 |   └── start-bridge.sh
 └── README.md
@@ -170,18 +171,18 @@ export ROS_MASTER_URI=http://localhost:11311
 You can replace localhost with the actual IP address or hostname of your ROS Master.  
 This command ensures that your ROS nodes know where to find the ROS Master for communication.
 
-If you've modified the default URI, please execute the `start_bridge.sh` script with the new URI address to ensure proper configuration and communication.
+If you've modified the default URI, please execute the `start-bridge.sh` script with the new URI address to ensure proper configuration and communication.
 
 For example, if you've changed the default URI to `127.0.0.1`, you should make the following modification to the `compose.yaml`:
 
 ```bash
-command: ./start_bridge.sh http://127.0.0.1:11311
+command: ./start-bridge.sh http://127.0.0.1:11311
 ```
 
 ## ROS2 can't receive the topic
 
 The latest releases of Fast-DDS come with the SharedMemory transport enabled by default.  
-Therefore, you need to mount shared memory, also known as `/dev/shm`, into every container you intend to communicate with when using Fast-DDS.  
-This ensures proper communication between containers.
+Therefore, you need to mount shared memory, also known as `/dev/shm`, into every container you intend to communicate with when using Fast-DDS. This ensures proper communication between containers.  
+Ensure that you use the same UID as `ros1-bridge` to avoid Fast-DDS shared memory permission issues.
 
 Reference: https://github.com/eProsima/Fast-DDS/issues/1698#issuecomment-778039676
