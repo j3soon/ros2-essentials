@@ -630,7 +630,7 @@ class SE2 : public SE2Base<SE2<Scalar_, Options>> {
   /// Precondition: ``i`` must be in 0, 1 or 2.
   ///
   SOPHUS_FUNC static Transformation generator(int i) {
-    SOPHUS_ENSURE(i >= 0 || i <= 2, "i should be in range [0,2].");
+    SOPHUS_ENSURE(i >= 0 || i <= 2, "%s", "i should be in range [0,2].");
     Tangent e;
     e.setZero();
     e[i] = Scalar(1);

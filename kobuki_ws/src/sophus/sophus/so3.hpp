@@ -668,7 +668,7 @@ class SO3 : public SO3Base<SO3<Scalar_, Options>> {
   ///
   SOPHUS_FUNC static SO3<Scalar> expAndTheta(Tangent const& omega,
                                              Scalar* theta) {
-    SOPHUS_ENSURE(theta != nullptr, "must not be nullptr.");
+    SOPHUS_ENSURE(theta != nullptr, "%s", "must not be nullptr.");
     using std::abs;
     using std::cos;
     using std::sin;
@@ -733,7 +733,7 @@ class SO3 : public SO3Base<SO3<Scalar_, Options>> {
   /// Precondition: ``i`` must be 0, 1 or 2.
   ///
   SOPHUS_FUNC static Transformation generator(int i) {
-    SOPHUS_ENSURE(i >= 0 && i <= 2, "i should be in range [0,2].");
+    SOPHUS_ENSURE(i >= 0 && i <= 2, "%s", "i should be in range [0,2].");
     Tangent e;
     e.setZero();
     e[i] = Scalar(1);

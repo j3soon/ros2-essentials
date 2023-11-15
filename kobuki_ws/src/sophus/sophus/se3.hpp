@@ -881,7 +881,7 @@ class SE3 : public SE3Base<SE3<Scalar_, Options>> {
   /// Precondition: ``i`` must be in [0, 5].
   ///
   SOPHUS_FUNC static Transformation generator(int i) {
-    SOPHUS_ENSURE(i >= 0 && i <= 5, "i should be in range [0,5].");
+    SOPHUS_ENSURE(i >= 0 && i <= 5, "%s", "i should be in range [0,5].");
     Tangent e;
     e.setZero();
     e[i] = Scalar(1);

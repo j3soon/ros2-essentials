@@ -203,22 +203,22 @@ class optional {
   explicit operator bool() const { return is_valid_; }
 
   T const* operator->() const {
-    SOPHUS_ENSURE(is_valid_, "must be valid");
+    SOPHUS_ENSURE(is_valid_, "%s", "must be valid");
     return &type_;
   }
 
   T* operator->() {
-    SOPHUS_ENSURE(is_valid_, "must be valid");
+    SOPHUS_ENSURE(is_valid_, "%s", "must be valid");
     return &type_;
   }
 
   T const& operator*() const {
-    SOPHUS_ENSURE(is_valid_, "must be valid");
+    SOPHUS_ENSURE(is_valid_, "%s", "must be valid");
     return type_;
   }
 
   T& operator*() {
-    SOPHUS_ENSURE(is_valid_, "must be valid");
+    SOPHUS_ENSURE(is_valid_, "%s", "must be valid");
     return type_;
   }
 

@@ -172,7 +172,7 @@ class SO2Base {
     using std::hypot;
     // Avoid under/overflows for higher precision
     Scalar length = hypot(unit_complex().x(), unit_complex().y());
-    SOPHUS_ENSURE(length >= Constants<Scalar>::epsilon(),
+    SOPHUS_ENSURE(length >= Constants<Scalar>::epsilon(), "%s",
                   "Complex number should not be close to zero!");
     unit_complex_nonconst() /= length;
   }
