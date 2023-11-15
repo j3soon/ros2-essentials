@@ -1,0 +1,24 @@
+version: '3'
+services:
+  ros-core:
+    extends:
+      file: compose.yaml
+      service: ros-core
+  ros1-bridge-build:
+    extends:
+      file: compose.yaml
+      service: ros1-bridge
+    build:
+      context: .
+      target: build
+    image: j3soon/ros1-bridge-build-ws
+    container_name: ros1-bridge-build-ws
+    command: /bin/bash
+  ros1:
+    extends:
+      file: compose.yaml
+      service: ros1
+  ros2:
+    extends:
+      file: compose.yaml
+      service: ros2

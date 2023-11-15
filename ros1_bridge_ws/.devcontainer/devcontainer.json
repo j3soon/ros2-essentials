@@ -1,0 +1,26 @@
+/* For reference, see https://aka.ms/devcontainer.json */
+{
+    "name": "ros1-bridge",
+    "dockerComposeFile": "../docker/compose.debug.yaml",
+    "service": "ros1-bridge-build",
+    "runServices": [
+        "ros1-bridge-build"
+    ],
+    // workspace settings
+    "workspaceFolder": "/",
+    // Vscode extensions
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-themes",
+                "twxs.cmake",
+                "donjayamanne.python-extension-pack",
+                "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
+                "ms-iot.vscode-ros"
+            ]
+        }
+    }
+}
