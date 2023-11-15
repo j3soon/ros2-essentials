@@ -1,0 +1,42 @@
+name: Build Docker Image for ros1-bridge-ws
+
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - .github/workflows/build-ros1-bridge-ws.yaml
+      - ros1_bridge_ws/docker/Dockerfile
+
+jobs:
+  docker:
+    if: github.repository == 'j3soon/ros2-agv-essentials'
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Docker meta
+        id: meta
+        # Ref: https://github.com/docker/metadata-action
+        uses: docker/metadata-action@v5
+        with:
+          # Link: https://hub.docker.com/repository/docker/j3soon/ros2-ros1-bridge-ws/tags
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/ros2-ros1-bridge-ws
+          tags: |
+            type=raw,value={{date 'YYYYMMDD'}}
+            type=raw,value=latest
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ros1_bridge_ws/docker
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}

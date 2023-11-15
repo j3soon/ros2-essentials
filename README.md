@@ -12,6 +12,7 @@ Pulling the pre-built Docker images can bypass the time-consuming building proce
 |--------------|-------------|--------------------------|
 | [j3soon/ros2-template-ws](https://hub.docker.com/repository/docker/j3soon/ros2-template-ws/tags) | [`./template_ws`](./template_ws) | No |
 | [j3soon/ros2-orbslam3-ws](https://hub.docker.com/repository/docker/j3soon/ros2-orbslam3-ws/tags) | [`./orbslam3_ws`](./orbslam3_ws) | No |
+| [j3soon/ros2-ros1-bridge-ws](https://hub.docker.com/repository/docker/j3soon/ros2-ros1-bridge-ws/tags) | [`./ros1_bridge_ws`](./ros1_bridge_ws) | No |
 
 ## Supplementary
 
