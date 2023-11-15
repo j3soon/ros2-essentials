@@ -1,0 +1,38 @@
+<package format="2">
+  <name>kobuki_auto_docking</name>
+  <version>1.0.0</version>
+  <description>
+	    Automatic docking for Kobuki:
+	    Users owning a docking station for Kobuki can use this tool to let Kobuki find its nest autonomously.
+  </description>
+  <author email="yhju@yujinrobot.com">Younghun Ju</author>
+  <maintainer email="yhju@yujinrobot.com">Younghun Ju</maintainer>
+  <license>BSD</license>
+  <url type="bugtracker">https://github.com/kobuki-base/kobuki_ros/issues</url>
+  <url type="repository">https://github.com/kobuki-base/kobuki_ros</url>
+  <url type="website">http://ros.org/wiki/kobuki_auto_docking</url>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclpy</depend>
+  <depend>rclcpp_components</depend>
+
+  <depend>message_filters</depend>
+  <depend>rclcpp_action</depend>
+
+  <depend>std_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>actionlib_msgs</depend>
+  <depend>tf2_geometry_msgs</depend>
+
+  <depend>kobuki_core</depend>
+  <depend>kobuki_ros_interfaces</depend>
+
+  <depend>ecl_linear_algebra</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

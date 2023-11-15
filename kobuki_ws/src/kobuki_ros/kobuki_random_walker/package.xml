@@ -1,0 +1,26 @@
+<package format="2">
+  <name>kobuki_random_walker</name>
+  <version>1.0.0</version>
+  <description>
+    Random walker app for Kobuki
+  </description>
+  <author email="marcus.liebhardt@yujinrobot.com">Marcus Liebhardt</author>
+  <maintainer email="marcus.liebhardt@yujinrobot.com">Marcus Liebhardt</maintainer>
+  <license>BSD</license>
+  <url type="bugtracker">https://github.com/kobuki-base/kobuki_ros/issues</url>
+  <url type="repository">https://github.com/kobuki-base/kobuki_ros</url>
+  <url type="website">http://ros.org/wiki/kobuki_random_walker</url>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <depend>geometry_msgs</depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>std_msgs</depend>
+
+  <depend>kobuki_ros_interfaces</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
