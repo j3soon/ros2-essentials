@@ -11,6 +11,7 @@ def generate_launch_description():
     
     #####################################
     # Declare Model path
+    # Model Path Ref: https://github.com/ROBOTIS-GIT/turtlebot3_simulations/tree/humble-devel/turtlebot3_gazebo/models
     model_path = PathJoinSubstitution([
         FindPackageShare("turtlebot3_gazebo"), 
         "models"
@@ -22,6 +23,7 @@ def generate_launch_description():
     ])
     
     # Gazebo launch file path
+    # Ref: https://github.com/ros-simulation/gazebo_ros_pkgs/blob/ros2/gazebo_ros/launch/gazebo.launch.py
     gazebo_path = PathJoinSubstitution([
         FindPackageShare("gazebo_ros"), 
         "launch", "gazebo.launch.py"
@@ -56,12 +58,10 @@ def generate_launch_description():
             '-y', '0.0',
             '-z', '0.01'
         ],
-        output='screen',
         parameters=[{'use_sim_time': True}]
     )
     
     # Launch Gazebo
-    # Ref: https://github.com/ros-simulation/gazebo_ros_pkgs/blob/ros2/gazebo_ros/launch/gazebo.launch.py
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(gazebo_path)
     )
