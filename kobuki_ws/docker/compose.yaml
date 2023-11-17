@@ -51,3 +51,5 @@ services:
       # "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
       # Mount workspace
       - ../..:/home/ros2-agv-essentials
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
