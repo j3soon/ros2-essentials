@@ -28,6 +28,17 @@ jobs:
             type=raw,value={{date 'YYYYMMDD'}}
             type=raw,value=latest
       -
+        name: Docker meta (for build)
+        id: meta_build
+        # Ref: https://github.com/docker/metadata-action
+        uses: docker/metadata-action@v5
+        with:
+          # Link: https://hub.docker.com/repository/docker/j3soon/ros2-ros1-bridge-build-ws/tags
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/ros2-ros1-bridge-build-ws
+          tags: |
+            type=raw,value={{date 'YYYYMMDD'}}
+            type=raw,value=latest
+      -
         name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -38,5 +49,14 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ros1_bridge_ws/docker
+          target: release
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ros1_bridge_ws/docker
+          target: build
+          push: true
+          tags: ${{ steps.meta_build.outputs.tags }}
