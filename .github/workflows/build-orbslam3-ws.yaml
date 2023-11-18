@@ -7,6 +7,7 @@ on:
     paths:
       - .github/workflows/build-orbslam3-ws.yaml
       - orbslam3_ws/docker/Dockerfile
+      - orbslam3_ws/docker/.dockerignore
 
 jobs:
   docker:

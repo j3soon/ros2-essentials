@@ -7,6 +7,8 @@ on:
     paths:
       - .github/workflows/build-ros1-bridge-ws.yaml
       - ros1_bridge_ws/docker/Dockerfile
+      - ros1_bridge_ws/docker/.dockerignore
+      - ros1_bridge_ws/docker/start-bridge.sh
 
 jobs:
   docker:

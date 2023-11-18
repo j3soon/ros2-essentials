@@ -7,6 +7,8 @@ on:
     paths:
       - .github/workflows/build-template-ws.yaml
       - template_ws/docker/Dockerfile
+      - template_ws/docker/.dockerignore
+      - template_ws/docker/.bashrc
 
 jobs:
   docker:
