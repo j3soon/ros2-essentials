@@ -1,8 +1,8 @@
 /* Reference: https://aka.ms/devcontainer.json */
 {
-    "name": "ROS 2 Development Container",
+    "name": "template-ws",
     "dockerComposeFile": "../docker/compose.yaml",
-    "service": "ros2",
+    "service": "template-ws",
     // workspace settings
     "workspaceFolder": "/home/ros2-agv-essentials/template_ws",
     // Vscode extensions

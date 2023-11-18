@@ -41,5 +41,8 @@ echo "# ${NEW_WS_NAME_UNDERSCORE}" > "${NEW_WS_DIR}/README.md"
 
 # Replace the "template_ws" with new workspace name in each file.
 sed -i "s/template_ws/${NEW_WS_NAME_UNDERSCORE}/g" "${NEW_WS_DIR}/.devcontainer/devcontainer.json"
+sed -i "s/template-ws/${NEW_WS_NAME_HYPHEN}/g"     "${NEW_WS_DIR}/.devcontainer/devcontainer.json"
 sed -i "s/template_ws/${NEW_WS_NAME_UNDERSCORE}/g" "${NEW_WS_DIR}/docker/compose.yaml"
 sed -i "s/template-ws/${NEW_WS_NAME_HYPHEN}/g"     "${NEW_WS_DIR}/docker/compose.yaml"
+
+echo "Done."
