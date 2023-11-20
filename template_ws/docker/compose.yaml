@@ -1,6 +1,6 @@
 version: '3'
 services:
-  ros2:
+  template-ws:
     build: .
     image: j3soon/ros2-template-ws
     container_name: ros2-template-ws
