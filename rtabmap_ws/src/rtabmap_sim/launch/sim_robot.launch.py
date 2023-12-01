@@ -5,8 +5,20 @@ from launch.substitutions import PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.actions import Node
 
 def generate_launch_description():
+
+    # Declare the Model path
+    model_path = PathJoinSubstitution([
+        FindPackageShare("rtabmap_sim"), 
+        "models"
+    ])
+    
+    waffle_model_path = PathJoinSubstitution([
+        FindPackageShare("rtabmap_sim"), 
+        "models/turtlebot3_waffle/model.sdf"
+    ])
 
     # Declared the world path
     # Ref: https://github.com/ROBOTIS-GIT/turtlebot3_simulations/tree/98a27b20952b11047f454d7ec751f8c742862713
@@ -29,7 +41,22 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(gazebo_path),
         launch_arguments={'world': world_path}.items()
     )
+    
+    # Spawn the robot in Gazebo
+    # Ref: https://github.com/ros-simulation/gazebo_ros_pkgs/blob/ros2/gazebo_ros/launch/spawn_entity_demo.launch.py
+    spawn_entity = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        arguments=[
+            '-entity', model_path,
+            '-file', waffle_model_path,
+            '-x', '0.5',
+            '-y', '0.5',
+            '-z', '0.0'
+        ],
+        parameters=[{'use_sim_time': True}]
+    )
 
     return LaunchDescription([
-        gazebo
+        gazebo, spawn_entity
     ])
