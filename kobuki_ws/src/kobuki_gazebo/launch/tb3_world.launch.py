@@ -25,6 +25,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             "world_path": world_file,
+            "launch_rviz": "True",
         }.items(),
     )
 
