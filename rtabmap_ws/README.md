@@ -12,22 +12,69 @@ docker-compose pull
 docker-compose up -d --build
 ```
 
-### Simple test with gazebo
-
 - Attach to the container
   ```sh
   docker attach ros2-rtabmap-ws
   cd /home/ros2-agv-essentials/rtabmap_ws
+  colcon build --symlink-install
   ```
+
+### LiDAR test with gazebo
+
 - Launch Gazebo with turtlebot3 in `tmux`
   ```bash
-  export TURTLEBOT3_MODEL=waffle
-  ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+  ros2 launch rtabmap_sim sim_robot.launch.py
   ```
 - Run rtabmap LiDAR demo in a new `tmux` window
   ```bash
   ros2 launch rtabmap_demos turtlebot3_scan.launch.py
   ```
+
+### RGBD test with gazebo
+
+- Launch Gazebo with turtlebot3 in `tmux`
+  ```bash
+  ros2 launch rtabmap_sim sim_robot.launch.py
+  ```
+- Run rtabmap LiDAR demo in a new `tmux` window
+  ```bash
+  ros2 launch rtabmap_demos turtlebot3_rgbd.launch.py
+  ```
+
+### Dual sensor test with gazebo
+
+- Launch Gazebo with turtlebot3 in `tmux`
+  ```bash
+  ros2 launch rtabmap_sim sim_robot.launch.py
+  ```
+- Run dual sensor demo in a new `tmux` window
+  ```bash
+  ros2 launch rtabmap_sim dual_sensor.launch.py
+  ```
+
+### Run with rqt
+
+- Running in a new `tmux` window
+  ```bash
+  rqt_robot_steering
+  ```
+
+### Result
+
+- After you've run the demo, you could find the following result directly.
+
+1. LiDAR test
+<center>
+  <img src="./assets/lidar_test.png" width="75%"/>
+</center>
+2. RGBD test
+<center>
+  <img src="./assets/rgbd_test.png" width="75%"/>
+</center>
+3. Dual sensor test
+<center>
+  <img src="./assets/dual_test.png" width="75%"/>
+</center>
 
 ### Reference
 
