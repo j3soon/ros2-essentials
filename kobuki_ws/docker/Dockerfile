@@ -45,6 +45,24 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-rviz2 \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Kobuki dependencies
+# The list of packages below was identified by executing the following command:
+# sudo rosdep install --from-paths src --ignore-src -y
+# Install these packages to avoid having to run `rosdep install` every time you build the workspace.
+RUN apt-get update && apt-get install -y \
+    ros-$ROS_DISTRO-ros-testing \
+    ros-$ROS_DISTRO-kobuki-velocity-smoother \
+    ros-$ROS_DISTRO-diagnostics \
+    ros-$ROS_DISTRO-ecl-license \
+    ros-$ROS_DISTRO-ecl-build \
+    ros-$ROS_DISTRO-ecl-tools \
+    ros-$ROS_DISTRO-joint-state-publisher \
+    ros-$ROS_DISTRO-joint-state-publisher-gui \
+    ros-$ROS_DISTRO-controller-manager \
+    ros-$ROS_DISTRO-diff-drive-controller \
+    ros-$ROS_DISTRO-joint-state-broadcaster \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY .bashrc /home/$USERNAME/.bashrc
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
