@@ -1,19 +1,16 @@
+import os
+
 from launch import LaunchDescription
 
+from ament_index_python.packages import get_package_share_directory
 from launch.actions import IncludeLaunchDescription
-from launch.substitutions import PathJoinSubstitution
+from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
 
 def generate_launch_description():
-
-    # Declare the Model path
-    model_path = PathJoinSubstitution([
-        FindPackageShare("rtabmap_sim"), 
-        "models"
-    ])
     
     waffle_model_path = PathJoinSubstitution([
         FindPackageShare("rtabmap_sim"), 
@@ -48,7 +45,7 @@ def generate_launch_description():
         package='gazebo_ros',
         executable='spawn_entity.py',
         arguments=[
-            '-entity', model_path,
+            '-entity', 'waffle',
             '-file', waffle_model_path,
             '-x', '0.5',
             '-y', '0.5',
@@ -56,7 +53,28 @@ def generate_launch_description():
         ],
         parameters=[{'use_sim_time': True}]
     )
+    
+    # Add robot description
+    # Ref: https://github.com/ROBOTIS-GIT/turtlebot3_simulations/blob/98a27b20952b11047f454d7ec751f8c742862713
+    # File path: turtlebot3_gazebo/launch/robot_state_publisher.launch.py
+    urdf_path = os.path.join(
+        get_package_share_directory('rtabmap_sim'),
+        'urdf',
+        'turtlebot3_waffle.urdf'
+    )
+
+    with open(urdf_path, 'r') as infp:
+        robot_desc = infp.read()
+    
+    robot_description = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        parameters=[{
+            'use_sim_time': True,
+            'robot_description': robot_desc
+        }],
+    )
 
     return LaunchDescription([
-        gazebo, spawn_entity
+        gazebo, robot_description, spawn_entity
     ])
