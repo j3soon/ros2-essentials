@@ -33,50 +33,79 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.conditions import IfCondition
 from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
-
-    urdf_path = PathJoinSubstitution(
-        [FindPackageShare('kobuki_description'), 'urdf', 'kobuki_VLP16.urdf.xacro']
-        # [FindPackageShare('kobuki_description'), 'urdf', 'kobuki_standalone.urdf.xacro']
+    urdf_default_path = PathJoinSubstitution(
+        [FindPackageShare("kobuki_description"), "urdf", "kobuki_VLP16.urdf.xacro"]
     )
 
-    return LaunchDescription([
-
+    ARGUMENTS = [
         DeclareLaunchArgument(
-            name='urdf',
-            default_value=urdf_path,
-            description='URDF path'
+            name="use_sim_time",
+            default_value="True",
+            description="Use simulation time",
         ),
-
         DeclareLaunchArgument(
-            name='use_sim_time',
-            default_value='false',
-            description='Use simulation time'
+            name="is_sim",
+            default_value="true",
+            description="Use gazebo simulation",
         ),
+        DeclareLaunchArgument(
+            name="VLP16_enabled",
+            default_value="true",
+            description="Enable VLP-16 sensor",
+        ),
+        DeclareLaunchArgument(
+            name="urdf",
+            default_value=urdf_default_path,
+            description="URDF path",
+        ),
+    ]
 
-        Node(
-            package='robot_state_publisher',
-            executable='robot_state_publisher',
-            name='robot_state_publisher',
-            output='screen',
-            parameters=[{
-                'use_sim_time': LaunchConfiguration('use_sim_time'),
-                'robot_description': Command(['xacro ', LaunchConfiguration('urdf')])
-            }]
-        ),
+    robot_description_content = Command(
+        [
+            "xacro ",
+            LaunchConfiguration("urdf"),
+            " ",
+            "is_sim:=",
+            LaunchConfiguration("is_sim"),
+            " ",
+            "VLP16_enabled:=",
+            LaunchConfiguration("VLP16_enabled"),
+        ]
+    )
 
-        Node(
-            package='joint_state_publisher',
-            executable='joint_state_publisher',
-            name='joint_state_publisher',
-            parameters=[{
-                'use_sim_time': LaunchConfiguration('use_sim_time')
-            }]
-        ),
-    ])
+    robot_state_publisher = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        name="robot_state_publisher",
+        output="screen",
+        parameters=[
+            {
+                "use_sim_time": LaunchConfiguration("use_sim_time"),
+                "robot_description": robot_description_content,
+            }
+        ],
+    )
+
+    joint_state_publisher = Node(
+        package="joint_state_publisher",
+        executable="joint_state_publisher",
+        name="joint_state_publisher",
+        parameters=[
+            {
+                "use_sim_time": LaunchConfiguration("use_sim_time"),
+            }
+        ],
+    )
+
+    ld = LaunchDescription(ARGUMENTS)
+
+    ld.add_action(robot_state_publisher)
+    ld.add_action(joint_state_publisher)
+
+    return ld

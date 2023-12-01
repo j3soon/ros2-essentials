@@ -11,7 +11,7 @@
   <xacro:include filename="$(find kobuki_description)/urdf/kobuki_gazebo.urdf.xacro"/>
 
   <!-- Kobuki -->
-  <xacro:macro name="kobuki">
+  <xacro:macro name="kobuki" params="is_sim:=true">
     <link name="base_footprint"/>
     <!--
        Base link is set at the bottom of the base mould.
@@ -221,7 +221,9 @@
     </link>
 
     <!-- Kobuki Gazebo simulation details -->
-    <xacro:kobuki_sim/>
+    <xacro:if value="$(arg is_sim)">
+        <xacro:kobuki_sim/>
+    </xacro:if>
 
   </xacro:macro>
 </robot>
