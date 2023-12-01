@@ -21,6 +21,7 @@ RUN apt-get update && \
                 ros-humble-turtlebot3-gazebo \
                 ros-humble-gazebo-ros-pkgs \
                 ros-humble-joint-state-publisher-gui \
+                ros-humble-rqt-robot-steering \
                 # ---
                 # RTAB-MAP required packages
                 ros-humble-rtabmap-ros && \
