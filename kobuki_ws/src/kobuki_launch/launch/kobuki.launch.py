@@ -11,6 +11,11 @@ ARGUMENTS = [
         default_value="False",
         description="Use gazebo simulation or use real robot",
     ),
+    DeclareLaunchArgument(
+        name="launch_rviz",
+        default_value="True",
+        description="Launch rviz or not",
+    ),
 ]
 
 
@@ -21,11 +26,11 @@ def generate_launch_description():
             [
                 FindPackageShare("kobuki_gazebo"),
                 "launch",
-                "gazebo.launch.py",
+                "tb3_world.launch.py",
             ],
         ),
         launch_arguments={
-            "launch_rviz": "True",
+            "launch_rviz": LaunchConfiguration("launch_rviz"),
         }.items(),
         condition=IfCondition(LaunchConfiguration("is_sim")),
     )

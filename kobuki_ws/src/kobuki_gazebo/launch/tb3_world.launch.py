@@ -1,8 +1,15 @@
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
-from launch.substitutions import PathJoinSubstitution
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch_ros.substitutions import FindPackageShare
 
+ARGUMENTS = [
+    DeclareLaunchArgument(
+        "launch_rviz",
+        default_value="False",
+        description="Launch rviz2, by default is False",
+    ),
+]
 
 def generate_launch_description():
     # Get gazebo world file path
@@ -10,7 +17,7 @@ def generate_launch_description():
         [
             FindPackageShare("kobuki_gazebo"),
             "worlds",
-            "turtlebot3_stage_2.world",
+            "turtlebot3_stage_1.world",
         ],
     )
 
@@ -25,11 +32,11 @@ def generate_launch_description():
         ),
         launch_arguments={
             "world_path": world_file,
-            "launch_rviz": "True",
+            "launch_rviz": LaunchConfiguration("launch_rviz"),
         }.items(),
     )
 
-    ld = LaunchDescription()
+    ld = LaunchDescription(ARGUMENTS)
     ld.add_action(launch_gazebo)
 
     return ld
