@@ -1,8 +1,8 @@
 /* For reference, see https://aka.ms/devcontainer.json */
 {
     "name": "Husky Simulation",
-    "dockerComposeFile": "../docker/docker-compose.yaml",
-    "service": "ros2-husky",
+    "dockerComposeFile": "../docker/compose.yaml",
+    "service": "husky-ws",
     // Workspace settings
     "workspaceFolder": "/home/ros2-agv-essentials/husky_ws",
     // Vscode extensions
@@ -14,6 +14,8 @@
                 "twxs.cmake",
                 "donjayamanne.python-extension-pack",
                 "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
                 "ms-iot.vscode-ros"
             ]
         }
