@@ -1,5 +1,12 @@
-docker/cache
 .vscode
-build
-install
-log
+
+# ROS2 basic directories
+/build
+/install
+/log
+
+# Gazebo cache
+docker/cache/*
+!docker/cache/.gazebo
+docker/cache/.gazebo/*
+!docker/cache/.gazebo/.gitkeep
