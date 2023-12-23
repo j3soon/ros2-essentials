@@ -1,5 +1,20 @@
+# Choose the architecture: arm or amd
+ARG TARGET_PLATFORM=amd
+
+# Base Image : https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
+FROM arm64v8/ros:humble AS arm
+
 # Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
-FROM osrf/ros:humble-desktop-full
+FROM osrf/ros:humble-desktop-full AS amd
+
+# Install Gazebo
+RUN apt-get update && apt-get install -y \
+    ros-$ROS_DISTRO-gazebo-ros-pkgs \
+    && rm -rf /var/lib/apt/lists/*
+
+##########################################################################################
+
+FROM $TARGET_PLATFORM
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 
@@ -39,9 +54,8 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Install ROS2 RVIZ and Gazebo
+# Install ROS2 RVIZ
 RUN apt-get update && apt-get install -y \
-    ros-$ROS_DISTRO-gazebo-ros-pkgs \
     ros-$ROS_DISTRO-rviz2 \
     && rm -rf /var/lib/apt/lists/*
 

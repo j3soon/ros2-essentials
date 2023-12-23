@@ -1,7 +1,11 @@
 version: '3'
 services:
   kobuki-ws:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - TARGET_PLATFORM=amd
     image: j3soon/ros2-kobuki-ws
     container_name: ros2-kobuki-ws
     stdin_open: true
