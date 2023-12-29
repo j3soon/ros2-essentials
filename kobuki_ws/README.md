@@ -54,6 +54,8 @@ Below are the main packages for Kobuki:
 
 ### Set up udev rule
 
+> This step is only required for real robot.
+
 ```bash
 cd /home/ros2-agv-essentials/kobuki_ws
 ./udev_rules/install_udev_rules.sh
@@ -88,6 +90,8 @@ ros2 launch kobuki_rviz view_model_launch.py
         <img src="./figure/view_model.png" width="80%"/>
     </a>
 </div>
+
+You can view the published states under `TF > Frames > wheel_left_link` and `TF > Frames > wheel_right_link` in RVIZ.
 
 ### Launch robot in real world or Gazebo
 
