@@ -56,4 +56,7 @@ services:
       # Mount workspace
       - ../..:/home/ros2-agv-essentials
     devices:
+      # TODO: Support mounting points other than /dev/ttyUSB0.
+      # We assume that the Kobuki is connected to /dev/ttyUSB0.
+      # If not, please change the following line.
       - /dev/ttyUSB0:/dev/ttyUSB0
