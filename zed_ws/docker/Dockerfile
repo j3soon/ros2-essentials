@@ -37,7 +37,29 @@ RUN apt-get update && apt-get install -y \
     tmux \
     vim \
     wget \
+    locales \
+    software-properties-common \
     && rm -rf /var/lib/apt/lists/*
+
+# Install ROS2-humble
+# Reference: https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
+ENV ROS_DISTRO=humble
+RUN locale-gen en_US en_US.UTF-8 \
+    && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
+    && add-apt-repository universe \
+    && curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y \
+    ros-humble-desktop \
+    python3-colcon-common-extensions \
+    python3-rosdep \
+    && rm -rf /var/lib/apt/lists/*
+
+# Init rosdep
+RUN rosdep init \
+    && rosdep update
 
 # Install ROS2 RVIZ and Gazebo
 RUN apt-get update && apt-get install -y \
