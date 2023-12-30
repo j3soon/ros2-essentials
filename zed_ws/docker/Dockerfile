@@ -1,5 +1,5 @@
-# Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
-FROM osrf/ros:humble-desktop-full
+# Base Image : https://hub.docker.com/r/stereolabs/zed/tags?page=1&name=22.04
+FROM stereolabs/zed:4.0-devel-cuda11.8-ubuntu22.04
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 
