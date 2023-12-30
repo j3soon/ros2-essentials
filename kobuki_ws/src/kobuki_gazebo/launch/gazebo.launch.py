@@ -44,8 +44,6 @@ def generate_launch_description():
     gz_resource_path = SetEnvironmentVariable(
         name="GAZEBO_MODEL_PATH",
         value=[
-            EnvironmentVariable("GAZEBO_MODEL_PATH", default_value=""),
-            ":",
             LaunchConfiguration("GAZEBO_MODEL_PATH"),
             ":",
             "/usr/share/gazebo-11/models/",
@@ -55,6 +53,8 @@ def generate_launch_description():
             ),
             ":",
             get_package_share_directory("kobuki_gazebo") + "/models",
+            ":",
+            EnvironmentVariable("GAZEBO_MODEL_PATH", default_value=""),
         ],
     )
 
