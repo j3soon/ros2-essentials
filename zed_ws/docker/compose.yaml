@@ -37,10 +37,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       # Mount X11 server
       - /tmp/.X11-unix:/tmp/.X11-unix
-      # Direct Rendering Infrastructure
-      - /dev/dri:/dev/dri
-      # Mount sound card to prevent Gazebo warning.
-      - /dev/snd:/dev/snd
+      # Mount devices
+      - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       - ./cache/.gazebo:/home/user/.gazebo
