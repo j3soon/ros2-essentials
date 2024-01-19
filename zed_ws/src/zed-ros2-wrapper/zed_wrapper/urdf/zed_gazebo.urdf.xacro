@@ -25,12 +25,13 @@
             <stddev>0.007</stddev>
           </noise>
           <distortion>
-            <!-- Values copied from an actual ZED2 camera -->
-            <k1>-0.043693598</k1>
-            <k2>0.0146164996</k2>
-            <p1>-0.006573319</p1>
-            <p2>-0.000216900</p2>
-            <k3>0.000084328</k3>
+            <!-- Values are copied from ZED SDK default config file. -->
+            <!-- Path -> /usr/local/zed/settings  -->
+            <k1>-0.0435026</k1>
+            <k2>0.0145802</k2>
+            <p1>-0.0000718253</p1>
+            <p2>0.000290585</p2>
+            <k3>-0.00614429</k3>
             <center>0.5 0.5</center>
           </distortion>
         </camera>
@@ -108,11 +109,13 @@
             <stddev>0.007</stddev>
           </noise>
           <distortion>
-            <k1>-0.040993299</k1>
-            <k2>0.009593590</k2>
-            <p1>-0.004429849</p1>
-            <p2>0.000192024</p2>
-            <k3>-0.000320880</k3>
+            <!-- Values are copied from ZED SDK default config file. -->
+            <!-- Path -> /usr/local/zed/settings  -->
+            <k1>-0.0474653</k1>
+            <k2>0.0206527</k2>
+            <p1>-0.0000131747</p1>
+            <p2>-0.000120416</p2>
+            <k3>-0.00880454</k3>
             <center>0.5 0.5</center>
           </distortion>
         </camera>
