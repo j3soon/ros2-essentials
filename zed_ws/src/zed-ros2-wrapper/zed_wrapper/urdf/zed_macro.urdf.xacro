@@ -56,7 +56,8 @@
       <xacro:property name="bottom_slope" value="0.0" />
       <xacro:property name="screw_offset_x" value="-0.01" />
       <xacro:property name="screw_offset_z" value="0.0" />
-      <xacro:property name="optical_offset_x" value="-0.01" />
+      <!-- <xacro:property name="optical_offset_x" value="-0.01" /> -->
+      <xacro:property name="optical_offset_x" value="0.0" />
     </xacro:if>
     <xacro:if value="${model == 'zedx'}">
       <xacro:property name="baseline" value="0.12" />

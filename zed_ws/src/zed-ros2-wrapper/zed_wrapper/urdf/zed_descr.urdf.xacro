@@ -23,4 +23,7 @@
   <xacro:include filename="$(find zed_wrapper)/urdf/zed_macro.urdf.xacro" />
   <xacro:zed_camera name="$(arg camera_name)" model="$(arg camera_model)">
   </xacro:zed_camera>
+
+  <xacro:include filename="$(find zed_wrapper)/urdf/zed_gazebo.urdf.xacro" />
+  <xacro:zed_gazebo name="$(arg camera_name)" />
 </robot>

@@ -1,21 +1,14 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="zed2_gazebo"
-               params="robot_ns:=''">
-
-    <xacro:property name="link_prefix" value=""/>
-    <xacro:if value="${robot_ns != '' and robot_ns != '/'}">
-      <xacro:property name="link_prefix" value="${robot_ns}/"/>
-    </xacro:if>
-
+<robot name="zed_gazebo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="zed_gazebo" params="name=zed">
     <!-- Left/Depth camera -->
-    <gazebo reference="${link_prefix}zed2_left_camera_frame">
+    <gazebo reference="${name}_left_camera_frame">
       <!-- Raw images (with lens distortion) -->
-      <sensor type="camera" name="zed2_left_raw_camera">
+      <sensor type="camera" name="${name}_left_raw_camera">
         <always_on>true</always_on>
         <update_rate>15.0</update_rate>
         <visualize>false</visualize> 
-        <camera name="zed2_left_raw">
+        <camera name="${name}_left_raw">
           <horizontal_fov>1.7633</horizontal_fov>
           <image>
             <width>1280</width>
@@ -41,30 +34,23 @@
             <center>0.5 0.5</center>
           </distortion>
         </camera>
-        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-          <robotNamespace>${robot_ns}</robotNamespace>
-          <cameraName>zed2/left_raw</cameraName>
-          <imageTopicName>image_raw_color</imageTopicName>
-          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <frameName>zed2_left_camera_optical_frame</frameName>
-          <distortionK1>-0.043693598</distortionK1>
-          <distortionK2>0.0146164996</distortionK2>
-          <distortionT1>-0.006573319</distortionT1>
-          <distortionT2>-0.000216900</distortionT2>
-          <distortionK3>0.000084328</distortionK3>
-          <CxPrime>648.5</CxPrime>
-          <Cx>648.5</Cx>
-          <Cy>366.8340148925781</Cy>
-          <hackBaseline>0.0</hackBaseline>
+        <plugin name="${name}_left_raw_camera" filename="libgazebo_ros_camera.so">
+          <ros>
+              <namespace>/${name}/zed_node/left_raw</namespace>
+              <remapping>${name}_left_raw_camera/image_raw:=image_raw_color</remapping>
+              <remapping>${name}_left_raw_camera/camera_info:=camera_info</remapping>
+          </ros>
+          <frame_name>${name}_left_camera_optical_frame</frame_name>
+          <hack_baseline>0.0</hack_baseline>
         </plugin>
       </sensor>
 
-      <sensor type="depth" name="zed2_left_camera">
+      <sensor type="depth" name="${name}_left_camera">
         <!-- Rectified images, Depth images, Point Clouds -->
         <always_on>true</always_on>
         <update_rate>15.0</update_rate>
         <visualize>false</visualize> 
-        <camera name="zed2_left">
+        <camera name="${name}_left">
           <horizontal_fov>1.7633</horizontal_fov>
           <image>
             <width>1280</width>
@@ -81,34 +67,31 @@
             <stddev>0.007</stddev>
           </noise>
         </camera>
-        <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
-          <robotNamespace>${robot_ns}</robotNamespace>
-          <cameraName>zed2</cameraName>
-          <imageTopicName>left/image_rect_color</imageTopicName>
-          <cameraInfoTopicName>left/camera_info</cameraInfoTopicName>
-          <depthImageTopicName>depth/depth_registered</depthImageTopicName>
-          <depthImageInfoTopicName>depth/camera_info</depthImageInfoTopicName>
-          <pointCloudTopicName>point_cloud/cloud_registered</pointCloudTopicName>
-          <pointCloudCutoff>0.3</pointCloudCutoff>
-          <pointCloudCutoffMax>20.0</pointCloudCutoffMax>
-          <frameName>zed2_left_camera_optical_frame</frameName>
-          <baseline>0.12</baseline>
-          <CxPrime>658.8206787109375</CxPrime>
-          <Cx>658.8206787109375</Cx>
-          <Cy>372.25787353515625</Cy>
-          <hackBaseline>0.0</hackBaseline>
+        <plugin name="${name}_left_camera" filename="libgazebo_ros_camera.so">
+          <ros>
+            <namespace>/${name}/zed_node</namespace>
+            <remapping>${name}_left_camera/camera_info:=left/camera_info</remapping>
+            <remapping>${name}_left_camera/image_raw:=left/image_rect_color</remapping>
+            <remapping>${name}_left_camera/depth/camera_info:=depth/camera_info</remapping>
+            <remapping>${name}_left_camera/depth/image_raw:=depth/depth_registered</remapping>
+            <remapping>${name}_left_camera/points:=point_cloud/cloud_registered</remapping>
+          </ros>
+          <frame_name>${name}_left_camera_optical_frame</frame_name>
+          <min_depth>0.3</min_depth>
+          <max_depth>20.0</max_depth>
+          <hack_baseline>0.0</hack_baseline>
         </plugin>
       </sensor>
     </gazebo>
 
     <!-- Right camera -->
-    <gazebo reference="${link_prefix}zed2_right_camera_frame">
+    <gazebo reference="${name}_right_camera_frame">
       <!-- Raw images (with lens distortion) -->
-      <sensor type="camera" name="zed2_right_raw_camera">
+      <sensor type="camera" name="${name}_right_raw_camera">
         <always_on>true</always_on>
         <update_rate>15.0</update_rate>
         <visualize>false</visualize> 
-        <camera name="zed2_right_raw">
+        <camera name="${name}_right_raw">
           <horizontal_fov>1.7633</horizontal_fov>
           <image>
             <width>1280</width>
@@ -133,30 +116,23 @@
             <center>0.5 0.5</center>
           </distortion>
         </camera>
-        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-          <robotNamespace>${robot_ns}</robotNamespace>
-          <cameraName>zed2/right_raw</cameraName>
-          <imageTopicName>image_raw_color</imageTopicName>
-          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <frameName>zed2_right_camera_optical_frame</frameName>
-          <distortionK1>-0.040993299</distortionK1>
-          <distortionK2>0.009593590</distortionK2>
-          <distortionT1>-0.004429849</distortionT1>
-          <distortionT2>0.000192024</distortionT2>
-          <distortionK3>-0.000320880</distortionK3>
-          <CxPrime>659.3049926757812</CxPrime>
-          <Cx>659.3049926757812</Cx>
-          <Cy>371.39849853515625</Cy>
-          <hackBaseline>0.12</hackBaseline>
+        <plugin name="${name}_right_raw_camera" filename="libgazebo_ros_camera.so">
+          <ros>
+            <namespace>/${name}/zed_node/right_raw</namespace>
+            <remapping>${name}_right_raw_camera/image_raw:=image_raw_color</remapping>
+            <remapping>${name}_right_raw_camera/camera_info:=camera_info</remapping>
+          </ros>
+          <frame_name>${name}_right_camera_optical_frame</frame_name>
+          <hack_baseline>0.12</hack_baseline>
         </plugin>
       </sensor>
-
-      <sensor type="camera" name="zed2_right_camera">
-        <!-- Rectified images -->
+      
+      <!-- Rectified images -->
+      <sensor type="camera" name="${name}_right_camera">
         <always_on>true</always_on>
         <update_rate>15.0</update_rate>
         <visualize>false</visualize> 
-        <camera name="zed2_right">
+        <camera name="${name}_right">
           <horizontal_fov>1.7633</horizontal_fov>
           <image>
             <width>1280</width>
@@ -173,38 +149,41 @@
             <stddev>0.007</stddev>
           </noise>
         </camera>
-        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-          <robotNamespace>${robot_ns}</robotNamespace>
-          <cameraName>zed2/right</cameraName>
-          <imageTopicName>image_rect_color</imageTopicName>
-          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <frameName>zed2_right_camera_optical_frame</frameName>
-          <CxPrime>658.8206787109375</CxPrime>
-          <Cx>658.8206787109375</Cx>
-          <Cy>372.25787353515625</Cy>
-          <hackBaseline>0.12</hackBaseline>
+        <plugin name="${name}_right_camera" filename="libgazebo_ros_camera.so">
+          <ros>
+            <namespace>/${name}/zed_node/right</namespace>
+            <remapping>${name}_right_camera/image_raw:=image_rect_color</remapping>
+            <remapping>${name}_right_camera/camera_info:=camera_info</remapping>
+          </ros>
+          <frame_name>${name}_right_camera_optical_frame</frame_name>
+          <hack_baseline>0.12</hack_baseline>
         </plugin>
       </sensor>
     </gazebo>
 
     <!-- IMU -->
-    <gazebo reference="${link_prefix}zed2_left_camera_frame">
-      <sensor type="imu" name="zed2_imu_sensor">
+    <gazebo reference="${name}_left_camera_frame">
+      <sensor type="imu" name="${name}_imu_sensor">
         <update_rate>100</update_rate>
-        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-          <robotNamespace>${robot_ns}</robotNamespace>
-          <topicName>zed2/imu/data</topicName>
-          <frameName>zed2_imu_link</frameName>
-          <updateRateHZ>100.0</updateRateHZ>
-          <gaussianNoise>0.01</gaussianNoise>
-          <initialOrientationAsReference>false</initialOrientationAsReference>
-          <!-- IMU frame offset copied from an actual ZED2 camera -->
-          <xyzOffset>-0.002 -0.023 -0.002</xyzOffset>
-          <rpyOffset>0.0014025 -0.0000012 -0.0016915</rpyOffset>
+        <always_on>true</always_on>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+        <plugin name="${name}_imu" filename="libgazebo_ros_imu_sensor.so">
+          <ros>
+            <namespace>/${name}/zed_node</namespace>
+            <remapping>~/out:=imu/data_raw</remapping>
+          </ros>
+          <frame_name>${name}_imu_link</frame_name>
+          <initial_orientation_as_reference>false</initial_orientation_as_reference>
+          <!-- TODO -> Create a new link to replace imu offset.                -->
+          <!-- IMU frame offset is copied from an actual ZED2 camera.          -->
+          <!-- Offset                                                          -->
+          <!-- x 0.002 y -0.023 z -0.002 r 0.0014025 p -0.0000012 y -0.0016915 -->
         </plugin>
       </sensor>
     </gazebo>
-
   </xacro:macro>
-
 </robot>
