@@ -20,15 +20,20 @@ from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
     OpaqueFunction,
-    SetEnvironmentVariable
+    SetEnvironmentVariable,
+    IncludeLaunchDescription
 )
 from launch.conditions import IfCondition
 from launch.substitutions import (
     LaunchConfiguration,
     Command,
-    TextSubstitution
+    TextSubstitution,
+    PathJoinSubstitution,
+    EnvironmentVariable
 )
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
+from pathlib import Path
 
 # ZED Configurations to be loaded by ZED Node
 default_config_common = os.path.join(
@@ -144,11 +149,76 @@ def launch_setup(context, *args, **kwargs):
             ros_params_override_path,
         ]
     )
-
-    return [
-        rsp_node,
-        zed_wrapper_node
-    ]
+    
+    # Set GAZEBO_MODEL_PATH
+    gz_resource_path = SetEnvironmentVariable(
+        name="GAZEBO_MODEL_PATH",
+        value=[
+            "/usr/share/gazebo-11/models/",
+            ":",
+            str(Path(get_package_share_directory("zed_interfaces")).parent.resolve()),
+            ":",
+            EnvironmentVariable("GAZEBO_MODEL_PATH", default_value=""),
+        ],
+    )
+    
+    # Launch Gazebo
+    launch_gazebo = IncludeLaunchDescription(
+        PathJoinSubstitution(
+            [
+                FindPackageShare("gazebo_ros"),
+                "launch",
+                "gazebo.launch.py",
+            ]
+        ),
+        launch_arguments={
+            "world": "",
+        }.items(),
+    )
+    
+    # Spawn ZED instance
+    spawn_zed = Node(
+        package="gazebo_ros",
+        executable="spawn_entity.py",
+        name="spawn_zed",
+        arguments=[
+            "-entity", "zed", 
+            "-topic", "/" + camera_name_val + "/robot_description"
+        ],
+        output="screen",
+    )
+    
+    # Static tf: map -> zed_camera_link
+    zed_camera_link_tf = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        name="zed_camera_link_tf",
+        arguments=[
+            "--x", "0.0",
+            "--y", "0.0",
+            "--z", "0.0",
+            "--roll", "0.0",
+            "--pitch", "0.0",
+            "--yaw", "0.0",
+            "--frame-id", "map",
+            "--child-frame-id", camera_name_val + "_camera_link",
+        ],
+        output="screen",
+    )
+    
+    # Setup the node list
+    node_list = [rsp_node]
+    if sim_mode.perform(context) == "true":
+        # Simulation mode
+        node_list.append(gz_resource_path)
+        node_list.append(launch_gazebo)
+        node_list.append(spawn_zed)
+        node_list.append(zed_camera_link_tf)
+    else:
+        # Real mode
+        node_list.append(zed_wrapper_node)
+    
+    return node_list
 
 
 def generate_launch_description():
