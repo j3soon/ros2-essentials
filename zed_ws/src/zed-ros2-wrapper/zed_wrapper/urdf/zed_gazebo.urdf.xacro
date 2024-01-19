@@ -11,8 +11,8 @@
         <camera name="${name}_left_raw">
           <horizontal_fov>1.7633</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
+            <width>640</width>
+            <height>360</height>
             <format>R8G8B8</format>
           </image>
           <clip>
@@ -53,8 +53,8 @@
         <camera name="${name}_left">
           <horizontal_fov>1.7633</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
+            <width>640</width>
+            <height>360</height>
             <format>R8G8B8</format>
           </image>
           <clip>
@@ -94,8 +94,8 @@
         <camera name="${name}_right_raw">
           <horizontal_fov>1.7633</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
+            <width>640</width>
+            <height>360</height>
             <format>R8G8B8</format>
           </image>
           <clip>
@@ -135,8 +135,8 @@
         <camera name="${name}_right">
           <horizontal_fov>1.7633</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
+            <width>640</width>
+            <height>360</height>
             <format>R8G8B8</format>
           </image>
           <clip>
