@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     locales \
     software-properties-common \
+    usbutils \
     && rm -rf /var/lib/apt/lists/*
 
 # Install ROS2-humble
@@ -61,10 +62,20 @@ RUN locale-gen en_US en_US.UTF-8 \
 RUN rosdep init \
     && rosdep update
 
-# Install ROS2 RVIZ and Gazebo
+# Install ROS2 packages
 RUN apt-get update && apt-get install -y \
+    # RVIZ and Gazebo
     ros-$ROS_DISTRO-gazebo-ros-pkgs \
     ros-$ROS_DISTRO-rviz2 \
+    # ZED dependencies
+    # From the command: rosdep install --from-paths src --ignore-src -r -y
+    ros-$ROS_DISTRO-ament-cmake-clang-format \
+    ros-$ROS_DISTRO-grid-map-rviz-plugin \
+    ros-$ROS_DISTRO-xacro \
+    ros-$ROS_DISTRO-nmea-msgs \
+    ros-$ROS_DISTRO-geographic-msgs \
+    ros-$ROS_DISTRO-diagnostic-updater \
+    ros-$ROS_DISTRO-robot-localization \
     && rm -rf /var/lib/apt/lists/*
 
 COPY .bashrc /home/$USERNAME/.bashrc
