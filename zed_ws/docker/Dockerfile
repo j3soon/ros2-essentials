@@ -78,6 +78,10 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-robot-localization \
     && rm -rf /var/lib/apt/lists/*
 
+# Change the ownership of the ZED folder
+# Reference: https://answers.ros.org/question/293850
+RUN chown -R $USERNAME:$USERNAME /usr/local/zed
+
 COPY .bashrc /home/$USERNAME/.bashrc
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
