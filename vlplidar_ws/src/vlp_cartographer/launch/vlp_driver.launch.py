@@ -1,12 +1,18 @@
-from launch_ros.actions import Node
+from launch_ros.actions import Node, PushRosNamespace
 from launch_ros.substitutions import FindPackageShare
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
-from launch.substitutions import PathJoinSubstitution
-
+from launch.actions import IncludeLaunchDescription, GroupAction, DeclareLaunchArgument
+from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 
 def generate_launch_description():
+
+    #####################################
+    # Get namespace by launch configuration
+    # Ref: https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-Substitutions.html
+
+    ns = LaunchConfiguration('ns')
+    ns_arg = DeclareLaunchArgument('ns', default_value='')
 
     #####################################
     # Path settings
@@ -41,11 +47,24 @@ def generate_launch_description():
     vlp_driver = IncludeLaunchDescription(vlp_driver_path)
     transformation = IncludeLaunchDescription(transformation_path)
     laserscan_node = IncludeLaunchDescription(laserscan_node_path)
+
+    #####################################
+    # Add to namespace
+    # Ref: https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html
+    # 
+
+    driver_with_namespace = GroupAction(
+        actions=[
+            PushRosNamespace(ns),
+            vlp_driver,       # LiDAR underlayer driver
+            transformation,   # Transformation node (raw -> point cloud)
+            laserscan_node    # Laser scan node (point cloud -> laser scan)
+        ]
+    )
     
     #####################################
     # Launch description
     return LaunchDescription([
-        vlp_driver,       # LiDAR underlayer driver
-        transformation,   # Transformation node (raw -> point cloud)
-        laserscan_node    # Laser scan node (point cloud -> laser scan)
+        ns_arg,
+        driver_with_namespace
     ])
