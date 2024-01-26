@@ -1,5 +1,52 @@
 # Velodyne Workspace
 
+## Simulation Setup
+
+### Add description in defined robot
+
+1. Declared necessary argument and  your own `robot_gazebo.urdf.xacro`
+
+    ```xml
+    <xacro:arg name="gpu" default="false"/>
+    <xacro:arg name="organize_cloud" default="false"/>
+    <xacro:property name="gpu" value="$(arg gpu)" />
+    <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
+    ```
+
+2. Include the `velodyne_description` package
+
+    ```xml
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP16.urdf.xacro" />
+    ```
+
+3. Add LiDAR in the robot
+
+    ```xml
+    <xacro:VLP-16 parent="base_footprint" name="velodyne" topic="/velodyne_points" organize_cloud="${organize_cloud}" hz="10" samples="440" gpu="${gpu}">
+        <origin xyz="0 0 0.1" rpy="0 0 0" />
+    </xacro:VLP-16>
+    ```
+
+- You could refer to more information from `veloyne_simulator/velodyne_description/urdf/template.urdf.xacro`
+
+---
+
+## Launch LiDAR driver with simulated LiDAR
+
+- Launch example robot with LiDAR
+
+    ```bash
+    ros2 launch velodyne_simulator example.launch.py
+    ```
+
+- Launch the LiDAR data process without driver in another terminal
+
+    ```bash
+    ros2 launch vlp_cartographer vlp_driver.launch.py is_sim:=True
+    ```
+
+---
+
 ## LiDAR setup
 
 ### Hardware Setup
@@ -36,7 +83,7 @@
 #### Operating in a single launch file
 
 ```bash
-roslaunch velodyne_pointcloud VLP16_points.launch
+ros2 launch vlp_cartographer vlp_driver.launch.py
 ```
 
 - By the above command, the driver, pointcloud and laserscan will be launched.
