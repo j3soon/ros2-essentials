@@ -2,17 +2,21 @@ from launch_ros.actions import Node, PushRosNamespace
 from launch_ros.substitutions import FindPackageShare
 
 from launch import LaunchDescription
+from launch.conditions import UnlessCondition
 from launch.actions import IncludeLaunchDescription, GroupAction, DeclareLaunchArgument
 from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 
 def generate_launch_description():
 
     #####################################
-    # Get namespace by launch configuration
+    # Get argument by launch configuration
     # Ref: https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-Substitutions.html
 
     ns = LaunchConfiguration('ns')
     ns_arg = DeclareLaunchArgument('ns', default_value='')
+
+    is_sim = LaunchConfiguration('is_sim')
+    is_sim_arg = DeclareLaunchArgument('is_sim', default_value='False')
 
     #####################################
     # Path settings
@@ -44,8 +48,20 @@ def generate_launch_description():
     #####################################
     # Add launch description
 
-    vlp_driver = IncludeLaunchDescription(vlp_driver_path)
-    transformation = IncludeLaunchDescription(transformation_path)
+    vlp_driver = IncludeLaunchDescription(
+        vlp_driver_path, 
+        condition=UnlessCondition(
+            is_sim
+        )
+    )
+
+    transformation = IncludeLaunchDescription(
+        transformation_path, 
+        condition=UnlessCondition(
+            is_sim
+        )
+    )
+
     laserscan_node = IncludeLaunchDescription(laserscan_node_path)
 
     #####################################
@@ -65,6 +81,6 @@ def generate_launch_description():
     #####################################
     # Launch description
     return LaunchDescription([
-        ns_arg,
+        ns_arg, is_sim_arg,
         driver_with_namespace
     ])
