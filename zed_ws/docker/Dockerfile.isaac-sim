@@ -78,6 +78,7 @@ RUN apt-get update -y || true && \
 # Configure permissions and ownership
 # Handle some special cases
 RUN chown -R $USERNAME:$USERNAME /usr/local/zed \
+    && chown -R $USERNAME:$USERNAME /isaac-sim/exts/omni.isaac.synthetic_recorder/data \
     && chmod 755 /isaac-sim/*.sh \
     && mkdir -p /isaac-sim/kit/exts/omni.gpu_foundation/cache/nv_shadercache
 
