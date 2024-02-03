@@ -1,0 +1,32 @@
+# Base Image : https://catalog.ngc.nvidia.com/orgs/nvidia/containers/isaac-sim
+FROM nvcr.io/nvidia/isaac-sim:2023.1.1
+
+LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
+
+# Note that the user is already created in the base image.
+# Don't change the user name, or you will have to modify lots of files.
+ARG USERNAME=ubuntu
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+# Setup the user
+RUN apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    && rm -rf /var/lib/apt/lists/*
+ENV SHELL /bin/bash
+
+# Install common tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    git \
+    git-extras \
+    htop \
+    net-tools \
+    tmux \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+USER $USERNAME
