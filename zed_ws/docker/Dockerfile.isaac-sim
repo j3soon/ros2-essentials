@@ -57,4 +57,26 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-vision-msgs \
     && rm -rf /var/lib/apt/lists/*
 
+# Install ZED SDK
+# Reference: https://github.com/stereolabs/zed-ros2-wrapper/blob/282f879ba05cbbc845e519683a11033c1c2eb6f0/docker/Dockerfile.u22-cu117-humble-devel
+ARG UBUNTU_RELEASE_YEAR=22
+ARG CUDA_MAJOR=12
+ARG CUDA_MINOR=1
+ARG ZED_SDK_MAJOR=4
+ARG ZED_SDK_MINOR=0
+ARG ZED_SDK_PATCH=8
+RUN apt-get update -y || true && \
+    apt-get install --no-install-recommends dialog bash-completion lsb-release wget less udev sudo build-essential cmake zstd python3 python3-pip libpng-dev libgomp1 -y && \
+    python3 -m pip install --upgrade pip; python3 -m pip install numpy opencv-python-headless && \
+    wget -q -O ZED_SDK_Linux_Ubuntu.run https://download.stereolabs.com/zedsdk/$ZED_SDK_MAJOR.$ZED_SDK_MINOR/cu$CUDA_MAJOR$CUDA_MINOR/ubuntu$UBUNTU_RELEASE_YEAR && \
+    chmod +x ZED_SDK_Linux_Ubuntu.run && \
+    ./ZED_SDK_Linux_Ubuntu.run -- silent skip_tools skip_cuda && \
+    ln -sf /lib/x86_64-linux-gnu/libusb-1.0.so.0 /usr/lib/x86_64-linux-gnu/libusb-1.0.so && \
+    rm ZED_SDK_Linux_Ubuntu.run && \
+    rm -rf /var/lib/apt/lists/*
+
+# Configure permissions and ownership
+RUN chown -R $USERNAME:$USERNAME /usr/local/zed \
+    && chmod 755 /isaac-sim/*.sh
+
 USER $USERNAME
