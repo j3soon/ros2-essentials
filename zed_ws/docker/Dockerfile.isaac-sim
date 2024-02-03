@@ -76,7 +76,9 @@ RUN apt-get update -y || true && \
     rm -rf /var/lib/apt/lists/*
 
 # Configure permissions and ownership
+# Handle some special cases
 RUN chown -R $USERNAME:$USERNAME /usr/local/zed \
-    && chmod 755 /isaac-sim/*.sh
+    && chmod 755 /isaac-sim/*.sh \
+    && mkdir -p /isaac-sim/kit/exts/omni.gpu_foundation/cache/nv_shadercache
 
 USER $USERNAME
