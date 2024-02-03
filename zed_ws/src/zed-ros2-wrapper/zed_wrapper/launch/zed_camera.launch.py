@@ -66,6 +66,7 @@ def launch_setup(context, *args, **kwargs):
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     sim_mode = LaunchConfiguration('sim_mode')
+    sim_platform = LaunchConfiguration('sim_platform')
     sim_address = LaunchConfiguration('sim_address')
     sim_port = LaunchConfiguration('sim_port')
 
@@ -208,14 +209,14 @@ def launch_setup(context, *args, **kwargs):
     
     # Setup the node list
     node_list = [rsp_node]
-    if sim_mode.perform(context) == "true":
-        # Simulation mode
+    if sim_mode.perform(context) == "true" and sim_platform.perform(context) == "gazebo":
+        # Simulation mode with Gazebo
         node_list.append(gz_resource_path)
         node_list.append(launch_gazebo)
         node_list.append(spawn_zed)
         node_list.append(zed_camera_link_tf)
     else:
-        # Real mode
+        # Real mode or simulation mode with Isaac Sim
         node_list.append(zed_wrapper_node)
     
     return node_list
@@ -291,6 +292,11 @@ def generate_launch_description():
                 default_value='false',
                 description='Enable simulation mode. Set `sim_address` and `sim_port` to configure the simulator input.',
                 choices=['true', 'false']),
+            DeclareLaunchArgument(
+                'sim_platform',
+                default_value='isaac_sim',
+                description='The simulation platform to be used.',
+                choices=['gazebo', 'isaac_sim']),
             DeclareLaunchArgument(
                 'sim_address',
                 default_value='127.0.0.1',
