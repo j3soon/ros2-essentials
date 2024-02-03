@@ -1,7 +1,9 @@
 version: '3'
 services:
   zed-ws:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: j3soon/ros2-zed-ws
     container_name: ros2-zed-ws
     stdin_open: true
@@ -47,5 +49,51 @@ services:
       # "source=${localWorkspaceFolder}/../cache/humble/build,target=/home/ws/build,type=bind",
       # "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
       # "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
+      # Mount workspace
+      - ../..:/home/ros2-agv-essentials
+  zed-isaac-sim:
+    build:
+      context: .
+      dockerfile: Dockerfile.isaac-sim
+    image: j3soon/ros2-zed-isaac-sim
+    container_name: ros2-zed-isaac-sim
+    stdin_open: true
+    tty: true
+    privileged: true
+    entrypoint: bash
+    network_mode: host
+    working_dir: /isaac-sim
+    user: ubuntu
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ACCEPT_EULA=Y
+      - PRIVACY_CONSENT=Y
+    # If you want to access GPU, please uncomment the lines below.
+    # Reference : https://docs.docker.com/compose/gpu-support/
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    volumes:
+      # Mount local timezone into container. ( Readonly )
+      # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      # Mount X11 server
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      # Mount device
+      - /dev:/dev
+      # Mount Isaac Sim Cache
+      - ./cache/kit:/isaac-sim/kit/cache
+      - ./cache/ov:/home/ubuntu/.cache/ov
+      - ./cache/pip:/home/ubuntu/.cache/pip
+      - ./cache/glcache:/home/ubuntu/.cache/nvidia/GLCache
+      - ./cache/computecache:/home/ubuntu/.nv/ComputeCache
+      - ./cache/logs:/home/ubuntu/.nvidia-omniverse/logs
+      - ./cache/data:/home/ubuntu/.local/share/ov/data
+      - ./cache/documents:/home/ubuntu/Documents
       # Mount workspace
       - ../..:/home/ros2-agv-essentials

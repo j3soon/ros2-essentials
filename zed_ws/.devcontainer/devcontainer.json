@@ -3,6 +3,9 @@
     "name": "zed-ws",
     "dockerComposeFile": "../docker/compose.yaml",
     "service": "zed-ws",
+    "runServices": [
+        "zed-ws"
+    ],
     // workspace settings
     "workspaceFolder": "/home/ros2-agv-essentials/zed_ws",
     // Vscode extensions
