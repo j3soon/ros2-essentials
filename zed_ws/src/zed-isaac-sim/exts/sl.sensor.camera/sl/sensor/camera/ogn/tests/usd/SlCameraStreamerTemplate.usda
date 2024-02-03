@@ -1,0 +1,38 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file SlCameraStreamer.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_sl_sensor_camera_ZED_Camera" (
+        docs="""Streams ZED camera data to the ZED SDK"""
+    )
+    {
+        token node:type = "sl.sensor.camera.ZED_Camera"
+        int node:typeVersion = 1
+
+        # 5 attributes
+        custom rel inputs:camera_prim (
+            docs="""ZED Camera prim used to stream data"""
+        )
+        custom uint inputs:exec_in = 0 (
+            docs="""Triggers execution"""
+        )
+        custom uint inputs:serial_number = 20976320 (
+            docs="""Serial number (identification) of the camera to stream, can be left to default. It must be of one of the compatible values: 20976320, 29123828, 25626933, 27890353, 25263213, 21116066, 27800035, 27706147"""
+        )
+        custom uint inputs:streaming_port = 30000 (
+            docs="""Streaming port - unique per camera"""
+        )
+        custom bool inputs:use_system_time = false (
+            docs="""Override simulation time with system time for image timestamps"""
+        )
+    }
+}
