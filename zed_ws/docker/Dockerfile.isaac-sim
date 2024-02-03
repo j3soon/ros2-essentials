@@ -81,4 +81,7 @@ RUN chown -R $USERNAME:$USERNAME /usr/local/zed \
     && chmod 755 /isaac-sim/*.sh \
     && mkdir -p /isaac-sim/kit/exts/omni.gpu_foundation/cache/nv_shadercache
 
+# Copy the setup script
+COPY setup-isaac-sim.sh /isaac-sim/setup-isaac-sim.sh
+
 USER $USERNAME
