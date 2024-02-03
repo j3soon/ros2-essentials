@@ -19,7 +19,7 @@ services:
       # - https://docs.ros.org/en/humble/Concepts/Intermediate/About-Domain-ID.html
       # - https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html
       # - https://docs.ros.org/en/humble/Tutorials/Demos/Logging-and-logger-configuration.html#console-output-colorizing
-      - ROS_LOCALHOST_ONLY=1
+      # - ROS_LOCALHOST_ONLY=1
       - ROS_DOMAIN_ID=42
       - ROS2_WS=/home/ros2-agv-essentials/zed_ws
       - RCUTILS_COLORIZED_OUTPUT=1
@@ -52,6 +52,8 @@ services:
       # Mount workspace
       - ../..:/home/ros2-agv-essentials
   zed-isaac-sim:
+    # The following configurations are based on the official Isaac Sim container installation guide.
+    # Reference: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_container.html
     build:
       context: .
       dockerfile: Dockerfile.isaac-sim
@@ -66,10 +68,12 @@ services:
     user: ubuntu
     environment:
       - DISPLAY=${DISPLAY}
+      # Set Isaac Sim environment variables.
       - ACCEPT_EULA=Y
       - PRIVACY_CONSENT=Y
-    # If you want to access GPU, please uncomment the lines below.
-    # Reference : https://docs.docker.com/compose/gpu-support/
+      # Set ROS2 environment variables.
+      - ROS_DOMAIN_ID=42
+      - RCUTILS_COLORIZED_OUTPUT=1
     deploy:
       resources:
         reservations:
