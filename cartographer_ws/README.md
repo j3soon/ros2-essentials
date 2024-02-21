@@ -37,6 +37,29 @@ docker-compose up -d --build
   rqt_robot_steering
   ```
 
+### Multi LiDAR - Single Robot SLAM test
+
+#### Simulation
+
+- multi_lidar_desp package: Description of a robot with multiple LiDARs.
+- multi_lidar_gazebo package: Gazebo simulation of the robot with robot state publisher.
+
+  ```bash
+  ros2 launch multi_lidar_gazebo multi_lidar_gazebo.launch.py
+  ```
+
+#### Run the SLAM node
+
+- Run the cartographer SLAM node in new window of `tmux`
+  ```bash
+  ros2 launch cartographer_demo cartographer_demo.launch.py
+  ```
+
+- Run the control tool in new window of `tmux`
+  ```bash
+  rqt_robot_steering
+  ```
+
 #### References
 
-- [Cartographer Demo]()
+- [Cartographer Demo](https://google-cartographer-ros.readthedocs.io/en/latest/demos.html)
