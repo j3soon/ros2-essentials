@@ -95,7 +95,7 @@
       </sensor>
     </link>
 
-    <link name="base_scan">    
+    <link name="base_scan_1">    
       <inertial>
         <pose>-0.052 0 0.111 0 0 0</pose>
         <inertia>
@@ -120,7 +120,7 @@
       </collision>
 
       <visual name="lidar_sensor_visual">
-        <pose>-0.064 0 0.121 0 0 0</pose>
+        <pose>0.002 0.07 0.121 0 0 0</pose>
         <geometry>
           <mesh>
             <uri>model://turtlebot3_common/meshes/lds.dae</uri>
@@ -132,15 +132,15 @@
       <sensor name="hls_lfcd_lds" type="ray">
         <always_on>true</always_on>
         <visualize>true</visualize>
-        <pose>-0.064 0 0.121 0 0 0</pose>
+        <pose>0.002 0.07 0.121 0 0 0</pose>
         <update_rate>5</update_rate>
         <ray>
           <scan>
             <horizontal>
-              <samples>360</samples>
+              <samples>1080</samples>
               <resolution>1.000000</resolution>
               <min_angle>0.000000</min_angle>
-              <max_angle>6.280000</max_angle>
+              <max_angle>3.140000</max_angle>
             </horizontal>
           </scan>
           <range>
@@ -157,10 +157,10 @@
         <plugin name="turtlebot3_laserscan" filename="libgazebo_ros_ray_sensor.so">
           <ros>
             <!-- <namespace>/tb3</namespace> -->
-            <remapping>~/out:=scan</remapping>
+            <remapping>~/out:=scan_1</remapping>
           </ros>
           <output_type>sensor_msgs/LaserScan</output_type>
-          <frame_name>base_scan</frame_name>
+          <frame_name>base_scan_1</frame_name>
         </plugin>
       </sensor>
     </link>
@@ -446,10 +446,10 @@
       </axis>
     </joint>    
 
-    <joint name="lidar_joint" type="fixed">
+    <joint name="lidar_joint_1" type="fixed">
       <parent>base_link</parent>
-      <child>base_scan</child>
-      <pose>-0.064 0 0.121 0 0 0</pose>
+      <child>base_scan_1</child>
+      <pose>0.002 0.07 0.121 0 0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
       </axis>
