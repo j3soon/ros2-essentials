@@ -75,3 +75,9 @@ COPY .bashrc /home/$USERNAME/.bashrc
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
 CMD ["/bin/bash"]
+
+# Setup husky controller by the script.
+# Note: The script need to be run as user, not root.
+# Reference: https://github.com/clearpathrobotics/clearpath_computer_installer/tree/main
+COPY clearpath_computer_installer /home/$USERNAME/clearpath_computer_installer
+RUN bash /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh
