@@ -99,11 +99,14 @@ prompt_yesNO() {
   fi
 }
 
+# Enable the feature: Automatically answering Yes or No to 'prompt_YESno' and 'prompt_yesNO' questions
+AUTO_YES=1
+
 # available robots; pre-load the user-choice with -1 to indicate undefined
 ROBOT_HUSKY_A200=1
 ROBOT_JACKAL_J100=2
 ROBOT_WARTHOG_W200=3
-ROBOT_CHOICE=-1
+ROBOT_CHOICE=1
 
 # Set front end to non-interactive to avoid prompts while installing packages
 export DEBIAN_FRONTEND=noninteractive
