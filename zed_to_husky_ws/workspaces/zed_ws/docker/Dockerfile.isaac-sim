@@ -1,0 +1,88 @@
+# Base Image : https://catalog.ngc.nvidia.com/orgs/nvidia/containers/isaac-sim
+FROM nvcr.io/nvidia/isaac-sim:2023.1.1
+
+LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
+
+# Note that the user is already created in the base image.
+# Don't change the user name, or you will have to modify lots of files.
+ARG USERNAME=ubuntu
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+# Setup the user
+RUN apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    && rm -rf /var/lib/apt/lists/*
+ENV SHELL /bin/bash
+
+# Install common tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    git \
+    git-extras \
+    htop \
+    net-tools \
+    tmux \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ROS2 Humble
+# Reference: 
+# - https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
+# - https://www.stereolabs.com/docs/isaac-sim/ros2_integration
+ENV ROS_DISTRO=humble
+RUN apt-get update && apt-get install -y \
+    locales \
+    software-properties-common \
+    && locale-gen en_US en_US.UTF-8 \
+    && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
+    && add-apt-repository universe \
+    && curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    tzdata \
+    ros-humble-ros-base \
+    python3-colcon-common-extensions \
+    python3-rosdep \
+    && rosdep init \
+    && rosdep update \
+    && echo "source /opt/ros/humble/setup.bash" >> /home/$USERNAME/.bashrc \
+    && apt-get install -y \
+    ros-$ROS_DISTRO-rviz2 \
+    ros-$ROS_DISTRO-vision-msgs \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ZED SDK
+# Reference: https://github.com/stereolabs/zed-ros2-wrapper/blob/282f879ba05cbbc845e519683a11033c1c2eb6f0/docker/Dockerfile.u22-cu117-humble-devel
+ARG UBUNTU_RELEASE_YEAR=22
+ARG CUDA_MAJOR=12
+ARG CUDA_MINOR=1
+ARG ZED_SDK_MAJOR=4
+ARG ZED_SDK_MINOR=0
+ARG ZED_SDK_PATCH=8
+RUN apt-get update -y || true && \
+    apt-get install --no-install-recommends dialog bash-completion lsb-release wget less udev sudo build-essential cmake zstd python3 python3-pip libpng-dev libgomp1 -y && \
+    python3 -m pip install --upgrade pip; python3 -m pip install numpy opencv-python-headless && \
+    wget -q -O ZED_SDK_Linux_Ubuntu.run https://download.stereolabs.com/zedsdk/$ZED_SDK_MAJOR.$ZED_SDK_MINOR/cu$CUDA_MAJOR$CUDA_MINOR/ubuntu$UBUNTU_RELEASE_YEAR && \
+    chmod +x ZED_SDK_Linux_Ubuntu.run && \
+    ./ZED_SDK_Linux_Ubuntu.run -- silent skip_tools skip_cuda && \
+    ln -sf /lib/x86_64-linux-gnu/libusb-1.0.so.0 /usr/lib/x86_64-linux-gnu/libusb-1.0.so && \
+    rm ZED_SDK_Linux_Ubuntu.run && \
+    rm -rf /var/lib/apt/lists/*
+
+# Configure permissions and ownership
+# Handle some special cases
+RUN chown -R $USERNAME:$USERNAME /usr/local/zed \
+    && chown -R $USERNAME:$USERNAME /isaac-sim/exts/omni.isaac.synthetic_recorder/data \
+    && chmod 755 /isaac-sim/*.sh \
+    && mkdir -p /isaac-sim/kit/exts/omni.gpu_foundation/cache/nv_shadercache
+
+# Copy the setup script
+COPY setup-isaac-sim.sh /isaac-sim/setup-isaac-sim.sh
+
+USER $USERNAME

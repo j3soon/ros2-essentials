@@ -1,0 +1,40 @@
+.vscode
+
+# ROS2 basic directories
+/build
+/install
+/log
+
+# Gazebo cache
+docker/cache/*
+!docker/cache/.gazebo
+docker/cache/.gazebo/*
+!docker/cache/.gazebo/.gitkeep
+
+# Isaac Sim cache
+!docker/cache/computecache
+!docker/cache/data
+!docker/cache/documents
+!docker/cache/glcache
+!docker/cache/kit
+!docker/cache/logs
+!docker/cache/ov
+!docker/cache/pip
+
+docker/cache/computecache/*
+docker/cache/data/*
+docker/cache/documents/*
+docker/cache/glcache/*
+docker/cache/kit/*
+docker/cache/logs/*
+docker/cache/ov/*
+docker/cache/pip/*
+
+!docker/cache/computecache/.gitkeep
+!docker/cache/data/.gitkeep
+!docker/cache/documents/.gitkeep
+!docker/cache/glcache/.gitkeep
+!docker/cache/kit/.gitkeep
+!docker/cache/logs/.gitkeep
+!docker/cache/ov/.gitkeep
+!docker/cache/pip/.gitkeep
