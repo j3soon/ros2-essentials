@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import rclpy
-from minimal_pkg.subscriber import MinimalSubscriber
+from dummy_controller.subscriber import MinimalSubscriber
 
 
 def main(args=None):

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>minimal_pkg</name>
+  <name>dummy_controller</name>
   <version>0.0.0</version>
-  <description>Examples of minimal publisher/subscriber using rclcpp/rclpy</description>
+  <description>Dummy controller for zed_to_husky</description>
   <maintainer email="yuzhong1214@gmail.com">YuZhong-Chen</maintainer>
   <license>Apache License 2.0</license>
 

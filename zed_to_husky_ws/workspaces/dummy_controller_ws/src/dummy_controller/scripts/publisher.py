@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import rclpy
-from minimal_pkg.publisher import MinimalPublisher
+from dummy_controller.publisher import MinimalPublisher
 
 
 def main(args=None):
