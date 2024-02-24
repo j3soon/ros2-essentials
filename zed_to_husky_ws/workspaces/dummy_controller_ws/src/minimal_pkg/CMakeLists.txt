@@ -20,22 +20,6 @@ find_package(std_msgs REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-# Include Cpp "include" directory
-include_directories(include)
-
-# Create Cpp executable
-add_executable(talker src/publisher.cpp)
-ament_target_dependencies(talker rclcpp std_msgs)
-add_executable(listener src/subscriber.cpp)
-ament_target_dependencies(listener rclcpp std_msgs)
-
-# Install Cpp executables
-install(TARGETS
-  talker
-  listener
-  DESTINATION lib/${PROJECT_NAME}
-)
-
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
