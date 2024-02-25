@@ -15,21 +15,30 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from geometry_msgs.msg import Twist
 
 
-class MinimalPublisher(Node):
+class CmdVelPublisher(Node):
 
-    def __init__(self):
-        super().__init__('minimal_publisher')
-        self.publisher_ = self.create_publisher(String, 'topic', 10)
-        timer_period = 0.5  # seconds
-        self.timer = self.create_timer(timer_period, self.timer_callback)
-        self.i = 0
+    def __init__(self, topic_name: str, node_name="cmd_vel_publisher"):
+        super().__init__(node_name)
+        
+        self.cmd_vel_speed = 0.5 # m/s
+        
+        self.publisher_ = self.create_publisher(Twist, topic_name, 10)
+        self.status = "stop"
 
-    def timer_callback(self):
-        msg = String()
-        msg.data = 'Hello World: %d' % self.i
+    def publish(self):
+        msg = Twist()
+        msg.linear.x = msg.linear.y = msg.linear.z = 0.0
+        msg.angular.x = msg.angular.y = msg.angular.z = 0.0
+        
+        if self.status == "forward":
+            msg.linear.x = self.cmd_vel_speed
+        elif self.status == "right":
+            msg.angular.z = self.cmd_vel_speed
+        elif self.status == "left":
+            msg.angular.z = -self.cmd_vel_speed
+        
         self.publisher_.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
-        self.i += 1
+        self.get_logger().info('Publishing: "%s"' % self.status)

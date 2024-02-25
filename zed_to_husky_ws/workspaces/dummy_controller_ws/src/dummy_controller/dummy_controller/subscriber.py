@@ -15,19 +15,24 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from sensor_msgs.msg import Image
 
 
-class MinimalSubscriber(Node):
+class ImageSubscriber(Node):
 
-    def __init__(self):
-        super().__init__('minimal_subscriber')
+    def __init__(self, topic_name: str, node_name: str):
+        super().__init__(node_name)
         self.subscription = self.create_subscription(
-            String,
-            'topic',
-            self.listener_callback,
-            10)
+            msg_type=Image,
+            topic=topic_name,
+            callback=self.listener_callback,
+            qos_profile=10)
         self.subscription  # prevent unused variable warning
+        self.image_brightness = 0
 
     def listener_callback(self, msg):
-        self.get_logger().info('I heard: "%s"' % msg.data)
+        self.image_brightness = sum(msg.data) / len(msg.data)
+        # self.get_logger().info("Received an image, brightness: %d" % self.image_brightness)
+    
+    def get_brightness(self):
+        return self.image_brightness
