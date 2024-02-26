@@ -1,6 +1,6 @@
 # husky_ws
 
-This repository will help you configure a simulation environment for Husky quickly.
+This repository will help you configure the environment for Husky quickly.
 
 ## 🌱 Structure 🌱
 
@@ -14,12 +14,19 @@ husky_ws
 ├── install
 ├── build
 ├── log
+├── script
+|   ├── husky-bringup.sh
+|   ├── husky-generate.sh
+|   └── husky-teleop.sh
 ├── src
 |   ├── husky
 |   |   ├── husky_base
 |   |   ├── husky_bringup
 |   |   ├── husky_control
 |   |   └── ...
+├── udev_rules
+|   ├── 41-clearpath.rules
+|   └── install_udev_rules.sh
 ├── .gitignore
 └── README.md
 ```
@@ -84,4 +91,28 @@ ros2 launch husky_navigation slam_launch.py
     </a>
 </div>
 
+### Control real robot
 
+> Before you proceed, please ensure that you've plugged the USB adapter of the Husky into the computer and mounted it into the container.
+
+```bash=
+# 0. Move to the workspace.
+cd /home/ros2-agv-essentials/husky_ws
+
+# 1. Setup udev rules.
+./udev_rules/install_udev_rules.sh
+
+# 2. Generate robot configuration files.
+./script/husky-generate.sh 
+
+# 3. Source .bashrc or open a new terminal.
+source ~/.bashrc
+
+# 4. Bring up the robot.
+./script/husky-bringup.sh
+
+# (Optional) Control the robot via keyboard teleoperation.
+./script/husky-teleop.sh
+```
+
+Once you've set up everything correctly, you'll only need to execute the last step to bring up the robot.
