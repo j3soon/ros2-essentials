@@ -46,7 +46,8 @@ from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 
 def generate_launch_description():
   this_directory = get_package_share_directory('velodyne_description')
-  xacro_path = os.path.join(this_directory, 'urdf', 'example.urdf.xacro')
+  example_xacro_path = os.path.join(this_directory, 'urdf', 'example.urdf.xacro')
+  sample_xacro_path = os.path.join(this_directory, 'urdf', 'sample_robot.urdf.xacro')
   rviz_config_file = os.path.join(this_directory, 'rviz', 'example.rviz')
   world = os.path.join(this_directory, 'world', 'example.world')
 
@@ -58,19 +59,48 @@ def generate_launch_description():
     'organize_cloud',
     default_value='False',
     description='Organize PointCloud2 into 2D array with NaN placeholders, otherwise 1D array and leave out invlaid points')
+  declare_robot_model_cmd = DeclareLaunchArgument(
+    'robot',
+    default_value="0",
+    description='Which robot to launch (0 for example, 1 for sample)')
   gpu = LaunchConfiguration('gpu')
   organize_cloud = LaunchConfiguration('organize_cloud')
-  robot_description = Command(['xacro',' ', xacro_path, ' gpu:=', gpu, ' organize_cloud:=', organize_cloud])
+  robot = LaunchConfiguration('robot')
+  example_robot_description = Command(['xacro',' ', example_xacro_path, ' gpu:=', gpu, ' organize_cloud:=', organize_cloud])
+  sample_robot_description = Command(['xacro',' ', sample_xacro_path, ' gpu:=', gpu, ' organize_cloud:=', organize_cloud])
 
-  start_robot_state_publisher_cmd = Node(
+  example_start_robot_state_publisher_cmd = Node(
     package='robot_state_publisher',
     executable='robot_state_publisher',
     name='robot_state_publisher',
     output='screen',
     parameters=[{
       'use_sim_time': True,
-      'robot_description': robot_description
-    }]
+      'robot_description': example_robot_description
+    }],
+    condition=IfCondition(
+      PythonExpression([
+        robot,
+        ' == 0'
+      ])
+    ),
+  )
+
+  sample_start_robot_state_publisher_cmd = Node(
+    package='robot_state_publisher',
+    executable='robot_state_publisher',
+    name='robot_state_publisher',
+    output='screen',
+    parameters=[{
+      'use_sim_time': True,
+      'robot_description': sample_robot_description
+    }],
+    condition=IfCondition(
+      PythonExpression([
+        robot,
+        ' == 1'
+      ])
+    ),
   )
 
   spawn_example_cmd = Node(
@@ -114,8 +144,10 @@ def generate_launch_description():
   ld.add_action(declare_gpu_cmd)
   ld.add_action(declare_organize_cloud_cmd)
   ld.add_action(declare_gui_cmd)
+  ld.add_action(declare_robot_model_cmd)
   ld.add_action(start_gazebo)
-  ld.add_action(start_robot_state_publisher_cmd)
+  ld.add_action(example_start_robot_state_publisher_cmd)
+  ld.add_action(sample_start_robot_state_publisher_cmd)
   ld.add_action(spawn_example_cmd)
   ld.add_action(start_rviz_cmd)
   ld.add_action(exit_event_handler)
