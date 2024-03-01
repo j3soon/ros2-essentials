@@ -45,6 +45,15 @@
     ros2 launch vlp_cartographer vlp_driver.launch.py is_sim:=True
     ```
 
+### Sample Robot
+
+- A given turtlebot waffle model with VLP-16 is provided in `velodyne_simulator/velodyne_simulator/urdf/sample_robot.urdf.xacro`
+- Launch the sample robot
+
+    ```bash
+    ros2 launch velodyne_description example.launch.py robot:=1
+    ```
+
 ---
 
 ## LiDAR setup
