@@ -27,7 +27,10 @@ def generate_launch_description():
         package='twist_mux',
         executable='twist_mux',
         output='screen',
-        remappings={('/cmd_vel_out', '/husky_velocity_controller/cmd_vel_unstamped')},
+        remappings={
+            ('/cmd_vel_out', '/husky_velocity_controller/cmd_vel_unstamped'),
+            ('/cmd_vel', '/a200_0000/cmd_vel')
+        },
         parameters=[filepath_config_twist_mux]
     )
 
