@@ -27,18 +27,29 @@ class CmdVelPublisher(Node):
         
         self.publisher_ = self.create_publisher(Twist, topic_name, 10)
         self.status = "stop"
+        self.msg = Twist()
 
-    def publish(self):
-        msg = Twist()
-        msg.linear.x = msg.linear.y = msg.linear.z = 0.0
-        msg.angular.x = msg.angular.y = msg.angular.z = 0.0
+    def forward(self, speed):
+        self.status = "forward"
+        self.msg.linear.y = self.msg.linear.z = 0.0
+        self.msg.angular.x = self.msg.angular.y = self.msg.angular.z = 0.0
+        self.msg.linear.x = speed
+
+        self.publish()
+        self.get_logger().info('Publishing speed: %lf' % speed)
+
+    def update_status(self):
+        self.msg.linear.x = self.msg.linear.y = self.msg.linear.z = 0.0
+        self.msg.angular.x = self.msg.angular.y = self.msg.angular.z = 0.0
         
-        if self.status == "forward":
-            msg.linear.x = self.cmd_vel_speed
-        elif self.status == "right":
-            msg.angular.z = self.cmd_vel_speed
+        if self.status == "right":
+            self.msg.angular.z = self.cmd_vel_speed
         elif self.status == "left":
-            msg.angular.z = -self.cmd_vel_speed
+            self.msg.angular.z = -self.cmd_vel_speed
         
-        self.publisher_.publish(msg)
+        self.publish()
         self.get_logger().info('Publishing: "%s"' % self.status)
+    
+    def publish(self):
+        self.publisher_.publish(self.msg)
+    

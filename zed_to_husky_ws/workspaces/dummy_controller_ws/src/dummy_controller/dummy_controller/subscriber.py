@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import rclpy
+import struct
 from rclpy.node import Node
 
 from sensor_msgs.msg import Image
@@ -28,11 +29,27 @@ class ImageSubscriber(Node):
             callback=self.listener_callback,
             qos_profile=10)
         self.subscription  # prevent unused variable warning
-        self.image_brightness = 0
+        self.msg = None
 
     def listener_callback(self, msg):
-        self.image_brightness = sum(msg.data) / len(msg.data)
-        # self.get_logger().info("Received an image, brightness: %d" % self.image_brightness)
+        self.msg = msg
+        # self.get_logger().info("Brightness: %lf" % self.get_brightness())
+        # self.get_logger().info("Depth: %lf" % self.get_depth())
     
     def get_brightness(self):
-        return self.image_brightness
+        if self.msg == None:
+            return float("inf")
+        
+        image_brightness = sum(self.msg.data) / len(self.msg.data)
+        return image_brightness
+    
+    def get_depth(self):
+        if self.msg == None:
+            return float("inf")
+        
+        # As the original data is an array of char, we will need to convert it into a list of floats.
+        # Reference: https://www.stereolabs.com/docs/ros2/depth-sensing
+        depth_data = struct.unpack('%sf' % (self.msg.height * self.msg.width), self.msg.data)
+        
+        center_depth = depth_data[int((self.msg.height / 2) * self.msg.width + (self.msg.width / 2))]
+        return center_depth
