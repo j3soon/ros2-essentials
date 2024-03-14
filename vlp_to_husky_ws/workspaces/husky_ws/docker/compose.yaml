@@ -39,6 +39,8 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       # Mount devices
       - /dev:/dev
+      # Mount shared memory for ROS2 communication.
+      - /dev/shm:/dev/shm
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       - ./cache/.gazebo:/home/user/.gazebo
