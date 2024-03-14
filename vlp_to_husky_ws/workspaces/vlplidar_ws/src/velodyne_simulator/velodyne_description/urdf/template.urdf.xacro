@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="sample">
+
+    <!-- Add argument for VLP-16 LiDAR simulator settings -->
+    <xacro:arg name="gpu" default="false"/>
+    <xacro:arg name="organize_cloud" default="false"/>
+    <xacro:property name="gpu" value="$(arg gpu)" />
+    <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
+
+    <!-- Remember to include the VLP-16 LiDAR -->
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+
+    <!-- Define your own robot start from here -->
+    <link name="base_footprint" />
+    <!-- Define your own robot end here -->
+
+    <!-- Define the VLP-16 LiDAR -->
+    <xacro:VLP-16 parent="base_footprint" name="velodyne" topic="/velodyne_points" organize_cloud="${organize_cloud}" hz="10" samples="440" gpu="${gpu}">
+        <origin xyz="0 0 0.1" rpy="0 0 0" />
+    </xacro:VLP-16>
+
+</robot>
