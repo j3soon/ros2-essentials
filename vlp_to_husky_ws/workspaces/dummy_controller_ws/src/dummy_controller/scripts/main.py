@@ -15,21 +15,21 @@
 # limitations under the License.
 
 import rclpy
-from dummy_controller.subscriber import MinimalSubscriber
+from dummy_controller.publisher import CmdVelPublisher
 
 
 def main(args=None):
     rclpy.init(args=args)
 
-    minimal_subscriber = MinimalSubscriber()
+    cmd_vel_publisher = CmdVelPublisher("/a200_0000/cmd_vel")
 
-    rclpy.spin(minimal_subscriber)
+    try:
+        while rclpy.ok():
+            cmd_vel_publisher.forward(0.1)
 
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
-    minimal_subscriber.destroy_node()
-    rclpy.shutdown()
+    except KeyboardInterrupt:
+        
+        cmd_vel_publisher.destroy_node()
 
 
 if __name__ == '__main__':
