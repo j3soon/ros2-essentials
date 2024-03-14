@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(minimal_pkg)
+project(dummy_controller)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -19,22 +19,6 @@ find_package(std_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
-
-# Include Cpp "include" directory
-include_directories(include)
-
-# Create Cpp executable
-add_executable(talker src/publisher.cpp)
-ament_target_dependencies(talker rclcpp std_msgs)
-add_executable(listener src/subscriber.cpp)
-ament_target_dependencies(listener rclcpp std_msgs)
-
-# Install Cpp executables
-install(TARGETS
-  talker
-  listener
-  DESTINATION lib/${PROJECT_NAME}
-)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
