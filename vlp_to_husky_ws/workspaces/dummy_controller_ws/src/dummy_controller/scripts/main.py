@@ -16,20 +16,33 @@
 
 import rclpy
 from dummy_controller.publisher import CmdVelPublisher
+from dummy_controller.subscriber import LaserSubscriber
 
+def UpdateCmdVelByRange(laser_subscriber, cmd_vel_publisher):
+
+    # Get the average range
+    ave_range = laser_subscriber.get_average_range()
+
+    # If the average range is less than 2.5 meter, stop it.
+    if ave_range < 2.5:
+        cmd_vel_publisher.forward(0.0)
+    else:
+        cmd_vel_publisher.forward(0.3)
 
 def main(args=None):
     rclpy.init(args=args)
 
     cmd_vel_publisher = CmdVelPublisher("/a200_0000/cmd_vel")
+    laser_subscriber = LaserSubscriber()
 
     try:
         while rclpy.ok():
-            cmd_vel_publisher.forward(0.1)
+            rclpy.spin_once(laser_subscriber)
+            UpdateCmdVelByRange(laser_subscriber, cmd_vel_publisher)
 
     except KeyboardInterrupt:
-        
         cmd_vel_publisher.destroy_node()
+        laser_subscriber.destroy_node()
 
 
 if __name__ == '__main__':
