@@ -13,21 +13,63 @@
 # limitations under the License.
 
 import rclpy
+import numpy as np
 from rclpy.node import Node
 
-from std_msgs.msg import String
+# Import laser scan
+from sensor_msgs.msg import LaserScan
 
 
-class MinimalSubscriber(Node):
+class LaserSubscriber(Node):
 
-    def __init__(self):
-        super().__init__('minimal_subscriber')
+    def __init__(self, node_name="laser_subscriber", degree_range=[-5, 5]):
+        super().__init__(node_name)
+
         self.subscription = self.create_subscription(
-            String,
-            'topic',
-            self.listener_callback,
-            10)
-        self.subscription  # prevent unused variable warning
+            LaserScan, '/scan',
+            self.scan_callback, 10
+        )
+        self.subscription
 
-    def listener_callback(self, msg):
-        self.get_logger().info('I heard: "%s"' % msg.data)
+        # Message to store the laser scan.
+        self.msg = LaserScan
+
+        # Degree range to calculate the forward view of average range.
+        self.degree_range = degree_range
+
+        # Index of the degree range in the message.
+        self.degree_range_index = None
+
+    def _get_angle_index(self, angle, angle_increment, angle_min) -> int:
+
+        if angle_increment == 0:
+            return 0
+        return int((angle - angle_min) / angle_increment)
+
+    def _get_range_index(self, angle_min: float, angle_increment: float) -> list:
+        
+        # Get the index of the degree range, remember to convert the degree to angle.
+        # Maybe we could consider to directly use the angle as input instead of the degree,
+        # but it maybe not straightforward to use the angle for the user.
+        start = self._get_angle_index(np.deg2rad(self.degree_range[0]), angle_increment, angle_min)
+        end = self._get_angle_index(np.deg2rad(self.degree_range[1]), angle_increment, angle_min)
+
+        return list(range(start, end + 1))
+
+    def get_average_range(self) -> float:
+
+        if self.degree_range_index is None:
+            self.degree_range_index = self._get_range_index(self.msg.angle_min, self.msg.angle_increment)
+
+        # Get the range in the degree range and remove inf values.
+        ranges = self.msg.ranges
+        ranges = [ranges[i] for i in self.degree_range_index if ranges[i] != float('inf')]
+
+        if len(ranges) == 0:
+            return float('inf')
+
+        return np.mean(ranges)
+
+    def scan_callback(self, msg):
+
+        self.msg = msg
