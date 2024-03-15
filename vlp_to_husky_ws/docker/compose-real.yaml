@@ -7,7 +7,8 @@ services:
     stdin_open: true
     tty: true
     privileged: true
-    command: /bin/bash
+    command: /bin/bash -c "source /home/ros2-agv-essentials/vlp_to_husky_ws/workspaces/dummy_controller_ws/install/setup.bash && \
+                           ros2 run dummy_controller main.py"
     network_mode: host
     working_dir: /home/ros2-agv-essentials/vlp_to_husky_ws/workspaces/dummy_controller_ws
     environment:
@@ -108,7 +109,9 @@ services:
     stdin_open: true
     tty: true
     privileged: true
-    command: bash
+    command: bash -c "source /opt/ros/humble/setup.bash && \
+                      source /home/ros2-agv-essentials/vlp_to_husky_ws/workspaces/vlplidar_ws/install/setup.bash && \
+                      ros2 launch vlp_cartographer vlp_driver.launch.py"
     network_mode: host
     working_dir: /home/ros2-agv-essentials/vlp_to_husky_ws/workspaces/vlplidar_ws
 
