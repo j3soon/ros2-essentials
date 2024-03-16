@@ -86,7 +86,7 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-imu-tools \
     && sudo rm -rf /var/lib/apt/lists/*
 
-COPY .bashrc /home/$USERNAME/.bashrc 
+COPY .bashrc /home/$USERNAME/.bashrc
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
@@ -97,3 +97,5 @@ CMD ["/bin/bash"]
 # Reference: https://github.com/clearpathrobotics/clearpath_computer_installer/tree/main
 COPY clearpath_computer_installer /home/$USERNAME/clearpath_computer_installer
 RUN bash /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh
+# Remove the source list added by the script.
+RUN sudo rm -f /etc/apt/sources.list.d/ros2.list
