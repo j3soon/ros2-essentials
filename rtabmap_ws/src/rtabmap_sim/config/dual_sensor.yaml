@@ -1,0 +1,19 @@
+rtabmap: 
+  ros__parameters: 
+    frame_id: 'base_footprint'
+    use_sim_time: True
+    use_action_for_goal: True
+    qos_image: 2
+    qos_imu: 2
+    Reg/Force3DoF: 'true'
+    Optimizer/GravitySigma: '0'
+
+    # For LiDAR data subscription
+    subscribe_scan: True
+
+    # For RGB-D data subscription
+    subscribe_depth: True
+    subscribe_rgb: True
+
+    # Data synchronization
+    approx_sync: True
