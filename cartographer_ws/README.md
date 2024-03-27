@@ -37,6 +37,19 @@ docker-compose up -d --build
   rqt_robot_steering
   ```
 
+### Building Packages
+
+```sh
+docker attach ros2-cartographer-ws
+cd /home/ros2-agv-essentials/cartographer_ws
+rosdep update
+rosdep install --from-paths src --ignore-src --rosdistro humble -y
+colcon build
+```
+
+> After the build process, make sure to source the `install/setup.bash` file.  
+> Otherwise, ROS2 will not locate the executable files. You can open a new terminal to accomplish this.
+
 ### Multi LiDAR - Single Robot SLAM test
 
 #### Simulation
