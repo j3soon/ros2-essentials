@@ -1,3 +1,9 @@
+# Since we are using Gazebo simulation, we need to set use_sim_time to True in all the nodes (servers).
+#
+# Currently, we rely on the VLP-16 LiDAR for acquiring point cloud data. 
+# If an alternative LiDAR is used, it may necessitate adjustments to the configurations accordingly.
+# Those adjustments may be found in the local_costmap and global_costmap configurations.
+
 amcl:
   ros__parameters:
     use_sim_time: True
@@ -197,9 +203,10 @@ local_costmap:
           marking: True
           data_type: "PointCloud2"
       voxel_layer:
+        # Reference: https://navigation.ros.org/configuration/packages/costmap-plugins/voxel.html
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
-        publish_voxel_map: False
+        publish_voxel_map: False # Set to True for debugging purposes. It will be computationally expensive.
         origin_z: 0.0
         z_resolution: 0.05
         z_voxels: 16
@@ -253,7 +260,7 @@ global_costmap:
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
-        publish_voxel_map: False
+        publish_voxel_map: False # Set to True for debugging purposes. It will be computationally expensive.
         origin_z: 0.0
         z_resolution: 0.05
         z_voxels: 16
