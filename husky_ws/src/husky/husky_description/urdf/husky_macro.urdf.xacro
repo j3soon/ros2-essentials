@@ -35,7 +35,7 @@
     <xacro:property name="base_z_size" value="0.24750000" />
 
     <!-- Wheel Mounting Positions -->
-    <xacro:property name="wheelbase" value="0.5120" />
+    <xacro:property name="wheelbase" value="0.5550" />
     <xacro:property name="track" value="0.5708" />
     <xacro:property name="wheel_vertical_offset" value="0.03282" />
 
