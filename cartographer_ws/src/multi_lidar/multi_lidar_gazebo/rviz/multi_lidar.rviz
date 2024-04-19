@@ -4,9 +4,6 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
-        - /TF1
         - /TF1/Frames1
       Splitter Ratio: 0.5
     Tree Height: 700
@@ -78,6 +75,8 @@ Visualization Manager:
           Value: false
         imu_link:
           Value: false
+        map:
+          Value: true
         odom:
           Value: true
         wheel_left_link:
@@ -90,6 +89,8 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
+        map:
+          {}
         odom:
           base_footprint:
             base_link:
@@ -184,6 +185,27 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map_updates
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -229,26 +251,21 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz_default_plugins/Orbit
-      Distance: 3.8998892307281494
+      Angle: 0
+      Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
-      Focal Point:
-        X: -0.10367435961961746
-        Y: 0.6083193421363831
-        Z: -0.8064939975738525
-      Focal Shape Fixed Size: true
-      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6597968935966492
+      Scale: 145.32310485839844
       Target Frame: <Fixed Frame>
-      Value: Orbit (rviz)
-      Yaw: 5.6935834884643555
+      Value: TopDownOrtho (rviz_default_plugins)
+      X: -0.12329459190368652
+      Y: 0.06662681698799133
     Saved: ~
 Window Geometry:
   Displays:
