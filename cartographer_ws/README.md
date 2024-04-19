@@ -29,7 +29,7 @@ docker-compose up -d --build
 - Run the SLAM node in new window of `tmux`
 
   ```bash
-  ros2 launch turtlebot3_cartographer cartographer.launch.py use_sim_time:=True
+  ros2 launch turtlebot3_cartographer cartographer.launch.py is_sim:=True
   ```
 - Run the control tool in new window of `tmux`
 
@@ -65,7 +65,7 @@ colcon build
 
 - Run the cartographer SLAM node in new window of `tmux`
   ```bash
-  ros2 launch cartographer_demo cartographer_demo.launch.py
+  ros2 launch cartographer_demo cartographer_demo.launch.py is_sim:=True
   ```
 
 - Run the control tool in new window of `tmux`
