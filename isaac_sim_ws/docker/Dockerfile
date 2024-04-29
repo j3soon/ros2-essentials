@@ -74,3 +74,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY ./thirdparty/ros_entrypoint.sh /
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
+
+# Install common tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    git-extras \
+    htop \
+    net-tools \
+    tmux \
+    vim \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY .bashrc /root/.bashrc
