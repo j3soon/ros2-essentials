@@ -5,65 +5,10 @@
 
 <sdf version="1.6">
   <world name="default">
-    <plugin name="joy" filename="libJoyPlugin.so">
-      <sticky_buttons>false</sticky_buttons>
-      <dead_zone>0.05</dead_zone>
-      <rate>60</rate>
-      <accumulation_rate>1000</accumulation_rate>
-    </plugin>
-
-
     <gui>
      <camera name="user_camera">
        <pose>-49.08 -1.911 6.95 0 0 -0.0159</pose>
      </camera>
-     <plugin name="keyboard" filename="libKeyboardGUIPlugin.so">
-     </plugin>
-     <plugin name="TrafficLights" filename="libTrafficLightsGUIPlugin.so">
-
-       <!-- Q -->
-       <key value="113" model="stop_light_post_475" color="red"/>
-       <key value="113" model="stop_light_post_482" color="green"/>
-       <key value="113" model="stop_light_post_485" color="green"/>
-       <key value="113" model="stop_light_post_479" color="red"/>
-
-       <!-- A -->
-       <key value="97" model="stop_light_post_475" color="green"/>
-       <key value="97" model="stop_light_post_482" color="red"/>
-       <key value="97" model="stop_light_post_485" color="red"/>
-       <key value="97" model="stop_light_post_479" color="green"/>
-
-       <!-- W -->
-       <key value="119" model="stop_light_post_476" color="red"/>
-       <key value="119" model="stop_light_post_483" color="green"/>
-       <key value="119" model="stop_light_post_480" color="red"/>
-
-       <!-- S -->
-       <key value="115" model="stop_light_post_476" color="green"/>
-       <key value="115" model="stop_light_post_483" color="red"/>
-       <key value="115" model="stop_light_post_480" color="green"/>
-
-       <!-- E -->
-       <key value="101" model="stop_light_post_477" color="red"/>
-       <key value="101" model="stop_light_post_486" color="green"/>
-       <key value="101" model="stop_light_post_481" color="red"/>
-
-       <!-- D -->
-       <key value="100" model="stop_light_post_477" color="green"/>
-       <key value="100" model="stop_light_post_486" color="red"/>
-       <key value="100" model="stop_light_post_481" color="green"/>
-
-       <!-- R -->
-       <key value="114" model="stop_light_post_478" color="red"/>
-       <key value="114" model="stop_light_post_484" color="green"/>
-       <key value="114" model="stop_light_post_487" color="green"/>
-
-       <!-- F -->
-       <key value="102" model="stop_light_post_478" color="green"/>
-       <key value="102" model="stop_light_post_484" color="red"/>
-       <key value="102" model="stop_light_post_487" color="red"/>
-
-     </plugin>
     </gui>
     <scene>
       <grid>false</grid>
@@ -122,8 +67,6 @@
               <name>CitySim/ShinyGrey</name>
             </script>
           </material>
-          <plugin name="bloom" filename="libBloomVisualPlugin.so" />
-          <plugin name="lensflare" filename="libLensFlareVisualPlugin.so" />
         </visual>
       </link>
     </model>
@@ -14070,44 +14013,5 @@
           </trajectory>
         </script>
       </actor>
-    
-
-    <!-- Prius -->
-
-    <include>
-      <name>prius_hybrid_123</name>
-      <pose> -40 -1.9 5.01 0 0 1.57 </pose>
-
-      <uri>model://prius_hybrid_sensors</uri>
-      <plugin name="prius" filename="libPriusHybridPlugin.so">
-        <chassis>prius_hybrid::chassis</chassis>
-        <front_left_wheel>prius_hybrid::front_left_combined_joint</front_left_wheel>
-        <front_right_wheel>prius_hybrid::front_right_combined_joint</front_right_wheel>
-        <front_left_wheel_steering>prius_hybrid::front_left_combined_joint</front_left_wheel_steering>
-        <front_right_wheel_steering>prius_hybrid::front_right_combined_joint</front_right_wheel_steering>
-        <back_left_wheel>prius_hybrid::rear_left_wheel_joint</back_left_wheel>
-        <back_right_wheel>prius_hybrid::rear_right_wheel_joint</back_right_wheel>
-        <steering_wheel>prius_hybrid::steering_joint</steering_wheel>
-        <chassis_aero_force_gain>0.63045</chassis_aero_force_gain>
-        <front_torque>859.4004393000001</front_torque>
-        <back_torque>0</back_torque>
-        <front_brake_torque>1031.28052716</front_brake_torque>
-        <back_brake_torque>687.5203514400001</back_brake_torque>
-        <max_speed>37.998337013956565</max_speed>
-        <min_gas_flow>8.981854013171626e-05</min_gas_flow>
-        <gas_efficiency>0.371</gas_efficiency>
-        <battery_charge_watt_hours>291</battery_charge_watt_hours>
-        <battery_discharge_watt_hours>214</battery_discharge_watt_hours>
-        <max_steer>0.6458</max_steer>
-        <flwheel_steering_p_gain>1e4</flwheel_steering_p_gain>
-        <frwheel_steering_p_gain>1e4</frwheel_steering_p_gain>
-        <flwheel_steering_i_gain>0</flwheel_steering_i_gain>
-        <frwheel_steering_i_gain>0</frwheel_steering_i_gain>
-        <flwheel_steering_d_gain>3e2</flwheel_steering_d_gain>
-        <frwheel_steering_d_gain>3e2</frwheel_steering_d_gain>
-      </plugin>
-
-    </include>
-
   </world>
 </sdf>
