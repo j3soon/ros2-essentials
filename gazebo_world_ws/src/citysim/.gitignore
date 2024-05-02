@@ -1,0 +1,5 @@
+/models/*
+!/models/.gitkeep
+
+/media/*
+!/media/.gitkeep

@@ -1,4 +1,10 @@
 deps
 downloads
-fuel_models
 .DS_Store
+
+/fuel_models/*
+!/fuel_models/.gitkeep
+/models/*
+!/models/.gitkeep
+/photos/*
+!/photos/.gitkeep
