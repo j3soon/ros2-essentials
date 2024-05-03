@@ -20,7 +20,7 @@
     <xacro:if value="$(arg VLP16_enabled)">
         <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
         <xacro:VLP-16 is_sim="${is_sim}" parent="base_link" name="velodyne" topic="/velodyne_points" organize_cloud="${organize_cloud}" hz="10" samples="440" gpu="${gpu}">
-            <origin xyz="0 0 0.4" rpy="0 0 0" />
+            <origin xyz="0 0 0.2" rpy="0 0 0" />
         </xacro:VLP-16>
     </xacro:if>
 </robot>
