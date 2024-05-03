@@ -75,6 +75,7 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-controller-manager \
     ros-$ROS_DISTRO-diff-drive-controller \
     ros-$ROS_DISTRO-joint-state-broadcaster \
+    ros-$ROS_DISTRO-imu-tools \
     #
     # Install navigation dependencies
     # Reference:
