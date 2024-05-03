@@ -1,0 +1,10 @@
+deps
+downloads
+.DS_Store
+
+/fuel_models/*
+!/fuel_models/.gitkeep
+/models/*
+!/models/.gitkeep
+/photos/*
+!/photos/.gitkeep
