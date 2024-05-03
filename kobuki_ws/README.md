@@ -19,6 +19,7 @@ kobuki_ws
 ├── figure
 ├── src
 │   ├── kobuki_core
+│   ├── kobuki_control
 │   ├── kobuki_gazebo
 │   ├── kobuki_launch
 │   ├── kobuki_navigation
@@ -40,10 +41,11 @@ Below are the main packages for Kobuki:
 
 |      Package       |                                        Introduction                                        |
 |:------------------:|:------------------------------------------------------------------------------------------:|
+|   kobuki_control   |                          The localization configuration of Kobuki                          |
 |    kobuki_core     |                               Base configuration for Kobuki                                |
 |   kobuki_gazebo    |                                Simulating Kobuki in Gazebo                                 |
 |   kobuki_launch    |                        Launch Kobuki in Gazebo or with a real robot                        |
-| kobuki_navigation  |                                Navigation setup for Kobuki                                 |
+| kobuki_navigation  |                                SLAM setup for Kobuki                                 |
 | kobuki_description |                                  Robot description (URDF)                                  |
 |    kobuki_keyop    | Similar to [teleop_twist_keyboard](https://github.com/ros2/teleop_twist_keyboard) in ROS 2 |
 |    kobuki_node     |                                       Kobuki Driver                                        |
@@ -117,14 +119,14 @@ ros2 launch kobuki_launch kobuki.launch.py is_sim:=true
     </a>
 </div>
 
-### Launch navigation2
+### Launch slam_toolbox
 
-```bash
-ros2 launch kobuki_navigation navigation2.launch.py
+```bash=
+ros2 launch kobuki_navigation slam.launch.py
 ```
 
 <div align="center">
     <a href="./">
-        <img src="./figure/navigation_demo_rviz.png" width="80%"/>
+        <img src="./figure/launch_slam_toolbox.png" width="80%"/>
     </a>
 </div>
