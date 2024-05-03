@@ -106,6 +106,20 @@ def generate_launch_description():
             "use_sim_time": LaunchConfiguration("use_sim_time"),
         }.items(),
     )
+    
+    # Launch Kobuki's control
+    launch_kobuki_control = IncludeLaunchDescription(
+        PathJoinSubstitution(
+            [
+                FindPackageShare("kobuki_control"),
+                "launch",
+                "control.launch.py",
+            ]
+        ),
+        launch_arguments={
+            "use_sim_time": LaunchConfiguration("use_sim_time"),
+        }.items(),
+    )
 
     # Spawn robot
     spawn_robot = Node(
@@ -120,6 +134,7 @@ def generate_launch_description():
     ld.add_action(gz_resource_path)
     ld.add_action(launch_gazebo)
     ld.add_action(launch_kobuki_description)
+    ld.add_action(launch_kobuki_control)
     ld.add_action(spawn_robot)
     ld.add_action(launch_rviz)
 
