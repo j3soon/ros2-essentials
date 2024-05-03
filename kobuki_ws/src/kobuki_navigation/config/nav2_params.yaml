@@ -4,6 +4,8 @@
 # If an alternative LiDAR is used, it may necessitate adjustments to the configurations accordingly.
 # Those adjustments may be found in the local_costmap and global_costmap configurations.
 
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-amcl.html
 amcl:
   ros__parameters:
     use_sim_time: True
@@ -53,12 +55,14 @@ amcl_rclcpp_node:
   ros__parameters:
     use_sim_time: True
 
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-bt-navigator.html
 bt_navigator:
   ros__parameters:
     use_sim_time: True
     global_frame: map
     robot_base_frame: base_link
-    odom_topic: /odom
+    odom_topic: /odometry/filtered
     default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
     bt_loop_duration: 10
     default_server_timeout: 20
@@ -102,9 +106,12 @@ bt_navigator_rclcpp_node:
   ros__parameters:
     use_sim_time: True
 
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-controller-server.html
 controller_server:
   ros__parameters:
     use_sim_time: True
+    odom_topic: /odometry/filtered
     controller_frequency: 10.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
@@ -173,6 +180,8 @@ controller_server_rclcpp_node:
   ros__parameters:
     use_sim_time: True
 
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-costmaps.html
 local_costmap:
   local_costmap:
     ros__parameters:
@@ -182,6 +191,7 @@ local_costmap:
       robot_base_frame: base_link
       use_sim_time: True
       rolling_window: true
+      inf_is_valid: false # pointCloud-to-laserScan node will publish inf values for points that are not in the scan range
       width: 3
       height: 3
       resolution: 0.05
@@ -189,8 +199,8 @@ local_costmap:
       plugins: ["obstacle_layer", "voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        inflation_radius: 1.0
-        cost_scaling_factor: 3.0
+        inflation_radius: 0.5
+        cost_scaling_factor: 2.0
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -242,6 +252,7 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_link
       use_sim_time: True
+      inf_is_valid: false # pointCloud-to-laserScan node will publish inf values for points that are not in the scan range
       robot_radius: 0.22
       resolution: 0.05
       track_unknown_space: true
@@ -252,7 +263,7 @@ global_costmap:
         observation_sources: pointcloud
         pointcloud:
           topic: /velodyne_points
-          min_obstacle_height: 0.5
+          min_obstacle_height: 0.2
           max_obstacle_height: 2.0
           clearing: True
           marking: True
@@ -283,8 +294,8 @@ global_costmap:
         map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.55
+        cost_scaling_factor: 2.0
+        inflation_radius: 0.5
       always_send_full_costmap: True
   global_costmap_client:
     ros__parameters:
@@ -293,6 +304,8 @@ global_costmap:
     ros__parameters:
       use_sim_time: True
 
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-map-server.html
 map_server:
   ros__parameters:
     use_sim_time: True
@@ -306,9 +319,11 @@ map_saver:
     occupied_thresh_default: 0.65
     map_subscribe_transient_local: True
 
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-planner-server.html
 planner_server:
   ros__parameters:
-    expected_planner_frequency: 20.0
+    expected_planner_frequency: 10.0
     use_sim_time: True
     planner_plugins: ["GridBased"]
     GridBased:
@@ -321,21 +336,39 @@ planner_server_rclcpp_node:
   ros__parameters:
     use_sim_time: True
 
-recoveries_server:
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-smoother-server.html
+smoother_server:
+  ros__parameters:
+    use_sim_time: True
+    smoother_plugins: ["simple_smoother"]
+    simple_smoother:
+      plugin: "nav2_smoother::SimpleSmoother"
+      tolerance: 1.0e-10
+      max_its: 1000
+      do_refinement: True
+
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-behavior-server.html
+behavior_server:
   ros__parameters:
     costmap_topic: local_costmap/costmap_raw
     footprint_topic: local_costmap/published_footprint
     cycle_frequency: 10.0
-    recovery_plugins: ["spin", "backup", "wait"]
+    behavior_plugins: ["spin", "backup", "drive_on_heading", "assisted_teleop", "wait"]
     spin:
-      plugin: "nav2_recoveries/Spin"
+      plugin: "nav2_behaviors/Spin"
     backup:
-      plugin: "nav2_recoveries/BackUp"
+      plugin: "nav2_behaviors/BackUp"
+    drive_on_heading:
+      plugin: "nav2_behaviors/DriveOnHeading"
     wait:
-      plugin: "nav2_recoveries/Wait"
+      plugin: "nav2_behaviors/Wait"
+    assisted_teleop:
+      plugin: "nav2_behaviors/AssistedTeleop"
     global_frame: odom
     robot_base_frame: base_link
-    transform_timeout: 0.1
+    transform_tolerance: 0.5
     use_sim_time: true
     simulate_ahead_time: 2.0
     max_rotational_vel: 1.0
@@ -346,12 +379,32 @@ robot_state_publisher:
   ros__parameters:
     use_sim_time: True
 
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-waypoint-follower.html
 waypoint_follower:
   ros__parameters:
-    loop_rate: 200
+    use_sim_time: True
+    loop_rate: 20
     stop_on_failure: false
     waypoint_task_executor_plugin: "wait_at_waypoint"   
     wait_at_waypoint:
       plugin: "nav2_waypoint_follower::WaitAtWaypoint"
       enabled: True
       waypoint_pause_duration: 200
+
+# Reference:
+# - https://navigation.ros.org/configuration/packages/configuring-velocity-smoother.html
+velocity_smoother:
+  ros__parameters:
+    use_sim_time: True
+    smoothing_frequency: 20.0
+    scale_velocities: False
+    feedback: "OPEN_LOOP"
+    max_velocity: [0.26, 0.0, 1.0]
+    min_velocity: [-0.26, 0.0, -1.0]
+    max_accel: [2.5, 0.0, 3.2]
+    max_decel: [-2.5, 0.0, -3.2]
+    odom_topic: "odometry/filtered"
+    odom_duration: 0.1
+    deadband_velocity: [0.0, 0.0, 0.0]
+    velocity_timeout: 1.0
