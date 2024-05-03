@@ -33,6 +33,10 @@ def generate_launch_description():
         launch_arguments={
             "world_path": world_file,
             "launch_rviz": LaunchConfiguration("launch_rviz"),
+            "robot_init_x": "0.0",
+            "robot_init_y": "0.0",
+            "robot_init_z": "0.0",
+            "robot_init_yaw": "0.0",
         }.items(),
     )
 

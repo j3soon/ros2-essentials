@@ -36,6 +36,26 @@ ARGUMENTS = [
         default_value="",
         description="The path to the gazebo models",
     ),
+    DeclareLaunchArgument(
+        "robot_init_x",
+        default_value="0.0",
+        description="The initial x position of the robot",
+    ),
+    DeclareLaunchArgument(
+        "robot_init_y",
+        default_value="0.0",
+        description="The initial y position of the robot",
+    ),
+    DeclareLaunchArgument(
+        "robot_init_z",
+        default_value="0.0",
+        description="The initial z position of the robot",
+    ),
+    DeclareLaunchArgument(
+        "robot_init_yaw",
+        default_value="0.0",
+        description="The initial yaw of the robot",
+    ),
 ]
 
 
@@ -71,12 +91,12 @@ def generate_launch_description():
             "world": LaunchConfiguration("world_path"),
         }.items(),
     )
-    
+
     # The path of .rviz file.
     rviz_config_path = PathJoinSubstitution(
         [FindPackageShare("kobuki_rviz"), "rviz", "gazebo.rviz"]
     )
-    
+
     # Launch rviz2.
     launch_rviz = IncludeLaunchDescription(
         PathJoinSubstitution(
@@ -106,7 +126,7 @@ def generate_launch_description():
             "use_sim_time": LaunchConfiguration("use_sim_time"),
         }.items(),
     )
-    
+
     # Launch Kobuki's control
     launch_kobuki_control = IncludeLaunchDescription(
         PathJoinSubstitution(
@@ -126,7 +146,14 @@ def generate_launch_description():
         package="gazebo_ros",
         executable="spawn_entity.py",
         name="spawn_kobuki",
-        arguments=["-entity", "kobuki", "-topic", "/robot_description"],
+        arguments=[
+            "-entity", "kobuki",
+            "-topic", "/robot_description",
+            "-x", LaunchConfiguration("robot_init_x"),
+            "-y", LaunchConfiguration("robot_init_y"),
+            "-z", LaunchConfiguration("robot_init_z"),
+            "-Y", LaunchConfiguration("robot_init_yaw"),
+        ],
         output="screen",
     )
 
