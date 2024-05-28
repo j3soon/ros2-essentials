@@ -1,17 +1,7 @@
 # Base Image : https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
 FROM arm64v8/ros:humble AS arm64
-
-# TODO: Verify whether the package needs to be installed or removed for the ARM platform.
-
 # Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
 FROM osrf/ros:humble-desktop-full AS amd64
-
-# Install Gazebo
-RUN apt-get update && apt-get install -y \
-    ros-$ROS_DISTRO-gazebo-ros-pkgs \
-    && rm -rf /var/lib/apt/lists/*
-
-##########################################################################################
 
 FROM $TARGETARCH
 
@@ -53,6 +43,13 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        apt-get update && apt-get install -y \
+        && ros-$ROS_DISTRO-gazebo-ros-pkgs \
+        && ros-$ROS_DISTRO-gazebo-ros2-control \
+        && rm -rf /var/lib/apt/lists/*; \
+    fi
+
 # Install ROS2 packages
 RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-rviz2 \
@@ -72,7 +69,6 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-velodyne-pointcloud \
     ros-$ROS_DISTRO-robot-upstart \
     ros-$ROS_DISTRO-ros2-control \
-    ros-$ROS_DISTRO-gazebo-ros2-control \
     ros-$ROS_DISTRO-robot-localization \
     ros-$ROS_DISTRO-realsense2-description \
     ros-$ROS_DISTRO-realsense2-camera \
