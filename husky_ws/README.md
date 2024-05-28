@@ -93,7 +93,7 @@ ros2 launch husky_navigation slam_launch.py
 
 ### Control real robot
 
-> Before you proceed, please ensure that you've plugged the USB adapter of the Husky into the computer and mounted it into the container.
+> Before you proceed, please ensure that you've plugged the USB adapter of the Husky into the computer and mounted it into the container. (plugging in the USB adapter before creating the container is preferred but not required)
 
 ```bash=
 # 0. Move to the workspace.

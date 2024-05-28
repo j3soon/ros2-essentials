@@ -3,6 +3,9 @@
 # This script is used to bring up the Husky robot in real world.
 # It is assumed that the robot is powered on and the computer is connected to the robot via USB cable.
 
+# A udevadm trigger is required if the USB adapter is plugged in right before executing this script.
+sudo udevadm trigger --subsystem-match=tty
+
 # Note: As the script will initiate ROS nodes in the background, ending the script won't halt the ROS nodes. 
 #       Typically, you'd use the stop script provided by Clearpath located at `/usr/sbin/clearpath-platform-stop`. 
 #       However, this stop script won't function as expected, it solely terminates this script, not the ROS nodes. 
