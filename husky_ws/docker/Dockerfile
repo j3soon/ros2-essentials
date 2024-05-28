@@ -96,6 +96,6 @@ CMD ["/bin/bash"]
 # Note: The script need to be run as user, not root.
 # Reference: https://github.com/clearpathrobotics/clearpath_computer_installer/tree/main
 COPY clearpath_computer_installer /home/$USERNAME/clearpath_computer_installer
-RUN bash /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh
-# Remove the source list added by the script.
-RUN sudo rm -f /etc/apt/sources.list.d/ros2.list
+RUN sudo apt-get update \
+    && bash /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh \
+    && sudo rm -rf /var/lib/apt/lists/*
