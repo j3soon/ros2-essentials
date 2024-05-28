@@ -90,7 +90,7 @@ CMD ["/bin/bash"]
 # Reference: https://github.com/clearpathrobotics/clearpath_computer_installer/tree/main
 COPY clearpath_computer_installer /home/$USERNAME/clearpath_computer_installer
 RUN sudo apt-get update \
-    && bash /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh \
+    && /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh \
     && sudo rm -rf /var/lib/apt/lists/*
 # Setup udev rules.
 COPY udev_rules /home/$USERNAME/udev_rules
