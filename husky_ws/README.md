@@ -96,23 +96,11 @@ ros2 launch husky_navigation slam_launch.py
 > Before you proceed, please ensure that you've plugged the USB adapter of the Husky into the computer and mounted it into the container. (plugging in the USB adapter before creating the container is preferred but not required)
 
 ```bash=
-# 0. Move to the workspace.
+# Move to the workspace, source .bashrc, and bringup husky.
 cd /home/ros2-agv-essentials/husky_ws
-
-# 1. Setup udev rules.
-./udev_rules/install_udev_rules.sh
-
-# 2. Generate robot configuration files.
-./script/husky-generate.sh 
-
-# 3. Source .bashrc or open a new terminal.
 source ~/.bashrc
-
-# 4. Bring up the robot.
 ./script/husky-bringup.sh
 
-# (Optional) Control the robot via keyboard teleoperation.
+# (Optional) Open a new terminal & control the robot via keyboard teleoperation.
 ./script/husky-teleop.sh
 ```
-
-Once you've set up everything correctly, you'll only need to execute the last step to bring up the robot.

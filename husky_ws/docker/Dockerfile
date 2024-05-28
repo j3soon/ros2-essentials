@@ -99,3 +99,9 @@ COPY clearpath_computer_installer /home/$USERNAME/clearpath_computer_installer
 RUN sudo apt-get update \
     && bash /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh \
     && sudo rm -rf /var/lib/apt/lists/*
+# Setup udev rules.
+COPY udev_rules /home/$USERNAME/udev_rules
+RUN /home/$USERNAME/udev_rules/install_udev_rules.sh
+# Generate robot configuration files.
+COPY script /home/$USERNAME/script
+RUN /home/$USERNAME/script/husky-generate.sh 

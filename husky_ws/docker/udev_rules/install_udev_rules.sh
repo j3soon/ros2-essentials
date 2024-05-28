@@ -6,12 +6,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 
 RULE_FILENAME="41-clearpath.rules"
 
-# Check whether the script is running inside a Docker container.
-if [ ! -f "/.dockerenv" ]; then
-    echo "Not running inside a Docker container."
-    exit 1
-fi
-
 # Check the udev rule file exists.
 if [ ! -f "${SCRIPT_DIR}/${RULE_FILENAME}" ]; then
     echo "${SCRIPT_DIR}/${RULE_FILENAME} not found."
@@ -41,18 +35,5 @@ else
     sudo cp -f "${SCRIPT_DIR}/${RULE_FILENAME}" "/etc/udev/rules.d/${RULE_FILENAME}"
     echo "Copied the udev rule file."
 fi
-
-echo "Reloading the udev rules ..."
-
-# Running udevd in the background, it will listen for events from the kernel and manage the device nodes in /dev.
-# Reference: 
-# - https://forums.docker.com/t/udevadm-control-reload-rules/135564/2
-# - https://manpages.ubuntu.com/manpages/focal/en/man8/systemd-udevd-kernel.socket.8.html
-sudo /lib/systemd/systemd-udevd --daemon &> /dev/null
-
-# Reload the udev rules.
-# Reference: https://unix.stackexchange.com/a/39371
-sudo udevadm control --reload-rules
-sudo udevadm trigger --subsystem-match=tty
 
 echo "Done."
