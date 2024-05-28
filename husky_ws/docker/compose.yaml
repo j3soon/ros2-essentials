@@ -4,8 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - TARGET_PLATFORM=amd
     image: j3soon/ros2-husky-ws
     container_name: ros2-husky-ws
     stdin_open: true

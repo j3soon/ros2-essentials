@@ -1,13 +1,10 @@
-# Choose the architecture: arm or amd
-ARG TARGET_PLATFORM=amd
-
 # Base Image : https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
-FROM arm64v8/ros:humble AS arm
+FROM arm64v8/ros:humble AS arm64
 
 # TODO: Verify whether the package needs to be installed or removed for the ARM platform.
 
 # Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
-FROM osrf/ros:humble-desktop-full AS amd
+FROM osrf/ros:humble-desktop-full AS amd64
 
 # Install Gazebo
 RUN apt-get update && apt-get install -y \
@@ -16,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 
 ##########################################################################################
 
-FROM $TARGET_PLATFORM
+FROM $TARGETARCH
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 
