@@ -77,6 +77,7 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-nav2-bringup \
     ros-$ROS_DISTRO-slam-toolbox \
     ros-$ROS_DISTRO-imu-tools \
+    ros-$ROS_DISTRO-teleop-twist-keyboard \
     && sudo rm -rf /var/lib/apt/lists/*
 
 COPY .bashrc /home/$USERNAME/.bashrc
