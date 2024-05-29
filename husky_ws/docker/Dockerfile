@@ -86,15 +86,19 @@ USER $USERNAME
 CMD ["/bin/bash"]
 
 # Setup husky controller by the script.
+# Build certain packages from source for arm64.
+COPY script /home/$USERNAME/script
+RUN sudo apt-get update \
+    && bash -ie /home/$USERNAME/script/install-clearpath-robot.sh \
+    && sudo rm -rf /var/lib/apt/lists/*
 # Note: The script need to be run as user, not root.
 # Reference: https://github.com/clearpathrobotics/clearpath_computer_installer/tree/main
 COPY clearpath_computer_installer /home/$USERNAME/clearpath_computer_installer
 RUN sudo apt-get update \
-    && /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh \
+    && bash -ie /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh \
     && sudo rm -rf /var/lib/apt/lists/*
 # Setup udev rules.
 COPY udev_rules /home/$USERNAME/udev_rules
 RUN /home/$USERNAME/udev_rules/install_udev_rules.sh
 # Generate robot configuration files.
-COPY script /home/$USERNAME/script
-RUN /home/$USERNAME/script/husky-generate.sh 
+RUN bash -ie /home/$USERNAME/script/husky-generate.sh
