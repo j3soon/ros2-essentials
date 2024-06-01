@@ -12,7 +12,7 @@ on:
 
 jobs:
   docker:
-    if: github.repository == 'j3soon/ros2-agv-essentials'
+    if: github.repository == 'j3soon/ros2-essentials'
     runs-on: ubuntu-latest
     steps:
       -

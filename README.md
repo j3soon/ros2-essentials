@@ -1,6 +1,6 @@
-# ROS 2 AGV Essentials
+# ROS 2 Essentials
 
-A repo containing essential ROS2 Humble features for controlling Autonomous Guided Vehicles (AGVs). Please setup an Ubuntu environment before using this repo.
+A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs). Please setup an Ubuntu environment before using this repo.
 
 ## Pre-built Docker Images
 

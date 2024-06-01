@@ -3,7 +3,7 @@
 ### Run with docker
 
 ```bash
-git clone https://github.com/j3soon/ros2-agv-essentials.git
+git clone https://github.com/j3soon/ros2-essentials.git
 ```
 
 ```bash

@@ -138,7 +138,7 @@ rosrun roscpp_tutorials listener
 docker exec -it ros2 /ros_entrypoint.sh bash
 # In ROS 2 container
 # Use the same UID as ros1_bridge to prevent Fast-DDS Shared Memory permission issues.
-# Ref: https://github.com/j3soon/ros2-agv-essentials/pull/9#issuecomment-1795743063
+# Ref: https://github.com/j3soon/ros2-essentials/pull/9#issuecomment-1795743063
 useradd -ms /bin/bash user
 su user
 source /ros_entrypoint.sh
