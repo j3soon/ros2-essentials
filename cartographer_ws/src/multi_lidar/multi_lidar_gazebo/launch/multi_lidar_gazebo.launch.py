@@ -14,16 +14,14 @@ def generate_launch_description():
     # Path settings
 
     # Declared the world path
-    # Ref: https://github.com/ROBOTIS-GIT/turtlebot3_simulations/tree/98a27b20952b11047f454d7ec751f8c742862713
-    # File path: turtlebot3_gazebo/worlds/turtlebot3_world.world
+    # Ref: https://github.com/ROBOTIS-GIT/turtlebot3_simulations/tree/98a27b20952b11047f454d7ec751f8c742862713/turtlebot3_gazebo/worlds/turtlebot3_world.world
     world_path = PathJoinSubstitution([
         FindPackageShare("turtlebot3_gazebo"), 
         "worlds/turtlebot3_world.world"
     ])
 
     # Gazebo launch file path
-    # Ref: https://github.com/ros-simulation/gazebo_ros_pkgs/blob/0f4818cd5d594f044a65e5beaf4a8b296ed00bc6
-    # File path: gazebo_ros/launch/gazebo.launch.py
+    # Ref: https://github.com/ros-simulation/gazebo_ros_pkgs/blob/0f4818cd5d594f044a65e5beaf4a8b296ed00bc6/gazebo_ros/launch/gazebo.launch.py
     gazebo_path = PathJoinSubstitution([
         FindPackageShare("gazebo_ros"), 
         "launch", "gazebo.launch.py"

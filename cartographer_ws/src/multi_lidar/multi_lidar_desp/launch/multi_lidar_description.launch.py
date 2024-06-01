@@ -28,8 +28,7 @@ def generate_launch_description():
     ])
     
     # Add robot description
-    # Ref: https://github.com/ROBOTIS-GIT/turtlebot3_simulations/blob/98a27b20952b11047f454d7ec751f8c742862713
-    # File path: turtlebot3_gazebo/launch/robot_state_publisher.launch.py
+    # Ref: https://github.com/ROBOTIS-GIT/turtlebot3_simulations/blob/98a27b20952b11047f454d7ec751f8c742862713/turtlebot3_gazebo/launch/robot_state_publisher.launch.py
     urdf_path = os.path.join(
         get_package_share_directory('multi_lidar_desp'),
         'urdf',
@@ -49,7 +48,7 @@ def generate_launch_description():
     )
 
     # Spawn the robot in Gazebo
-    # Ref: https://github.com/ros-simulation/gazebo_ros_pkgs/blob/ros2/gazebo_ros/launch/spawn_entity_demo.launch.py
+    # Ref: https://github.com/ros-simulation/gazebo_ros_pkgs/blob/d52f7c471d1d2fd9425bf8621290bc4831be8dea/gazebo_ros/launch/spawn_entity_demo.launch.py
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
