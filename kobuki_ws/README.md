@@ -76,7 +76,7 @@ cd /home/ros2-agv-essentials/kobuki_ws
 colcon build --symlink-install
 ```
 
-- The `--symlink-install` flag is optional, adding this flag may provide more convenience.
+- The `--symlink-install` flag is optional, adding this flag may provide more convenience. See [this post](https://answers.ros.org/question/371822/what-is-the-use-of-symlink-install-in-ros2-colcon-build/) for more info.
 
 > After the build process, make sure to source the `install/setup.bash` file.  
 > Otherwise, ROS2 will not locate the executable files. You can open a new terminal to accomplish this.
