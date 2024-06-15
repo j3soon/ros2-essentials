@@ -80,8 +80,8 @@ RUN apt-get update && apt-get install -y \
     #
     # Install navigation dependencies
     # Reference:
-    # - https://navigation.ros.org/development_guides/build_docs/index.html
-    # - https://navigation.ros.org/tutorials/docs/navigation2_with_slam.html
+    # - https://docs.nav2.org/development_guides/build_docs/index.html
+    # - https://docs.nav2.org/tutorials/docs/navigation2_with_slam.html
     ros-$ROS_DISTRO-navigation2 \
     ros-$ROS_DISTRO-nav2-bringup \
     ros-$ROS_DISTRO-slam-toolbox \

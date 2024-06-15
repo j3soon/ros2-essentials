@@ -5,7 +5,7 @@
 # Those adjustments may be found in the local_costmap and global_costmap configurations.
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-amcl.html
+# - https://docs.nav2.org/configuration/packages/configuring-amcl.html
 amcl:
   ros__parameters:
     use_sim_time: True
@@ -56,7 +56,7 @@ amcl_rclcpp_node:
     use_sim_time: True
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-bt-navigator.html
+# - https://docs.nav2.org/configuration/packages/configuring-bt-navigator.html
 bt_navigator:
   ros__parameters:
     use_sim_time: True
@@ -107,7 +107,7 @@ bt_navigator_rclcpp_node:
     use_sim_time: True
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-controller-server.html
+# - https://docs.nav2.org/configuration/packages/configuring-controller-server.html
 controller_server:
   ros__parameters:
     use_sim_time: True
@@ -181,7 +181,7 @@ controller_server_rclcpp_node:
     use_sim_time: True
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-costmaps.html
+# - https://docs.nav2.org/configuration/packages/configuring-costmaps.html
 local_costmap:
   local_costmap:
     ros__parameters:
@@ -213,7 +213,7 @@ local_costmap:
           marking: True
           data_type: "PointCloud2"
       voxel_layer:
-        # Reference: https://navigation.ros.org/configuration/packages/costmap-plugins/voxel.html
+        # Reference: https://docs.nav2.org/configuration/packages/costmap-plugins/voxel.html
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
         publish_voxel_map: False # Set to True for debugging purposes. It will be computationally expensive.
@@ -305,7 +305,7 @@ global_costmap:
       use_sim_time: True
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-map-server.html
+# - https://docs.nav2.org/configuration/packages/configuring-map-server.html
 map_server:
   ros__parameters:
     use_sim_time: True
@@ -320,7 +320,7 @@ map_saver:
     map_subscribe_transient_local: True
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-planner-server.html
+# - https://docs.nav2.org/configuration/packages/configuring-planner-server.html
 planner_server:
   ros__parameters:
     expected_planner_frequency: 10.0
@@ -337,7 +337,7 @@ planner_server_rclcpp_node:
     use_sim_time: True
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-smoother-server.html
+# - https://docs.nav2.org/configuration/packages/configuring-smoother-server.html
 smoother_server:
   ros__parameters:
     use_sim_time: True
@@ -349,7 +349,7 @@ smoother_server:
       do_refinement: True
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-behavior-server.html
+# - https://docs.nav2.org/configuration/packages/configuring-behavior-server.html
 behavior_server:
   ros__parameters:
     costmap_topic: local_costmap/costmap_raw
@@ -380,7 +380,7 @@ robot_state_publisher:
     use_sim_time: True
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-waypoint-follower.html
+# - https://docs.nav2.org/configuration/packages/configuring-waypoint-follower.html
 waypoint_follower:
   ros__parameters:
     use_sim_time: True
@@ -393,7 +393,7 @@ waypoint_follower:
       waypoint_pause_duration: 200
 
 # Reference:
-# - https://navigation.ros.org/configuration/packages/configuring-velocity-smoother.html
+# - https://docs.nav2.org/configuration/packages/configuring-velocity-smoother.html
 velocity_smoother:
   ros__parameters:
     use_sim_time: True
