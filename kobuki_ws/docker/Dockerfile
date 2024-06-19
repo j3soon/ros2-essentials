@@ -1,23 +1,17 @@
-# Choose the architecture: arm or amd
-ARG TARGET_PLATFORM=amd
-
 # Base Image : https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
-FROM arm64v8/ros:humble AS arm
-
+FROM arm64v8/ros:humble AS arm64
 # Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
-FROM osrf/ros:humble-desktop-full AS amd
+FROM osrf/ros:humble-desktop-full AS amd64
 
-# Install Gazebo
-RUN apt-get update && apt-get install -y \
-    ros-$ROS_DISTRO-gazebo-ros-pkgs \
-    && rm -rf /var/lib/apt/lists/*
-
-##########################################################################################
-
-FROM $TARGET_PLATFORM
+# Use docker automatic platform args to select the base image.
+# It may be `arm64` or `amd64` depending on the platform.
+# Reference: 
+# - https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope
+FROM $TARGETARCH
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 
+ARG TARGETARCH
 ARG USERNAME=user
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -54,16 +48,25 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Install ROS2 RVIZ
-RUN apt-get update && apt-get install -y \
-    ros-$ROS_DISTRO-rviz2 \
-    && rm -rf /var/lib/apt/lists/*
+# Install ROS2 RVIZ and Gazebo
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        apt-get update && apt-get install -y \
+        ros-$ROS_DISTRO-gazebo-ros-pkgs \
+        ros-$ROS_DISTRO-gazebo-ros2-control \
+        && rm -rf /var/lib/apt/lists/*; \
+    elif [ "$TARGETARCH" = "arm64" ]; then \
+        # Fix the issue of Eigen
+        # Reference:
+        # - https://gitlab.com/libeigen/eigen/-/issues/2326
+        sed -i 's/EIGEN_ALWAYS_INLINE eigen_packet_wrapper() {}/EIGEN_ALWAYS_INLINE eigen_packet_wrapper() = default;/' /usr/include/eigen3/Eigen/src/Core/GenericPacketMath.h; \
+    fi
 
 # Install Kobuki dependencies
 # The list of packages below was identified by executing the following command:
 # sudo rosdep install --from-paths src --ignore-src -y
 # Install these packages to avoid having to run `rosdep install` every time you build the workspace.
 RUN apt-get update && apt-get install -y \
+    ros-$ROS_DISTRO-rviz2 \
     ros-$ROS_DISTRO-ros-testing \
     ros-$ROS_DISTRO-kobuki-velocity-smoother \
     ros-$ROS_DISTRO-diagnostics \

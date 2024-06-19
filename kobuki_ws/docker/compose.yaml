@@ -4,8 +4,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - TARGET_PLATFORM=amd
+      # Specify the target platform to build the image.
+      # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
+      # platforms:
+      #   - "linux/arm64"
     image: j3soon/ros2-kobuki-ws
     container_name: ros2-kobuki-ws
     stdin_open: true
