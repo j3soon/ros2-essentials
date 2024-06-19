@@ -21,5 +21,6 @@
         }
     },
     // Lifecycle scripts
-    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh",
+    "postStartCommand": "${containerWorkspaceFolder}/.devcontainer/postStartCommand.sh"
 }

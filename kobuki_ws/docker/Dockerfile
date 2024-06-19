@@ -93,3 +93,7 @@ COPY .bashrc /home/$USERNAME/.bashrc
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
 CMD ["/bin/bash"]
+
+# Setup udev rules for Kobuki.
+COPY udev_rules /home/$USERNAME/udev_rules
+RUN /home/$USERNAME/udev_rules/install_udev_rules.sh
