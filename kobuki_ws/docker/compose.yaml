@@ -41,10 +41,13 @@ services:
       - /etc/localtime:/etc/localtime:ro
       # Mount X11 server
       - /tmp/.X11-unix:/tmp/.X11-unix
-      # Direct Rendering Infrastructure
-      - /dev/dri:/dev/dri
-      # Mount sound card to prevent Gazebo warning.
-      - /dev/snd:/dev/snd
+      # Mount devices.
+      # If you don't want to mount all devices, you can specify the ones you need.
+      # But make sure to mount the device below:
+      # - Direct Rendering Infrastructure: /dev/dri
+      # - Sound Card: /dev/snd
+      # - Kubuki Base: usually /dev/ttyUSB0
+      - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       - ./cache/.gazebo:/home/user/.gazebo
@@ -55,8 +58,3 @@ services:
       # "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
       # Mount workspace
       - ../..:/home/ros2-agv-essentials
-    devices:
-      # TODO: Support mounting points other than /dev/ttyUSB0.
-      # We assume that the Kobuki is connected to /dev/ttyUSB0.
-      # If not, please change the following line.
-      - /dev/ttyUSB0:/dev/ttyUSB0
