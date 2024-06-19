@@ -77,6 +77,7 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-joint-state-broadcaster \
     ros-$ROS_DISTRO-imu-tools \
     ros-$ROS_DISTRO-pointcloud-to-laserscan \
+    ros-$ROS_DISTRO-teleop-twist-keyboard \
     #
     # Install navigation dependencies
     # Reference:
