@@ -3,10 +3,15 @@ FROM arm64v8/ros:humble AS arm64
 # Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
 FROM osrf/ros:humble-desktop-full AS amd64
 
+# Use docker automatic platform args to select the base image.
+# It may be `arm64` or `amd64` depending on the platform.
+# Reference: 
+# - https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope
 FROM $TARGETARCH
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 
+ARG TARGETARCH
 ARG USERNAME=user
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -45,8 +50,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
         apt-get update && apt-get install -y \
-        && ros-$ROS_DISTRO-gazebo-ros-pkgs \
-        && ros-$ROS_DISTRO-gazebo-ros2-control \
+        ros-$ROS_DISTRO-gazebo-ros-pkgs \
+        ros-$ROS_DISTRO-gazebo-ros2-control \
         && rm -rf /var/lib/apt/lists/*; \
     fi
 
