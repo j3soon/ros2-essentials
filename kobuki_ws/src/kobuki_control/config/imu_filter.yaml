@@ -1,0 +1,19 @@
+imu_filter:
+  ros__parameters:
+    stateless: false
+    # Since we don't have a magnetometer in Gazebo.
+    use_mag: false
+    # Enable `publish_tf` will let the filter publish the tf of odom -> gyro_link
+    # which is not needed in Gazebo, as it will be published by the robot_state_publisher.
+    publish_tf: false
+    reverse_tf: false
+    fixed_frame: "odom"
+    constant_dt: 0.0
+    publish_debug_topics: false
+    world_frame: "enu"
+    gain: 0.1
+    zeta: 0.0
+    mag_bias_x: 0.0
+    mag_bias_y: 0.0
+    mag_bias_z: 0.0
+    orientation_stddev: 0.0

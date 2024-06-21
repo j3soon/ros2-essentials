@@ -1,0 +1,15 @@
+/**
+\mainpage
+
+<b>Welcome!</b>
+
+<hr/>
+
+You have found the c++ api documentation for the Kobuki. These pages will be useful if you
+intend to write your own custom c++ application with the Kobuki libraries or if you are
+endeavouring to understand a an application or driver written by someone else.
+
+If you were perchance chasing the user documentation, please refer to the
+<a href="https://kobuki.readthedocs.io/en/devel/">Kobuki User Guide</a>.
+
+*/

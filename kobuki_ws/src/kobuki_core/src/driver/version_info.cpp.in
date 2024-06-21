@@ -1,0 +1,11 @@
+#include "kobuki_core/version_info.hpp"
+
+namespace kobuki
+{
+
+std::string VersionInfo::getSoftwareVersion()
+{
+  return std::string("@kobuki_core_VERSION@");
+}
+
+} //namespace kobuki

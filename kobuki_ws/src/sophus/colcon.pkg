@@ -1,0 +1,3 @@
+{
+    "cmake-args": [ "-DSOPHUS_USE_BASIC_LOGGING=ON" ]
+}

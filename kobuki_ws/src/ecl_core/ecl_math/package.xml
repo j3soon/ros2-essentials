@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>ecl_math</name>
+  <version>1.2.1</version>
+  <description>
+    This package provides simple support to cmath, filling in holes
+    or redefining in a c++ formulation where desirable.
+  </description>
+  <maintainer email="d.stonier@gmail.com">Daniel Stonier</maintainer>
+  <license>BSD</license>
+  <url type="website">http://wiki.ros.org/ecl_math</url>
+  <url type="repository">https://github.com/stonier/ecl_core</url>
+  <url type="bugtracker">https://github.com/stonier/ecl_core/issues</url>
+  <author email="d.stonier@gmail.com">Daniel Stonier</author> -->
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <build_depend>ecl_license</build_depend>
+  <build_depend>ecl_build</build_depend>
+  <build_depend>ecl_type_traits</build_depend>
+
+  <exec_depend>ecl_license</exec_depend>
+  <exec_depend>ecl_type_traits</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+
+

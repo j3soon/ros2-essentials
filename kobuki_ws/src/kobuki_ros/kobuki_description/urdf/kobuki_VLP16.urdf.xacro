@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<robot name="kobuki_VLP16" xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- Arguments -->
+    <xacro:arg name="is_sim" default="true"/>
+    <xacro:arg name="VLP16_enabled" default="true"/>
+    <xacro:arg name="gpu" default="false"/>
+    <xacro:arg name="organize_cloud" default="false"/>
+
+    <!-- Properties -->
+    <xacro:property name="is_sim" value="$(arg is_sim)"/>
+    <xacro:property name="VLP16_enabled" value="$(arg VLP16_enabled)"/>
+    <xacro:property name="gpu" value="$(arg gpu)"/>
+    <xacro:property name="organize_cloud" value="$(arg organize_cloud)"/>
+
+    <!-- Defines the kobuki component tag. -->
+    <xacro:include filename="$(find kobuki_description)/urdf/kobuki.urdf.xacro" />
+    <xacro:kobuki is_sim="${is_sim}"/>
+
+    <!-- Defines the VLP-16 component tag. -->
+    <xacro:if value="$(arg VLP16_enabled)">
+        <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+        <xacro:VLP-16 is_sim="${is_sim}" parent="base_link" name="velodyne" topic="/velodyne_points" organize_cloud="${organize_cloud}" hz="10" samples="440" gpu="${gpu}">
+            <origin xyz="0 0 0.2" rpy="0 0 0" />
+        </xacro:VLP-16>
+    </xacro:if>
+</robot>

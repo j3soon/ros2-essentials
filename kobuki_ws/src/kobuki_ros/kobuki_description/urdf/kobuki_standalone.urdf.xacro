@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="kobuki_standalone">
+    <!-- Arguments -->
+    <xacro:arg name="is_sim" default="true"/>
+
+    <!-- Properties -->
+    <xacro:property name="is_sim" value="$(arg is_sim)" />
+
+    <!-- Defines the kobuki component tag. -->
+    <xacro:include filename="$(find kobuki_description)/urdf/kobuki.urdf.xacro" />
+    <xacro:kobuki is_sim="${is_sim}"/>
+</robot>
