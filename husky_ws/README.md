@@ -104,3 +104,14 @@ source ~/.bashrc
 # (Optional) Open a new terminal & control the robot via keyboard teleoperation.
 ./script/husky-teleop.sh
 ```
+
+## License
+
+To maintain reproducibility, we have frozen the following packages at specific commits. The licenses of these packages are listed below:
+
+* [husky/husky](https://github.com/husky/husky) (at commit 1e0b1d1, `humble-devel` branch) is released under the [BSD-3-Clause License](https://github.com/husky/husky/blob/noetic-devel/LICENSE).
+* [clearpathrobotics/LMS1xx](https://github.com/clearpathrobotics/LMS1xx) (at commit 90001ac, `humble-devel` branch) is released under the [LGPL License](https://github.com/clearpathrobotics/LMS1xx/blob/humble-devel/package.xml).
+* [osrf/citysim](https://github.com/osrf/citysim) (at commit 3928b08) is released under the [Apache-2.0 License](https://github.com/osrf/citysim/blob/master/LICENSE).
+* [clearpathrobotics/clearpath_computer_installer](https://github.com/clearpathrobotics/clearpath_computer_installer) (at commit 7e7f415) is released under the [BSD-3-Clause License](https://github.com/clearpathrobotics/clearpath_computer_installer/blob/main/LICENSE).
+
+Further changes based on the packages above are release under the [Apache-2.0 License](https://github.com/j3soon/ros2-essentials/blob/master/LICENSE), as stated in the repository.
