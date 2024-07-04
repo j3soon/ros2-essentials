@@ -101,3 +101,8 @@ CMD ["/bin/bash"]
 # Setup udev rules for Kobuki.
 COPY udev_rules /home/$USERNAME/udev_rules
 RUN /home/$USERNAME/udev_rules/install_udev_rules.sh
+
+# Build the kobuki driver workspace
+COPY --chown=$USER_UID:$USER_GID kobuki_driver_ws /home/$USERNAME/kobuki_driver_ws
+RUN cd /home/$USERNAME/kobuki_driver_ws \
+    && /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build --symlink-install"
