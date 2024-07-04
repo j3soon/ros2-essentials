@@ -113,5 +113,6 @@ To maintain reproducibility, we have frozen the following packages at specific c
 * [clearpathrobotics/LMS1xx](https://github.com/clearpathrobotics/LMS1xx) (at commit 90001ac, `humble-devel` branch) is released under the [LGPL License](https://github.com/clearpathrobotics/LMS1xx/blob/humble-devel/package.xml).
 * [osrf/citysim](https://github.com/osrf/citysim) (at commit 3928b08) is released under the [Apache-2.0 License](https://github.com/osrf/citysim/blob/master/LICENSE).
 * [clearpathrobotics/clearpath_computer_installer](https://github.com/clearpathrobotics/clearpath_computer_installer) (at commit 7e7f415) is released under the [BSD-3-Clause License](https://github.com/clearpathrobotics/clearpath_computer_installer/blob/main/LICENSE).
+* [clearpathrobotics/clearpath_robot/clearpath_robot/debian/udev](https://github.com/clearpathrobotics/clearpath_robot/blob/17d55f1b27d3fe19fb82e7df64dca96dbd345837/clearpath_robot/debian/udev) (at commit 17d55f1) is released under the [BSD 3-Clause License](https://github.com/clearpathrobotics/clearpath_robot/blob/17d55f1b27d3fe19fb82e7df64dca96dbd345837/LICENSE).
 
 Further changes based on the packages above are release under the [Apache-2.0 License](https://github.com/j3soon/ros2-essentials/blob/master/LICENSE), as stated in the repository.
