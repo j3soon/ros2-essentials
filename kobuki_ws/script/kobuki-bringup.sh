@@ -17,3 +17,10 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger --subsystem-match=tty
 
 echo "Done."
+
+# Source kobuki driver workspace environment.
+source /opt/ros/$ROS_DISTRO/setup.bash
+source ~/kobuki_driver_ws/install/local_setup.bash
+
+# Bring up the kobuki node.
+ros2 launch kobuki_node kobuki_node-launch.py
