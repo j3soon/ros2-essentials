@@ -130,7 +130,7 @@ ros2 launch kobuki_navigation slam.launch.py
 
 Since the embedded system may not have enough memory to build the packages, or it may take a long time to build them, you can build the packages on a x86_64 machine and then copy the executable files to the arm64 machine.
 
-First, you need to set up the Docker cross-compilation environment. See [this repo](https://github.com/multiarch/qemu-user-static) and [this website](https://www.stereolabs.com/docs/docker/building-arm-container-on-x86?fbclid=IwAR35xqEMsZRUbBf9mXkYx2KRU_yIWVOKInLL6WOmnvy2XPQnW5sJB8b_7aM) for more info.
+First, you need to set up the Docker cross-compilation environment. See [this repo](https://github.com/multiarch/qemu-user-static) and [this website](https://www.stereolabs.com/docs/docker/building-arm-container-on-x86) for more info.
 
 ```bash
 # Install the QEMU packages
