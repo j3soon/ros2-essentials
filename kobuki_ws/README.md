@@ -14,16 +14,15 @@ This repository is primarily based on the [kobuki-base](https://github.com/kobuk
 |   kobuki_launch    |                        Launch Kobuki in Gazebo or with a real robot                        |
 | kobuki_navigation  |                                SLAM setup for Kobuki                                       |
 | kobuki_description |                                  Robot description (URDF)                                  |
-|    kobuki_keyop    | Similar to [teleop_twist_keyboard](https://github.com/ros2/teleop_twist_keyboard) in ROS 2 |
 |    kobuki_node     |                                       Kobuki Driver                                        |
 |    kobuki_rviz     |                                 Visualizing data in RViz2                                  |
-| velodyne_simulator |                                 Simulating VLP-16 in Gaebo                                 |
+| velodyne_simulator |                                 Simulating VLP-16 in Gazebo                                |
 
 ## 🚩 Testing 🚩
 
 ### Building packages
 
-Before attempting any examples, please remember to build the packages first.
+> If you only need to bring up the real Kobuki robot, you don't need to compile the workspace. The Kobuki driver is already included in the Docker image. After the Docker image is built, you can directly bring up the robot.
 
 ```bash
 cd /home/ros2-agv-essentials/kobuki_ws
@@ -38,8 +37,7 @@ colcon build --symlink-install --packages-ignore velodyne_gazebo_plugins
 - The `--packages-ignore` flag is used to ignore the `velodyne_gazebo_plugins` package. This package will use the `gazebo_ros_pkgs` package, which is not supported in the arm64 architecture.
 - Please note that the building process for the embedded system may take a long time and could run out of memory. You can use the flag `--parallel-workers 1` to reduce the number of parallel workers, or you can build the packages on a more powerful machine and then transfer the executable files to the embedded system. For guidance on building the packages on a x86_64 architecture and then transferring the files to an arm64 architecture, refer to the `cross-compilation` section at the end of this README.
 
-After the build process, make sure to source the `install/setup.bash` file.  
-Otherwise, ROS2 will not locate the executable files. You can open a new terminal to accomplish this.
+After the build process, make sure to source the `install/setup.bash` file. Otherwise, ROS2 will not locate the executable files. You can open a new terminal to accomplish this.
 
 ### Visualize the model in RViz
 
@@ -69,21 +67,17 @@ ros2 launch kobuki_launch kobuki.launch.py is_sim:=true
 
 ### Launch the robot in the real world
 
-First of all, please reload the udev rule, and re-plug the USB cable to the Kobuki.
-
 ```bash
+# Inside the container
 cd /home/ros2-agv-essentials/kobuki_ws
-./script/reload-udev.sh
+./script/kobuki-bringup.sh
+
+# Outside the container
+cd /path/to/kobuki_ws/docker
+docker compose run kobuki-ws /home/ros2-agv-essentials/kobuki_ws/script/kobuki-bringup.sh
 ```
 
-After the reload, you should see a symlink `/dev/kobuki -> /dev/ttyUSB0` or something similar. If you can't find this link at `/dev`, please ensure that the container has access to the Kobuki. You can try to re-plug the USB cable, reopen the Kobuki, or even restart the container.
-
-Once the udev rule is established, you can launch the real robot with the following command.  
-If you have successfully connected to the Kobuki, you should hear a sound from it.
-
-```bash
-ros2 launch kobuki_launch kobuki.launch.py is_sim:=false
-```
+If you have successfully connected to the Kobuki, you should hear a sound from it. Otherwise, there may be errors. You can try re-plugging the USB cable, reopening the Kobuki, or even restarting the container.
 
 <div align="center">
     <a href="./">
@@ -99,24 +93,27 @@ If you encounter an error message like the one below or a similar error in the t
     </a>
 </div>
 
-To control the Kobuki with a keyboard, you can use the `teleop_twist_keyboard` package (recommended) or the `kobuki_keyop` package.
+To control the Kobuki with a keyboard, you can use the `teleop_twist_keyboard` package.
 
 ```bash
-# teleop_twist_keyboard
 # Recommend speed: 
 # - Linear 0.1
 # - Angular 0.3
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
 
-# kobuki_keyop
-ros2 run kobuki_keyop kobuki_keyop_node
+# Inside the container
+cd /home/ros2-agv-essentials/kobuki_ws
+./script/kobuki-teleop.sh
+
+# Outside the container
+cd /path/to/kobuki_ws/docker
+docker compose run kobuki-ws /home/ros2-agv-essentials/kobuki_ws/script/kobuki-teleop.sh
 ```
 
 ### Launch the demo of SLAM
 
 This demo is based on the [slam_toolbox](https://github.com/SteveMacenski/slam_toolbox) package and only supports the simulation environment.
 
-```bash=
+```bash
 ros2 launch kobuki_navigation slam.launch.py
 ```
 
@@ -143,7 +140,7 @@ docker run --rm -t arm64v8/ros:humble uname -m
 
 Secondly, modify the target platform for the Docker image in `docker/compose.yaml` by uncommenting the two lines below.
 
-```
+```yaml
 platforms:
     - "linux/arm64"
 ```
