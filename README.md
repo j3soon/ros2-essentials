@@ -18,6 +18,10 @@ Pulling the pre-built Docker images can bypass the time-consuming building proce
 | [j3soon/ros2-cartographer-ws](https://hub.docker.com/r/j3soon/ros2-cartographer-ws/tags) | [`./cartographer_ws`](./cartographer_ws) | ✔️ | ❌ |
 | [j3soon/ros2-husky-ws](https://hub.docker.com/r/j3soon/ros2-husky-ws/tags) | [`./husky_ws`](./husky_ws) | ✔️ | ✔️ |
 
+## Contributors
+
+The code is mainly contributed by [Johnson](https://github.com/j3soon), [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), and [others](https://github.com/j3soon/ros2-essentials/graphs/contributors).
+
 ## Supplementary
 
 ### Installing Docker
