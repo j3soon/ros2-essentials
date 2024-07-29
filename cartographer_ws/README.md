@@ -8,8 +8,8 @@ git clone https://github.com/j3soon/ros2-essentials.git
 
 ```bash
 cd ros2-agv-essentials/cartographer_ws/docker
-docker-compose pull
-docker-compose up -d --build
+docker compose pull
+docker compose up -d --build
 ```
 
 ### Simple Test With Turtlebot3

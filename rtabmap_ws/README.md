@@ -8,8 +8,8 @@ git clone https://github.com/j3soon/ros2-essentials.git
 
 ```bash
 cd ros2-agv-essentials/rtabmap_ws/docker
-docker-compose pull
-docker-compose up -d --build
+docker compose pull
+docker compose up -d --build
 ```
 
 - Attach to the container

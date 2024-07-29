@@ -38,7 +38,7 @@ ros1_bridge_ws
 
 # 🚩 How to use 🚩
 
-> There are two services in the docker-compose, one is `ros1-bridge`, and the other one is `ros1-bridge-build`.  
+> There are two services in the docker compose, one is `ros1-bridge`, and the other one is `ros1-bridge-build`.  
 > `ros1-bridge` should be sufficient for normal usage.  
 > `ros1-bridge-build`, which contains all the necessary build tools, is used for debugging purposes.  
 >
@@ -156,7 +156,7 @@ simply starting the container will suffice.
 
 # 🔍 Troubleshooting 🔍
 
-> If you are trying to debug ros1_bridge, it is recommended to use the `ros1-bridge-build` service in docker-compose.  
+> If you are trying to debug ros1_bridge, it is recommended to use the `ros1-bridge-build` service in docker compose.  
 > It contains all the necessary build tools, which should be helpful for you.
 
 ## Failed to contact master

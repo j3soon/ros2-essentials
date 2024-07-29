@@ -73,7 +73,7 @@ We have provided a script to create a new workspace. Please use it to avoid pote
 Spotting the workspace folder within your Explorer indicates that you've selected the wrong folder.  
 You should only observe the `.devcontainer`, `docker` and `src` folders there.
 
-**Note**: Alternatively, you can use `docker-compose` instead of `devcontainer` if you are not using VSCode.
+**Note**: Alternatively, you can use `docker compose` instead of `devcontainer` if you are not using VSCode.
 
 ### 4. Build the container.
 
