@@ -54,6 +54,8 @@ RUN adduser --disabled-password --gecos '' --shell /bin/bash ${USERNAME} && \
     adduser ${USERNAME} sudo && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+COPY .bashrc /home/${USERNAME}/.bashrc
+
 # Login with user
 USER ${USERNAME}
 
