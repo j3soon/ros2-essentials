@@ -3,7 +3,14 @@ services:
   # Container for ROS2 VLP LiDAR
   vlplidar-ws:
     # Build or Reference the image
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # Specify the target platform to build the image.
+      # It could still be automatically detected.
+      # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
+      # platforms:
+      #   - "linux/arm64"
     image: j3soon/ros2-vlp-ws
     container_name: ros2-vlp-ws
     stdin_open: true
