@@ -118,6 +118,28 @@ ros2 launch vlp_cartographer vlp_driver.launch.py
 
 ---
 
+## Bringup
+
+- Build the docker image and workspace
+
+    ```bash
+    docker compose up --build
+    ```
+
+- LiDAR driver
+
+    ```bash
+    docker exec -it ros2-vlp-ws /home/ros2-agv-essentials/vlplidar_ws/scripts/lidar-driver-bringup.sh
+    ```
+
+- LiDAR SLAM with cartographer
+
+    ```bash
+    docker exec -it ros2-vlp-ws /home/ros2-agv-essentials/vlplidar_ws/scripts/lidar-slam-bringup.sh
+    ```
+
+---
+
 ## Reference
 
 - [Velodyne_driver with ROS2 Humble](https://github.com/ros-drivers/velodyne/tree/d8cf623a922b1f12995e8c71295924c2905bd9a3)
