@@ -2,11 +2,19 @@ from launch_ros.actions import Node, PushRosNamespace
 from launch_ros.substitutions import FindPackageShare
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, GroupAction, DeclareLaunchArgument
+from launch.conditions import UnlessCondition, IfCondition
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 
 
 def generate_launch_description():
+
+    #####################################
+    # Get argument by launch configuration
+    # Ref: https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-Substitutions.html
+
+    using_odom = LaunchConfiguration('using_odom')
+    using_odom_arg = DeclareLaunchArgument('using_odom', default_value='False')
 
     #####################################
     # Path settings
@@ -26,7 +34,8 @@ def generate_launch_description():
     
     # Some minor settings such as frame name is different,
     # we should use our own config file
-    cartographer_basename = "cartographer_demo.lua"
+    cartographer_demo_basename = "cartographer_demo.lua"
+    cartographer_with_odom_basename = "cartographer_with_odom.lua"
 
     #####################################
     # Add launch description
@@ -35,12 +44,27 @@ def generate_launch_description():
         cartographer_demo_path,
         launch_arguments={
             'cartographer_config_dir': cartographer_config_dir,
-            'configuration_basename': cartographer_basename
+            'configuration_basename': cartographer_demo_basename
         }.items(),
+        condition=UnlessCondition(using_odom)
+    )
+
+    cartographer_with_odom = IncludeLaunchDescription(
+        cartographer_demo_path,
+        launch_arguments={
+            'cartographer_config_dir': cartographer_config_dir,
+            'configuration_basename': cartographer_with_odom_basename
+        }.items(),
+        condition=IfCondition(using_odom)
     )
     
     #####################################
     # Launch description
     return LaunchDescription([
-        cartographer_demo
+
+        # --- Arguments ---
+        using_odom_arg,
+
+        # --- Nodes ---
+        cartographer_demo, cartographer_with_odom
     ])
