@@ -20,26 +20,34 @@ ARG USER_GID=$USER_UID
 
 #############################################
 # --- Basic setup ---
+
+# Install necessary packages, Note: formation ref: template_ws
+RUN apt-get update && apt-get install -y \
+    sudo \
+    vim \
+    curl \
+    tree \
+    tmux \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ROS2 and Gazebo simulation packages when using `amd64` platform
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        apt update && apt install -y \
+        ros-$ROS_DISTRO-turtlebot3-gazebo \
+        ros-$ROS_DISTRO-gazebo-ros-pkgs \
+        ros-$ROS_DISTRO-joint-state-publisher-gui \
+        ros-$ROS_DISTRO-rqt-robot-steering \
+        && rm -rf /var/lib/apt/lists/*; \
+        curl -sSL http://get.gazebosim.org | sh; \
+    fi
+
+# Install ROS2 velodyne package
 RUN apt-get update && \
     apt-get install -y \
-                sudo \
-                vim \
-                curl \
-                tree \
-                tmux \
-                # ---
-                # Simulation required packages
-                ros-humble-turtlebot3 \
-                ros-humble-turtlebot3-gazebo \
-                ros-humble-gazebo-ros-pkgs \
-                ros-humble-joint-state-publisher-gui \
-                ros-humble-rqt-robot-steering \
-                ros-humble-diagnostic-updater \
-                ros-humble-velodyne && \
-                rm -rf /var/lib/apt/lists/*
-
-# Install Gazebo
-RUN curl -sSL http://get.gazebosim.org | sh
+    ros-$ROS_DISTRO-turtlebot3 \
+    ros-$ROS_DISTRO-diagnostic-updater \
+    ros-$ROS_DISTRO-velodyne && \
+    rm -rf /var/lib/apt/lists/*
 
 # # add user with default bash
 RUN adduser --disabled-password --gecos '' --shell /bin/bash ${USERNAME} && \
