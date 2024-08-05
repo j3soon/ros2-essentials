@@ -1,0 +1,7 @@
+/doc/generated
+.settings
+build/
+bin/
+lib/
+*.swp
+*.pyc

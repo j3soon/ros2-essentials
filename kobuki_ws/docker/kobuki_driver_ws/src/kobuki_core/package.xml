@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>kobuki_core</name>
+  <version>1.3.1</version>
+  <description>
+    Pure C++ driver library for Kobuki.
+  </description>
+  <author>Daniel Stonier</author>
+  <author>Younghun Ju</author>
+  <author>Jorge Santos Simon</author>
+  <maintainer email="d.stonier@gmail.com">Daniel Stonier</maintainer>
+  <license>BSD</license>
+  <url type="bugtracker">https://github.com/kobuki-base/kobuki_core/issues</url>
+  <url type="repository">https://github.com/kobuki-base/kobuki_core</url>
+  <url type="website">https://kobuki.readthedocs.io/en/release-1.0.x/</url>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <build_depend>ecl_build</build_depend>
+  <build_depend>ecl_command_line</build_depend>
+  <build_depend>ecl_config</build_depend>
+  <build_depend>ecl_console</build_depend>
+  <build_depend>ecl_converters</build_depend>
+  <build_depend>ecl_devices</build_depend>
+  <build_depend>ecl_geometry</build_depend>
+  <build_depend>ecl_mobile_robot</build_depend>
+  <build_depend>ecl_sigslots</build_depend>
+  <build_depend>ecl_threads</build_depend>
+  <build_depend>ecl_time</build_depend>
+
+  <exec_depend>ecl_command_line</exec_depend>
+  <exec_depend>ecl_config</exec_depend>
+  <exec_depend>ecl_console</exec_depend>
+  <exec_depend>ecl_converters</exec_depend>
+  <exec_depend>ecl_devices</exec_depend>
+  <exec_depend>ecl_geometry</exec_depend>
+  <exec_depend>ecl_mobile_robot</exec_depend>
+  <exec_depend>ecl_sigslots</exec_depend>
+  <exec_depend>ecl_threads</exec_depend>
+  <exec_depend>ecl_time</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
