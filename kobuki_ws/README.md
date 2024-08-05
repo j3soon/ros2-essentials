@@ -72,12 +72,12 @@ ros2 launch kobuki_launch kobuki.launch.py is_sim:=true
 cd /home/ros2-agv-essentials/kobuki_ws
 ./script/kobuki-bringup.sh
 
-# Outside the container
+# or Outside the container
 cd /path/to/kobuki_ws/docker
 docker compose run kobuki-ws /home/ros2-agv-essentials/kobuki_ws/script/kobuki-bringup.sh
 ```
 
-If you have successfully connected to the Kobuki, you should hear a sound from it. Otherwise, there may be errors. You can try re-plugging the USB cable, reopening the Kobuki, or even restarting the container.
+If you have successfully connected to the Kobuki, you should hear a sound from it. Otherwise, there may be errors. You can try re-plugging the USB cable, restarting the Kobuki, or even restarting the container.
 
 <div align="center">
     <a href="./">
@@ -104,7 +104,7 @@ To control the Kobuki with a keyboard, you can use the `teleop_twist_keyboard` p
 cd /home/ros2-agv-essentials/kobuki_ws
 ./script/kobuki-teleop.sh
 
-# Outside the container
+# or Outside the container
 cd /path/to/kobuki_ws/docker
 docker compose run kobuki-ws /home/ros2-agv-essentials/kobuki_ws/script/kobuki-teleop.sh
 ```
