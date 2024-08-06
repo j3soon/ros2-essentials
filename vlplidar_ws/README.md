@@ -36,7 +36,7 @@
 - Launch example robot with LiDAR
 
     ```bash
-    ros2 launch velodyne_simulator example.launch.py
+    ros2 launch velodyne_description example.launch.py
     ```
 
 - Launch the LiDAR data process without driver in another terminal
