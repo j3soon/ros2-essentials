@@ -1,0 +1,51 @@
+name: Build Docker Image for kobuki-ws
+
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - .github/workflows/build-kobuki-ws.yaml
+      - kobuki_ws/docker/Dockerfile
+      - kobuki_ws/docker/.dockerignore
+      - kobuki_ws/docker/.bashrc
+      - kobuki_ws/kobuki_driver_ws
+      - kobuki_ws/udev_rules
+
+jobs:
+  docker:
+    if: github.repository == 'j3soon/ros2-essentials'
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Docker meta
+        id: meta
+        # Ref: https://github.com/docker/metadata-action
+        uses: docker/metadata-action@v5
+        with:
+          # Link: https://hub.docker.com/repository/docker/j3soon/ros2-kobuki-ws/tags
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/ros2-kobuki-ws
+          tags: |
+            type=raw,value={{date 'YYYYMMDD'}}
+            type=raw,value=latest
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: kobuki_ws/docker
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
