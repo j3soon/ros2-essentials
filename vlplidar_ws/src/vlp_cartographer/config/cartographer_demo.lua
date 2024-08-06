@@ -48,8 +48,10 @@ options = {
 
 MAP_BUILDER.use_trajectory_builder_2d = true
 
-TRAJECTORY_BUILDER_2D.min_range = 0.5
-TRAJECTORY_BUILDER_2D.max_range = 100       -- Max range provided by VLP-16 user manual
+-- Min/Max range provided by the sensor spec
+-- Ref: https://docs.clearpathrobotics.com/docs/robots/accessories/sensors/lidar_3d/velodyne_puck/#specifications
+TRAJECTORY_BUILDER_2D.min_range = 0.9
+TRAJECTORY_BUILDER_2D.max_range = 100
 TRAJECTORY_BUILDER_2D.missing_data_ray_length = 3.
 TRAJECTORY_BUILDER_2D.use_imu_data = false
 TRAJECTORY_BUILDER_2D.use_online_correlative_scan_matching = true 
