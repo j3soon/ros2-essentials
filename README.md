@@ -23,6 +23,14 @@ Pulling the pre-built Docker images can bypass the time-consuming building proce
 
 The code is mainly contributed by [Johnson](https://github.com/j3soon), [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), and [others](https://github.com/j3soon/ros2-essentials/graphs/contributors).
 
+## License
+
+All modifications are licensed under [Apache License 2.0](./LICENSE).
+
+However, this repository includes many dependencies released under different licenses. For information on these licenses, please check the commit history. Make sure to review the license of each dependency before using this repository.
+
+> The licenses for dependencies will be clearly documented in the workspace README in the future.
+
 ## Supplementary
 
 ### Installing Docker
