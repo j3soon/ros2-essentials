@@ -43,24 +43,21 @@ def generate_launch_description():
     # Path settings
 
     # 1. Underlayer driver launch file path
-    # Ref: https://github.com/ros-drivers/velodyne/tree/d8cf623a922b1f12995e8c71295924c2905bd9a3
-    # File Path: velodyne_driver/launch/velodyne_driver_node-VLP16-launch.py
+    # Ref: https://github.com/ros-drivers/velodyne/tree/d8cf623a922b1f12995e8c71295924c2905bd9a3/velodyne_driver/launch/velodyne_driver_node-VLP16-launch.py
     vlp_driver_path = PathJoinSubstitution([
         FindPackageShare("velodyne_driver"),
         "launch", "velodyne_driver_node-VLP16-launch.py"
     ])
 
     # 2. Transformation node (raw data -> point cloud)
-    # Ref: https://github.com/ros-drivers/velodyne/tree/d8cf623a922b1f12995e8c71295924c2905bd9a3
-    # File Path: velodyne_pointcloud/launch/velodyne_transform_node-VLP16-launch.py
+    # Ref: https://github.com/ros-drivers/velodyne/tree/d8cf623a922b1f12995e8c71295924c2905bd9a3/velodyne_pointcloud/launch/velodyne_transform_node-VLP16-launch.py
     transformation_path = PathJoinSubstitution([
         FindPackageShare("velodyne_pointcloud"),
         "launch", "velodyne_transform_node-VLP16-launch.py"
     ])
 
     # 3. Laser scan node (point cloud -> laser scan)
-    # Ref: https://github.com/ros-drivers/velodyne/tree/d8cf623a922b1f12995e8c71295924c2905bd9a3
-    # File Path: velodyne_laserscan/launch/velodyne_laserscan_node-launch.py
+    # Ref: https://github.com/ros-drivers/velodyne/tree/d8cf623a922b1f12995e8c71295924c2905bd9a3/velodyne_laserscan/launch/velodyne_laserscan_node-launch.py
     laserscan_node_path = PathJoinSubstitution([
         FindPackageShare("velodyne_laserscan"),
         "launch", "velodyne_laserscan_node-launch.py"

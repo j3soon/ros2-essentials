@@ -1,5 +1,21 @@
--- Ref: https://github.com/ROBOTIS-GIT/turtlebot3/tree/a7dd05ae176f3f3778b0a36f7065dc9655b050e3
--- File Path: turtlebot3_cartographer/config/turtlebot3_lds_2d.lua
+-- Copyright 2016 The Cartographer Authors
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--      http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+
+-- /* Author: Darby Lim */
+
+-- Ref: https://github.com/ROBOTIS-GIT/turtlebot3/tree/a7dd05ae176f3f3778b0a36f7065dc9655b050e3/turtlebot3_cartographer/config/turtlebot3_lds_2d.lua
+
 include "map_builder.lua"
 include "trajectory_builder.lua"
 

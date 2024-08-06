@@ -19,8 +19,7 @@ def generate_launch_description():
     #####################################
     # Path settings
     # Using turtlebot3 cartographer demo launch
-    # Ref: https://github.com/ROBOTIS-GIT/turtlebot3/tree/a7dd05ae176f3f3778b0a36f7065dc9655b050e3
-    # File Path: turtlebot3_cartographer/launch/cartographer.launch.py
+    # Ref: https://github.com/ROBOTIS-GIT/turtlebot3/tree/a7dd05ae176f3f3778b0a36f7065dc9655b050e3/turtlebot3_cartographer/launch/cartographer.launch.py
 
     cartographer_demo_path = PathJoinSubstitution([
         FindPackageShare("turtlebot3_cartographer"),
