@@ -132,7 +132,7 @@ ros2 launch vlp_cartographer vlp_driver.launch.py
     docker exec -it ros2-vlp-ws /home/ros2-agv-essentials/vlplidar_ws/scripts/lidar-driver-bringup.sh
     ```
 
-- LiDAR SLAM with cartographer
+- After launching the driver, launch the cartographer in another terminal
 
     ```bash
     docker exec -it ros2-vlp-ws /home/ros2-agv-essentials/vlplidar_ws/scripts/lidar-slam-bringup.sh
