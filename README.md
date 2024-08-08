@@ -18,6 +18,7 @@ Pulling the pre-built Docker images can bypass the time-consuming building proce
 | [j3soon/ros2-cartographer-ws](https://hub.docker.com/r/j3soon/ros2-cartographer-ws/tags) | [`./cartographer_ws`](./cartographer_ws) | ✔️ | ❌ |
 | [j3soon/ros2-husky-ws](https://hub.docker.com/r/j3soon/ros2-husky-ws/tags) | [`./husky_ws`](./husky_ws) | ✔️ | ✔️ |
 | [j3soon/ros2-kobuki-ws](https://hub.docker.com/r/j3soon/ros2-kobuki-ws/tags) | [`./kobuki_ws`](./kobuki_ws) | ✔️ | ✔️ |
+| [j3soon/ros2-vlp-ws](https://hub.docker.com/r/j3soon/ros2-vlp-ws/tags) | [`./vlp_ws`](./vlp_ws) | ✔️ | ✔️ |
 
 ## Contributors
 
