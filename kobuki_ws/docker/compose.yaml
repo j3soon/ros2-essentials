@@ -43,6 +43,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       # Mount X11 server
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/home/user/.Xauthority
       # Mount devices.
       # If you don't want to mount all devices, you can specify the ones you need.
       # But make sure to mount the device below:

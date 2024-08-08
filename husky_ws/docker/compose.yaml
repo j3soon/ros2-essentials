@@ -43,6 +43,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       # Mount X11 server
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/home/user/.Xauthority
       # Mount devices
       - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
