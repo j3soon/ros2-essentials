@@ -2,10 +2,10 @@
 {
     "name": "ROS2 and VLP-16 Container",
     "dockerComposeFile": "../docker/docker-compose.yaml",
-    "service": "vlplidar-ws",
+    "service": "vlp-ws",
 
     // workspace settings
-    "workspaceFolder": "/home/ros2-agv-essentials/vlplidar_ws",
+    "workspaceFolder": "/home/ros2-agv-essentials/vlp_ws",
 
     // Vscode extensions
     "customizations": {
