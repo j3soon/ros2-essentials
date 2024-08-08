@@ -1,7 +1,7 @@
 /* Reference: https://aka.ms/devcontainer.json */
 {
     "name": "ROS2 and RTAB-Map Container",
-    "dockerComposeFile": "../docker/docker-compose.yaml",
+    "dockerComposeFile": "../docker/compose.yaml",
     "service": "ros2-rtabmap",
 
     // workspace settings
