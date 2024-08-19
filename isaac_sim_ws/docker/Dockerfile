@@ -68,11 +68,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-humble-desktop-full=0.10.0-1* \
     && rm -rf /var/lib/apt/lists/*
 
+# Isaac Sim ROS 2 Optional Dependencies
+# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_ros.html#running-native-ros
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-humble-vision-msgs \
+    ros-humble-ackermann-msgs \
+    && rm -rf /var/lib/apt/lists/*
+
+# Reset isaac sim docker image entrypoint
+ENTRYPOINT []
+
 # ros-core
 # Ref: https://github.com/osrf/docker_images/blob/master/ros/humble/ubuntu/jammy/ros-core/Dockerfile
 # setup entrypoint
-COPY ./thirdparty/ros_entrypoint.sh /
-ENTRYPOINT ["/ros_entrypoint.sh"]
+# COPY ./thirdparty/ros_entrypoint.sh /
+# ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
 
 # Install common tools
