@@ -12,8 +12,9 @@ services:
     working_dir: /home/ros2-agv-essentials/isaac_sim_ws
     environment:
       # Environment vars for isaac sim
+      # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_container.html#container-deployment
       - ACCEPT_EULA=Y
-      - PRIVACY_CONSENT=Y
+      # - PRIVACY_CONSENT=Y # Data collection is optional.
       # Set X11 display
       - DISPLAY=$DISPLAY
       # Set ros2 environment variables.
