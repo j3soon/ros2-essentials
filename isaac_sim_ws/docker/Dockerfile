@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/isaac-sim:2023.1.1
+FROM nvcr.io/nvidia/isaac-sim:4.1.0
 
 # Ref: https://github.com/j3soon/docker-ros-humble-desktop-full/blob/master/Dockerfile
 
