@@ -19,7 +19,5 @@
                 "ms-iot.vscode-ros"
             ]
         }
-    },
-    // Lifecycle scripts
-    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+    }
 }
