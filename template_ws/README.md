@@ -7,7 +7,7 @@ This template will help you set up a ROS-Humble environment quickly.
 Here is the structure of this template:
 
 ```
-ros2-agv-essentials
+ros2-essentials
 ├── scripts
 |   └── create_workspace.sh
 ├── template_ws
@@ -43,7 +43,7 @@ ros2-agv-essentials
 We have provided a script to create a new workspace. Please use it to avoid potential issues.  
 
 ```bash
-# Open a terminal, and change the directory to ros2-agv-essentials.
+# Open a terminal, and change the directory to ros2-essentials.
 ./scripts/create_workspace.sh <new_workspace_name>
 ```
 
