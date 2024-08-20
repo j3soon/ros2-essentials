@@ -53,4 +53,5 @@ RUN apt-get update && apt-get install -y \
 COPY .bashrc /home/$USERNAME/.bashrc
 
 USER $USERNAME
+ENTRYPOINT []
 CMD ["/bin/bash"]
