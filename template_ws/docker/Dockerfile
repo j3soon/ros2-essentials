@@ -7,18 +7,22 @@ ARG USER_UID=1000
 
 # Upgrade packages
 # Ref: https://pythonspeed.com/articles/security-updates-in-docker/
-RUN apt-get update && apt-get upgrade -y \
+# Ref: https://docs.docker.com/build/cache/#use-the-dedicated-run-cache
+RUN --mount=type=cache,target=/var/cache/apt \
+    apt-get update && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install sudo and create a user with sudo privileges
 # Ref: https://stackoverflow.com/a/65434659
-RUN apt-get update && apt-get install -y sudo \
+RUN --mount=type=cache,target=/var/cache/apt \
+    apt-get update && apt-get install -y sudo \
     && useradd -m -s /bin/bash -u $USER_UID -G sudo $USERNAME \
     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
     && rm -rf /var/lib/apt/lists/*
 
 # Install common tools
-RUN apt-get update && apt-get install -y \
+RUN --mount=type=cache,target=/var/cache/apt \
+    apt-get update && apt-get install -y \
     curl \
     git \
     htop \
@@ -34,16 +38,19 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python pip
-RUN apt-get update && apt-get install -y python3-pip \
+RUN --mount=type=cache,target=/var/cache/apt \
+    apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install custom tools
-RUN apt-get update && apt-get install -y \
+RUN --mount=type=cache,target=/var/cache/apt \
+    apt-get update && apt-get install -y \
     git-extras \
     && rm -rf /var/lib/apt/lists/*
 
 # Install ROS2 RVIZ and Gazebo
-RUN apt-get update && apt-get install -y \
+RUN --mount=type=cache,target=/var/cache/apt \
+    apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-gazebo-ros-pkgs \
     ros-$ROS_DISTRO-rviz2 \
     && rm -rf /var/lib/apt/lists/*
