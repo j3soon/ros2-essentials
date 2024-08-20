@@ -57,8 +57,9 @@ RUN --mount=type=cache,target=/var/cache/apt \
 
 # TODO: Add more commands here
 
-COPY .bashrc /home/$USERNAME/.bashrc
-
 USER $USERNAME
+COPY .bashrc /home/$USERNAME/.bashrc
+# Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
+RUN mkdir /home/$USERNAME/.gazebo
 ENTRYPOINT []
 CMD ["/bin/bash"]

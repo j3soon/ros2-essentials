@@ -51,6 +51,10 @@ services:
       # - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
-      - ./cache/.gazebo:/home/user/.gazebo
+      # Note that this volume is shared among all workspaces.
+      - gazebo-cache:/home/user/.gazebo
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
+volumes:
+  gazebo-cache:
+    name: ros2-gazebo-cache
