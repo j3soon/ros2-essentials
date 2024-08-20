@@ -95,3 +95,4 @@ Wishing you a productive and successful journey in your ROS development !
 
 - Do not place your files in any folder named `build`, `install`, or `log`. These folders will not be tracked by Git.
 - If you encounter an error when opening Gazebo, consider closing the container and deleting the cache in the `docker/cache` directory. Please note that you should only delete the files inside the folder and not the entire cache folder.
+- `xhost +local:docker` is required if the container is not in privileged mode.
