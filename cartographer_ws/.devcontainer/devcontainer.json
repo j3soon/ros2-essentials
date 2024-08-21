@@ -2,7 +2,7 @@
 {
     "name": "Catographer",
     "dockerComposeFile": "../docker/compose.yaml",
-    "service": "ros2-cartographer",
+    "service": "cartographer-ws",
     // Workspace settings
     "workspaceFolder": "/home/ros2-essentials/cartographer_ws",
     // Vscode extensions

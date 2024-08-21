@@ -1,5 +1,5 @@
 services:
-  ros2-cartographer:
+  cartographer-ws:
     build: .
     image: j3soon/ros2-cartographer-ws
     container_name: ros2-cartographer-ws

@@ -2,7 +2,7 @@
 {
     "name": "PLACEHOLDER",
     "dockerComposeFile": "../docker/compose.yaml",
-    "service": "PLACEHOLDER",
+    "service": "PLACEHOLDER-ws",
     // Workspace settings
     "workspaceFolder": "/home/ros2-essentials/PLACEHOLDER_ws",
     // Vscode extensions

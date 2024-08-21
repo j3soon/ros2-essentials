@@ -2,7 +2,7 @@
 {
     "name": "RTAB-Map",
     "dockerComposeFile": "../docker/compose.yaml",
-    "service": "ros2-rtabmap",
+    "service": "rtabmap-ws",
     // Workspace settings
     "workspaceFolder": "/home/ros2-essentials/rtabmap_ws",
     // Vscode extensions

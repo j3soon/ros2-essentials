@@ -2,7 +2,7 @@
 {
     "name": "ORB-SLAM3",
     "dockerComposeFile": "../docker/compose.yaml",
-    "service": "ros2-orbslam3",
+    "service": "orbslam3-ws",
     // Workspace settings
     "workspaceFolder": "/home/ros2-essentials/orbslam3_ws",
     // Vscode extensions
