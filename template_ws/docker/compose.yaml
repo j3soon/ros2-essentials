@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      # Specify the target platform to build the image, otherwise it will build for the host platform.
+      # TODO: Specify the target platform to build the image, otherwise it will build for the host platform.
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
       # platforms:
       #   - "linux/arm64"
@@ -19,7 +19,7 @@ services:
     environment:
       # Set X11 server environment variable for existing display.
       - DISPLAY=$DISPLAY
-      # Set ros2 environment variables.
+      # TODO: Set ros2 environment variables.
       # References:
       # - https://docs.ros.org/en/humble/Concepts/Intermediate/About-Domain-ID.html
       # - https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html
