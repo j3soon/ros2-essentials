@@ -1,6 +1,6 @@
-import os
 import glob
 import logging
+import os
 
 logging.basicConfig(level=logging.INFO)
 current_dir = os.path.dirname(os.path.realpath(__file__))
