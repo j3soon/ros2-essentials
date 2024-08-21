@@ -3,7 +3,7 @@ name: Build Docker Image for template-ws
 on:
   push:
     branches:
-      - "master"
+      - "main"
     paths:
       - .github/workflows/build-template-ws.yaml
       - template_ws/docker/Dockerfile

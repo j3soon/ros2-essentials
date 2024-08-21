@@ -1,6 +1,9 @@
 import os
 import glob
 
+current_dir = os.path.dirname(os.path.realpath(__file__))
+repo_dir = os.path.realpath(f"{current_dir}/..")
+
 # Check if all default files exist
 DEFAULT_FILES = [
     ".gitignore",
@@ -11,8 +14,6 @@ DEFAULT_FILES = [
     "docker/Dockerfile",
     ".devcontainer/devcontainer.json",
 ]
-current_dir = os.path.dirname(os.path.realpath(__file__))
-repo_dir = os.path.realpath(f"{current_dir}/..")
 for filename in DEFAULT_FILES:
     print(f"Checking existence of: '{filename}'...")
     for workspace_path in glob.glob(f"{repo_dir}/*_ws"):
@@ -31,6 +32,15 @@ for filename in glob.glob(f"{repo_dir}/**/compose*.yaml", recursive=True):
         content = f.read()
         if "version:" in content:
             # Ref: https://docs.docker.com/compose/compose-file/04-version-and-name/#version-top-level-element-optional
-            raise ValueError(f"version should not exist since it's obsolete: '{filename}'")
+            raise ValueError(f"`version` should not exist since it's obsolete: '{filename}'")
+
+# Check if `master` branch is accidentally used
+for filename in glob.glob(f"{repo_dir}/.github/workflows/*.yaml", recursive=True):
+    print(f"Checking: '{filename[len(repo_dir)+1:]}'...")
+    with open(filename, "r") as f:
+        content = f.read()
+        if "master" in content:
+            # Ref: https://github.com/j3soon/ros2-essentials/pull/44#pullrequestreview-2251404984
+            raise ValueError(f"`master` should not exist since it's obsolete: '{filename}'")
 
 print("All checks passed!")

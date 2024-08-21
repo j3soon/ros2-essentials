@@ -3,7 +3,7 @@ name: Build Docker Image for cartographer-ws
 on:
   push:
     branches:
-      - "master"
+      - "main"
     paths:
       - .github/workflows/build-cartographer-ws.yaml
       - cartographer_ws/docker/Dockerfile
