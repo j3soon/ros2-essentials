@@ -35,8 +35,6 @@ cp -r "${TEMPLATE_WS_DIR}" "${NEW_WS_DIR}"
 rm -rf "${NEW_WS_DIR}/.vscode"
 rm -rf "${NEW_WS_DIR}/build" "${NEW_WS_DIR}/install" "${NEW_WS_DIR}/log"
 rm -rf "${NEW_WS_DIR}/README.md"
-rm -rf "${NEW_WS_DIR}/docker/cache/.gazebo/*"
-touch "${NEW_WS_DIR}/docker/cache/.gazebo/.gitkeep"
 echo "# ${NEW_WS_NAME_UNDERSCORE}" > "${NEW_WS_DIR}/README.md"
 
 # Replace the "template_ws" with new workspace name in each file.

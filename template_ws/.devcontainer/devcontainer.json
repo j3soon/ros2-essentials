@@ -4,7 +4,7 @@
     "dockerComposeFile": "../docker/compose.yaml",
     "service": "template-ws",
     // workspace settings
-    "workspaceFolder": "/home/ros2-agv-essentials/template_ws",
+    "workspaceFolder": "/home/ros2-essentials/template_ws",
     // Vscode extensions
     "customizations": {
         "vscode": {
@@ -19,7 +19,5 @@
                 "ms-iot.vscode-ros"
             ]
         }
-    },
-    // Lifecycle scripts
-    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+    }
 }
