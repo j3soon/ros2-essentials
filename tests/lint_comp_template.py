@@ -43,3 +43,4 @@ def compare_file_with_template(filepath, ignored_workspaces=[]):
 
 compare_file_with_template(".devcontainer/devcontainer.json", ["ros1_bridge_ws"])
 compare_file_with_template(".gitignore")
+compare_file_with_template("docker/.bashrc")

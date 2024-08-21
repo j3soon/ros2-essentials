@@ -25,5 +25,6 @@ if [ ! -f $ROS2_WS/install/setup.bash ]; then
     fi
     echo "Workspace built."
 fi
+# TODO: Source other workspace environments as underlay
 # Source workspace environment
 source $ROS2_WS/install/setup.bash
