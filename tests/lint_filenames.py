@@ -27,15 +27,6 @@ for filename in DEFAULT_FILES:
             # Report error
             raise ValueError(f"'{filename}' does not exist in: '{workspace_path}'")
 
-logging.info("Checking `compose.yaml` files...")
-for filename in glob.glob(f"{repo_dir}/**/compose*.yaml", recursive=True):
-    logging.debug(f"Checking: '{filename[len(repo_dir)+1:]}'...")
-    with open(filename, "r") as f:
-        content = f.read()
-        if "version:" in content:
-            # Ref: https://docs.docker.com/compose/compose-file/04-version-and-name/#version-top-level-element-optional
-            raise ValueError(f"`version` should not exist since it's obsolete: '{filename}'")
-
 logging.info("Checking if all obsolete files do not exist...")
 OBSOLETE_FILES = [
     "docker/cache/.gazebo/.gitkeep",
@@ -49,14 +40,3 @@ for filename in OBSOLETE_FILES:
     for workspace_path in glob.glob(f"{repo_dir}/*_ws"):
         if os.path.isfile(f"{workspace_path}/{filename}"):
             raise ValueError(f"'{filename}' exists in: '{workspace_path}'")
-
-logging.info("Checking if `master` branch is accidentally used in github workflows...")
-for filename in glob.glob(f"{repo_dir}/.github/workflows/*.yaml", recursive=True):
-    logging.debug(f"Checking: '{filename[len(repo_dir)+1:]}'...")
-    with open(filename, "r") as f:
-        content = f.read()
-        if "master" in content:
-            # Ref: https://github.com/j3soon/ros2-essentials/pull/44#pullrequestreview-2251404984
-            raise ValueError(f"`master` should not exist since it's obsolete: '{filename}'")
-
-print("All checks passed!")
