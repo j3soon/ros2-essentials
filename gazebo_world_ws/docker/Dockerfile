@@ -45,8 +45,9 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-rviz2 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY .bashrc /home/$USERNAME/.bashrc
-
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
+COPY .bashrc /home/$USERNAME/.bashrc
+# Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
+RUN mkdir /home/$USERNAME/.gazebo
 CMD ["/bin/bash"]

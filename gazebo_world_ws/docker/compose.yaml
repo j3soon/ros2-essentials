@@ -43,11 +43,11 @@ services:
       - /dev/snd:/dev/snd
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
-      - ./cache/.gazebo:/home/user/.gazebo
-      # Mounting the following directories will forbid direct deletion.
-      # Consider mount these directories only if the build process is slow.
-      # "source=${localWorkspaceFolder}/../cache/humble/build,target=/home/ws/build,type=bind",
-      # "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
-      # "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
+      # Note that this volume is shared among all workspaces.
+      - gazebo-cache:/home/user/.gazebo
       # Mount workspace
       - ../..:/home/ros2-agv-essentials
+
+volumes:
+  gazebo-cache:
+    name: ros2-gazebo-cache
