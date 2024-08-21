@@ -15,7 +15,7 @@ if [ ! -f $ROS2_WS/install/setup.bash ]; then
     echo "Workspace has not been built yet. Building workspace..."
     cd $ROS2_WS
     # Ref: https://docs.ros.org/en/humble/Tutorials/Intermediate/Rosdep.html
-    rosdep install --from-paths src --ignore-src -y
+    rosdep install --from-paths src --ignore-src -y -r
     # TODO: If command `arch` outputs `aarch64`, consider adding `--packages-ignore <package>` to ignore x86 packages
     # Ref: https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
     if [ $(arch) == "aarch64" ]; then
