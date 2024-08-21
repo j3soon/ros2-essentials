@@ -1,5 +1,5 @@
 services:
-  vlp-ws:
+  PLACEHOLDER-ws:
     build:
       context: .
       dockerfile: Dockerfile
@@ -7,15 +7,15 @@ services:
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
       # platforms:
       #   - "linux/arm64"
-    image: j3soon/ros2-vlp-ws
-    container_name: ros2-vlp-ws
+    image: j3soon/ros2-PLACEHOLDER-ws
+    container_name: ros2-PLACEHOLDER-ws
     stdin_open: true
     tty: true
     # TODO: Comment the line below if the workspace don't need to communicate through `/dev/*` devices.
     privileged: true
     command: /bin/bash
     network_mode: host
-    working_dir: /home/ros2-essentials/vlp_ws
+    working_dir: /home/ros2-essentials/PLACEHOLDER_ws
     environment:
       # Set X11 server environment variable for existing display.
       - DISPLAY=$DISPLAY
@@ -29,7 +29,7 @@ services:
       - ROS_DOMAIN_ID=0
         # Domain ID is set to 0 to allow communication through ros1_bridge.
       - RCUTILS_COLORIZED_OUTPUT=1
-      - ROS2_WS=/home/ros2-essentials/vlp_ws
+      - ROS2_WS=/home/ros2-essentials/PLACEHOLDER_ws
     # TODO: Uncomment the lines below to enable GPU support.
     # deploy:
     # # Reference : https://docs.docker.com/compose/gpu-support/
@@ -50,13 +50,12 @@ services:
       - $HOME/.Xauthority:/home/user/.Xauthority
         # Xauthority is mounted to allow X11 forwarding for remote display.
       # Mount Direct Rendering Infrastructure (DRI) for hardware acceleration support such as OpenGL.
-      - /dev/dri:/dev/dri
+      PLACEHOLDER- /dev/dri:/dev/dri
       # Mount sound card to prevent Gazebo warning.
-      - /dev/snd:/dev/snd
+      PLACEHOLDER- /dev/snd:/dev/snd
       # TODO: Uncomment the line below and comment out the two entries above to enable USB support.
-      # - /dev:/dev
-      # Mount shared memory for ROS2 communication.
-      - /dev/shm:/dev/shm
+      PLACEHOLDER- /dev:/dev
+MULTILINE_PLACEHOLDER
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.

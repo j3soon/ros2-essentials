@@ -34,14 +34,41 @@ def compare_file_with_template(filepath, ignored_workspaces=[]):
                 continue
             if i+1 >= len(diff):
                 error("Odd lines", i)
-            if not diff[i].startswith('- ') or not diff[i+1].startswith('+ '):
-                error("Expected no line deletion and addition", i)
-            regexp = "^" + re.escape(diff[i][2:]).replace('PLACEHOLDER', '.*') + "$"
-            if not re.match(regexp, diff[i+1][2:]):
-                error("Expected line deletion and addition to differ only in the placeholder", i)
-            i += 2
+            # Stack and compare
+            if diff[i].startswith('- '):
+                stack = [diff[i]]
+                j = i+1
+                while j < len(diff) and diff[j].startswith('- '):
+                    stack.append(j)
+                    j += 1
+                k = 0
+                while k < len(stack) and diff[j+k].startswith('+ '):
+                    regexp = "^" + re.escape(diff[i+k][2:]).replace('PLACEHOLDER', '.*') + "$"
+                    if not re.match(regexp, diff[j+k][2:]):
+                        error("Expected line deletion and addition to differ only in the placeholder", i)
+                    k += 1
+                if k != len(stack):
+                    error("Expected no line deletion and addition", i)
+            elif diff[i].startswith('+ '):
+                stack = [diff[i]]
+                j = i+1
+                while j < len(diff) and diff[j].startswith('+ '):
+                    stack.append(j)
+                    j += 1
+                k = 0
+                while k < len(stack) and diff[j+k].startswith('- '):
+                    regexp = "^" + re.escape(diff[j+k][2:]).replace('PLACEHOLDER', '.*') + "$"
+                    if not re.match(regexp, diff[i+k][2:]):
+                        error("Expected line deletion and addition to differ only in the placeholder", i)
+                    k += 1
+                if k != len(stack):
+                    error("Expected no line deletion and addition", i)
+            else:
+                raise ValueError("Unexpected diff prefix")
+            i = j + k
 
 compare_file_with_template(".devcontainer/devcontainer.json", ignored_workspaces=["ros1_bridge_ws"])
 compare_file_with_template(".gitignore")
 compare_file_with_template("docker/.bashrc")
 compare_file_with_template("docker/.dockerignore", ignored_workspaces=["ros1_bridge_ws", "orbslam3_ws"])
+compare_file_with_template("docker/compose.yaml", ignored_workspaces=["ros1_bridge_ws"])
