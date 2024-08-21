@@ -34,6 +34,20 @@ for filename in glob.glob(f"{repo_dir}/**/compose*.yaml", recursive=True):
             # Ref: https://docs.docker.com/compose/compose-file/04-version-and-name/#version-top-level-element-optional
             raise ValueError(f"`version` should not exist since it's obsolete: '{filename}'")
 
+# Check if all obsolete files do not exist
+OBSOLETE_FILES = [
+    "docker/cache/.gazebo/.gitkeep",
+    "docker/compose.yml",
+    "docker/docker-compose.yaml",
+    "docker/docker-compose.yml",
+    ".devcontainer/postCreateCommand.sh",
+]
+for filename in OBSOLETE_FILES:
+    print(f"Checking non-existence of: '{filename}'...")
+    for workspace_path in glob.glob(f"{repo_dir}/*_ws"):
+        if os.path.isfile(f"{workspace_path}/{filename}"):
+            raise ValueError(f"'{filename}' exists in: '{workspace_path}'")
+
 # Check if `master` branch is accidentally used
 for filename in glob.glob(f"{repo_dir}/.github/workflows/*.yaml", recursive=True):
     print(f"Checking: '{filename[len(repo_dir)+1:]}'...")
