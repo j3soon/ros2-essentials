@@ -53,9 +53,10 @@ services:
       PLACEHOLDER- /dev/dri:/dev/dri
       # Mount sound card to prevent Gazebo warning.
       PLACEHOLDER- /dev/snd:/dev/snd
-      # TODO: Uncomment the line below and comment out the two entries above to enable USB support.
+      # Mount shared memory for ROS2 communication.
+      PLACEHOLDER- /dev/shm:/dev/shm
+      # TODO: Uncomment the line below and comment out the three entries above to enable USB support.
       PLACEHOLDER- /dev:/dev
-MULTILINE_PLACEHOLDER
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.

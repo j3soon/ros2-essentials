@@ -43,6 +43,8 @@ def compare_file_with_template(filepath, ignored_workspaces=[]):
                     j += 1
                 k = 0
                 while k < len(stack) and diff[j+k].startswith('+ '):
+                    if "- MULTILINE_PLACEHOLDER" in diff[i+k]:
+                        raise error("MULTILINE_PLACEHOLDER is not supported in this case yet", i)
                     regexp = "^" + re.escape(diff[i+k][2:]).replace('PLACEHOLDER', '.*') + "$"
                     if not re.match(regexp, diff[j+k][2:]):
                         error("Expected line deletion and addition to differ only in the placeholder", i)
@@ -57,6 +59,8 @@ def compare_file_with_template(filepath, ignored_workspaces=[]):
                     j += 1
                 k = 0
                 while k < len(stack) and diff[j+k].startswith('- '):
+                    if "- MULTILINE_PLACEHOLDER" in diff[j+k]:
+                        raise error("MULTILINE_PLACEHOLDER is not supported in this case yet", i)
                     regexp = "^" + re.escape(diff[j+k][2:]).replace('PLACEHOLDER', '.*') + "$"
                     if not re.match(regexp, diff[i+k][2:]):
                         error("Expected line deletion and addition to differ only in the placeholder", i)
