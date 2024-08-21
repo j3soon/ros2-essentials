@@ -10,25 +10,29 @@ ARGUMENTS = [
         default_value="False",
         description="Launch gzclient, by default is False, which means headless mode",
     ),
+    DeclareLaunchArgument(
+        "gazebo_world",
+        default_value="turtlebot3_world.world",
+        description="TurtleBot3 world file",
+        choices=[
+            "empty_world.world", 
+            "turtlebot3_dqn_stage1.world", 
+            "turtlebot3_dqn_stage2.world", 
+            "turtlebot3_dqn_stage3.world", 
+            "turtlebot3_dqn_stage4.world", 
+            "turtlebot3_house.world", 
+            "turtlebot3_world.world",
+        ],
+    ),
 ]
 
 
 def generate_launch_description():
-    # Get gazebo world file path
-    # Available choices:
-    # - empty_world
-    # - turtlebot3_dqn_stage1
-    # - turtlebot3_dqn_stage2
-    # - turtlebot3_dqn_stage3
-    # - turtlebot3_dqn_stage4
-    # - turtlebot3_house
-    # - turtlebot3_world
-    choice = "turtlebot3_world"
     world_file = PathJoinSubstitution(
         [
             FindPackageShare("turtlebot3_gazebo"),
             "worlds",
-            choice + ".world",
+            LaunchConfiguration("gazebo_world"),
         ],
     )
 
