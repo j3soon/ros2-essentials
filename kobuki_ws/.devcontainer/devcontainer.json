@@ -1,10 +1,10 @@
 /* Reference: https://aka.ms/devcontainer.json */
 {
-    "name": "kobuki_ws",
+    "name": "Kobuki",
     "dockerComposeFile": "../docker/compose.yaml",
     "service": "kobuki-ws",
-    // workspace settings
-    "workspaceFolder": "/home/ros2-agv-essentials/kobuki_ws",
+    // Workspace settings
+    "workspaceFolder": "/home/ros2-essentials/kobuki_ws",
     // Vscode extensions
     "customizations": {
         "vscode": {
@@ -19,7 +19,5 @@
                 "ms-iot.vscode-ros"
             ]
         }
-    },
-    // Lifecycle scripts
-    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+    }
 }

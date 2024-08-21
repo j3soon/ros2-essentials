@@ -1,10 +1,10 @@
 /* Reference: https://aka.ms/devcontainer.json */
 {
-    "name": "Template",
+    "name": "PLACEHOLDER",
     "dockerComposeFile": "../docker/compose.yaml",
-    "service": "template-ws",
+    "service": "PLACEHOLDER",
     // Workspace settings
-    "workspaceFolder": "/home/ros2-essentials/template_ws",
+    "workspaceFolder": "/home/ros2-essentials/PLACEHOLDER_ws",
     // Vscode extensions
     "customizations": {
         "vscode": {
