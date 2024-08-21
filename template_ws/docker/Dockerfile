@@ -1,5 +1,12 @@
 # Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
-FROM osrf/ros:humble-desktop-full
+FROM osrf/ros:humble-desktop-full AS amd64
+# Base Image : https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
+FROM arm64v8/ros:humble AS arm64
+
+# Use docker automatic platform args to select the base image.
+# It may be `arm64` or `amd64` depending on the platform.
+# Ref: https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope
+FROM $TARGETARCH
 
 # Arguments for the default user
 ARG USERNAME=user
@@ -49,10 +56,17 @@ RUN --mount=type=cache,target=/var/cache/apt \
     git-extras \
     && rm -rf /var/lib/apt/lists/*
 
-# Install ROS2 RVIZ and Gazebo
+# Install ROS2 Gazebo packages for amd64
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        apt-get update && apt-get install -y \
+        ros-$ROS_DISTRO-gazebo-ros-pkgs \
+        ros-$ROS_DISTRO-gazebo-ros2-control \
+        && rm -rf /var/lib/apt/lists/*; \
+    fi
+
+# Install ROS2 RVIZ and other custom ROS2 packages
 RUN --mount=type=cache,target=/var/cache/apt \
     apt-get update && apt-get install -y \
-    ros-$ROS_DISTRO-gazebo-ros-pkgs \
     ros-$ROS_DISTRO-rviz2 \
     && rm -rf /var/lib/apt/lists/*
 

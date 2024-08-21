@@ -1,6 +1,12 @@
 services:
   template-ws:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # Specify the target platform to build the image, otherwise it will build for the host platform.
+      # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
+      # platforms:
+      #   - "linux/arm64"
     image: j3soon/ros2-template-ws
     container_name: ros2-template-ws
     stdin_open: true
