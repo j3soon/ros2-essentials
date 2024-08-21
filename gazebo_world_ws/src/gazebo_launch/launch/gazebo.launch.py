@@ -14,6 +14,11 @@ from ament_index_python.packages import get_package_share_directory
 
 ARGUMENTS = [
     DeclareLaunchArgument(
+        "launch_gzclient",
+        default_value="False",
+        description="Launch gzclient, by default is False, which means headless mode",
+    ),
+    DeclareLaunchArgument(
         "world_path",
         default_value="",
         description="The world path, by default is empty.world",
@@ -67,6 +72,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             "world": LaunchConfiguration("world_path"),
+            "gui": LaunchConfiguration("launch_gzclient"),
         }.items(),
     )
 
