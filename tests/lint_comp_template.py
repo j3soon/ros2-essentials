@@ -41,6 +41,7 @@ def compare_file_with_template(filepath, ignored_workspaces=[]):
                 error("Expected line deletion and addition to differ only in the placeholder", i)
             i += 2
 
-compare_file_with_template(".devcontainer/devcontainer.json", ["ros1_bridge_ws"])
+compare_file_with_template(".devcontainer/devcontainer.json", ignored_workspaces=["ros1_bridge_ws"])
 compare_file_with_template(".gitignore")
 compare_file_with_template("docker/.bashrc")
+compare_file_with_template("docker/.dockerignore", ignored_workspaces=["ros1_bridge_ws", "orbslam3_ws"])
