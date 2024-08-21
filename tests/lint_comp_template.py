@@ -9,17 +9,18 @@ logging.basicConfig(level=logging.INFO)
 current_dir = os.path.dirname(os.path.realpath(__file__))
 repo_dir = os.path.realpath(f"{current_dir}/..")
 
-def compare_file_with_template(filepath, ignored_workspaces=[]):
-    logging.info(f"Checking if '{filepath}' matches the template...")
+def compare_file_with_template(filepath, targetpath=None, ignored_workspaces=[]):
+    targetpath = targetpath or filepath
+    logging.info(f"Checking if '{targetpath}' matches the template...")
     template_path = f"{repo_dir}/tests/diff_base/{filepath}"
     template = Path(template_path).read_text().splitlines(keepends=True)  # keepends to preserve trailing newlines
-    for filename in glob.glob(f"{repo_dir}/*_ws/{filepath}"):
+    for filename in glob.glob(f"{repo_dir}/*_ws/{targetpath}"):
         # Skip certain cases intentionally
         if any(ws in filename for ws in ignored_workspaces):
             continue
         logging.debug(f"Checking: '{filename[len(repo_dir)+1:]}'...")
         content = Path(filename).read_text().splitlines(keepends=True)
-        diff = list(filter(lambda x: x.startswith('- ') or x.startswith('+ '), difflib.ndiff(template, content)))
+        diff = list(filter(lambda x: x.startswith('- ') or x.startswith('+ ') or x.startswith('  '), difflib.ndiff(template, content)))
         def error(msg, i):
             diff.insert(i+2, "! <<< Parsing failed before reaching here >>>\n")
             logging.info('\n' + ''.join(diff))
@@ -32,6 +33,9 @@ def compare_file_with_template(filepath, ignored_workspaces=[]):
                 while i < len(diff) and diff[i].startswith('+ '):
                     i += 1
                 continue
+            if diff[i].startswith('  '):
+                i += 1
+                continue
             if i+1 >= len(diff):
                 error("Odd lines", i)
             # Stack and compare
@@ -42,7 +46,7 @@ def compare_file_with_template(filepath, ignored_workspaces=[]):
                     stack.append(j)
                     j += 1
                 k = 0
-                while k < len(stack) and diff[j+k].startswith('+ '):
+                while k < len(stack) and j+k < len(diff) and diff[j+k].startswith('+ '):
                     if "- MULTILINE_PLACEHOLDER" in diff[i+k]:
                         raise error("MULTILINE_PLACEHOLDER is not supported in this case yet", i)
                     regexp = "^" + re.escape(diff[i+k][2:]).replace('PLACEHOLDER', '.*') + "$"
@@ -58,7 +62,7 @@ def compare_file_with_template(filepath, ignored_workspaces=[]):
                     stack.append(j)
                     j += 1
                 k = 0
-                while k < len(stack) and diff[j+k].startswith('- '):
+                while k < len(stack) and j+k < len(diff) and diff[j+k].startswith('- '):
                     if "- MULTILINE_PLACEHOLDER" in diff[j+k]:
                         raise error("MULTILINE_PLACEHOLDER is not supported in this case yet", i)
                     regexp = "^" + re.escape(diff[j+k][2:]).replace('PLACEHOLDER', '.*') + "$"
@@ -76,3 +80,4 @@ compare_file_with_template(".gitignore")
 compare_file_with_template("docker/.bashrc")
 compare_file_with_template("docker/.dockerignore", ignored_workspaces=["ros1_bridge_ws", "orbslam3_ws"])
 compare_file_with_template("docker/compose.yaml", ignored_workspaces=["ros1_bridge_ws"])
+compare_file_with_template("docker/Dockerfile", ignored_workspaces=["ros1_bridge_ws"])

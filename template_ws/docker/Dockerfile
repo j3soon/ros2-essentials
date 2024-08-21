@@ -85,8 +85,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 #     && rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME
-COPY .bashrc /home/$USERNAME/.bashrc
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
+# TODO: Run additional commands as non-root user here
+COPY .bashrc /home/$USERNAME/.bashrc
+# TODO: Copy additional files here
 ENTRYPOINT []
 CMD ["/bin/bash"]
