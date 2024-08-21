@@ -12,7 +12,7 @@ repo_dir = os.path.realpath(f"{current_dir}/..")
 def compare_file_with_template(filepath, ignored_workspaces=[]):
     logging.info(f"Checking if '{filepath}' matches the template...")
     template_path = f"{repo_dir}/tests/diff_base/{filepath}"
-    template = Path(template_path).read_text().splitlines(keepends=True)
+    template = Path(template_path).read_text().splitlines(keepends=True)  # keepends to preserve trailing newlines
     for filename in glob.glob(f"{repo_dir}/*_ws/{filepath}"):
         # Skip certain cases intentionally
         if any(ws in filename for ws in ignored_workspaces):
@@ -27,13 +27,19 @@ def compare_file_with_template(filepath, ignored_workspaces=[]):
             raise ValueError(f"'{filepath}' does not match the template: '{filename}'")
         i = 0
         while i < len(diff):
+            if "- MULTILINE_PLACEHOLDER" in diff[i]:  # don't use exact match to avoid cases without trailing newline
+                i += 1
+                while i < len(diff) and diff[i].startswith('+ '):
+                    i += 1
+                continue
             if i+1 >= len(diff):
                 error("Odd lines", i)
             if not diff[i].startswith('- ') or not diff[i+1].startswith('+ '):
                 error("Expected no line deletion and addition", i)
-            regexp = "^" + re.escape(diff[i][1:]).replace('PLACEHOLDER', '.*') + "$"
-            if not re.match(regexp, diff[i+1][1:]):
+            regexp = "^" + re.escape(diff[i][2:]).replace('PLACEHOLDER', '.*') + "$"
+            if not re.match(regexp, diff[i+1][2:]):
                 error("Expected line deletion and addition to differ only in the placeholder", i)
             i += 2
 
 compare_file_with_template(".devcontainer/devcontainer.json", ["ros1_bridge_ws"])
+compare_file_with_template(".gitignore")

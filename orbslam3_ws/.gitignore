@@ -1,2 +1,11 @@
+# Visual Studio Code
+.vscode
+
+# ROS2 basic directories
+/build
+/install
+/log
+
+# ROS2 bag files
 V1_02_medium.bag
 V1_02_medium/
