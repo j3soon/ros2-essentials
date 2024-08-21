@@ -40,6 +40,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
 # Install Python pip
 RUN --mount=type=cache,target=/var/cache/apt \
     apt-get update && apt-get install -y \
+    python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install custom tools
