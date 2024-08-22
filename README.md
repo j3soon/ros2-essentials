@@ -4,6 +4,8 @@
 
 A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs). Please setup an Ubuntu environment before using this repo.
 
+> Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.
+
 ## Pre-built Docker Images
 
 The following Docker images can be pulled by `docker pull <IMAGE_NAME>` or by `docker compose pull` in the corresponding directory.
@@ -23,9 +25,16 @@ Pulling the pre-built Docker images can bypass the time-consuming building proce
 | [j3soon/ros2-vlp-ws](https://hub.docker.com/r/j3soon/ros2-vlp-ws/tags) | [`./vlp_ws`](./vlp_ws) | ✔️ | ✔️ | Support real vlp |
 | [j3soon/ros2-gazebo-world-ws](https://hub.docker.com/r/j3soon/ros2-gazebo-world-ws/tags) | [`./gazebo_world_ws`](./vlp_ws) | ✔️ | ❌️ | |
 
-## Contributors
+## Acknowledgement
 
 The code is mainly contributed by [Johnson](https://github.com/j3soon), [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), and [others](https://github.com/j3soon/ros2-essentials/graphs/contributors).
+
+We extend our gratitude to [ElsaLab][elsalab] and [NVIDIA AI Technology Center (NVAITC)][nvaitc] for their support in making this project possible.
+
+[elsalab]: https://github.com/elsa-lab
+[nvaitc]: https://github.com/NVAITC
+
+Disclaimer: this is not an official NVIDIA product.
 
 ## License
 
