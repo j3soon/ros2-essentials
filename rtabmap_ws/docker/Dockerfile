@@ -28,6 +28,9 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
+# RTAB-Map docker image does not define ROS_DISTRO, so we need to define it here
+ENV ROS_DISTRO humble
+
 # Install sudo and create a user with sudo privileges
 # Ref: https://stackoverflow.com/a/65434659
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \

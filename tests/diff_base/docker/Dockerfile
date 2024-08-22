@@ -25,7 +25,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloa
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
-
+{PLACEHOLDER_MULTILINE}
 # Install sudo and create a user with sudo privileges
 # Ref: https://stackoverflow.com/a/65434659
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
