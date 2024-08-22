@@ -86,6 +86,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 #     apt-get update && apt-get install -y \
 #     $OTHER_PACKAGES \
 #     && rm -rf /var/lib/apt/lists/*
+
 # Install ROS2 and Gazebo simulation packages when using `amd64` platform
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \
@@ -101,8 +102,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-turtlebot3 \
     ros-$ROS_DISTRO-diagnostic-updater \
-    ros-$ROS_DISTRO-velodyne && \
-    rm -rf /var/lib/apt/lists/*
+    ros-$ROS_DISTRO-velodyne \
+    && rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
