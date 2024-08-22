@@ -107,6 +107,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 # ENTRYPOINT ["/ros_entrypoint.sh"]
 # CMD ["bash"]
 
+# Delete default `ubuntu` user in Ubuntu 24.04 image and above to avoid UID conflict
+# Ref: https://askubuntu.com/a/1515958
+RUN touch /var/mail/ubuntu && chown ubuntu /var/mail/ubuntu && userdel -r ubuntu
+
 # Install sudo and create a user with sudo privileges
 # Ref: https://stackoverflow.com/a/65434659
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
