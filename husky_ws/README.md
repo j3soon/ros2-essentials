@@ -55,7 +55,7 @@ Before attempting any examples, please remember to build the packages first.
 If you encounter any dependency errors, please use rosdep to resolve them.
 
 ```bash
-cd /home/ros2-agv-essentials/husky_ws
+cd /home/ros2-essentials/husky_ws
 rosdep update
 rosdep install --from-paths src --ignore-src --rosdistro humble -y
 colcon build
@@ -97,7 +97,7 @@ ros2 launch husky_navigation slam_launch.py
 
 ```bash=
 # Move to the workspace, source .bashrc, and bringup husky.
-cd /home/ros2-agv-essentials/husky_ws
+cd /home/ros2-essentials/husky_ws
 source ~/.bashrc
 ./script/husky-bringup.sh
 
