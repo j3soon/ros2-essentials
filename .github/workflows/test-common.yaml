@@ -15,5 +15,5 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Lint filenames
-        run: python tests/lint_filenames.py
+      - name: Run tests
+        run: tests/test_all.sh

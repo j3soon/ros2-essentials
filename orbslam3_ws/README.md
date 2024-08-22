@@ -7,7 +7,7 @@ git clone https://github.com/j3soon/ros2-essentials.git
 ```
 
 ```bash
-cd ros2-agv-essentials/orbslam3_ws/docker
+cd ros2-essentials/orbslam3_ws/docker
 docker compose pull
 docker compose up -d --build
 ```
@@ -17,7 +17,7 @@ docker compose up -d --build
 - Attach to the container
   ```sh
   docker attach ros2-orbslam3-ws
-  cd /home/ros2-agv-essentials/orbslam3_ws
+  cd /home/ros2-essentials/orbslam3_ws
   ```
 - Prepare data, only need to be done once
   - Download dataset (~1.2G)

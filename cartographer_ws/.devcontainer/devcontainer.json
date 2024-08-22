@@ -1,12 +1,10 @@
 /* Reference: https://aka.ms/devcontainer.json */
 {
-    "name": "ROS2 and Catorgrapher Container",
+    "name": "Catographer",
     "dockerComposeFile": "../docker/compose.yaml",
-    "service": "ros2-cartographer",
-
-    // workspace settings
-    "workspaceFolder": "/home/ros2-agv-essentials/cartographer_ws",
-
+    "service": "cartographer-ws",
+    // Workspace settings
+    "workspaceFolder": "/home/ros2-essentials/cartographer_ws",
     // Vscode extensions
     "customizations": {
         "vscode": {
@@ -16,11 +14,10 @@
                 "twxs.cmake",
                 "donjayamanne.python-extension-pack",
                 "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
                 "ms-iot.vscode-ros"
             ]
         }
-    },
-    
-    // Lifecycle scripts
-    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+    }
 }

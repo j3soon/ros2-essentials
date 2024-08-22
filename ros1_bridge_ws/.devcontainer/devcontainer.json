@@ -1,12 +1,12 @@
-/* For reference, see https://aka.ms/devcontainer.json */
+/* Reference: https://aka.ms/devcontainer.json */
 {
-    "name": "ros1-bridge",
+    "name": "Ros1 Bridge",
     "dockerComposeFile": "../docker/compose.debug.yaml",
     "service": "ros1-bridge-build",
     "runServices": [
         "ros1-bridge-build"
     ],
-    // workspace settings
+    // Workspace settings
     "workspaceFolder": "/",
     // Vscode extensions
     "customizations": {

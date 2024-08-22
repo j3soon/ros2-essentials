@@ -1,16 +1,14 @@
-# Base Image: https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
-FROM osrf/ros:humble-desktop-full AS amd64
-# Base Image: https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
-FROM arm64v8/ros:humble AS arm64
+# Base Image: {PLACEHOLDER}
+FROM {PLACEHOLDER} AS amd64
+# Base Image: {PLACEHOLDER}
+FROM {PLACEHOLDER} AS arm64
 
 # Use docker automatic platform args to select the base image.
 # It may be `arm64` or `amd64` depending on the platform.
 # Ref: https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope
 FROM $TARGETARCH
 ARG TARGETARCH
-
-LABEL org.opencontainers.image.authors="assume0701@gmail.com"
-
+{PLACEHOLDER_MULTILINE}
 # Arguments for the default user
 ARG USERNAME=user
 ARG USER_UID=1000
@@ -86,30 +84,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 #     apt-get update && apt-get install -y \
 #     $OTHER_PACKAGES \
 #     && rm -rf /var/lib/apt/lists/*
-
-# Install ROS2 and Gazebo simulation packages when using `amd64` platform
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    if [ "$TARGETARCH" = "amd64" ]; then \
-        apt-get update && apt-get install -y \
-        ros-$ROS_DISTRO-turtlebot3-gazebo \
-        ros-$ROS_DISTRO-joint-state-publisher-gui \
-        ros-$ROS_DISTRO-rqt-robot-steering \
-        && rm -rf /var/lib/apt/lists/*; \
-    fi
-
-# Install ROS2 velodyne package
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    apt-get update && apt-get install -y \
-    ros-$ROS_DISTRO-turtlebot3 \
-    ros-$ROS_DISTRO-diagnostic-updater \
-    ros-$ROS_DISTRO-velodyne \
-    && rm -rf /var/lib/apt/lists/*
-
+{PLACEHOLDER_MULTILINE}
 USER $USERNAME
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
 # TODO: Run additional commands as non-root user here
+{PLACEHOLDER_MULTILINE}
 COPY .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
+{PLACEHOLDER_MULTILINE}
 ENTRYPOINT []
 CMD ["/bin/bash"]

@@ -1,12 +1,10 @@
 /* Reference: https://aka.ms/devcontainer.json */
 {
-    "name": "ROS2 and RTAB-Map Container",
+    "name": "RTAB-Map",
     "dockerComposeFile": "../docker/compose.yaml",
-    "service": "ros2-rtabmap",
-
-    // workspace settings
-    "workspaceFolder": "/home/ros2-agv-essentials/rtabmap_ws",
-
+    "service": "rtabmap-ws",
+    // Workspace settings
+    "workspaceFolder": "/home/ros2-essentials/rtabmap_ws",
     // Vscode extensions
     "customizations": {
         "vscode": {
@@ -16,11 +14,10 @@
                 "twxs.cmake",
                 "donjayamanne.python-extension-pack",
                 "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
                 "ms-iot.vscode-ros"
             ]
         }
-    },
-    
-    // Lifecycle scripts
-    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+    }
 }

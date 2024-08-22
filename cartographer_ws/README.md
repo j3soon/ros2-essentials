@@ -7,7 +7,7 @@ git clone https://github.com/j3soon/ros2-essentials.git
 ```
 
 ```bash
-cd ros2-agv-essentials/cartographer_ws/docker
+cd ros2-essentials/cartographer_ws/docker
 docker compose pull
 docker compose up -d --build
 ```
@@ -18,7 +18,7 @@ docker compose up -d --build
 
   ```sh
   docker attach ros2-cartographer-ws
-  cd /home/ros2-agv-essentials/cartographer_ws
+  cd /home/ros2-essentials/cartographer_ws
   ```
 - Open the turtlebot simulation in `tmux`
 
@@ -41,7 +41,7 @@ docker compose up -d --build
 
 ```sh
 docker attach ros2-cartographer-ws
-cd /home/ros2-agv-essentials/cartographer_ws
+cd /home/ros2-essentials/cartographer_ws
 rosdep update
 rosdep install --from-paths src --ignore-src --rosdistro humble -y
 colcon build

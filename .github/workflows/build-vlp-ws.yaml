@@ -3,7 +3,7 @@ name: Build Docker Image for vlp-ws
 on:
   push:
     branches:
-      - "master"
+      - "main"
     paths:
       - .github/workflows/build-vlp-ws.yaml
       - vlp_ws/docker/Dockerfile

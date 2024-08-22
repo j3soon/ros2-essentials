@@ -25,7 +25,7 @@ This repository is primarily based on the [kobuki-base](https://github.com/kobuk
 > If you only need to bring up the real Kobuki robot, you don't need to compile the workspace. The Kobuki driver is already included in the Docker image. After the Docker image is built, you can directly bring up the robot.
 
 ```bash
-cd /home/ros2-agv-essentials/kobuki_ws
+cd /home/ros2-essentials/kobuki_ws
 
 # For x86_64 architecture
 colcon build --symlink-install
@@ -69,12 +69,12 @@ ros2 launch kobuki_launch kobuki.launch.py is_sim:=true
 
 ```bash
 # Inside the container
-cd /home/ros2-agv-essentials/kobuki_ws
+cd /home/ros2-essentials/kobuki_ws
 ./script/kobuki-bringup.sh
 
 # or Outside the container
 cd /path/to/kobuki_ws/docker
-docker compose run kobuki-ws /home/ros2-agv-essentials/kobuki_ws/script/kobuki-bringup.sh
+docker compose run kobuki-ws /home/ros2-essentials/kobuki_ws/script/kobuki-bringup.sh
 ```
 
 If you have successfully connected to the Kobuki, you should hear a sound from it. Otherwise, there may be errors. You can try re-plugging the USB cable, restarting the Kobuki, or even restarting the container.
@@ -101,12 +101,12 @@ To control the Kobuki with a keyboard, you can use the `teleop_twist_keyboard` p
 # - Angular 0.3
 
 # Inside the container
-cd /home/ros2-agv-essentials/kobuki_ws
+cd /home/ros2-essentials/kobuki_ws
 ./script/kobuki-teleop.sh
 
 # or Outside the container
 cd /path/to/kobuki_ws/docker
-docker compose run kobuki-ws /home/ros2-agv-essentials/kobuki_ws/script/kobuki-teleop.sh
+docker compose run kobuki-ws /home/ros2-essentials/kobuki_ws/script/kobuki-teleop.sh
 ```
 
 ### Launch the demo of SLAM
@@ -152,7 +152,7 @@ Note that the arm64 architecture is emulated by the QEMU, so it may consume a lo
 When the building process ends, use `docker compose up -d` and attach to the container by running `docker attach ros2-kobuki-ws`. After that, we can start building the ROS packages. If you have built the packages for the x86_64 architecture before, remember to delete the `build`, `install`, and `log` folders.
 
 ```bash
-cd /home/ros2-agv-essentials/kobuki_ws
+cd /home/ros2-essentials/kobuki_ws
 colcon build --symlink-install --packages-ignore velodyne_gazebo_plugins
 ```
 

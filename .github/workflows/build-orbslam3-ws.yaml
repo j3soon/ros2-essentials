@@ -3,7 +3,7 @@ name: Build Docker Image for orbslam3-ws
 on:
   push:
     branches:
-      - "master"
+      - "main"
     paths:
       - .github/workflows/build-orbslam3-ws.yaml
       - orbslam3_ws/docker/Dockerfile

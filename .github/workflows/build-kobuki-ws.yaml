@@ -3,7 +3,7 @@ name: Build Docker Image for kobuki-ws
 on:
   push:
     branches:
-      - "master"
+      - "main"
     paths:
       - .github/workflows/build-kobuki-ws.yaml
       - kobuki_ws/docker/Dockerfile

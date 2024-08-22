@@ -3,7 +3,7 @@ name: Build Docker Image for husky-ws
 on:
   push:
     branches:
-      - "master"
+      - "main"
     paths:
       - .github/workflows/build-husky-ws.yaml
       - husky_ws/docker/Dockerfile

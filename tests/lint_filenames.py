@@ -1,7 +1,12 @@
-import os
 import glob
+import logging
+import os
 
-# Check if all default files exist
+logging.basicConfig(level=logging.INFO)
+current_dir = os.path.dirname(os.path.realpath(__file__))
+repo_dir = os.path.realpath(f"{current_dir}/..")
+
+logging.info("Checking if all default files exist...")
 DEFAULT_FILES = [
     ".gitignore",
     "README.md",
@@ -11,10 +16,8 @@ DEFAULT_FILES = [
     "docker/Dockerfile",
     ".devcontainer/devcontainer.json",
 ]
-current_dir = os.path.dirname(os.path.realpath(__file__))
-repo_dir = os.path.realpath(f"{current_dir}/..")
 for filename in DEFAULT_FILES:
-    print(f"Checking existence of: '{filename}'...")
+    logging.debug(f"Checking existence of: '{filename}'...")
     for workspace_path in glob.glob(f"{repo_dir}/*_ws"):
         if not os.path.isfile(f"{workspace_path}/{filename}"):
             # Skip certain cases intentionally
@@ -24,13 +27,16 @@ for filename in DEFAULT_FILES:
             # Report error
             raise ValueError(f"'{filename}' does not exist in: '{workspace_path}'")
 
-# Check compose.yaml files
-for filename in glob.glob(f"{repo_dir}/**/compose*.yaml", recursive=True):
-    print(f"Checking: '{filename[len(repo_dir)+1:]}'...")
-    with open(filename, "r") as f:
-        content = f.read()
-        if "version:" in content:
-            # Ref: https://docs.docker.com/compose/compose-file/04-version-and-name/#version-top-level-element-optional
-            raise ValueError(f"version should not exist since it's obsolete: '{filename}'")
-
-print("All checks passed!")
+logging.info("Checking if all obsolete files do not exist...")
+OBSOLETE_FILES = [
+    "docker/cache/.gazebo/.gitkeep",
+    "docker/compose.yml",
+    "docker/docker-compose.yaml",
+    "docker/docker-compose.yml",
+    ".devcontainer/postCreateCommand.sh",
+]
+for filename in OBSOLETE_FILES:
+    logging.debug(f"Checking non-existence of: '{filename}'...")
+    for workspace_path in glob.glob(f"{repo_dir}/*_ws"):
+        if os.path.isfile(f"{workspace_path}/{filename}"):
+            raise ValueError(f"'{filename}' exists in: '{workspace_path}'")

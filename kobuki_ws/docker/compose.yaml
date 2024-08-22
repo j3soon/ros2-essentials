@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      # Specify the target platform to build the image.
+      # TODO: Specify the target platform to build the image, otherwise it will build for the host platform.
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
       # platforms:
       #   - "linux/arm64"
@@ -11,52 +11,59 @@ services:
     container_name: ros2-kobuki-ws
     stdin_open: true
     tty: true
+    # TODO: Comment the line below if the workspace don't need to communicate through `/dev/*` devices.
     privileged: true
     command: /bin/bash
     network_mode: host
-    working_dir: /home/ros2-agv-essentials/kobuki_ws
+    working_dir: /home/ros2-essentials/kobuki_ws
     environment:
-      - DISPLAY=${DISPLAY}
-      # Set ros2 environment variables.
+      # Set X11 server environment variable for existing display.
+      - DISPLAY=$DISPLAY
       # References:
       # - https://docs.ros.org/en/humble/Concepts/Intermediate/About-Domain-ID.html
       # - https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html
       # - https://docs.ros.org/en/humble/Tutorials/Demos/Logging-and-logger-configuration.html#console-output-colorizing
-      - ROS_LOCALHOST_ONLY=1
-      - ROS_DOMAIN_ID=42
-      - ROS2_WS=/home/ros2-agv-essentials/kobuki_ws
+      - ROS_LOCALHOST_ONLY=0
+        # Localhost only is disabled by default to allow communication with external devices.
+      - ROS_DOMAIN_ID=0
+        # Domain ID is set to 0 to allow communication through ros1_bridge.
       - RCUTILS_COLORIZED_OUTPUT=1
-      # If you want to access GPU, please uncomment the lines below.
-      # Reference : https://docs.docker.com/compose/gpu-support/
-      # deploy:
-      #   resources:
-      #     reservations:
-      #       devices:
-      #         - driver: nvidia
-      #           count: all
-      #           capabilities: [ gpu ]
+      - ROS2_WS=/home/ros2-essentials/kobuki_ws
+      # TODO: Add more environment variables here.
+    # TODO: Uncomment the lines below to enable GPU support.
+    # # Reference: https://docs.docker.com/compose/gpu-support/
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [ gpu ]
     volumes:
-      # Mount local timezone into container. ( Readonly )
+      # Mount local timezone into container.
       # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       # Mount X11 server
       - /tmp/.X11-unix:/tmp/.X11-unix
+        # X11-unix is mounted to allow GUI applications to display on host.
       - $HOME/.Xauthority:/home/user/.Xauthority
-      # Mount devices.
-      # If you don't want to mount all devices, you can specify the ones you need.
-      # But make sure to mount the device below:
-      # - Direct Rendering Infrastructure: /dev/dri
-      # - Sound Card: /dev/snd
-      # - Kubuki Base: usually /dev/ttyUSB0
+        # Xauthority is mounted to allow X11 forwarding for remote display.
+      # Mount Direct Rendering Infrastructure (DRI) for hardware acceleration support such as OpenGL.
+      # - /dev/dri:/dev/dri
+      # Mount sound card to prevent Gazebo warning.
+      # - /dev/snd:/dev/snd
+      # Mount shared memory for ROS2 communication.
+      # - /dev/shm:/dev/shm
+      # TODO: Uncomment the line below and comment out the three entries above to enable USB support.
       - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
-      - ./cache/.gazebo:/home/user/.gazebo
-      # Mounting the following directories will forbid direct deletion.
-      # Consider mount these directories only if the build process is slow.
-      # "source=${localWorkspaceFolder}/../cache/humble/build,target=/home/ws/build,type=bind",
-      # "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
-      # "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
-      # Mount workspace
-      - ../..:/home/ros2-agv-essentials
+      # Note that this volume is shared among all workspaces.
+      - gazebo-cache:/home/user/.gazebo
+      # TODO: Add more volume mounts here.
+      # Mount root workspace to allow easy access to all workspaces.
+      - ../..:/home/ros2-essentials
+volumes:
+  gazebo-cache:
+    name: ros2-gazebo-cache

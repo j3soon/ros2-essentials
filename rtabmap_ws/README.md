@@ -7,7 +7,7 @@ git clone https://github.com/j3soon/ros2-essentials.git
 ```
 
 ```bash
-cd ros2-agv-essentials/rtabmap_ws/docker
+cd ros2-essentials/rtabmap_ws/docker
 docker compose pull
 docker compose up -d --build
 ```
@@ -15,7 +15,7 @@ docker compose up -d --build
 - Attach to the container
   ```sh
   docker attach ros2-rtabmap-ws
-  cd /home/ros2-agv-essentials/rtabmap_ws
+  cd /home/ros2-essentials/rtabmap_ws
   colcon build --symlink-install
   ```
 
