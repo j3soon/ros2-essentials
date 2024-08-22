@@ -29,7 +29,7 @@ services:
         # Domain ID is set to 0 to allow communication through ros1_bridge.
       - RCUTILS_COLORIZED_OUTPUT=1
       - ROS2_WS=/home/ros2-essentials/kobuki_ws
-      # TODO: Set more environment variables.
+      # TODO: Add more environment variables here.
     # TODO: Uncomment the lines below to enable GPU support.
     # # Reference: https://docs.docker.com/compose/gpu-support/
     # deploy:
@@ -61,6 +61,7 @@ services:
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
       - gazebo-cache:/home/user/.gazebo
+      # TODO: Add more volume mounts here.
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
 volumes:
