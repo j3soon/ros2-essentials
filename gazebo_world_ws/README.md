@@ -48,6 +48,8 @@ source /home/ros2-essentials/gazebo_world_ws/install/setup.bash
 # Launch the world
 # Replace <target world> with the name of the world you wish to launch.
 ros2 launch gazebo_launch <target world>.launch.py
+# or launch turtlebot3 worlds, such as:
+ros2 launch gazebo_launch turtlebot3.launch.py gazebo_world:=turtlebot3_dqn_stage3.world
 ```
 
 ### Use in other container/workspace
@@ -94,8 +96,8 @@ from launch_ros.substitutions import FindPackageShare
 ARGUMENTS = [
     DeclareLaunchArgument(
         "launch_gzclient",
-        default_value="False",
-        description="Launch gzclient, by default is False, which means headless mode",
+        default_value="True",
+        description="Launch gzclient, by default is True, which shows the gazebo GUI",
     ),
 ]
 

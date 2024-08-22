@@ -7,8 +7,8 @@ from ament_index_python.packages import get_package_share_directory
 ARGUMENTS = [
     DeclareLaunchArgument(
         "launch_gzclient",
-        default_value="False",
-        description="Launch gzclient, by default is False, which means headless mode",
+        default_value="True",
+        description="Launch gzclient, by default is True, which shows the gazebo GUI",
     ),
     DeclareLaunchArgument(
         "gazebo_world",
