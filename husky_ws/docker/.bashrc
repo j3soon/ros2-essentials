@@ -27,7 +27,7 @@ if [ ! -f $ROS2_WS/install/setup.bash ]; then
 fi
 # TODO: Source other workspace environments as underlay
 # Source Clearpath robot environment
-source ~/ros2_ws/install/local_setup.bash
+source ~/husky_driver_ws/install/local_setup.bash
 # Source Clearpath default environment installed by `clearpath_computer_installer.sh`
 source /etc/clearpath/setup.bash
 # Source workspace environment
