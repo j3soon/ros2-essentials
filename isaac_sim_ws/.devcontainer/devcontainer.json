@@ -1,10 +1,10 @@
 /* Reference: https://aka.ms/devcontainer.json */
 {
-    "name": "isaac-sim-ws",
+    "name": "Isaac Sim",
     "dockerComposeFile": "../docker/compose.yaml",
     "service": "isaac-sim-ws",
-    // workspace settings
-    "workspaceFolder": "/home/ros2-agv-essentials/isaac_sim_ws",
+    // Workspace settings
+    "workspaceFolder": "/home/ros2-essentials/isaac_sim_ws",
     // Vscode extensions
     "customizations": {
         "vscode": {
@@ -19,7 +19,5 @@
                 "ms-iot.vscode-ros"
             ]
         }
-    },
-    // Lifecycle scripts
-    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+    }
 }

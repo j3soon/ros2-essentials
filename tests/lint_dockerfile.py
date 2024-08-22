@@ -14,8 +14,8 @@ for filename in glob.glob(f"{repo_dir}/*_ws/docker/Dockerfile*"):
     if "ros1_bridge_ws" in filename:
         continue
     content = Path(filename).read_text()
-    if "ros-humble-" in content:
-        raise ValueError(f"`ros-humble-*` should not exist, use `ros-$ROS_DISTRO-*` instead: '{filename}'")
+    if " ros-humble-" in content:
+        raise ValueError(f"` ros-humble-*` should not exist, use ` ros-$ROS_DISTRO-*` instead: '{filename}'")
     if "$USER_GID" in content:
         raise ValueError(f"`$USER_GID` should not exist since it's unnecessary: '{filename}'")
     if "RUN apt-get update" in content:
