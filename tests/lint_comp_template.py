@@ -9,6 +9,12 @@ logging.basicConfig(level=logging.INFO)
 current_dir = os.path.dirname(os.path.realpath(__file__))
 repo_dir = os.path.realpath(f"{current_dir}/..")
 
+def get_regexp_from_template_line(line):
+    regexp = re.escape(line) \
+        .replace(r'\{PLACEHOLDER_\#\}', '(# )?') \
+        .replace(r'\{PLACEHOLDER\}', '.*')
+    return f"^{regexp}$"
+
 def compare_file_with_template(filepath, targetpath=None, ignored_workspaces=[]):
     targetpath = targetpath or filepath
     logging.info(f"Checking if '{targetpath}' matches the template...")
@@ -28,7 +34,7 @@ def compare_file_with_template(filepath, targetpath=None, ignored_workspaces=[])
             raise ValueError(f"'{filepath}' does not match the template: '{filename}'")
         i = 0
         while i < len(diff):
-            if "- MULTILINE_PLACEHOLDER" in diff[i]:  # don't use exact match to avoid cases without trailing newline
+            if "- {PLACEHOLDER_MULTILINE}" in diff[i]:  # don't use exact match to avoid cases without trailing newline
                 i += 1
                 while i < len(diff) and diff[i].startswith('+ '):
                     i += 1
@@ -47,9 +53,9 @@ def compare_file_with_template(filepath, targetpath=None, ignored_workspaces=[])
                     j += 1
                 k = 0
                 while k < len(stack) and j+k < len(diff) and diff[j+k].startswith('+ '):
-                    if "- MULTILINE_PLACEHOLDER" in diff[i+k]:
-                        raise error("MULTILINE_PLACEHOLDER is not supported in this case yet", i)
-                    regexp = "^" + re.escape(diff[i+k][2:]).replace('PLACEHOLDER', '.*') + "$"
+                    if "- {PLACEHOLDER_MULTILINE}" in diff[i+k]:
+                        raise error("{PLACEHOLDER_MULTILINE} is not supported in this case yet", i)
+                    regexp = get_regexp_from_template_line(diff[i+k][2:])
                     if not re.match(regexp, diff[j+k][2:]):
                         error("Expected line deletion and addition to differ only in the placeholder", i)
                     k += 1
@@ -63,9 +69,9 @@ def compare_file_with_template(filepath, targetpath=None, ignored_workspaces=[])
                     j += 1
                 k = 0
                 while k < len(stack) and j+k < len(diff) and diff[j+k].startswith('- '):
-                    if "- MULTILINE_PLACEHOLDER" in diff[j+k]:
-                        raise error("MULTILINE_PLACEHOLDER is not supported in this case yet", i)
-                    regexp = "^" + re.escape(diff[j+k][2:]).replace('PLACEHOLDER', '.*') + "$"
+                    if "- {PLACEHOLDER_MULTILINE}" in diff[j+k]:
+                        raise error("{PLACEHOLDER_MULTILINE} is not supported in this case yet", i)
+                    regexp = get_regexp_from_template_line(diff[j+k][2:])
                     if not re.match(regexp, diff[i+k][2:]):
                         error("Expected line deletion and addition to differ only in the placeholder", i)
                     k += 1

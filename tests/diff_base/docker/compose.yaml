@@ -1,5 +1,5 @@
 services:
-  PLACEHOLDER-ws:
+  {PLACEHOLDER}-ws:
     build:
       context: .
       dockerfile: Dockerfile
@@ -7,15 +7,15 @@ services:
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
       # platforms:
       #   - "linux/arm64"
-    image: j3soon/ros2-PLACEHOLDER-ws
-    container_name: ros2-PLACEHOLDER-ws
+    image: j3soon/ros2-{PLACEHOLDER}-ws
+    container_name: ros2-{PLACEHOLDER}-ws
     stdin_open: true
     tty: true
     # TODO: Comment the line below if the workspace don't need to communicate through `/dev/*` devices.
-    PLACEHOLDERprivileged: true
+    {PLACEHOLDER_#}privileged: true
     command: /bin/bash
     network_mode: host
-    working_dir: /home/ros2-essentials/PLACEHOLDER_ws
+    working_dir: /home/ros2-essentials/{PLACEHOLDER}_ws
     environment:
       # Set X11 server environment variable for existing display.
       - DISPLAY=$DISPLAY
@@ -28,18 +28,18 @@ services:
       - ROS_DOMAIN_ID=0
         # Domain ID is set to 0 to allow communication through ros1_bridge.
       - RCUTILS_COLORIZED_OUTPUT=1
-      - ROS2_WS=/home/ros2-essentials/PLACEHOLDER_ws
+      - ROS2_WS=/home/ros2-essentials/{PLACEHOLDER}_ws
       # TODO: Set more environment variables.
-MULTILINE_PLACEHOLDER
+{PLACEHOLDER_MULTILINE}
     # TODO: Uncomment the lines below to enable GPU support.
-    # # Reference: https://docs.docker.com/compose/gpu-support/
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [ gpu ]
+    {PLACEHOLDER_#}# Reference: https://docs.docker.com/compose/gpu-support/
+    {PLACEHOLDER_#}deploy:
+    {PLACEHOLDER_#}  resources:
+    {PLACEHOLDER_#}    reservations:
+    {PLACEHOLDER_#}      devices:
+    {PLACEHOLDER_#}        - driver: nvidia
+    {PLACEHOLDER_#}          count: all
+    {PLACEHOLDER_#}          capabilities: [ gpu ]
     volumes:
       # Mount local timezone into container.
       # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
@@ -51,13 +51,13 @@ MULTILINE_PLACEHOLDER
       - $HOME/.Xauthority:/home/user/.Xauthority
         # Xauthority is mounted to allow X11 forwarding for remote display.
       # Mount Direct Rendering Infrastructure (DRI) for hardware acceleration support such as OpenGL.
-      PLACEHOLDER- /dev/dri:/dev/dri
+      {PLACEHOLDER_#}- /dev/dri:/dev/dri
       # Mount sound card to prevent Gazebo warning.
-      PLACEHOLDER- /dev/snd:/dev/snd
+      {PLACEHOLDER_#}- /dev/snd:/dev/snd
       # Mount shared memory for ROS2 communication.
-      PLACEHOLDER- /dev/shm:/dev/shm
+      {PLACEHOLDER_#}- /dev/shm:/dev/shm
       # TODO: Uncomment the line below and comment out the three entries above to enable USB support.
-      PLACEHOLDER- /dev:/dev
+      {PLACEHOLDER_#}- /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.

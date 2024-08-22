@@ -1,14 +1,14 @@
-# Base Image: PLACEHOLDER
-FROM PLACEHOLDER AS amd64
-# Base Image: PLACEHOLDER
-FROM PLACEHOLDER AS arm64
+# Base Image: {PLACEHOLDER}
+FROM {PLACEHOLDER} AS amd64
+# Base Image: {PLACEHOLDER}
+FROM {PLACEHOLDER} AS arm64
 
 # Use docker automatic platform args to select the base image.
 # It may be `arm64` or `amd64` depending on the platform.
 # Ref: https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope
 FROM $TARGETARCH
 ARG TARGETARCH
-MULTILINE_PLACEHOLDER
+{PLACEHOLDER_MULTILINE}
 # Arguments for the default user
 ARG USERNAME=user
 ARG USER_UID=1000
@@ -84,14 +84,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 #     apt-get update && apt-get install -y \
 #     $OTHER_PACKAGES \
 #     && rm -rf /var/lib/apt/lists/*
-MULTILINE_PLACEHOLDER
+{PLACEHOLDER_MULTILINE}
 USER $USERNAME
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
 # TODO: Run additional commands as non-root user here
-MULTILINE_PLACEHOLDER
+{PLACEHOLDER_MULTILINE}
 COPY .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
-MULTILINE_PLACEHOLDER
+{PLACEHOLDER_MULTILINE}
 ENTRYPOINT []
 CMD ["/bin/bash"]

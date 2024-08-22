@@ -19,13 +19,13 @@ if [ ! -f $ROS2_WS/install/setup.bash ]; then
     # TODO: If command `arch` outputs `aarch64`, consider adding `--packages-ignore <package>` to ignore x86 packages
     # Ref: https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
     if [ $(arch) == "aarch64" ]; then
-        colcon build --symlink-installPLACEHOLDER
+        colcon build --symlink-install{PLACEHOLDER}
     else
         colcon build --symlink-install
     fi
     echo "Workspace built."
 fi
 # TODO: Source other workspace environments as underlay
-MULTILINE_PLACEHOLDER
+{PLACEHOLDER_MULTILINE}
 # Source workspace environment
 source $ROS2_WS/install/setup.bash
