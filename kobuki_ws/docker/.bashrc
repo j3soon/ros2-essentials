@@ -19,7 +19,7 @@ if [ ! -f $ROS2_WS/install/setup.bash ]; then
     # TODO: If command `arch` outputs `aarch64`, consider adding `--packages-ignore <package>` to ignore x86 packages
     # Ref: https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
     if [ $(arch) == "aarch64" ]; then
-        colcon build --symlink-install
+        colcon build --symlink-install --packages-ignore velodyne_gazebo_plugins
     else
         colcon build --symlink-install
     fi
