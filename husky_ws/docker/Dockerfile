@@ -7,6 +7,7 @@ FROM arm64v8/ros:humble AS arm64
 # It may be `arm64` or `amd64` depending on the platform.
 # Ref: https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope
 FROM $TARGETARCH
+ARG TARGETARCH
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 

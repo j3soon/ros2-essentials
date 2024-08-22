@@ -7,6 +7,7 @@ FROM introlab3it/rtabmap:jammy AS arm64
 # It may be `arm64` or `amd64` depending on the platform.
 # Ref: https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope
 FROM $TARGETARCH
+ARG TARGETARCH
 
 LABEL org.opencontainers.image.authors="assume0701@gmail.com"
 

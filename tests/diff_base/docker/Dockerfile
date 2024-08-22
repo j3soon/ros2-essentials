@@ -7,6 +7,7 @@ FROM PLACEHOLDER AS arm64
 # It may be `arm64` or `amd64` depending on the platform.
 # Ref: https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope
 FROM $TARGETARCH
+ARG TARGETARCH
 MULTILINE_PLACEHOLDER
 # Arguments for the default user
 ARG USERNAME=user
