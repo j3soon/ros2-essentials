@@ -31,8 +31,8 @@ services:
       - RCUTILS_COLORIZED_OUTPUT=1
       - ROS2_WS=/home/ros2-essentials/cartographer_ws
     # TODO: Uncomment the lines below to enable GPU support.
+    # # Reference: https://docs.docker.com/compose/gpu-support/
     # deploy:
-    # # Reference : https://docs.docker.com/compose/gpu-support/
     #   resources:
     #     reservations:
     #       devices:

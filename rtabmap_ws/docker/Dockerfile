@@ -1,6 +1,6 @@
-# Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
+# Base Image: https://hub.docker.com/r/introlab3it/rtabmap/tags?page=1&name=jammy
 FROM introlab3it/rtabmap:jammy AS amd64
-# Base Image : https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
+# Base Image: https://hub.docker.com/r/introlab3it/rtabmap/tags?page=1&name=jammy
 FROM introlab3it/rtabmap:jammy AS arm64
 
 # Use docker automatic platform args to select the base image.

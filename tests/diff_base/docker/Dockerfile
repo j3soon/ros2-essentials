@@ -1,6 +1,6 @@
-# Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
+# Base Image: PLACEHOLDER
 FROM PLACEHOLDER AS amd64
-# Base Image : https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
+# Base Image: PLACEHOLDER
 FROM PLACEHOLDER AS arm64
 
 # Use docker automatic platform args to select the base image.
