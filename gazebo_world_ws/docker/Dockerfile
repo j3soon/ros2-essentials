@@ -1,6 +1,6 @@
-# Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
+# Base Image: https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
 FROM osrf/ros:humble-desktop-full AS amd64
-# Base Image : https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
+# Base Image: https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
 FROM arm64v8/ros:humble AS arm64
 
 # Use docker automatic platform args to select the base image.
@@ -86,8 +86,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 #     && rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME
-COPY .bashrc /home/$USERNAME/.bashrc
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
+# TODO: Run additional commands as non-root user here
+COPY .bashrc /home/$USERNAME/.bashrc
+# TODO: Copy additional files here
 ENTRYPOINT []
 CMD ["/bin/bash"]

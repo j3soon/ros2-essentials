@@ -1,7 +1,7 @@
 # Check if the architecture is aarch64
 if [ $(arch) == "aarch64" ]; then
     echo "Architecture is aarch64, which is not supported by Gazebo. Exiting..."
-    exit
+    exit 1
 fi
 # Source global ROS2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
@@ -21,8 +21,15 @@ if [ ! -f $ROS2_WS/install/setup.bash ]; then
     cd $ROS2_WS
     # Ref: https://docs.ros.org/en/humble/Tutorials/Intermediate/Rosdep.html
     rosdep install --from-paths src --ignore-src -y -r
-    colcon build --symlink-install
+    # TODO: If command `arch` outputs `aarch64`, consider adding `--packages-ignore <package>` to ignore x86 packages
+    # Ref: https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
+    if [ $(arch) == "aarch64" ]; then
+        colcon build --symlink-install
+    else
+        colcon build --symlink-install
+    fi
     echo "Workspace built."
 fi
+# TODO: Source other workspace environments as underlay
 # Source workspace environment
 source $ROS2_WS/install/setup.bash

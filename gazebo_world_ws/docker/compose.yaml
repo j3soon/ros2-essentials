@@ -1,9 +1,12 @@
-version: '3'
 services:
   gazebo-world-ws:
     build:
       context: .
       dockerfile: Dockerfile
+      # TODO: Specify the target platform to build the image, otherwise it will build for the host platform.
+      # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
+      # platforms:
+      #   - "linux/arm64"
     image: j3soon/ros2-gazebo-world-ws
     container_name: ros2-gazebo-world-ws
     stdin_open: true
@@ -16,7 +19,6 @@ services:
     environment:
       # Set X11 server environment variable for existing display.
       - DISPLAY=$DISPLAY
-      # TODO: Set ros2 environment variables.
       # References:
       # - https://docs.ros.org/en/humble/Concepts/Intermediate/About-Domain-ID.html
       # - https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html
@@ -27,9 +29,10 @@ services:
         # Domain ID is set to 0 to allow communication through ros1_bridge.
       - RCUTILS_COLORIZED_OUTPUT=1
       - ROS2_WS=/home/ros2-essentials/gazebo_world_ws
+      # TODO: Add more environment variables here.
     # TODO: Uncomment the lines below to enable GPU support.
+    # # Reference: https://docs.docker.com/compose/gpu-support/
     # deploy:
-    # # Reference : https://docs.docker.com/compose/gpu-support/
     #   resources:
     #     reservations:
     #       devices:
@@ -50,12 +53,15 @@ services:
       - /dev/dri:/dev/dri
       # Mount sound card to prevent Gazebo warning.
       - /dev/snd:/dev/snd
-      # Uncomment the line below and comment out the two entries above to enable USB support.
+      # Mount shared memory for ROS2 communication.
+      - /dev/shm:/dev/shm
+      # TODO: Uncomment the line below and comment out the three entries above to enable USB support.
       # - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
       - gazebo-cache:/home/user/.gazebo
+      # TODO: Add more volume mounts here.
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
 volumes:

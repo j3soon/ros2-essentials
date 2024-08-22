@@ -3,7 +3,7 @@
     "name": "gazebo-world-ws",
     "dockerComposeFile": "../docker/compose.yaml",
     "service": "gazebo-world-ws",
-    // workspace settings
+    // Workspace settings
     "workspaceFolder": "/home/ros2-essentials/gazebo_world_ws",
     // Vscode extensions
     "customizations": {
@@ -19,5 +19,5 @@
                 "ms-iot.vscode-ros"
             ]
         }
-    },
+    }
 }
