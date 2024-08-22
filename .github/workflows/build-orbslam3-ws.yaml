@@ -8,6 +8,7 @@ on:
       - .github/workflows/build-orbslam3-ws.yaml
       - orbslam3_ws/docker/Dockerfile
       - orbslam3_ws/docker/.dockerignore
+      - orbslam3_ws/docker/.bashrc
 
 jobs:
   docker:

@@ -21,8 +21,7 @@ for filename in DEFAULT_FILES:
     for workspace_path in glob.glob(f"{repo_dir}/*_ws"):
         if not os.path.isfile(f"{workspace_path}/{filename}"):
             # Skip certain cases intentionally
-            if filename in (".gitignore", "docker/.bashrc") and os.path.basename(workspace_path) == "ros1_bridge_ws" or \
-               filename in ("docker/.bashrc") and os.path.basename(workspace_path) == "orbslam3_ws":
+            if filename in (".gitignore", "docker/.bashrc") and os.path.basename(workspace_path) == "ros1_bridge_ws":
                 continue
             # Report error
             raise ValueError(f"'{filename}' does not exist in: '{workspace_path}'")
