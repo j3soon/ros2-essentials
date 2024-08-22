@@ -1,0 +1,6 @@
+.vscode
+
+# ROS2 basic directories
+/build
+/install
+/log
