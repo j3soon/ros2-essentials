@@ -17,8 +17,8 @@ Pulling the pre-built Docker images can bypass the time-consuming building proce
 | [j3soon/ros2-template-ws](https://hub.docker.com/r/j3soon/ros2-template-ws/tags) | [`./template_ws`](./template_ws) | ✔️ | ✔️ | |
 | [j3soon/ros2-orbslam3-ws](https://hub.docker.com/r/j3soon/ros2-orbslam3-ws/tags) | [`./orbslam3_ws`](./orbslam3_ws) | ✔️ | ❌ | |
 | [j3soon/ros2-rtabmap-ws](https://hub.docker.com/r/j3soon/ros2-rtabmap-ws/tags) | [`./rtabmap_ws`](./rtabmap_ws) | ✔️ | ❌ | |
-| [j3soon/ros2-ros1-bridge-ws](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-ws/tags) | [`./ros1_bridge_ws`](./ros1_bridge_ws) | ✔️ | ❌ | Skip linting |
-| [j3soon/ros2-ros1-bridge-build-ws](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-build-ws/tags) | [`./ros1_bridge_ws`](./ros1_bridge_ws) | ✔️ | ❌ | Skip linting |
+| [j3soon/ros2-ros1-bridge-ws](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-ws/tags) | [`./ros1_bridge_ws`](./ros1_bridge_ws) | ✔️ | ✔️ | Skip linting |
+| [j3soon/ros2-ros1-bridge-build-ws](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-build-ws/tags) | [`./ros1_bridge_ws`](./ros1_bridge_ws) | ✔️ | ✔️ | Skip linting |
 | [j3soon/ros2-cartographer-ws](https://hub.docker.com/r/j3soon/ros2-cartographer-ws/tags) | [`./cartographer_ws`](./cartographer_ws) | ✔️ | ✔️ | |
 | [j3soon/ros2-husky-ws](https://hub.docker.com/r/j3soon/ros2-husky-ws/tags) | [`./husky_ws`](./husky_ws) | ✔️ | ✔️ | Support real husky |
 | [j3soon/ros2-kobuki-ws](https://hub.docker.com/r/j3soon/ros2-kobuki-ws/tags) | [`./kobuki_ws`](./kobuki_ws) | ✔️ | ✔️ | Support real kobuki |
