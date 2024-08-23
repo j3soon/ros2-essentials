@@ -9,6 +9,8 @@ FROM arm64v8/ros:humble AS arm64
 FROM $TARGETARCH
 ARG TARGETARCH
 
+LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
+
 # Arguments for the default user
 ARG USERNAME=user
 ARG USER_UID=1000

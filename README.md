@@ -12,22 +12,22 @@ The following Docker images can be pulled by `docker pull <IMAGE_NAME>` or by `d
 
 Pulling the pre-built Docker images can bypass the time-consuming building process (for both docker compose & devcontainers).
 
-| Docker Image | Description | amd64 | arm64 | Notes |
-|--------------|-------------|-------|-------|-------|
-| [j3soon/ros2-template-ws](https://hub.docker.com/r/j3soon/ros2-template-ws/tags) | [`./template_ws`](./template_ws) | ✔️ | ✔️ | |
-| [j3soon/ros2-orbslam3-ws](https://hub.docker.com/r/j3soon/ros2-orbslam3-ws/tags) | [`./orbslam3_ws`](./orbslam3_ws) | ✔️ | ❌ | |
-| [j3soon/ros2-rtabmap-ws](https://hub.docker.com/r/j3soon/ros2-rtabmap-ws/tags) | [`./rtabmap_ws`](./rtabmap_ws) | ✔️ | ❌ | |
-| [j3soon/ros2-ros1-bridge-ws](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-ws/tags) | [`./ros1_bridge_ws`](./ros1_bridge_ws) | ✔️ | ✔️ | Skip linting |
-| [j3soon/ros2-ros1-bridge-build-ws](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-build-ws/tags) | [`./ros1_bridge_ws`](./ros1_bridge_ws) | ✔️ | ✔️ | Skip linting |
-| [j3soon/ros2-cartographer-ws](https://hub.docker.com/r/j3soon/ros2-cartographer-ws/tags) | [`./cartographer_ws`](./cartographer_ws) | ✔️ | ✔️ | |
-| [j3soon/ros2-husky-ws](https://hub.docker.com/r/j3soon/ros2-husky-ws/tags) | [`./husky_ws`](./husky_ws) | ✔️ | ✔️ | Support real husky |
-| [j3soon/ros2-kobuki-ws](https://hub.docker.com/r/j3soon/ros2-kobuki-ws/tags) | [`./kobuki_ws`](./kobuki_ws) | ✔️ | ✔️ | Support real kobuki |
-| [j3soon/ros2-vlp-ws](https://hub.docker.com/r/j3soon/ros2-vlp-ws/tags) | [`./vlp_ws`](./vlp_ws) | ✔️ | ✔️ | Support real vlp |
-| [j3soon/ros2-gazebo-world-ws](https://hub.docker.com/r/j3soon/ros2-gazebo-world-ws/tags) | [`./gazebo_world_ws`](./vlp_ws) | ✔️ | ❌️ | |
+| Docker Image | amd64 | arm64 | Notes | Maintainer |
+|--------------|-------|-------|-------|------------|
+| `j3soon/ros2-template-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-template-ws/tags)][[code](./template_ws)] | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| `j3soon/ros2-orbslam3-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-orbslam3-ws/tags)][[code](./orbslam3_ws)] | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
+| `j3soon/ros2-rtabmap-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-rtabmap-ws/tags)][[code](./rtabmap_ws)] | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
+| `j3soon/ros2-ros1-bridge-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-ws/tags)][[code](./ros1_bridge_ws)] | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| `j3soon/ros2-ros1-bridge-build-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-build-ws/tags)][[code](./ros1_bridge_ws)] | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| `j3soon/ros2-cartographer-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-cartographer-ws/tags)][[code](./cartographer_ws)] | ✔️ | ✔️ | | [Assume Zhan](https://github.com/Assume-Zhan) |
+| `j3soon/ros2-husky-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-husky-ws/tags)][[code](./husky_ws)] | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| `j3soon/ros2-kobuki-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-kobuki-ws/tags)][[code](./kobuki_ws)] | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| `j3soon/ros2-vlp-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-vlp-ws/tags)][[code](./vlp_ws)] | ✔️ | ✔️ | Real-world support | [Assume Zhan](https://github.com/Assume-Zhan) |
+| `j3soon/ros2-gazebo-world-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-gazebo-world-ws/tags)][[code](./gazebo_world_ws)] | ✔️ | ❌️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 
 ## Acknowledgement
 
-The code is mainly contributed by [Johnson](https://github.com/j3soon), [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), and [others](https://github.com/j3soon/ros2-essentials/graphs/contributors).
+The code is mainly contributed by [Johnson](https://github.com/j3soon), [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), [Lam Chon Hang](https://github.com/ClassLongJoe1112), and others. For a full list of contributors, please refer to the [contribution list](https://github.com/j3soon/ros2-essentials/graphs/contributors).
 
 We extend our gratitude to [ElsaLab][elsalab] and [NVIDIA AI Technology Center (NVAITC)][nvaitc] for their support in making this project possible.
 
