@@ -4,6 +4,7 @@ services:
     container_name: ros-core
     command: "rosmaster --core"
     network_mode: host
+    env_file: .env
     healthcheck:
       # The healthcheck is required for ros1-bridge to wait until roscore is ready.
       test: /ros_entrypoint.sh bash -c "rostopic list || exit 1"
@@ -20,11 +21,12 @@ services:
       ros-core:
         # The healthcheck is required for ros1-bridge to wait until roscore is ready.
         condition: service_healthy
-    command: ./start-bridge.sh
+    command: ./start-bridge.sh $ROS_MASTER_URI
     stdin_open: true
     tty: true
     network_mode: host
     working_dir: /
+    env_file: .env
     volumes:
       # Mount local timezone into container. ( Readonly )
       # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
@@ -40,6 +42,7 @@ services:
     stdin_open: true
     tty: true
     network_mode: host
+    env_file: .env
     depends_on:
       ros-core:
         condition: service_healthy
@@ -49,6 +52,7 @@ services:
     stdin_open: true
     tty: true
     network_mode: host
+    env_file: .env
     volumes:
       # Shared Memory
       - /dev/shm:/dev/shm
