@@ -1,6 +1,8 @@
 services:
   ros-core:
+    # TODO: Change the image based on your platform.
     image: osrf/ros:noetic-desktop-full
+    # image: arm64v8/ros:noetic
     container_name: ros-core
     command: "rosmaster --core"
     network_mode: host
@@ -15,6 +17,10 @@ services:
     build:
       context: .
       target: release
+      # TODO: Specify the target platform to build the image, otherwise it will build for the host platform.
+      # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
+      # platforms:
+      #   - "linux/arm64"
     image: j3soon/ros2-ros1-bridge-ws
     container_name: ros2-ros1-bridge-ws
     depends_on:
@@ -37,7 +43,9 @@ services:
       # Shared Memory
       - /dev/shm:/dev/shm
   ros1:
+    # TODO: Change the image based on your platform.
     image: osrf/ros:noetic-desktop-full
+    # image: arm64v8/ros:noetic
     container_name: ros1
     stdin_open: true
     tty: true
@@ -47,7 +55,9 @@ services:
       ros-core:
         condition: service_healthy
   ros2:
+    # TODO: Change the image based on your platform.
     image: osrf/ros:humble-desktop-full
+    # image: arm64v8/ros:humble
     container_name: ros2
     stdin_open: true
     tty: true
