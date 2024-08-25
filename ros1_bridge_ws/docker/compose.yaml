@@ -14,8 +14,8 @@ services:
     build:
       context: .
       target: release
-    image: j3soon/ros1-bridge-ws
-    container_name: ros1-bridge-ws
+    image: j3soon/ros2-ros1-bridge-ws
+    container_name: ros2-ros1-bridge-ws
     depends_on:
       ros-core:
         # The healthcheck is required for ros1-bridge to wait until roscore is ready.
