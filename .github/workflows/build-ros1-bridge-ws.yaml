@@ -13,22 +13,11 @@ on:
 jobs:
   docker:
     if: github.repository == 'j3soon/ros2-essentials'
-    runs-on: ubuntu-latest
+    # Use self-hosted runner to bypass the 6-hour limit in GitHub-hosted runner
+    # Ref: https://docs.github.com/en/actions/administering-github-actions/usage-limits-billing-and-administration#usage-limits
+    runs-on: self-hosted
     timeout-minutes: 1440
     steps:
-      -
-        name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-          build-mount-path: /var/lib/docker/
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
-          remove-codeql: 'true'
-          remove-docker-images: 'true'
-      -
-        name: Restart docker
-        run: sudo service docker restart
       -
         name: Checkout
         uses: actions/checkout@v3
