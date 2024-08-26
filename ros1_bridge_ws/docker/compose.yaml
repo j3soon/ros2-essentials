@@ -16,6 +16,7 @@ services:
   ros1-bridge:
     build:
       context: .
+      dockerfile: Dockerfile
       target: release
       # TODO: Specify the target platform to build the image, otherwise it will build for the host platform.
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
@@ -34,13 +35,13 @@ services:
     working_dir: /
     env_file: .env
     volumes:
-      # Mount local timezone into container. ( Readonly )
+      # Mount local timezone into container.
       # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      # Direct Rendering Infrastructure
+      # Mount Direct Rendering Infrastructure (DRI) for hardware acceleration support such as OpenGL.
       - /dev/dri:/dev/dri
-      # Shared Memory
+      # Mount shared memory for ROS2 communication.
       - /dev/shm:/dev/shm
   ros1:
     # TODO: Change the image based on your platform.
@@ -64,5 +65,5 @@ services:
     network_mode: host
     env_file: .env
     volumes:
-      # Shared Memory
+      # Mount shared memory for ROS2 communication.
       - /dev/shm:/dev/shm

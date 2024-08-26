@@ -9,6 +9,7 @@ services:
       service: ros1-bridge
     build:
       context: .
+      dockerfile: Dockerfile
       target: build
     image: j3soon/ros2-ros1-bridge-build-ws
     container_name: ros2-ros1-bridge-build-ws
