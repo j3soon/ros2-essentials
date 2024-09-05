@@ -1,8 +1,6 @@
 # Base Image : https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
 FROM osrf/ros:humble-desktop-full
 
-LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
-
 ARG USERNAME=user
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -22,6 +20,15 @@ RUN apt-get update && apt-get upgrade -y \
 RUN apt-get update && apt-get install -y python3-pip \
     && rm -rf /var/lib/apt/lists/*
 ENV SHELL /bin/bash
+
+# Install Aloha Interbotix dependencies
+# Ref: https://docs.trossenrobotics.com/interbotix_xsarms_docs/ros_interface/ros2/software_setup.html#amd64-architecture
+# Ref: https://github.com/Interbotix/interbotix_ros_manipulators/blob/humble/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh
+RUN apt-get update && apt-get install -y curl \
+    && curl 'https://raw.githubusercontent.com/Interbotix/interbotix_ros_manipulators/d07c17cc0f868bf1f59ee8d8fa844e273f4699ff/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh' > xsarm_amd64_install.sh \
+    && chmod +x xsarm_amd64_install.sh \
+    && ./xsarm_amd64_install.sh -d humble \
+    && rm -rf /var/lib/apt/lists/*
 
 # ********************************************************
 # * Anything else you want to do like clean up goes here *
