@@ -1,0 +1,33 @@
+name: build-xs-noetic
+
+on:
+  push:
+    branches:
+      - main
+      - devel
+  pull_request:
+    branches:
+      - main
+      - devel
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  xs-noetic:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: noetic,  ROS_REPO: main, BUILDER: catkin_tools}
+          - {ROS_DISTRO: noetic,  ROS_REPO: main, BUILDER: catkin_make}
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create src directory for xs
+        run: |
+          rm interbotix_ros_xseries/CATKIN_IGNORE
+          mkdir src
+          mv interbotix_ros_xseries src
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: ${{matrix.env}}

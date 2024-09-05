@@ -1,0 +1,28 @@
+name: build-standalone
+
+on:
+  push:
+    branches:
+      - main
+      - devel
+  pull_request:
+    branches:
+      - main
+      - devel
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-standalone:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+      - name: Get dependencies
+        run: sudo apt-get install -y build-essential cmake libyaml-cpp-dev
+      - name: Build
+        run: mkdir build && cd build && cmake .. && make

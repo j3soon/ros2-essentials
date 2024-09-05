@@ -1,0 +1,33 @@
+name: build-xs-melodic
+
+on:
+  push:
+    branches:
+      - main
+      - devel
+  pull_request:
+    branches:
+      - main
+      - devel
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  xs-melodic:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: melodic, ROS_REPO: main, BUILDER: catkin_tools}
+          - {ROS_DISTRO: melodic, ROS_REPO: main, BUILDER: catkin_make}
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create src directory for xs
+        run: |
+          rm interbotix_ros_xseries/CATKIN_IGNORE
+          mkdir src
+          mv interbotix_ros_xseries src
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: ${{matrix.env}}

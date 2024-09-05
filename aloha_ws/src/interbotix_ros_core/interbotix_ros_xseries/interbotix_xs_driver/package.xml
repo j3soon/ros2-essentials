@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>interbotix_xs_driver</name>
+  <version>0.3.7</version>
+  <description>Provides low-level interfaces to easily control an Interbotix X-Series Robot.</description>
+  <maintainer email="trsupport@trossenrobotics.com">Luke Schmitt</maintainer>
+  <license>BSD-3-Clause</license>
+  <author email="trsupport@trossenrobotics.com">Solomon Wiznitzer</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>dynamixel_workbench_toolbox</depend>
+  <depend>yaml-cpp</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
