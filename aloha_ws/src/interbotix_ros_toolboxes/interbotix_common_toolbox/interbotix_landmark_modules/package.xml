@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>interbotix_landmark_modules</name>
+  <version>0.0.0</version>
+  <description>The interbotix_landmark_modules package</description>
+  <maintainer email="trsupport@trossenrobotics.com">Luke Schmitt</maintainer>
+  <license>BSD-3-Clause</license>
+  <author email="trsupport@trossenrobotics.com">Luke Schmitt</author>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <exec_depend>visualization_msgs</exec_depend>
+  <exec_depend>interbotix_common_modules</exec_depend>
+  <exec_depend>interbotix_perception_modules</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>tf_transformations</exec_depend>
+  <exec_depend>python3-transforms3d</exec_depend>
+  <exec_depend>realsense2_camera</exec_depend>
+
+  <test_depend>interbotix_tf_tools</test_depend>
+  <test_depend>launch_testing</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

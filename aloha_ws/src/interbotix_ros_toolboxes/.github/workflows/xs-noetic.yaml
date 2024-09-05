@@ -1,0 +1,51 @@
+name: build-xs-noetic
+
+on:
+  push:
+    branches:
+      - main
+      - devel
+      - noetic
+  pull_request:
+    branches:
+      - main
+      - devel
+      - noetic
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  xs-noetic:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: noetic,  ROS_REPO: main, BUILDER: catkin_tools, NOT_TEST_BUILD: true}
+          - {ROS_DISTRO: noetic,  ROS_REPO: main, BUILDER: catkin_make, NOT_TEST_BUILD: true}
+    runs-on: ubuntu-20.04
+    env:
+      CCACHE_DIR: "${{ github.workspace }}/.ccache"
+    steps:
+      - name: Checkout ROS Toolboxes
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          path: src/interbotix_ros_toolboxes
+      - name: Checkout ROS Core
+        uses: actions/checkout@v3
+        with:
+          repository: interbotix/interbotix_ros_core
+          ref: noetic
+          path: src/interbotix_ros_core
+      - name: Prepare Workspace
+        run: |
+          rm src/interbotix_ros_core/interbotix_ros_xseries/CATKIN_IGNORE
+          rm src/interbotix_ros_toolboxes/interbotix_xs_toolbox/CATKIN_IGNORE
+          rm src/interbotix_ros_toolboxes/interbotix_perception_toolbox/CATKIN_IGNORE
+          rm src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface/CATKIN_IGNORE
+      - name: ROS-I CI
+        uses: ros-industrial/industrial_ci@master
+        with:
+          config: ${{toJSON(matrix.env)}}

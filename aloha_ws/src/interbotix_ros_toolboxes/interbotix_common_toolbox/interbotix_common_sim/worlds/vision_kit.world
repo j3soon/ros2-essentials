@@ -1,0 +1,123 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="default">
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <!-- Trossen Robotics Offices -->
+    <include>
+      <uri>model://TrossenRoboticsOfficeBuilding</uri>
+      <pose>0 2 0 0 0 0</pose>
+    </include>
+    <!-- Interbotix Vision Kit (Stand, D415, 4x Colored Blocks) -->
+    <include>
+      <uri>model://VisionKit</uri>
+      <pose>0.3 0.4 0.01 0 0 1.574090</pose>
+    </include>
+    <model name="block_red">
+      <pose>0.3 0.08 0.01 0 0 -0.2</pose>
+      <link name="block_red_link">
+        <inertial>
+          <mass>0.1</mass>
+        </inertial>
+        <visual name="block_red_link_visual">
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1.0 0 0 0</ambient>
+          </material>
+        </visual>
+        <collision name="block_red_link_collision">
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="block_green">
+      <pose>0.28 0.16 0.01 0 0 -0.1</pose>
+      <link name="block_green_link">
+        <inertial>
+          <mass>0.1</mass>
+        </inertial>
+        <visual name="block_green_link_visual">
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1.0 0 0</ambient>
+          </material>
+        </visual>
+        <collision name="block_green_link_collision">
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="block_blue">
+      <pose>0.35 0.12 0.01 0 0 -0.8</pose>
+      <link name="block_blue_link">
+        <inertial>
+          <mass>0.1</mass>
+        </inertial>
+        <visual name="block_blue_link_visual">
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 1.0 0</ambient>
+          </material>
+        </visual>
+        <collision name="block_blue_link_collision">
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="block_yellow">
+      <pose>0.4 0.06 0.01 0 0 0.2</pose>
+      <link name="block_yellow_link">
+        <inertial>
+          <mass>0.1</mass>
+        </inertial>
+        <visual name="block_yellow_link_visual">
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0 0</ambient>
+          </material>
+        </visual>
+        <collision name="block_yellow_link_collision">
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+  </world>
+</sdf>

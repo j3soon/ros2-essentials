@@ -1,0 +1,25 @@
+/**:
+  ros__parameters:
+    tag_family: tagStandard41h12
+    standalone_tags:
+      tag_names:
+        - tag_5
+        - tag_413
+        - tag_820
+        - tag_875
+        - tag_1050
+      tag_5:
+        id: 5
+        size: 0.02
+      tag_413:
+        id: 413
+        size: 0.02
+      tag_820:
+        id: 820
+        size: 0.02
+      tag_875:
+        id: 875
+        size: 0.02
+      tag_1050:
+        id: 1050
+        size: 0.02

@@ -1,0 +1,50 @@
+name: build-xs-humble
+
+on:
+  push:
+    branches:
+      - humble
+  pull_request:
+    branches:
+      - humble
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  xs-humble:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: humble, ROS_REPO: main}
+    runs-on: ubuntu-22.04
+    env:
+      CCACHE_DIR: "${{ github.workspace }}/.ccache"
+    steps:
+      - name: Checkout ROS Toolboxes
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          path: src/interbotix_ros_toolboxes
+      - name: Checkout ROS Core
+        uses: actions/checkout@v3
+        with:
+          repository: interbotix/interbotix_ros_core
+          ref: humble
+          submodules: recursive
+          path: src/interbotix_ros_core
+      - name: Install non-rosdep Python dependencies
+        run: python3 -m pip install modern-robotics transforms3d
+      - name: Prepare Workspace
+        run: |
+          rm src/interbotix_ros_core/interbotix_ros_xseries/COLCON_IGNORE || echo "File not found"
+          rm src/interbotix_ros_toolboxes/interbotix_perception_toolbox/COLCON_IGNORE
+          rm src/interbotix_ros_toolboxes/interbotix_io_toolbox/COLCON_IGNORE
+          rm src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface/COLCON_IGNORE
+          rm src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface_msgs/COLCON_IGNORE
+      - name: ROS-I CI
+        uses: ros-industrial/industrial_ci@master
+        with:
+          config: ${{toJSON(matrix.env)}}
