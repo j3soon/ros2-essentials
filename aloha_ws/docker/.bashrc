@@ -26,5 +26,13 @@ if [ ! -f $ROS2_WS/install/setup.bash ]; then
     echo "Workspace built."
 fi
 # TODO: Source other workspace environments as underlay
+# Source Interbotix environment
+source ~/interbotix_ws/install/setup.bash
+# Source gazebo environment
+# Ref: https://github.com/Interbotix/interbotix_ros_manipulators/issues/81#issuecomment-1562118208
+# Ref: https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros#InstallGazebo
+if [ $(arch) == "x86_64" ]; then
+  source /usr/share/gazebo/setup.sh
+fi
 # Source workspace environment
 source $ROS2_WS/install/setup.bash

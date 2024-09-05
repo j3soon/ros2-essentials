@@ -84,20 +84,31 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 #     apt-get update && apt-get install -y \
 #     $OTHER_PACKAGES \
 #     && rm -rf /var/lib/apt/lists/*
-# Install Aloha Interbotix dependencies
-# Ref: https://docs.trossenrobotics.com/interbotix_xsarms_docs/ros_interface/ros2/software_setup.html#amd64-architecture
-# Ref: https://github.com/Interbotix/interbotix_ros_manipulators/blob/humble/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh
+# Install udevadm for later use
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    apt-get update && apt-get install -y curl \
-    && curl 'https://raw.githubusercontent.com/Interbotix/interbotix_ros_manipulators/d07c17cc0f868bf1f59ee8d8fa844e273f4699ff/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh' > xsarm_amd64_install.sh \
-    && chmod +x xsarm_amd64_install.sh \
-    && ./xsarm_amd64_install.sh -d humble \
+    apt-get update && apt-get install -y \
+    udev \
     && rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
 # TODO: Run additional commands as non-root user here
+
+# Install Aloha Interbotix dependencies
+# Ref: https://docs.trossenrobotics.com/interbotix_xsarms_docs/ros_interface/ros2/software_setup.html#amd64-architecture
+# Ref: https://github.com/Interbotix/interbotix_ros_manipulators/blob/humble/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh
+# Set the `TERM` variable for the `tput` command in the `xsarm_amd64_install.sh` script.
+# TODO: The github repos are cloned in the script for simplicity.
+#       It would be better to copy the repos directly into the `aloha_ws/src` directory for future development.
+ENV TERM=xterm-256color
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    cd ~ \
+    && curl 'https://raw.githubusercontent.com/Interbotix/interbotix_ros_manipulators/d07c17cc0f868bf1f59ee8d8fa844e273f4699ff/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh' > xsarm_amd64_install.sh \
+    && chmod +x xsarm_amd64_install.sh \
+    && bash -ie ./xsarm_amd64_install.sh -d humble -n \
+    && sudo rm -rf /var/lib/apt/lists/*
+
 COPY .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
 ENTRYPOINT []
