@@ -3,8 +3,8 @@
     "name": "aloha-ws",
     "dockerComposeFile": "../docker/compose.yaml",
     "service": "aloha-ws",
-    // workspace settings
-    "workspaceFolder": "/home/ros2-agv-essentials/aloha_ws",
+    // Workspace settings
+    "workspaceFolder": "/home/ros2-essentials/aloha_ws",
     // Vscode extensions
     "customizations": {
         "vscode": {
@@ -19,7 +19,5 @@
                 "ms-iot.vscode-ros"
             ]
         }
-    },
-    // Lifecycle scripts
-    "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
+    }
 }
