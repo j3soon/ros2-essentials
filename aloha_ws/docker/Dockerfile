@@ -77,10 +77,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 RUN apt-get update \
     && apt-get install -y libgl1 \
     && rm -rf /var/lib/apt/lists/*
+
 # Setup the required capabilities for the container runtime
 # Ref: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#driver-capabilities
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES all
+
 # Install Vulkan config files
 # Ref: https://gitlab.com/nvidia/container-images/vulkan
 COPY isaac-sim-4.1.0/10_nvidia.json     /usr/share/glvnd/egl_vendor.d/10_nvidia.json
@@ -124,11 +126,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 # Set the `TERM` variable for the `tput` command in the `xsarm_amd64_install.sh` script.
 # TODO: The github repos are cloned in the script for simplicity.
 #       It would be better to copy the repos directly into the `aloha_ws/src` directory for future development.
-ENV TERM=xterm-256color
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     cd ~ \
     && curl 'https://raw.githubusercontent.com/Interbotix/interbotix_ros_manipulators/d07c17cc0f868bf1f59ee8d8fa844e273f4699ff/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh' > xsarm_amd64_install.sh \
     && chmod +x xsarm_amd64_install.sh \
+    && export TERM=xterm-256color \
     && bash -ie ./xsarm_amd64_install.sh -d humble -n \
     && sudo rm -rf /var/lib/apt/lists/*
 
