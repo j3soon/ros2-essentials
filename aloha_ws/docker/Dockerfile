@@ -57,12 +57,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install custom tools
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    apt-get update && apt-get install -y \
-    git-extras \
-    && rm -rf /var/lib/apt/lists/*
-
 # Install ROS2 Gazebo packages for amd64
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \
@@ -78,22 +72,20 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-rviz2 \
     && rm -rf /var/lib/apt/lists/*
 
-# TODO: Add more commands here
-# For example, to install additional packages, uncomment the following lines and add the package names
-# RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-#     apt-get update && apt-get install -y \
-#     $OTHER_PACKAGES \
-#     && rm -rf /var/lib/apt/lists/*
-# Install udevadm for later use
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    apt-get update && apt-get install -y \
-    udev \
-    && rm -rf /var/lib/apt/lists/*
-
 USER $USERNAME
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
-# TODO: Run additional commands as non-root user here
+# Install custom tools
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    git-extras \
+    && sudo rm -rf /var/lib/apt/lists/*
+# TODO: Add more commands here
+# Install udevadm for later use
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    udev \
+    && sudo rm -rf /var/lib/apt/lists/*
 
 # Install Aloha Interbotix dependencies
 # Ref: https://docs.trossenrobotics.com/interbotix_xsarms_docs/ros_interface/ros2/software_setup.html#amd64-architecture
