@@ -57,6 +57,21 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
+# Install GUI debugging tools
+# - `x11-apps` and `x11-utils` for `xeyes` and `xdpyinfo`
+#   Ref: https://packages.debian.org/sid/x11-apps
+#   Ref: https://packages.debian.org/sid/x11-utils
+# - `mesa-utils` for `glxgears` and `glxinfo`
+#   Ref: https://wiki.debian.org/Mesa
+# - `vulkan-tools` for `vkcube` and `vulkaninfo`
+#   Ref: https://docs.vulkan.org/tutorial/latest/02_Development_environment.html#_vulkan_packages
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    apt-get update && apt-get install -y \
+    x11-apps x11-utils \
+    mesa-utils \
+    vulkan-tools \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install ROS2 Gazebo packages for amd64
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \
