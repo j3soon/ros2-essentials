@@ -34,5 +34,8 @@ source ~/interbotix_ws/install/setup.bash
 if [ $(arch) == "x86_64" ]; then
   source /usr/share/gazebo/setup.sh
 fi
+# Agree Isaac Sim EULA
+# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim
+export OMNI_KIT_ACCEPT_EULA=YES
 # Source workspace environment
 source $ROS2_WS/install/setup.bash
