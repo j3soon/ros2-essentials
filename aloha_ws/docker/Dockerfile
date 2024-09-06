@@ -72,6 +72,22 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     vulkan-tools \
     && rm -rf /var/lib/apt/lists/*
 
+# Install libGL
+# Ref: https://gitlab.com/nvidia/container-images/vulkan/-/blob/master/docker/Dockerfile.ubuntu
+RUN apt-get update \
+    && apt-get install -y libgl1 \
+    && rm -rf /var/lib/apt/lists/*
+# Setup the required capabilities for the container runtime
+# Ref: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#driver-capabilities
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES all
+# Install Vulkan config files
+# Ref: https://gitlab.com/nvidia/container-images/vulkan
+COPY isaac-sim-4.1.0/10_nvidia.json     /usr/share/glvnd/egl_vendor.d/10_nvidia.json
+COPY isaac-sim-4.1.0/50_mesa.json       /usr/share/glvnd/egl_vendor.d/50_mesa.json
+COPY isaac-sim-4.1.0/nvidia_icd.json    /etc/vulkan/icd.d/nvidia_icd.json
+COPY isaac-sim-4.1.0/nvidia_layers.json /etc/vulkan/implicit_layer.d/nvidia_layers.json
+
 # Install ROS2 Gazebo packages for amd64
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \

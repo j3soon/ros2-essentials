@@ -32,13 +32,13 @@ services:
       # TODO: Add more environment variables here.
     # TODO: Uncomment the lines below to enable GPU support.
     # # Reference: https://docs.docker.com/compose/gpu-support/
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [ gpu ]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
     volumes:
       # Mount local timezone into container.
       # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
