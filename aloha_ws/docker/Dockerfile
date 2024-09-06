@@ -74,8 +74,9 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 
 # Install libGL
 # Ref: https://gitlab.com/nvidia/container-images/vulkan/-/blob/master/docker/Dockerfile.ubuntu
-RUN apt-get update \
-    && apt-get install -y libgl1 \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    apt-get update && apt-get install -y \
+    libgl1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup the required capabilities for the container runtime
@@ -110,7 +111,8 @@ USER $USERNAME
 RUN mkdir /home/$USERNAME/.gazebo
 # Install Isaac Sim (requires Python 3.10)
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
-RUN if [ "$TARGETARCH" = "amd64" ]; then \
+RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
+    if [ "$TARGETARCH" = "amd64" ]; then \
         python3 -V | grep "Python 3.10" \
         && pip install isaacsim==4.1.0.0 --extra-index-url https://pypi.nvidia.com \
         && pip install isaacsim-extscache-physics==4.1.0.0 isaacsim-extscache-kit==4.1.0.0 isaacsim-extscache-kit-sdk==4.1.0.0 --extra-index-url https://pypi.nvidia.com; \
