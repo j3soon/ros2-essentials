@@ -1,3 +1,12 @@
+# Setup paths in `~/.profile` to allow unified environment variable across login/non-login shells
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 # Source global ROS2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Optionally perform apt update if it has not been executed yet
