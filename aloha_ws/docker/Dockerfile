@@ -108,6 +108,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 USER $USERNAME
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
+# Install Isaac Sim (requires Python 3.10)
+# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        python3 -V | grep "Python 3.10" \
+        && pip install isaacsim==4.1.0.0 --extra-index-url https://pypi.nvidia.com \
+        && pip install isaacsim-extscache-physics==4.1.0.0 isaacsim-extscache-kit==4.1.0.0 isaacsim-extscache-kit-sdk==4.1.0.0 --extra-index-url https://pypi.nvidia.com; \
+    fi
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
