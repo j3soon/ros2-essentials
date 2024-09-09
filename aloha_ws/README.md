@@ -53,7 +53,10 @@ isaacsim omni.isaac.sim
 
 Open pre-configured USD file with OmniGraph:
 
-- `File > Open` and in `File name:` type `/home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd`
+- `File > Open` and in `File name:` type:
+  ```
+  /home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd
+  ```
 - Click `Window > Visual Scripting > Action Graph`
 - In the `Action Graph` tab, click `Edit Action Graph` and select `/ActionGraph`
 - Click `Play (SPACE)`

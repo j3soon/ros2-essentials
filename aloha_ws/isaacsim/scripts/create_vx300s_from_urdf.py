@@ -6,32 +6,18 @@ simulation_app = SimulationApp({"headless": False})
 
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/advanced_tutorials/tutorial_advanced_import_urdf.html#importing-urdf-using-python
 
-import asyncio
 import logging
 import os
 
 import omni.kit.commands
 import omni.usd
 from omni.importer.urdf import _urdf
-from omni.kit import ui_test
 from pxr import UsdPhysics
 
+# Ref: https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/logging.html
+# `print(...)` outputs to Script Editor, while `logger.info(...)` outputs to console.
 logger = logging.getLogger(__name__)
 
-
-def log(msg):
-    # Print to console
-    # Ref: https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/logging.html
-    logger.info(msg)
-    # Print to Script Editor
-    print(msg)
-
-async def create_new_stage_with_defaults():
-    menu_widget = ui_test.get_menubar()
-    await menu_widget.find_menu("File").click()
-    await menu_widget.find_menu("New").click()
-    log("Done!")
-    simulation_app.close()
 
 def create_vx300s_from_urdf(urdf_path, usd_path):
     # Set the settings in the import config
@@ -61,8 +47,9 @@ def create_vx300s_from_urdf(urdf_path, usd_path):
     omni.usd.get_context().save_stage()
 
 if __name__ == '__main__':
-    print("Creating `vx300s.usd` from urdf...")
     vx300s_urdf_path = f'{os.path.expanduser("~")}/interbotix_ws/src/interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_descriptions/urdf/vx300s.urdf'
     vx300s_usd_path = '/home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_urdf.usd'
     create_vx300s_from_urdf(vx300s_urdf_path, vx300s_usd_path)
-    asyncio.ensure_future(create_new_stage_with_defaults())
+    print("Done")
+    logger.info("Done")
+    simulation_app.close()
