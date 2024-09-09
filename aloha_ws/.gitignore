@@ -5,3 +5,6 @@
 /build
 /install
 /log
+
+# Custom ignores
+/isaacsim/assets

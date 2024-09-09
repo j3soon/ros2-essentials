@@ -110,6 +110,8 @@ USER $USERNAME
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
 # Install Isaac Sim (requires Python 3.10)
+# Note that installing Isaac Sim with pip is experimental, keep this in mind when unexpected error occurs
+# TODO: Remove the note above when it is no longer experimental
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
 RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \
