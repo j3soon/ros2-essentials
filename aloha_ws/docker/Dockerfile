@@ -137,7 +137,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 COPY script/xsarm_amd64_install.sh /home/user
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     bash -ie ~/xsarm_amd64_install.sh -d humble -n \
-    && sudo rm -rf /var/lib/apt/lists/*
+    && sudo rm -rf /var/lib/apt/lists/* \
+    && rm -rf $HOME/.ros/rosdep/sources.cache
 COPY udev_rules/99-interbotix-udev.rules /etc/udev/rules.d/
 
 COPY .bashrc /home/$USERNAME/.bashrc
