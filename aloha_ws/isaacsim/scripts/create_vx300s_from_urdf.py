@@ -49,7 +49,7 @@ def create_vx300s_from_urdf(urdf_path, usd_path):
     omni.usd.get_context().save_stage()
 
 if __name__ == '__main__':
-    vx300s_urdf_path = f'{os.path.expanduser("~")}/interbotix_ws/src/interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_descriptions/urdf/vx300s.urdf'
+    vx300s_urdf_path = f'/home/ros2-essentials/aloha_ws/src/interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_descriptions/urdf/vx300s.urdf'
     vx300s_usd_path = '/home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_urdf.usd'
     create_vx300s_from_urdf(vx300s_urdf_path, vx300s_usd_path)
     print("Done")
