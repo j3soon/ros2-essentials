@@ -46,3 +46,4 @@ fi
 export OMNI_KIT_ACCEPT_EULA=YES
 # Source workspace environment
 source $ROS2_WS/install/setup.bash
+echo "Successfully built workspace and configured environment variables."
