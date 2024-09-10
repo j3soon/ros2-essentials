@@ -260,7 +260,7 @@ def launch_setup(context, *args, **kwargs):
         }.items(),
         condition=IfCondition(
             PythonExpression(
-                ['"', hardware_type_launch_arg, '"', " in ('actual', 'fake')"]
+                ['"', hardware_type_launch_arg, '"', " in ('actual', 'fake', 'isaac')"]
             )
         ),
     )
