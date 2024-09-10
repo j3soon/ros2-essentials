@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 def create_vx300s_with_omnigraph():
     # Create vx300s
     vx300s_prim_path = "/World/vx300s_urdf"
+    vx300s_joint_states_topic = "/vx300s/joint_states"
+    vx300s_joint_command_topic = "/vx300s/joint_commands"
     stage = omni.usd.get_context().get_stage()
     stage.DefinePrim(vx300s_prim_path)
     prim = stage.GetPrimAtPath(vx300s_prim_path)
@@ -35,21 +37,30 @@ def create_vx300s_with_omnigraph():
                 ("SubscribeJointState", "omni.isaac.ros2_bridge.ROS2SubscribeJointState"),
                 ("ArticulationController", "omni.isaac.core_nodes.IsaacArticulationController"),
                 ("ReadSimTime", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
-                ("ConstantToken", "omni.graph.nodes.ConstantToken"),
+                ("PublishClock", "omni.isaac.ros2_bridge.ROS2PublishClock"),
+                ("ConstantTokenTarget", "omni.graph.nodes.ConstantToken"),
                 ("ToTarget", "omni.graph.nodes.ToTarget"),
+                ("ConstantStringJointStatesTopic", "omni.graph.nodes.ConstantString"),
+                ("ConstantStringJointCommandTopic", "omni.graph.nodes.ConstantString"),
             ],
             og.Controller.Keys.CONNECT: [
                 ("OnPlaybackTick.outputs:tick", "PublishJointState.inputs:execIn"),
                 ("OnPlaybackTick.outputs:tick", "SubscribeJointState.inputs:execIn"),
+                ("OnPlaybackTick.outputs:tick", "PublishClock.inputs:execIn"),
                 ("OnPlaybackTick.outputs:tick", "ArticulationController.inputs:execIn"),
 
                 ("ReadSimTime.outputs:simulationTime", "PublishJointState.inputs:timeStamp"),
+                ("ReadSimTime.outputs:simulationTime", "PublishClock.inputs:timeStamp"),
 
                 # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnConstantToken.html
                 # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnToTarget.html
-                ("ConstantToken.inputs:value", "ToTarget.inputs:value"),
+                ("ConstantTokenTarget.inputs:value", "ToTarget.inputs:value"),
                 ("ToTarget.outputs:converted", "PublishJointState.inputs:targetPrim"),
                 ("ToTarget.outputs:converted", "ArticulationController.inputs:targetPrim"),
+
+                # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnConstantString.html
+                ("ConstantStringJointStatesTopic.inputs:value", "PublishJointState.inputs:topicName"),
+                ("ConstantStringJointCommandTopic.inputs:value", "SubscribeJointState.inputs:topicName"),
 
                 ("SubscribeJointState.outputs:jointNames", "ArticulationController.inputs:jointNames"),
                 ("SubscribeJointState.outputs:positionCommand", "ArticulationController.inputs:positionCommand"),
@@ -58,7 +69,9 @@ def create_vx300s_with_omnigraph():
             ],
             og.Controller.Keys.SET_VALUES: [
                 # Please refer to the `create_vx300s_from_urdf.py` file for reasons on using the root prim instead of root joint.
-                ("ConstantToken.inputs:value", vx300s_prim_path),
+                ("ConstantTokenTarget.inputs:value", vx300s_prim_path),
+                ("ConstantStringJointStatesTopic.inputs:value", vx300s_joint_states_topic),
+                ("ConstantStringJointCommandTopic.inputs:value", vx300s_joint_command_topic),
             ],
         },
     )
