@@ -88,6 +88,11 @@ services:
           subpath: cache/ov
       - type: volume
         source: isaac-sim-cache
+        target: /home/user/.local/lib/python3.10/site-packages/omni/cache  # For Isaac Sim standalone
+        volume:
+          subpath: cache/ov
+      - type: volume
+        source: isaac-sim-cache
         target: /home/user/.cache/pip
         volume:
           subpath: cache/pip
@@ -108,7 +113,17 @@ services:
           subpath: logs
       - type: volume
         source: isaac-sim-cache
+        target: /home/user/.local/lib/python3.10/site-packages/omni/logs  # For Isaac Sim standalone
+        volume:
+          subpath: logs
+      - type: volume
+        source: isaac-sim-cache
         target: /home/user/.local/share/ov/data
+        volume:
+          subpath: data
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.local/lib/python3.10/site-packages/omni/data  # For Isaac Sim standalone
         volume:
           subpath: data
       - type: volume
