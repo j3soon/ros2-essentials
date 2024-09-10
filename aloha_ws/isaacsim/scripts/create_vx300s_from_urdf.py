@@ -12,7 +12,7 @@ import os
 import omni.kit.commands
 import omni.usd
 from omni.importer.urdf import _urdf
-from pxr import UsdPhysics
+from pxr import UsdPhysics, PhysxSchema
 
 # Ref: https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/logging.html
 # `print(...)` outputs to Script Editor, while `logger.info(...)` outputs to console.
@@ -41,7 +41,9 @@ def create_vx300s_from_urdf(urdf_path, usd_path):
     # TODO: Switch back to the first option after this issue is fixed.
     prim = stage.GetPrimAtPath("/vx300s")
     # Note that this somehow cannot be applied through GUI, and must be done through Python
-    UsdPhysics.ArticulationRootAPI.Apply(prim)
+    articulation = UsdPhysics.ArticulationRootAPI.Apply(prim)
+    physx_articulation = PhysxSchema.PhysxArticulationAPI.Apply(articulation.GetPrim())
+    physx_articulation.CreateEnabledSelfCollisionsAttr().Set(False)
     prim = stage.GetPrimAtPath("/vx300s/root_joint")
     prim.RemoveAPI(UsdPhysics.ArticulationRootAPI)
     omni.usd.get_context().save_stage()
