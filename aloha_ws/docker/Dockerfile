@@ -134,6 +134,32 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 # Install Aloha Interbotix dependencies
 # Ref: https://docs.trossenrobotics.com/interbotix_xsarms_docs/ros_interface/ros2/software_setup.html#amd64-architecture
 # Ref: https://github.com/Interbotix/interbotix_ros_manipulators/blob/humble/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh
+# Install ros packages based on Interbotix rosdeps
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    ros-$ROS_DISTRO-moveit-msgs \
+    ros-$ROS_DISTRO-moveit-ros-planning-interface \
+    ros-$ROS_DISTRO-tf-transformations \
+    ros-$ROS_DISTRO-nav2-msgs \
+    ros-$ROS_DISTRO-dynamixel-sdk \
+    ros-$ROS_DISTRO-effort-controllers \
+    ros-$ROS_DISTRO-joint-trajectory-controller \
+    ros-$ROS_DISTRO-ros2-controllers \
+    ros-$ROS_DISTRO-ros2controlcli \
+    ros-$ROS_DISTRO-graph-msgs \
+    ros-$ROS_DISTRO-moveit-common \
+    ros-$ROS_DISTRO-moveit-core \
+    ros-$ROS_DISTRO-moveit-ros-planning \
+    ros-$ROS_DISTRO-rviz-visual-tools \
+    ros-$ROS_DISTRO-moveit-ros-move-group \
+    ros-$ROS_DISTRO-moveit-simple-controller-manager \
+    ros-$ROS_DISTRO-moveit-kinematics \
+    ros-$ROS_DISTRO-moveit-planners-ompl \
+    ros-$ROS_DISTRO-moveit-ros-visualization \
+    ros-$ROS_DISTRO-moveit-setup-assistant \
+    ros-$ROS_DISTRO-joint-state-publisher \
+    ros-$ROS_DISTRO-joint-state-publisher-gui \
+    && sudo rm -rf /var/lib/apt/lists/*
 COPY script/xsarm_amd64_install.sh /home/user
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     bash -ie ~/xsarm_amd64_install.sh -d humble -n \
