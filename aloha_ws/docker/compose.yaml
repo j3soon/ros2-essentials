@@ -74,7 +74,8 @@ services:
       # Note that this volume is shared among all workspaces.
       - gazebo-cache:/home/user/.gazebo
       # Mount Isaac Sim cache directories.
-      # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_container.html#container-deployment
+      # Reference: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_container.html#container-deployment
+      # Note that this volume is shared among all workspaces.
       - type: volume
         source: isaac-sim-cache
         target: /isaac-sim/kit/cache
