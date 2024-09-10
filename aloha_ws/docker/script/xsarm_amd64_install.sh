@@ -4,6 +4,9 @@
 #
 # Install the Interbotix X-Series Arms packages and their dependencies.
 
+# Set TERM to prevent `tput` from error during docker build
+export TERM=xterm-256color
+
 OFF='\033[0m'
 RED='\033[0;31m'
 GRN='\033[0;32m'
@@ -171,98 +174,100 @@ function install_essential_packages() {
 }
 
 function install_ros1() {
-  # Install ROS 1
-  if [ "$(dpkg-query -W -f='${Status}' ros-"$ROS_DISTRO_TO_INSTALL"-desktop-full 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
-    echo -e "${GRN}Installing ROS 1 $ROS_DISTRO_TO_INSTALL desktop...${OFF}"
-    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-    sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
-    curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-    sudo apt-get update
-    sudo apt-get install -yq ros-"$ROS_DISTRO_TO_INSTALL"-desktop-full
-    if [ -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
-      sudo rm /etc/ros/rosdep/sources.list.d/20-default.list
-    fi
-    echo "source /opt/ros/$ROS_DISTRO_TO_INSTALL/setup.bash" >> ~/.bashrc
-    if [ $PY_VERSION == 2 ]; then
-      sudo apt-get install -yq          \
-        python-rosdep                   \
-        python-rosinstall               \
-        python-rosinstall-generator     \
-        python-wstool                   \
-        build-essential
-    elif [ $PY_VERSION == 3 ]; then
-      sudo apt-get install -yq          \
-        python3-rosdep                  \
-        python3-rosinstall              \
-        python3-rosinstall-generator    \
-        python3-wstool                  \
-        build-essential
-    fi
-    sudo rosdep init
-    rosdep update --include-eol-distros
-  else
-    echo "ros-$ROS_DISTRO_TO_INSTALL-desktop-full is already installed!"
-  fi
-  source /opt/ros/"$ROS_DISTRO_TO_INSTALL"/setup.bash
+  echo "Does not support ROS 1"
+  exit 1
+  # # Install ROS 1
+  # if [ "$(dpkg-query -W -f='${Status}' ros-"$ROS_DISTRO_TO_INSTALL"-desktop-full 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
+  #   echo -e "${GRN}Installing ROS 1 $ROS_DISTRO_TO_INSTALL desktop...${OFF}"
+  #   sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+  #   sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+  #   curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+  #   sudo apt-get update
+  #   sudo apt-get install -yq ros-"$ROS_DISTRO_TO_INSTALL"-desktop-full
+  #   if [ -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
+  #     sudo rm /etc/ros/rosdep/sources.list.d/20-default.list
+  #   fi
+  #   echo "source /opt/ros/$ROS_DISTRO_TO_INSTALL/setup.bash" >> ~/.bashrc
+  #   if [ $PY_VERSION == 2 ]; then
+  #     sudo apt-get install -yq          \
+  #       python-rosdep                   \
+  #       python-rosinstall               \
+  #       python-rosinstall-generator     \
+  #       python-wstool                   \
+  #       build-essential
+  #   elif [ $PY_VERSION == 3 ]; then
+  #     sudo apt-get install -yq          \
+  #       python3-rosdep                  \
+  #       python3-rosinstall              \
+  #       python3-rosinstall-generator    \
+  #       python3-wstool                  \
+  #       build-essential
+  #   fi
+  #   sudo rosdep init
+  #   rosdep update --include-eol-distros
+  # else
+  #   echo "ros-$ROS_DISTRO_TO_INSTALL-desktop-full is already installed!"
+  # fi
+  # source /opt/ros/"$ROS_DISTRO_TO_INSTALL"/setup.bash
 
-  # Install Arm packages
-  if source /opt/ros/"$ROS_DISTRO_TO_INSTALL"/setup.bash 2>/dev/null && \
-     source "$INSTALL_PATH"/devel/setup.bash 2>/dev/null && \
-     rospack list | grep -q interbotix_;
-  then
-    echo "Interbotix Arm ROS packages already installed!"
-  else
-    cd "$INSTALL_PATH"/src
-    git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_core.git
-    git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_manipulators.git
-    git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_toolboxes.git
-    rm                                                                                              \
-      interbotix_ros_core/interbotix_ros_xseries/CATKIN_IGNORE                                      \
-      interbotix_ros_manipulators/interbotix_ros_xsarms/CATKIN_IGNORE                               \
-      interbotix_ros_toolboxes/interbotix_xs_toolbox/CATKIN_IGNORE                                  \
-      interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface/CATKIN_IGNORE
-    if [ "$INSTALL_PERCEPTION" = true ]; then
-      rm                                                                                            \
-        interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_perception/CATKIN_IGNORE \
-        interbotix_ros_toolboxes/interbotix_perception_toolbox/CATKIN_IGNORE
-    fi
-    if [ "$INSTALL_MATLAB" = true ]; then
-      cd interbotix_ros_toolboxes
-      git submodule update --init third_party_libraries/ModernRobotics
-      cd "$INSTALL_PATH/src"
-    fi
-    cd interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_sdk
-    sudo cp 99-interbotix-udev.rules /etc/udev/rules.d/
-    sudo udevadm control --reload-rules && sudo udevadm trigger
-    cd "$INSTALL_PATH"
-    rosdep install --from-paths src --ignore-src -r -y
-    catkin_make
-    if catkin_make; then
-      echo -e "${GRN}${BOLD}Interbotix Arm ROS Packages built successfully!${NORM}${OFF}"
-      echo "source $INSTALL_PATH/devel/setup.bash" >> ~/.bashrc
-      source "$INSTALL_PATH"/devel/setup.bash
-    else
-      failed "Failed to build Interbotix Arm ROS Packages."
-    fi
-  fi
+  # # Install Arm packages
+  # if source /opt/ros/"$ROS_DISTRO_TO_INSTALL"/setup.bash 2>/dev/null && \
+  #    source "$INSTALL_PATH"/devel/setup.bash 2>/dev/null && \
+  #    rospack list | grep -q interbotix_;
+  # then
+  #   echo "Interbotix Arm ROS packages already installed!"
+  # else
+  #   cd "$INSTALL_PATH"/src
+  #   git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_core.git
+  #   git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_manipulators.git
+  #   git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_toolboxes.git
+  #   rm                                                                                              \
+  #     interbotix_ros_core/interbotix_ros_xseries/CATKIN_IGNORE                                      \
+  #     interbotix_ros_manipulators/interbotix_ros_xsarms/CATKIN_IGNORE                               \
+  #     interbotix_ros_toolboxes/interbotix_xs_toolbox/CATKIN_IGNORE                                  \
+  #     interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface/CATKIN_IGNORE
+  #   if [ "$INSTALL_PERCEPTION" = true ]; then
+  #     rm                                                                                            \
+  #       interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_perception/CATKIN_IGNORE \
+  #       interbotix_ros_toolboxes/interbotix_perception_toolbox/CATKIN_IGNORE
+  #   fi
+  #   if [ "$INSTALL_MATLAB" = true ]; then
+  #     cd interbotix_ros_toolboxes
+  #     git submodule update --init third_party_libraries/ModernRobotics
+  #     cd "$INSTALL_PATH/src"
+  #   fi
+  #   cd interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_sdk
+  #   sudo cp 99-interbotix-udev.rules /etc/udev/rules.d/
+  #   sudo udevadm control --reload-rules && sudo udevadm trigger
+  #   cd "$INSTALL_PATH"
+  #   rosdep install --from-paths src --ignore-src -r -y
+  #   catkin_make
+  #   if catkin_make; then
+  #     echo -e "${GRN}${BOLD}Interbotix Arm ROS Packages built successfully!${NORM}${OFF}"
+  #     echo "source $INSTALL_PATH/devel/setup.bash" >> ~/.bashrc
+  #     source "$INSTALL_PATH"/devel/setup.bash
+  #   else
+  #     failed "Failed to build Interbotix Arm ROS Packages."
+  #   fi
+  # fi
 }
 
 function install_ros2() {
-  # Install ROS 2
-  if [ "$(dpkg-query -W -f='${Status}' ros-"$ROS_DISTRO_TO_INSTALL"-desktop 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
-    echo -e "${GRN}Installing ROS 2 $ROS_DISTRO_TO_INSTALL desktop...${OFF}"
-    sudo apt-get install -yq      \
-      software-properties-common  \
-      gnupg
-    sudo add-apt-repository -y universe
-    sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo "$UBUNTU_CODENAME") main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-    sudo apt-get update
-    sudo apt-get install -yq ros-"$ROS_DISTRO_TO_INSTALL"-desktop
-    echo "source /opt/ros/$ROS_DISTRO_TO_INSTALL/setup.bash" >> ~/.bashrc
-  else
-    echo "ros-$ROS_DISTRO_TO_INSTALL-desktop-full is already installed!"
-  fi
+  # # Install ROS 2
+  # if [ "$(dpkg-query -W -f='${Status}' ros-"$ROS_DISTRO_TO_INSTALL"-desktop 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
+  #   echo -e "${GRN}Installing ROS 2 $ROS_DISTRO_TO_INSTALL desktop...${OFF}"
+  #   sudo apt-get install -yq      \
+  #     software-properties-common  \
+  #     gnupg
+  #   sudo add-apt-repository -y universe
+  #   sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+  #   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo "$UBUNTU_CODENAME") main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+  #   sudo apt-get update
+  #   sudo apt-get install -yq ros-"$ROS_DISTRO_TO_INSTALL"-desktop
+  #   echo "source /opt/ros/$ROS_DISTRO_TO_INSTALL/setup.bash" >> ~/.bashrc
+  # else
+  #   echo "ros-$ROS_DISTRO_TO_INSTALL-desktop-full is already installed!"
+  # fi
   source /opt/ros/"$ROS_DISTRO_TO_INSTALL"/setup.bash
 
   # Install rosdep and other necessary tools
@@ -285,76 +290,77 @@ function install_ros2() {
   # Update local rosdep database, including EoL distros
   rosdep update --include-eol-distros
 
-  if [ "$INSTALL_PERCEPTION" = true ]; then
-    # Install apriltag ROS Wrapper, no official Apriltag ROS 2 package yet
-    if source /opt/ros/"$ROS_DISTRO_TO_INSTALL"/setup.bash 2>/dev/null && \
-      source "$APRILTAG_WS"/install/setup.bash 2>/dev/null && \
-      ros2 pkg list | grep -q apriltag_ros;
-    then
-      echo "Apriltag ROS Wrapper already installed!"
-    else
-      echo -e "${GRN}Installing Apriltag ROS Wrapper...${OFF}"
-      mkdir -p "$APRILTAG_WS"/src
-      cd "$APRILTAG_WS"/src
-      git clone -b ros2-port https://github.com/Interbotix/apriltag_ros.git
-      cd "$APRILTAG_WS"
-      rosdep install --from-paths src --ignore-src -r -y
-      # cmake-args flags disables warnings as errors unrelated to ROS
-      if colcon build --cmake-args -DCMAKE_CXX_FLAGS="-w"; then
-        echo -e "${GRN}${BOLD}Apriltag ROS Wrapper built successfully!${NORM}${OFF}"
-        echo "source $APRILTAG_WS/install/setup.bash" >> ~/.bashrc
-        source $APRILTAG_WS/install/setup.bash
-      else
-        failed "Failed to build Apriltag ROS Wrapper."
-      fi
-    fi
-  fi
+  # if [ "$INSTALL_PERCEPTION" = true ]; then
+  #   # Install apriltag ROS Wrapper, no official Apriltag ROS 2 package yet
+  #   if source /opt/ros/"$ROS_DISTRO_TO_INSTALL"/setup.bash 2>/dev/null && \
+  #     source "$APRILTAG_WS"/install/setup.bash 2>/dev/null && \
+  #     ros2 pkg list | grep -q apriltag_ros;
+  #   then
+  #     echo "Apriltag ROS Wrapper already installed!"
+  #   else
+  #     echo -e "${GRN}Installing Apriltag ROS Wrapper...${OFF}"
+  #     mkdir -p "$APRILTAG_WS"/src
+  #     cd "$APRILTAG_WS"/src
+  #     exit 1
+  #     # git clone -b ros2-port https://github.com/Interbotix/apriltag_ros.git
+  #     cd "$APRILTAG_WS"
+  #     rosdep install --from-paths src --ignore-src -r -y
+  #     # cmake-args flags disables warnings as errors unrelated to ROS
+  #     if colcon build --cmake-args -DCMAKE_CXX_FLAGS="-w"; then
+  #       echo -e "${GRN}${BOLD}Apriltag ROS Wrapper built successfully!${NORM}${OFF}"
+  #       echo "source $APRILTAG_WS/install/setup.bash" >> ~/.bashrc
+  #       source $APRILTAG_WS/install/setup.bash
+  #     else
+  #       failed "Failed to build Apriltag ROS Wrapper."
+  #     fi
+  #   fi
+  # fi
 
-  # Install Arm packages
-  if source /opt/ros/"$ROS_DISTRO_TO_INSTALL"/setup.bash 2>/dev/null && \
-     source "$INSTALL_PATH"/install/setup.bash 2>/dev/null && \
-     ros2 pkg list | grep -q interbotix_;
-  then
-    echo "Interbotix Arm ROS 2 packages already installed!"
-  else
-    echo -e "${GRN}Installing ROS 2 packages for the Interbotix Arm...${OFF}"
-    cd "$INSTALL_PATH"/src
-    git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_core.git
-    git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_manipulators.git
-    git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_toolboxes.git
-    # TODO(lsinterbotix) remove below when moveit_visual_tools is available in apt repo
-    git clone -b ros2 https://github.com/ros-planning/moveit_visual_tools.git
-    if [ "$INSTALL_PERCEPTION" = true ]; then
-      rm                                                                                                \
-        interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_perception/COLCON_IGNORE     \
-        interbotix_ros_toolboxes/interbotix_perception_toolbox/COLCON_IGNORE
-    fi
-    rm                                                                                                  \
-      interbotix_ros_core/interbotix_ros_xseries/COLCON_IGNORE                                          \
-      interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface/COLCON_IGNORE      \
-      interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface_msgs/COLCON_IGNORE
-    cd interbotix_ros_core
-    git submodule update --init interbotix_ros_xseries/dynamixel_workbench_toolbox
-    git submodule update --init interbotix_ros_xseries/interbotix_xs_driver
-    cd "$INSTALL_PATH"/src
-    if [ "$INSTALL_MATLAB" = true ]; then
-      cd interbotix_ros_toolboxes
-      git submodule update --init third_party_libraries/ModernRobotics
-      cd "$INSTALL_PATH"/src
-    fi
-    cd interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_sdk
-    sudo cp 99-interbotix-udev.rules /etc/udev/rules.d/
-    sudo udevadm control --reload-rules && sudo udevadm trigger
-    cd "$INSTALL_PATH"
-    rosdep install --from-paths src --ignore-src -r -y
-    if colcon build; then
-      echo -e "${GRN}${BOLD}Interbotix Arm ROS 2 Packages built successfully!${NORM}${OFF}"
-      echo "source $INSTALL_PATH/install/setup.bash" >> ~/.bashrc
-      source "$INSTALL_PATH"/install/setup.bash
-    else
-      failed "Failed to build Interbotix Arm ROS 2 Packages."
-    fi
-  fi
+  # # Install Arm packages
+  # if source /opt/ros/"$ROS_DISTRO_TO_INSTALL"/setup.bash 2>/dev/null && \
+  #    source "$INSTALL_PATH"/install/setup.bash 2>/dev/null && \
+  #    ros2 pkg list | grep -q interbotix_;
+  # then
+  #   echo "Interbotix Arm ROS 2 packages already installed!"
+  # else
+  #   echo -e "${GRN}Installing ROS 2 packages for the Interbotix Arm...${OFF}"
+  #   cd "$INSTALL_PATH"/src
+  #   git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_core.git
+  #   git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_manipulators.git
+  #   git clone -b "$ROS_DISTRO_TO_INSTALL" https://github.com/Interbotix/interbotix_ros_toolboxes.git
+  #   # TODO(lsinterbotix) remove below when moveit_visual_tools is available in apt repo
+  #   git clone -b ros2 https://github.com/ros-planning/moveit_visual_tools.git
+  #   if [ "$INSTALL_PERCEPTION" = true ]; then
+  #     rm                                                                                                \
+  #       interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_perception/COLCON_IGNORE     \
+  #       interbotix_ros_toolboxes/interbotix_perception_toolbox/COLCON_IGNORE
+  #   fi
+  #   rm                                                                                                  \
+  #     interbotix_ros_core/interbotix_ros_xseries/COLCON_IGNORE                                          \
+  #     interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface/COLCON_IGNORE      \
+  #     interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface_msgs/COLCON_IGNORE
+  #   cd interbotix_ros_core
+  #   git submodule update --init interbotix_ros_xseries/dynamixel_workbench_toolbox
+  #   git submodule update --init interbotix_ros_xseries/interbotix_xs_driver
+  #   cd "$INSTALL_PATH"/src
+  #   if [ "$INSTALL_MATLAB" = true ]; then
+  #     cd interbotix_ros_toolboxes
+  #     git submodule update --init third_party_libraries/ModernRobotics
+  #     cd "$INSTALL_PATH"/src
+  #   fi
+  #   cd interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_sdk
+  #   sudo cp 99-interbotix-udev.rules /etc/udev/rules.d/
+  #   sudo udevadm control --reload-rules && sudo udevadm trigger
+  #   cd "$INSTALL_PATH"
+  #   rosdep install --from-paths src --ignore-src -r -y
+  #   if colcon build; then
+  #     echo -e "${GRN}${BOLD}Interbotix Arm ROS 2 Packages built successfully!${NORM}${OFF}"
+  #     echo "source $INSTALL_PATH/install/setup.bash" >> ~/.bashrc
+  #     source "$INSTALL_PATH"/install/setup.bash
+  #   else
+  #     failed "Failed to build Interbotix Arm ROS 2 Packages."
+  #   fi
+  # fi
 }
 
 function setup_env_vars() {

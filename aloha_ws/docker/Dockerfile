@@ -134,16 +134,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 # Install Aloha Interbotix dependencies
 # Ref: https://docs.trossenrobotics.com/interbotix_xsarms_docs/ros_interface/ros2/software_setup.html#amd64-architecture
 # Ref: https://github.com/Interbotix/interbotix_ros_manipulators/blob/humble/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh
-# Set the `TERM` variable for the `tput` command in the `xsarm_amd64_install.sh` script.
-# TODO: The github repos are cloned in the script for simplicity.
-#       It would be better to copy the repos directly into the `aloha_ws/src` directory for future development.
+COPY script/xsarm_amd64_install.sh /home/user
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    cd ~ \
-    && curl 'https://raw.githubusercontent.com/Interbotix/interbotix_ros_manipulators/d07c17cc0f868bf1f59ee8d8fa844e273f4699ff/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh' > xsarm_amd64_install.sh \
-    && chmod +x xsarm_amd64_install.sh \
-    && export TERM=xterm-256color \
-    && bash -ie ./xsarm_amd64_install.sh -d humble -n \
+    bash -ie ~/xsarm_amd64_install.sh -d humble -n \
     && sudo rm -rf /var/lib/apt/lists/*
+COPY udev_rules/99-interbotix-udev.rules /etc/udev/rules.d/
 
 COPY .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
