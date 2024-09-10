@@ -159,6 +159,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-moveit-setup-assistant \
     ros-$ROS_DISTRO-joint-state-publisher \
     ros-$ROS_DISTRO-joint-state-publisher-gui \
+    ros-$ROS_DISTRO-topic-based-ros2-control \
     && sudo rm -rf /var/lib/apt/lists/*
 COPY script/xsarm_amd64_install.sh /home/user
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
