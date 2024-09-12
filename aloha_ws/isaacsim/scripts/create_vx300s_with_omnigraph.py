@@ -38,6 +38,7 @@ def create_vx300s_with_omnigraph():
                 ("ArticulationController", "omni.isaac.core_nodes.IsaacArticulationController"),
                 ("ReadSimTime", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
                 ("PublishClock", "omni.isaac.ros2_bridge.ROS2PublishClock"),
+                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
                 ("ConstantTokenTarget", "omni.graph.nodes.ConstantToken"),
                 ("ToTarget", "omni.graph.nodes.ToTarget"),
                 ("ConstantStringJointStatesTopic", "omni.graph.nodes.ConstantString"),
@@ -51,6 +52,11 @@ def create_vx300s_with_omnigraph():
 
                 ("ReadSimTime.outputs:simulationTime", "PublishJointState.inputs:timeStamp"),
                 ("ReadSimTime.outputs:simulationTime", "PublishClock.inputs:timeStamp"),
+
+                # Ref: https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.ros2_bridge/docs/index.html#ros2context
+                ("Context.outputs:context", "PublishJointState.inputs:context"),
+                ("Context.outputs:context", "SubscribeJointState.inputs:context"),
+                ("Context.outputs:context", "PublishClock.inputs:context"),
 
                 # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnConstantToken.html
                 # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnToTarget.html
