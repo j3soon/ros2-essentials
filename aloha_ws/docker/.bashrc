@@ -40,7 +40,12 @@ fi
 # Ref: https://github.com/Interbotix/interbotix_ros_manipulators/issues/81#issuecomment-1562118208
 # Ref: https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros#InstallGazebo
 if [ $(arch) == "x86_64" ]; then
-  source /usr/share/gazebo/setup.sh
+  source /usr/share/gazebo/setup.bash
+fi
+# Source isaac sim environment
+# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_ros.html#setting-up-workspaces
+if [ $(arch) == "x86_64" ]; then
+  source ~/IsaacSim-ros_workspaces/humble_ws/install/setup.bash
 fi
 # Agree Isaac Sim EULA
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim

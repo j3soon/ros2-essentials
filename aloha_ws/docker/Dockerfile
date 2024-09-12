@@ -107,8 +107,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     && rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME
+
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
+
 # Install Isaac Sim (requires Python 3.10)
 # Note that installing Isaac Sim with pip is experimental, keep this in mind when unexpected error occurs
 # TODO: Remove the note above when it is no longer experimental
@@ -119,12 +121,38 @@ RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
         && pip install isaacsim==4.1.0.0 --extra-index-url https://pypi.nvidia.com \
         && pip install isaacsim-extscache-physics==4.1.0.0 isaacsim-extscache-kit==4.1.0.0 isaacsim-extscache-kit-sdk==4.1.0.0 --extra-index-url https://pypi.nvidia.com; \
     fi
+
+# Setup Isaac Sim ROS2 Workspace
+# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_ros.html#setting-up-workspaces
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    python3-rosdep \
+    python3-rosinstall \
+    python3-rosinstall-generator \
+    python3-wstool \
+    build-essential \
+    python3-colcon-common-extensions \
+    && sudo rm -rf /var/lib/apt/lists/*
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update \
+    && cd ~ \
+    && git clone https://github.com/isaac-sim/IsaacSim-ros_workspaces.git -b IsaacSim-4.1.0 \
+    && cd ~/IsaacSim-ros_workspaces/humble_ws \
+    && rosdep update \
+    && . /opt/ros/humble/setup.sh \
+    && rosdep install -i --from-path src --rosdistro humble -y \
+    && colcon build \
+    && sudo rm -rf /var/lib/apt/lists/* \
+    && rm -rf $HOME/.ros/rosdep/sources.cache
+
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
     git-extras \
     && sudo rm -rf /var/lib/apt/lists/*
+
 # TODO: Add more commands here
+
 # Install udevadm for later use
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
