@@ -53,6 +53,7 @@ from launch.substitutions import (
 )
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch.actions.execute_process import ExecuteProcess
 import yaml
 
 
@@ -294,13 +295,24 @@ def launch_setup(context, *args, **kwargs):
         ),
     )
 
+    # Currently use `ExecuteProcess` for simplicity.
+    # TODO: Use an Isaac Sim package in `isaac_sim_ws` instead.
+    isaac_sim_exec = ExecuteProcess(
+        cmd=['isaacsim', 'omni.isaac.sim', '--exec', '/home/ros2-essentials/aloha_ws/isaacsim/scripts/open_isaacsim_stage.py --path /home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd'],
+        condition=LaunchConfigurationEquals(
+            launch_configuration_name='hardware_type',
+            expected_value='isaac'
+        ),
+        output={'both': 'screen'}
+    )
+
     return [
         move_group_node,
         moveit_rviz_node,
         xsarm_ros_control_launch_include,
         xsarm_gz_classic_launch_include,
+        isaac_sim_exec,
     ]
-
 
 def generate_launch_description():
     declared_arguments = []

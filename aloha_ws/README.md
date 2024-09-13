@@ -67,16 +67,28 @@ python3 create_vx300s_from_urdf.py
 python3 create_vx300s_with_omnigraph.py
 ```
 
-Keep in mind that these scripts can be easily debugged in Isaac Sim's `Script Editor`.
-Simply copy the code, omitting anything related to SimulationApp (remove the beginning and end).
+and run:
 
-Launch Isaac Sim app:
+```sh
+ros2 launch interbotix_xsarm_moveit xsarm_moveit.launch.py robot_model:=vx300s hardware_type:=isaac
+# and then move the target and use the `MotionPlanning` panel.
+```
+
+![](figure/moveit-isaacsim.png)
+
+### Debugging with Isaac Sim
+
+The Isaac Sim app can be launched with:
 
 ```sh
 isaacsim omni.isaac.sim
 ```
 
-Open pre-configured USD file with OmniGraph:
+Keep in mind that the standalone scripts can be easily debugged in Isaac Sim's `Script Editor`.
+Simply copy the code, omitting anything related to SimulationApp (remove the beginning and end),
+and paste to the `Script Editor` and run it.
+
+To open pre-configured USD file with OmniGraph:
 
 - `File > Open` and click `My Computer`, then in `File name:` type:
   ```
@@ -93,17 +105,6 @@ View the current joint states:
 docker exec -it ros2-aloha-ws bash
 ros2 topic echo /vx300s/joint_states
 ```
-
-Set the current joint states with MoveIt 2:
-
-```sh
-# in a new terminal
-docker exec -it ros2-aloha-ws bash
-ros2 launch interbotix_xsarm_moveit xsarm_moveit.launch.py robot_model:=vx300s hardware_type:=isaac
-# and then move the target and use the `MotionPlanning` panel.
-```
-
-![](figure/moveit-isaacsim.png)
 
 ## References
 
