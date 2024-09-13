@@ -42,11 +42,6 @@ fi
 if [ $(arch) == "x86_64" ]; then
   source /usr/share/gazebo/setup.bash
 fi
-# Source isaac sim environment
-# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_ros.html#setting-up-workspaces
-if [ $(arch) == "x86_64" ]; then
-  source ~/IsaacSim-ros_workspaces/humble_ws/install/setup.bash
-fi
 # Agree Isaac Sim EULA
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim
 export OMNI_KIT_ACCEPT_EULA=YES

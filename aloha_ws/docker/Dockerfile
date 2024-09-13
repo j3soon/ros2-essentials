@@ -122,29 +122,6 @@ RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
         && pip install isaacsim-extscache-physics==4.1.0.0 isaacsim-extscache-kit==4.1.0.0 isaacsim-extscache-kit-sdk==4.1.0.0 --extra-index-url https://pypi.nvidia.com; \
     fi
 
-# Setup Isaac Sim ROS2 Workspace
-# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_ros.html#setting-up-workspaces
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    sudo apt-get update && sudo apt-get install -y \
-    python3-rosdep \
-    python3-rosinstall \
-    python3-rosinstall-generator \
-    python3-wstool \
-    build-essential \
-    python3-colcon-common-extensions \
-    && sudo rm -rf /var/lib/apt/lists/*
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    sudo apt-get update \
-    && cd ~ \
-    && git clone https://github.com/isaac-sim/IsaacSim-ros_workspaces.git -b IsaacSim-4.1.0 \
-    && cd ~/IsaacSim-ros_workspaces/humble_ws \
-    && rosdep update \
-    && . /opt/ros/humble/setup.sh \
-    && rosdep install -i --from-path src --rosdistro humble -y \
-    && colcon build \
-    && sudo rm -rf /var/lib/apt/lists/* \
-    && rm -rf $HOME/.ros/rosdep/sources.cache
-
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
