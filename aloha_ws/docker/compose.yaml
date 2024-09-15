@@ -43,7 +43,7 @@ services:
       - ROS2_WS=/home/ros2-essentials/aloha_ws
       # TODO: Add more environment variables here.
     # TODO: Uncomment the lines below to enable GPU support.
-    # # Reference: https://docs.docker.com/compose/gpu-support/
+    # Reference: https://docs.docker.com/compose/gpu-support/
     deploy:
       resources:
         reservations:

@@ -35,13 +35,13 @@ if [ ! -f $ROS2_WS/install/setup.bash ]; then
     fi
     echo "Workspace built."
 fi
-# TODO: Source other workspace environments as underlay
 # Source gazebo environment
 # Ref: https://github.com/Interbotix/interbotix_ros_manipulators/issues/81#issuecomment-1562118208
 # Ref: https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros#InstallGazebo
 if [ $(arch) == "x86_64" ]; then
   source /usr/share/gazebo/setup.bash
 fi
+# TODO: Source other workspace environments as underlay
 # Agree Isaac Sim EULA
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim
 export OMNI_KIT_ACCEPT_EULA=YES

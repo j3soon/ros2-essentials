@@ -4,6 +4,7 @@
 
 ```sh
 cd ~/ros2-essentials/aloha_ws/docker
+xhost +local:docker
 docker compose up
 # The first build will take a while (~10 mins), please wait patiently.
 ```
