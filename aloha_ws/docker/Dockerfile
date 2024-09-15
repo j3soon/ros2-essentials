@@ -81,8 +81,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 
 # Setup the required capabilities for the container runtime
 # Ref: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#driver-capabilities
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES all
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=all
 
 # Install Vulkan config files
 # Ref: https://gitlab.com/nvidia/container-images/vulkan
