@@ -9,6 +9,9 @@ repo_dir = os.path.realpath(f"{current_dir}/..")
 
 logging.info("Checking `Dockerfile` files...")
 for filename in glob.glob(f"{repo_dir}/*_ws/docker/Dockerfile*"):
+    # Global ignore
+    if any(ws in filename for ws in os.getenv('IGNORED_WORKSPACES', '').split()):
+        continue
     logging.debug(f"Checking: '{filename[len(repo_dir)+1:]}'...")
     # Skip certain cases intentionally
     if "ros1_bridge_ws" in filename:

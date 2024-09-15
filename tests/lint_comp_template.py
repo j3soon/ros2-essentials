@@ -24,6 +24,9 @@ def compare_file_with_template(filepath, targetpath=None, ignored_workspaces=[])
         # Skip certain cases intentionally
         if any(ws in filename for ws in ignored_workspaces):
             continue
+        # Global ignore
+        if any(ws in filename for ws in os.getenv('IGNORED_WORKSPACES', '').split()):
+            continue
         logging.debug(f"Checking: '{filename[len(repo_dir)+1:]}'...")
         content = Path(filename).read_text().splitlines(keepends=True)
         diff = list(filter(lambda x: x.startswith('- ') or x.startswith('+ ') or x.startswith('  '), difflib.ndiff(template, content)))
