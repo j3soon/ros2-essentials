@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - "main"
+    tags:
+      - v*
     paths:
       - .github/workflows/build-orbslam3-ws.yaml
       - orbslam3_ws/docker/Dockerfile
@@ -15,11 +17,21 @@ jobs:
     if: github.repository == 'j3soon/ros2-essentials'
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Docker meta
+      - # Ref: https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#upgrading-a-workflow-that-accesses-a-registry-using-a-personal-access-token
+        name: Prepare tag name as environment variable
+        run: |
+          # This strips the git ref prefix from the version.
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # This strips the "v" prefix from the tag name.
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # This uses the Docker `latest` tag convention.
+          [ "$VERSION" == "main" ] && VERSION=latest
+          # Output the environment variable
+          # Ref: https://stackoverflow.com/a/57989070
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Docker meta
         id: meta
         # Ref: https://github.com/docker/metadata-action
         uses: docker/metadata-action@v5
@@ -28,15 +40,13 @@ jobs:
           images: ${{ secrets.DOCKERHUB_USERNAME }}/ros2-orbslam3-ws
           tags: |
             type=raw,value={{date 'YYYYMMDD'}}
-            type=raw,value=latest
-      -
-        name: Login to Docker Hub
+            type=raw,value=${{ env.VERSION }}
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: orbslam3_ws/docker
