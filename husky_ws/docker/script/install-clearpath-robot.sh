@@ -47,6 +47,15 @@ sed -i 's/<exec_depend>umx_driver<\/exec_depend>/<!-- <exec_depend>umx_driver<\/
 # Ref: https://github.com/clearpathrobotics/clearpath_config/blob/996eb50d0b05c87b65b8ffddcddd33239abd422e/clearpath_config/platform/battery.py#L51-L54
 sed -i 's/<exec_depend>valence_bms_driver<\/exec_depend>/<!-- <exec_depend>valence_bms_driver<\/exec_depend> -->/' ~/husky_driver_ws/src/clearpath_robot/clearpath_generator_robot/package.xml
 
+# Remove unnecessary dependencies (`nmea_navsat_driver`)
+# Ref: https://github.com/husky/husky/blob/1e0b1d14d657f04ec3a86e73d6676a2cf7af6f79/husky_bringup/package.xml#L25-L26
+# This type of GPS are only used for J100, so they aren't required for Husky.
+# Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/40b1c40a7d229ede7a674cb0fb359fc83c754adb/clearpath_generator_robot/clearpath_generator_robot/launch/generator.py#L100-L113
+# Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/40b1c40a7d229ede7a674cb0fb359fc83c754adb/clearpath_sensors/launch/garmin_18x.launch.py#L52-L58
+# Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/40b1c40a7d229ede7a674cb0fb359fc83c754adb/clearpath_sensors/launch/novatel_smart6.launch.py#L52-L58
+# Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/40b1c40a7d229ede7a674cb0fb359fc83c754adb/clearpath_sensors/launch/novatel_smart7.launch.py#L52-L58
+sed -i 's/<exec_depend>nmea_navsat_driver<\/exec_depend>/<!-- <exec_depend>nmea_navsat_driver<\/exec_depend> -->/' ~/husky_driver_ws/src/clearpath_robot/clearpath_sensors/package.xml
+
 # Continue building the workspace
 cd ~/husky_driver_ws
 rosdep update
