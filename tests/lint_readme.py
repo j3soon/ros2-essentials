@@ -16,3 +16,5 @@ for filename in glob.glob(f"{repo_dir}/*_ws/README.md"):
     content = Path(filename).read_text()
     if "ros2-agv-essentials" in content:
         raise ValueError(f"`ros2-agv-essentials` should not exist, use `ros2-essentials` instead: '{filename}'")
+    if "PLACEHOLDER" in content:
+        raise ValueError(f"`PLACEHOLDER` should not exist: '{filename}'")

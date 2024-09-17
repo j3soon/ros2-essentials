@@ -18,3 +18,5 @@ for filename in glob.glob(f"{repo_dir}/*_ws/.gitignore"):
         raise ValueError(f"`gazebo` should not exist since it's obsolete: '{filename}'")
     if "docker/cache" in content:
         raise ValueError(f"`docker/cache` should not exist since it's obsolete: '{filename}'")
+    if "PLACEHOLDER" in content:
+        raise ValueError(f"`PLACEHOLDER` should not exist: '{filename}'")

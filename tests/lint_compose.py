@@ -17,3 +17,5 @@ for filename in glob.glob(f"{repo_dir}/*_ws/docker/compose*.yaml"):
     if "version:" in content:
         # Ref: https://docs.docker.com/compose/compose-file/04-version-and-name/#version-top-level-element-optional
         raise ValueError(f"`version` should not exist since it's obsolete: '{filename}'")
+    if "PLACEHOLDER" in content:
+        raise ValueError(f"`PLACEHOLDER` should not exist: '{filename}'")
