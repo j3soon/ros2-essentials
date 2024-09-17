@@ -11,9 +11,9 @@ on:
       - husky_ws/docker/Dockerfile
       - husky_ws/docker/.dockerignore
       - husky_ws/docker/.bashrc
-      - husky_ws/script
-      - husky_ws/clearpath_computer_installer
-      - husky_ws/udev_rules
+      - husky_ws/docker/script
+      - husky_ws/docker/clearpath_computer_installer
+      - husky_ws/docker/udev_rules
 
 jobs:
   docker:
