@@ -1,5 +1,19 @@
 services:
+  volume-instantiation:
+    # Ref: https://github.com/moby/moby/issues/47842#issuecomment-2249050939
+    image: ubuntu:22.04
+    container_name: ros2-volume-instantiation
+    command: bash -c "
+        mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
+        mkdir -p /isaac-sim/{logs,data,documents} &&
+        mkdir -p /isaac-sim/standalone/cache/ov &&
+        mkdir -p /isaac-sim/standalone/{logs,data} &&
+        chown -R 1000:1000 /isaac-sim"
+    volumes:
+      - isaac-sim-cache:/isaac-sim
   gazebo-world-ws:
+    depends_on:
+      - volume-instantiation
     build:
       context: .
       dockerfile: Dockerfile
@@ -61,9 +75,69 @@ services:
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
       - gazebo-cache:/home/user/.gazebo
+      # Mount Isaac Sim cache directories.
+      # Reference: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_container.html#container-deployment
+      # Note that this volume is shared among all workspaces.
+      - type: volume
+        source: isaac-sim-cache
+        target: /isaac-sim/kit/cache
+        volume:
+          subpath: cache/kit
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.cache/ov
+        volume:
+          subpath: cache/ov
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.local/lib/python3.10/site-packages/omni/cache  # For Isaac Sim standalone
+        volume:
+          subpath: standalone/cache/ov
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.cache/pip
+        volume:
+          subpath: cache/pip
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.cache/nvidia/GLCache
+        volume:
+          subpath: cache/glcache
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.nv/ComputeCache
+        volume:
+          subpath: cache/computecache
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.nvidia-omniverse/logs
+        volume:
+          subpath: logs
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.local/lib/python3.10/site-packages/omni/logs  # For Isaac Sim standalone
+        volume:
+          subpath: standalone/logs
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.local/share/ov/data
+        volume:
+          subpath: data
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/.local/lib/python3.10/site-packages/omni/data  # For Isaac Sim standalone
+        volume:
+          subpath: standalone/data
+      - type: volume
+        source: isaac-sim-cache
+        target: /home/user/Documents
+        volume:
+          subpath: documents
       # TODO: Add more volume mounts here.
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache
+  isaac-sim-cache:
+    name: ros2-isaac-sim-cache
