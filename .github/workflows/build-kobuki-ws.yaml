@@ -11,8 +11,8 @@ on:
       - kobuki_ws/docker/Dockerfile
       - kobuki_ws/docker/.dockerignore
       - kobuki_ws/docker/.bashrc
-      - kobuki_ws/kobuki_driver_ws
-      - kobuki_ws/udev_rules
+      - kobuki_ws/docker/kobuki_driver_ws
+      - kobuki_ws/docker/udev_rules
 
 jobs:
   docker:
