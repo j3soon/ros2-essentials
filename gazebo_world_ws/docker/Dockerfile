@@ -59,11 +59,38 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install custom tools
+# Install GUI debugging tools
+# - `x11-apps` and `x11-utils` for `xeyes` and `xdpyinfo`
+#   Ref: https://packages.debian.org/sid/x11-apps
+#   Ref: https://packages.debian.org/sid/x11-utils
+# - `mesa-utils` for `glxgears` and `glxinfo`
+#   Ref: https://wiki.debian.org/Mesa
+# - `vulkan-tools` for `vkcube` and `vulkaninfo`
+#   Ref: https://docs.vulkan.org/tutorial/latest/02_Development_environment.html#_vulkan_packages
+#   Ref: https://gitlab.com/nvidia/container-images/vulkan/-/blob/master/docker/Dockerfile.ubuntu
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get install -y \
-    git-extras \
+    x11-apps x11-utils \
+    mesa-utils \
+    libgl1 vulkan-tools \
     && rm -rf /var/lib/apt/lists/*
+
+# Setup the required capabilities for the container runtime
+# Ref: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#driver-capabilities
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=all
+
+# Install Vulkan config files
+# Ref: https://gitlab.com/nvidia/container-images/vulkan
+RUN cat > /etc/vulkan/icd.d/nvidia_icd.json <<EOF
+{
+    "file_format_version" : "1.0.0",
+    "ICD": {
+        "library_path": "libGLX_nvidia.so.0",
+        "api_version" : "1.3.194"
+    }
+}
+EOF
 
 # Install ROS2 Gazebo packages for amd64
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
@@ -80,17 +107,29 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-rviz2 \
     && rm -rf /var/lib/apt/lists/*
 
-# TODO: Add more commands here
-# For example, to install additional packages, uncomment the following lines and add the package names
-# RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-#     apt-get update && apt-get install -y \
-#     $OTHER_PACKAGES \
-#     && rm -rf /var/lib/apt/lists/*
-
 USER $USERNAME
+
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
-# TODO: Run additional commands as non-root user here
+
+# Install Isaac Sim (requires Python 3.10)
+# Note that installing Isaac Sim with pip is experimental, keep this in mind when unexpected error occurs
+# TODO: Remove the note above when it is no longer experimental
+# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
+RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
+    if [ "$TARGETARCH" = "amd64" ]; then \
+        python3 -V | grep "Python 3.10" \
+        && pip install isaacsim==4.1.0.0 --extra-index-url https://pypi.nvidia.com \
+        && pip install isaacsim-extscache-physics==4.1.0.0 isaacsim-extscache-kit==4.1.0.0 isaacsim-extscache-kit-sdk==4.1.0.0 --extra-index-url https://pypi.nvidia.com; \
+    fi
+
+# Install custom tools
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    git-extras \
+    && sudo rm -rf /var/lib/apt/lists/*
+
+# TODO: Add more commands here
 COPY .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
 ENTRYPOINT []
