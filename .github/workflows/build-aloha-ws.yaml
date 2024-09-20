@@ -1,0 +1,61 @@
+name: Build Docker Image for aloha-ws
+
+on:
+  push:
+    branches:
+      - "main"
+    tags:
+      - v*
+    paths:
+      - .github/workflows/build-aloha-ws.yaml
+      - aloha_ws/docker/Dockerfile
+      - aloha_ws/docker/.dockerignore
+      - aloha_ws/docker/.bashrc
+      - aloha_ws/docker/script
+      - aloha_ws/docker/udev_rules
+
+jobs:
+  docker:
+    if: github.repository == 'j3soon/ros2-essentials'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - # Ref: https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#upgrading-a-workflow-that-accesses-a-registry-using-a-personal-access-token
+        name: Prepare tag name as environment variable
+        run: |
+          # This strips the git ref prefix from the version.
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # This strips the "v" prefix from the tag name.
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # This uses the Docker `latest` tag convention.
+          [ "$VERSION" == "main" ] && VERSION=latest
+          # Output the environment variable
+          # Ref: https://stackoverflow.com/a/57989070
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Docker meta
+        id: meta
+        # Ref: https://github.com/docker/metadata-action
+        uses: docker/metadata-action@v5
+        with:
+          # Link: https://hub.docker.com/repository/docker/j3soon/ros2-aloha-ws/tags
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/ros2-aloha-ws
+          tags: |
+            type=raw,value={{date 'YYYYMMDD'}}
+            type=raw,value=${{ env.VERSION }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: aloha_ws/docker
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
