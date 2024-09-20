@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>interbotix_perception_modules</name>
+  <version>0.0.0</version>
+  <description>The interbotix_perception_modules package</description>
+  <maintainer email="trsupport@trossenrobotics.com">Luke Schmitt</maintainer>
+  <license>BSD-3-Clause</license>
+  <author email="trsupport@trossenrobotics.com">Solomon Wiznitzer</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>apriltag_ros</depend>
+  <depend>cv_bridge</depend>
+  <depend>pcl_conversions</depend>
+  <depend>pcl_ros</depend>
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>rclpy</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>interbotix_xs_msgs</depend>
+  <depend>interbotix_perception_msgs</depend>
+  <depend>interbotix_perception_pipelines</depend>
+  <depend>interbotix_common_modules</depend>
+  <depend>visualization_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>rcutils</depend>
+  <depend>realsense2_camera</depend>
+  <depend>tf_transformations</depend>
+
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

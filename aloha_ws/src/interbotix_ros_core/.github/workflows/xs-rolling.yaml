@@ -1,0 +1,32 @@
+name: build-xs-rolling
+
+on:
+  push:
+    branches:
+      - rolling
+  pull_request:
+    branches:
+      - rolling
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  xs-rolling:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: rolling, ROS_REPO: main}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          path: src/interbotix_ros_core
+      - name: Prepare Workspace
+        run: |
+          rm src/interbotix_ros_core/interbotix_ros_xseries/COLCON_IGNORE
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: ${{matrix.env}}

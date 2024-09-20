@@ -1,0 +1,8 @@
+<library path="interbotix_xs_ros_control">
+  <class
+    name="interbotix_xs_ros_control/XSHardwareInterface"
+    type="interbotix_xs_ros_control::XSHardwareInterface"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>A ROS2 System Interface for Interbotix X-Series robots.</description>
+  </class>
+</library>

@@ -1,0 +1,31 @@
+name: build-slate-humble
+
+on:
+  push:
+    branches:
+      - humble
+  pull_request:
+    branches:
+      - humble
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  slate-humble:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: humble, ROS_REPO: main}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: src/interbotix_ros_core
+      - name: Prepare Workspace
+        run: |
+          rm src/interbotix_ros_core/interbotix_ros_slate/COLCON_IGNORE
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: ${{matrix.env}}

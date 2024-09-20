@@ -1,0 +1,4 @@
+[submodule "third_party_libraries/ModernRobotics"]
+	path = third_party_libraries/ModernRobotics
+	url = https://github.com/interbotix/ModernRobotics.git
+	branch = matlab_only

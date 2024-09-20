@@ -1,0 +1,11 @@
+# Visual Studio Code
+.vscode
+
+# ROS2 basic directories
+/build
+/install
+/log
+
+# Custom ignores
+/isaacsim/assets
+/src/interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_descriptions/urdf/*.urdf

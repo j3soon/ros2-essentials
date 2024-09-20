@@ -1,0 +1,3 @@
+# Notes
+
+The [interbotix_xs_sdk](interbotix_xs_sdk/) ROS wrapper builds on-top of the [dynamixel_workbench_toolbox](http://wiki.ros.org/dynamixel_workbench_toolbox) C++ API, which in turn builds on-top of the [dynamixel_sdk](http://wiki.ros.org/dynamixel_sdk) C++ API. As the *dynamixel_sdk* ROS wrapper version on 'apt' is kept up-to-date, the prebuilt binary version is installed. However, the *dynamixel_workbench_toolbox* ROS wrapper available on 'apt' is a bit behind the times so it is built from source here. Both the *dynamixel_sdk* and *dynamixel_workbench_toolbox* packages were created by [ROBOTIS](https://github.com/ROBOTIS-GIT).

@@ -1,0 +1,6 @@
+repositories:
+
+  dynamixel-workbench:
+    type: git
+    url: https://github.com/Interbotix/dynamixel-workbench.git
+    version: '3ed8229d2382c4d0931b471fbe1c83a4888da6a8'

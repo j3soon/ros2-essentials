@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>interbotix_footswitch_driver</name>
+  <version>0.0.0</version>
+  <description>
+    The interbotix_footswitch_driver package provides a ROS interface for three-pedal footswitches from PCsensor.
+  </description>
+  <maintainer email="trsupport@trossenrobotics.com">Trossen Robotics</maintainer>
+  <license>BSD-3-Clause</license>
+  <author email="trsupport@trossenrobotics.com">Trossen Robotics</author>
+
+  <license>BSD-3-Clause</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>interbotix_footswitch_msgs</depend>
+  <depend>rclcpp_components</depend>
+  <depend>rclcpp</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

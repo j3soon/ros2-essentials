@@ -1,0 +1,29 @@
+name: build-xs-galactic
+
+on:
+  push:
+    branches:
+      - galactic
+  pull_request:
+    branches:
+      - galactic
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  xs-galactic:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: galactic, ROS_REPO: main}
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          path: src
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: ${{matrix.env}}

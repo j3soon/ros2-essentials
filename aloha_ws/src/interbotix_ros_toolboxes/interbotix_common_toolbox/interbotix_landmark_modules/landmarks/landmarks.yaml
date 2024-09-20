@@ -1,0 +1,27 @@
+# Each node in this YAML file represents a single landmark.
+# The format of a single landmark's configuration is as follows:
+# ID:
+#   id: ID
+#   label: LABEL
+#   mounted: MOUNTED
+#   mounted_offset: MOUNTED_OFFSET
+#   set: SET
+# ID (int) - the AprilTag ID corresponding to the landmark
+# LABEL (str) - a human-readable name
+# MOUNTED (bool) - `true` if the landmark's AprilTag is mounted to a vertical surface, `false` if
+#   on the floor
+# MOUNTED_OFFSET (float) - if mounted, distance normal to the tag the robot should navigate to
+# SET (bool) - whether or not the robot has seen and set a transform to the landmark
+
+5:
+  id: 5
+  label: landmark_1
+  mounted: true
+  mounted_offset: 0.4
+  set: false
+413:
+  id: 413
+  label: landmark_2
+  mounted: false
+  mounted_offset: 0.0
+  set: false

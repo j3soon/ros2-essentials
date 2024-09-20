@@ -1,0 +1,40 @@
+name: build-ros2
+
+on:
+  push:
+    branches:
+      - ros2
+      - ros2-devel
+  pull_request:
+    branches:
+      - ros2
+      - ros2-devel
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-ros2:
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - {ROS_DISTRO: humble, RUNNER: ubuntu-22.04}
+          - {ROS_DISTRO: iron, RUNNER: ubuntu-22.04}
+          - {ROS_DISTRO: jazzy, RUNNER: ubuntu-24.04}
+          - {ROS_DISTRO: rolling, RUNNER: ubuntu-24.04}
+
+    runs-on: ${{ matrix.env.RUNNER }}
+    steps:
+      - name: Check out X-Series Driver
+        uses: actions/checkout@v4
+      - uses: ros-tooling/setup-ros@v0.7
+        with:
+          use-ros2-testing: true
+          required-ros-distributions: ${{ matrix.env.ROS_DISTRO }}
+      - uses: ros-tooling/action-ros-ci@v0.3
+        with:
+          target-ros2-distro: ${{ matrix.env.ROS_DISTRO }}
+          vcs-repo-file-url: dependencies.repos

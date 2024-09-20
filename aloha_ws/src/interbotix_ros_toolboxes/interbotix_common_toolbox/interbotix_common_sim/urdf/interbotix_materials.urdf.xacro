@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<robot name="interbotix_materials" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="interbotix_black">
+    <visual>
+      <material>
+        <diffuse>${60/255} ${60/255} ${60/255} 1</diffuse>
+        <specular>${3/255} ${3/255} ${3/255} 1</specular>
+        <emissive>0 0 0 1</emissive>
+      </material>
+    </visual>
+  </xacro:macro>
+
+</robot>

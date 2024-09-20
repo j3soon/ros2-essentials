@@ -1,0 +1,23 @@
+/* Reference: https://aka.ms/devcontainer.json */
+{
+    "name": "aloha-ws",
+    "dockerComposeFile": "../docker/compose.yaml",
+    "service": "aloha-ws",
+    // Workspace settings
+    "workspaceFolder": "/home/ros2-essentials/aloha_ws",
+    // Vscode extensions
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-themes",
+                "twxs.cmake",
+                "donjayamanne.python-extension-pack",
+                "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
+                "ms-iot.vscode-ros"
+            ]
+        }
+    }
+}

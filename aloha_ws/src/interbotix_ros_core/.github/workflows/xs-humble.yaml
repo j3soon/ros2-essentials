@@ -1,0 +1,36 @@
+name: build-xs-humble
+
+on:
+  push:
+    branches:
+      - humble
+  pull_request:
+    branches:
+      - humble
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  xs-humble:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: humble, ROS_REPO: main}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          path: src/interbotix_ros_core
+      - name: Prepare Workspace
+        run: |
+          # rm src/interbotix_ros_core/interbotix_ros_common_drivers/COLCON_IGNORE
+          rm src/interbotix_ros_core/interbotix_ros_xseries/COLCON_IGNORE
+      - name: Install Dependencies
+        run: |
+          sudo apt-get install --reinstall pkg-config cmake-data
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: ${{matrix.env}}
