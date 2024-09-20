@@ -19,6 +19,9 @@ DEFAULT_FILES = [
 for filename in DEFAULT_FILES:
     logging.debug(f"Checking existence of: '{filename}'...")
     for workspace_path in glob.glob(f"{repo_dir}/*_ws"):
+        # Global ignore
+        if any(ws in workspace_path for ws in os.getenv('IGNORED_WORKSPACES', '').split()):
+            continue
         if not os.path.isfile(f"{workspace_path}/{filename}"):
             # Skip certain cases intentionally
             if filename in (".gitignore", "docker/.bashrc") and os.path.basename(workspace_path) == "ros1_bridge_ws":
@@ -37,5 +40,8 @@ OBSOLETE_FILES = [
 for filename in OBSOLETE_FILES:
     logging.debug(f"Checking non-existence of: '{filename}'...")
     for workspace_path in glob.glob(f"{repo_dir}/*_ws"):
+        # Global ignore
+        if any(ws in workspace_path for ws in os.getenv('IGNORED_WORKSPACES', '').split()):
+            continue
         if os.path.isfile(f"{workspace_path}/{filename}"):
             raise ValueError(f"'{filename}' exists in: '{workspace_path}'")
