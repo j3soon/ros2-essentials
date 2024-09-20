@@ -133,7 +133,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
         # Fix the issue of Eigen
         # Reference: https://gitlab.com/libeigen/eigen/-/issues/2326
-        sed -i 's/EIGEN_ALWAYS_INLINE eigen_packet_wrapper() {}/EIGEN_ALWAYS_INLINE eigen_packet_wrapper() = default;/' /usr/include/eigen3/Eigen/src/Core/GenericPacketMath.h; \
+        sudo sed -i 's/EIGEN_ALWAYS_INLINE eigen_packet_wrapper() {}/EIGEN_ALWAYS_INLINE eigen_packet_wrapper() = default;/' /usr/include/eigen3/Eigen/src/Core/GenericPacketMath.h; \
     fi
 
 # Install Kobuki dependencies
