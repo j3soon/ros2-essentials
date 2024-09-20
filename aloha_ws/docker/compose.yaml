@@ -6,6 +6,8 @@ services:
     command: bash -c "
         mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
         mkdir -p /isaac-sim/{logs,data,documents} &&
+        mkdir -p /isaac-sim/standalone/cache/ov &&
+        mkdir -p /isaac-sim/standalone/{logs,data} &&
         chown -R 1000:1000 /isaac-sim"
     volumes:
       - isaac-sim-cache:/isaac-sim
@@ -90,7 +92,7 @@ services:
         source: isaac-sim-cache
         target: /home/user/.local/lib/python3.10/site-packages/omni/cache  # For Isaac Sim standalone
         volume:
-          subpath: cache/ov
+          subpath: standalone/cache/ov
       - type: volume
         source: isaac-sim-cache
         target: /home/user/.cache/pip
@@ -115,7 +117,7 @@ services:
         source: isaac-sim-cache
         target: /home/user/.local/lib/python3.10/site-packages/omni/logs  # For Isaac Sim standalone
         volume:
-          subpath: logs
+          subpath: standalone/logs
       - type: volume
         source: isaac-sim-cache
         target: /home/user/.local/share/ov/data
@@ -125,7 +127,7 @@ services:
         source: isaac-sim-cache
         target: /home/user/.local/lib/python3.10/site-packages/omni/data  # For Isaac Sim standalone
         volume:
-          subpath: data
+          subpath: standalone/data
       - type: volume
         source: isaac-sim-cache
         target: /home/user/Documents
