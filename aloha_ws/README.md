@@ -107,6 +107,14 @@ docker exec -it ros2-aloha-ws bash
 ros2 topic echo /vx300s/joint_states
 ```
 
+A specific world can also be directly launched and played with:
+
+```sh
+isaacsim omni.isaac.sim --exec '/home/ros2-essentials/aloha_ws/isaacsim/scripts/open_isaacsim_stage.py --path /home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd'
+```
+
+To access Nucleus from Isaac Sim, you should [install Nucleus](https://docs.omniverse.nvidia.com/nucleus/latest/workstation/installation.html) with default username/password `admin:admin` on your host machine or connect to an external Nucleus server.
+
 ## References
 
 - [Interbotix X-Series Arms \| Trossen Robotics Documentation](https://docs.trossenrobotics.com/interbotix_xsarms_docs/index.html)
