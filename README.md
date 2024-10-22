@@ -24,7 +24,7 @@ Pulling the pre-built Docker images can bypass the time-consuming building proce
 | `j3soon/ros2-kobuki-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-kobuki-ws/tags)][[code](./kobuki_ws)] | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | `j3soon/ros2-vlp-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-vlp-ws/tags)][[code](./vlp_ws)] | ✔️ | ✔️ | Real-world support | [Assume Zhan](https://github.com/Assume-Zhan) |
 | `j3soon/ros2-gazebo-world-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-gazebo-world-ws/tags)][[code](./gazebo_world_ws)] | ✔️ | ❌️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| `j3soon/aloha-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-aloha-ws/tags)][[code](./aloha_ws)] | ✔️ | ✔️ | Simulation only | |
+| `j3soon/ros2-aloha-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-aloha-ws/tags)][[code](./aloha_ws)] | ✔️ | ✔️ | Simulation only | |
 
 ## Acknowledgement
 
@@ -50,3 +50,7 @@ However, this repository includes many dependencies released under different lic
 ### Installing Docker
 
 Follow [this post](https://tutorial.j3soon.com/docker/installation/) for the installation instructions.
+
+### Installing NVIDIA Container Toolkit
+
+Follow [this post](https://tutorial.j3soon.com/docker/nvidia-gpu-support/) for the installation instructions.
