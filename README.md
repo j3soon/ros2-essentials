@@ -9,11 +9,18 @@ A repo containing essential ROS2 Humble features for controlling Autonomous Mobi
 
 The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 
+## Cloning the Repository
+
+```sh
+git clone https://github.com/j3soon/ros2-essentials.git
+cd ros2-essentials
+```
+
 ## Pre-built Workspaces
 
-Pre-built Docker images for each workspace can be pulled by running `docker compose pull` in the corresponding workspace directory.
+Pre-built Docker images for each workspace can be pulled by running `docker compose pull` in the corresponding workspace directory. Pulling these images bypasses the time-consuming build process (for both Docker Compose and Dev Containers).
 
-Pulling the pre-built Docker images can bypass the time-consuming building process (for both docker compose & devcontainers).
+Click on the following workspaces to navigate to their respective documentation.
 
 | Workspace | amd64 | arm64 | Notes | Maintainer |
 |-----------|-------|-------|-------|------------|
@@ -31,12 +38,21 @@ Pulling the pre-built Docker images can bypass the time-consuming building proce
 ## Building Documentation
 
 ```sh
+# (Optional) Create and activate python virtual environment
 virtualenv venv -p python3
 source venv/bin/activate
+# Install dependencies and start serving
 cd docs
 pip install -r requirements.txt
 mkdocs serve
 # Go to https://127.0.0.1:8000 to view the site.
+```
+
+## Linking the README
+
+```sh
+rm docs/index.md
+ln "${PWD}/README.md" docs/index.md
 ```
 
 ## Acknowledgement
