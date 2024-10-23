@@ -346,6 +346,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#cloning-the-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloning the Repository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pre-built-workspaces" class="md-nav__link">
     <span class="md-ellipsis">
       Pre-built Workspaces
@@ -358,6 +367,15 @@
   <a href="#building-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       Building Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linking-the-readme" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linking the README
     </span>
   </a>
   
@@ -649,6 +667,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#cloning-the-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloning the Repository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pre-built-workspaces" class="md-nav__link">
     <span class="md-ellipsis">
       Pre-built Workspaces
@@ -661,6 +688,15 @@
   <a href="#building-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       Building Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linking-the-readme" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linking the README
     </span>
   </a>
   
@@ -743,9 +779,13 @@
 <p>Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.</p>
 </blockquote>
 <p>The documentation is hosted on <a href="https://j3soon.github.io/ros2-essentials/">https://j3soon.github.io/ros2-essentials/</a>.</p>
+<h2 id="cloning-the-repository">Cloning the Repository<a class="headerlink" href="#cloning-the-repository" title="Permanent link">&para;</a></h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/j3soon/ros2-essentials.git
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>ros2-essentials
+</span></code></pre></div>
 <h2 id="pre-built-workspaces">Pre-built Workspaces<a class="headerlink" href="#pre-built-workspaces" title="Permanent link">&para;</a></h2>
-<p>Pre-built Docker images for each workspace can be pulled by running <code>docker compose pull</code> in the corresponding workspace directory.</p>
-<p>Pulling the pre-built Docker images can bypass the time-consuming building process (for both docker compose &amp; devcontainers).</p>
+<p>Pre-built Docker images for each workspace can be pulled by running <code>docker compose pull</code> in the corresponding workspace directory. Pulling these images bypasses the time-consuming build process (for both Docker Compose and Dev Containers).</p>
+<p>Click on the following workspaces to navigate to their respective documentation.</p>
 <table>
 <thead>
 <tr>
@@ -830,12 +870,18 @@
 </tbody>
 </table>
 <h2 id="building-documentation">Building Documentation<a class="headerlink" href="#building-documentation" title="Permanent link">&para;</a></h2>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>virtualenv<span class="w"> </span>venv<span class="w"> </span>-p<span class="w"> </span>python3
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">source</span><span class="w"> </span>venv/bin/activate
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>docs
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>mkdocs<span class="w"> </span>serve
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Go to https://127.0.0.1:8000 to view the site.</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># (Optional) Create and activate python virtual environment</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>virtualenv<span class="w"> </span>venv<span class="w"> </span>-p<span class="w"> </span>python3
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">source</span><span class="w"> </span>venv/bin/activate
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Install dependencies and start serving</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nb">cd</span><span class="w"> </span>docs
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>mkdocs<span class="w"> </span>serve
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Go to https://127.0.0.1:8000 to view the site.</span>
+</span></code></pre></div>
+<h2 id="linking-the-readme">Linking the README<a class="headerlink" href="#linking-the-readme" title="Permanent link">&para;</a></h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>docs/index.md
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ln<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="s2">/README.md&quot;</span><span class="w"> </span>docs/index.md
 </span></code></pre></div>
 <h2 id="acknowledgement">Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permanent link">&para;</a></h2>
 <p>The code is mainly contributed by <a href="https://github.com/j3soon">Johnson</a>, <a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a>, <a href="https://github.com/Assume-Zhan">Assume Zhan</a>, <a href="https://github.com/ClassLongJoe1112">Lam Chon Hang</a>, and others. For a full list of contributors, please refer to the <a href="https://github.com/j3soon/ros2-essentials/graphs/contributors">contribution list</a>.</p>
