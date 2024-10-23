@@ -190,7 +190,7 @@ site_description: A repo containing essential ROS2 Humble features for controlli
 # - Replace the `site_description` above with your site description
 
 nav:
-  - index.md
+  - Home: index.md
     # - styling-syntaxes.md
     # - dlbook-notations.md
     # DONE (Remove sample pages):
