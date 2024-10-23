@@ -1,5 +1,9 @@
 # ALOHA
 
+[![DockerHub image](https://img.shields.io/badge/dockerhub-image-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-aloha-ws/tags)
+[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/aloha_ws)
+[![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=aloha_ws)](https://github.com/j3soon/ros2-essentials/commits/main/aloha_ws)
+
 ## Start Container
 
 ```sh

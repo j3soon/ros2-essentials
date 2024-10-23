@@ -1,5 +1,9 @@
 # Gazebo World
 
+[![DockerHub image](https://img.shields.io/badge/dockerhub-image-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-gazebo-world-ws/tags)
+[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/gazebo_world_ws)
+[![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=gazebo_world_ws)](https://github.com/j3soon/ros2-essentials/commits/main/gazebo_world_ws)
+
 This repository contains several Gazebo worlds, which are valuable for testing robots or agents in both indoor and outdoor environments.
 
 ## 🌱 Structure 🌱
