@@ -1,0 +1,43 @@
+# Ref: https://squidfunk.github.io/mkdocs-material/publishing-your-site/
+name: ci
+on:
+  push:
+    branches:
+      - master
+      - main
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        # Ref: https://github.com/timvink/mkdocs-git-revision-date-localized-plugin#note-when-using-build-environments
+        with:
+          fetch-depth: '0'
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+      - run: pip install -r requirements.txt
+      - run: mkdocs gh-deploy --force
+        # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2
+        # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2/issues/51#issuecomment-1951450239
+        env:
+          MKDOCS_GIT_COMMITTERS_APIKEY: ${{ secrets.MKDOCS_GIT_COMMITTERS_APIKEY }}
+
+# TODO (Deploy the site):
+# - In the forked GitHub repo page, go to `Settings > Pages` and change `Branch` to `gh-pages`:
+#       https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+# - Visit the site at `https://<username>.github.io/<repository>`
+# - For using custom domain, refer to the link below:
+#       https://www.mkdocs.org/user-guide/deploying-your-docs/#custom-domains
+# - To publish the site to other platforms, refer to the link below:
+#       https://squidfunk.github.io/mkdocs-material/publishing-your-site/
+# - Take Netlify as an example, follow:
+#       https://www.starfallprojects.co.uk/projects/deploy-host-docs/deploy-mkdocs-material-netlify/
+#   Make sure to also set up the secrets:
+#       https://docs.netlify.com/environment-variables/get-started/#site-environment-variables

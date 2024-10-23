@@ -1,0 +1,19 @@
+<!-- Ref: https://github.com/squidfunk/mkdocs-material/blob/master/src/base.html -->
+{% extends "base.html" %}
+
+{% raw %}
+<!-- TODO (Announcement bar)
+     - Remove the surrounding raw/endraw tags
+     - Add announcement text in the announce block
+-->
+{% block announce %}
+  <!-- Add announcement here, including arbitrary HTML -->
+{% endblock %}
+{% endraw %}
+
+{% block header %}
+  {{ super() }}
+  {% if page.meta and page.meta.dlbook_notations == true %}
+    {% include "partials/dlbook-notations.html" %}
+  {% endif %}
+{% endblock %}
