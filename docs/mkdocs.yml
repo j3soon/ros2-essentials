@@ -190,8 +190,7 @@ site_description: A repo containing essential ROS2 Humble features for controlli
 # - Replace the `site_description` above with your site description
 
 nav:
-  - Home:
-    - index.md
+  - index.md
     # - styling-syntaxes.md
     # - dlbook-notations.md
     # DONE (Remove sample pages):
@@ -202,3 +201,13 @@ nav:
     # - Comment the `Tags` line above.
     # - Comment the `tags` entry in the `plugins` section.
     # - Delete the `docs/tags.md` file.
+  - template-ws/index.md
+  - orbslam3-ws/index.md
+  - rtabmap-ws/index.md
+  - ros1-bridge-ws/index.md
+  - cartographer-ws/index.md
+  - husky-ws/index.md
+  - kobuki-ws/index.md
+  - vlp-ws/index.md
+  - gazebo-world-ws/index.md
+  - aloha-ws/index.md
