@@ -1,0 +1,213 @@
+site_name: ROS2 Essentials
+# DONE (Set up site name):
+# - Replace the `site_name` value above with your site name.
+
+# Ref: https://github.com/oprypin/mkdocs-same-dir
+docs_dir: .
+site_dir: ../site
+
+theme:
+  name: material
+  # Ref: https://squidfunk.github.io/mkdocs-material/customization/#extending-the-theme
+  custom_dir: overrides
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons
+  icon:
+    logo: material/file-document-outline
+  favicon: assets/images/favicon.png
+  features:
+    # Ref: https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-copy-button
+    - content.code.copy
+    # # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-tabs
+    # - navigation.tabs
+    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-expansion
+    - navigation.expand
+    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages
+    - navigation.indexes
+    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#anchor-following
+    - toc.follow
+    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#back-to-top-button
+    - navigation.top
+    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/#search-suggestions
+    - search.suggest
+    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/#search-sharing
+    - search.share
+    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-header/#automatic-hiding
+    - header.autohide
+    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-header/#mark-as-read
+    - announce.dismiss
+    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/
+    # - navigation.footer
+    # DONE (Remove navigation footer):
+    # - Comment the `navigation.footer` line above.
+
+markdown_extensions:
+# Ref: https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - tables
+# Ref: https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/#arithmatex
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  # Ref: https://github.com/mkdocs/mkdocs/issues/545#issuecomment-522196661
+  - mdx_truly_sane_lists
+
+plugins:
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search
+  - search
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-social-cards
+  - social
+  # Ref: https://github.com/fralau/mkdocs_macros_plugin
+  - macros:
+      # Ref: https://mkdocs-macros-plugin.readthedocs.io/en/latest/advanced/#changing-the-directory-of-the-includes
+      include_dir: .
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#document-dates
+  # Ref: https://github.com/timvink/mkdocs-git-revision-date-localized-plugin
+  - git-revision-date-localized:
+      enable_creation_date: true
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#document-contributors
+  # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2
+  # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2/issues/51#issuecomment-1951450239
+  - git-committers:
+      repository: j3soon/ros2-essentials
+      branch: main
+  # DONE (Set up git contributors):
+  # - Replace the `git-committers` settings above to match your repository.
+  # - Generate a GitHub API key as described in the link above.
+  #   Alternatively, generate a GitLab API key.
+  # - Export the API key before running `mkdocs` commands.
+  #       export MKDOCS_GIT_COMMITTERS_APIKEY="<YOUR_API_KEY>"
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-tags/
+  # - tags:
+  #     tags_file: tags.md
+  # Ref: https://github.com/oprypin/mkdocs-same-dir
+  - same-dir
+
+extra:
+  # Variable for inserting images easily
+  imgroot: /../assets/images/
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-analytics
+  # analytics:
+  #   provider: google
+  #   property: G-XXXXXXXXXX # Google Analytics 4
+  # TODO (Set up site analytics):
+  # - Uncomment the `analytics` section above
+  # - Refer to the link below for remaining steps:
+  #       https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-analytics
+  # TODO (Search console):
+  # - After setting up Google Analytics, you might want to set up Google Search Console as well:
+  #       https://search.google.com/search-console/
+
+  # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#social-links
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/j3soon/ros2-essentials
+  # DONE (Add social links):
+  # - Uncomment the `social` section above
+  # - Refer to the link below for remaining steps:
+  #       https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#social-links
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+# Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#copyright-notice
+copyright: Copyright &copy; 2024 <a href="https://github.com/j3soon/ros2-essentials">ROS 2 Essentials Contributors</a>
+# DONE (Set up copyright notice):
+# - Uncomment the `copyright` line above and enter your name
+
+# Ref: https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/
+repo_url: https://github.com/j3soon/ros2-essentials
+repo_name: j3soon/ros2-essentials
+# DONE (Set up git repository):
+# - Replace the `repo_url`/`repo_name` above to your repository URL
+
+# Ref: https://www.mkdocs.org/user-guide/configuration/#site_url
+# Ref: https://stackoverflow.com/a/59295885
+site_url: https://j3soon.github.io/ros2-essentials/
+# DONE (Set up site url):
+# - Replace the `site_url` above to your site URL
+
+# Ref: https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-description
+# Ref: https://www.mkdocs.org/user-guide/configuration/#site_description
+site_description: A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs).
+# DONE (Set up site description):
+# - Replace the `site_description` above with your site description
+
+nav:
+  - Home: index.md
+    # - styling-syntaxes.md
+    # - dlbook-notations.md
+    # DONE (Remove sample pages):
+    # - Comment the sample pages entries above.
+    # - Delete the pages and their assets in `docs/<PAGE_NAME>` and `docs/assets/images/<PAGE_NAME>`
+    # - Tags: tags.md
+    # DONE (Remove tags page):
+    # - Comment the `Tags` line above.
+    # - Comment the `tags` entry in the `plugins` section.
+    # - Delete the `docs/tags.md` file.
+  - template-ws/index.md
+  - orbslam3-ws/index.md
+  - rtabmap-ws/index.md
+  - ros1-bridge-ws/index.md
+  - cartographer-ws/index.md
+  - husky-ws/index.md
+  - kobuki-ws/index.md
+  - vlp-ws/index.md
+  - gazebo-world-ws/index.md
+  - aloha-ws/index.md
