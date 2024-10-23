@@ -42,8 +42,8 @@ theme:
   features:
     # Ref: https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-copy-button
     - content.code.copy
-    # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-tabs
-    - navigation.tabs
+    # # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-tabs
+    # - navigation.tabs
     # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-expansion
     - navigation.expand
     # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages
