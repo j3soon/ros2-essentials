@@ -1,3 +1,4 @@
+import filecmp
 import glob
 import logging
 import os
@@ -18,3 +19,6 @@ for filename in glob.glob(f"{repo_dir}/*_ws/README.md"):
         raise ValueError(f"`ros2-agv-essentials` should not exist, use `ros2-essentials` instead: '{filename}'")
     if "PLACEHOLDER" in content:
         raise ValueError(f"`PLACEHOLDER` should not exist: '{filename}'")
+
+if not filecmp.cmp(f"{repo_dir}/README.md", f"{repo_dir}/docs/index.md"):
+    raise ValueError(f"`README.md` should be the same as `docs/index.md`")
