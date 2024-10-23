@@ -6,25 +6,37 @@ A repo containing essential ROS2 Humble features for controlling Autonomous Mobi
 
 > Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.
 
-## Pre-built Docker Images
+The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 
-The following Docker images can be pulled by `docker pull <IMAGE_NAME>` or by `docker compose pull` in the corresponding directory.
+## Pre-built Workspaces
+
+Pre-built Docker images for each workspace can be pulled by running `docker compose pull` in the corresponding workspace directory.
 
 Pulling the pre-built Docker images can bypass the time-consuming building process (for both docker compose & devcontainers).
 
-| Docker Image | amd64 | arm64 | Notes | Maintainer |
-|--------------|-------|-------|-------|------------|
-| `j3soon/ros2-template-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-template-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/template_ws)] | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| `j3soon/ros2-orbslam3-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-orbslam3-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/orbslam3_ws)] | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
-| `j3soon/ros2-rtabmap-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-rtabmap-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/rtabmap_ws)] | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
-| `j3soon/ros2-ros1-bridge-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/ros1_bridge_ws)] | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| `j3soon/ros2-ros1-bridge-build-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-build-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/ros1_bridge_ws)] | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| `j3soon/ros2-cartographer-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-cartographer-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/cartographer_ws)] | ✔️ | ✔️ | | [Assume Zhan](https://github.com/Assume-Zhan) |
-| `j3soon/ros2-husky-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-husky-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/husky_ws)] | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| `j3soon/ros2-kobuki-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-kobuki-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/kobuki_ws)] | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| `j3soon/ros2-vlp-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-vlp-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/vlp_ws)] | ✔️ | ✔️ | Real-world support | [Assume Zhan](https://github.com/Assume-Zhan) |
-| `j3soon/ros2-gazebo-world-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-gazebo-world-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/gazebo_world_ws)] | ✔️ | ❌️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| `j3soon/ros2-aloha-ws` [[tags](https://hub.docker.com/r/j3soon/ros2-aloha-ws/tags)][[code](https://github.com/j3soon/ros2-essentials/tree/main/aloha_ws)] | ✔️ | ✔️ | Simulation only | |
+| Workspace | amd64 | arm64 | Notes | Maintainer |
+|-----------|-------|-------|-------|------------|
+| [Template](https://j3soon.github.io/ros2-essentials/template-ws/) | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [ORB-SLAM3](https://j3soon.github.io/ros2-essentials/orbslam3_ws) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
+| [RTAB-Map](https://j3soon.github.io/ros2-essentials/rtabmap_ws/) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
+| [ROS1 Bridge](https://j3soon.github.io/ros2-essentials/ros1_bridge_ws/) | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Cartographer](https://j3soon.github.io/ros2-essentials/cartographer_ws/) | ✔️ | ✔️ | | [Assume Zhan](https://github.com/Assume-Zhan) |
+| [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky_ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Yujin Robot Kobuki](https://j3soon.github.io/ros2-essentials/kobuki_ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Velodyne VLP-16](https://j3soon.github.io/ros2-essentials/vlp_ws/) | ✔️ | ✔️ | Real-world support | [Assume Zhan](https://github.com/Assume-Zhan) |
+| [Gazebo World](https://j3soon.github.io/ros2-essentials/gazebo_world_ws/) | ✔️ | ❌️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [ALOHA](https://j3soon.github.io/ros2-essentials/aloha_ws/) | ✔️ | ✔️ | Simulation only | |
+
+## Building Documentation
+
+```sh
+virtualenv venv -p python3
+source venv/bin/activate
+cd docs
+pip install -r requirements.txt
+mkdocs serve
+# Go to https://127.0.0.1:8000 to view the site.
+```
 
 ## Acknowledgement
 
@@ -39,7 +51,7 @@ Disclaimer: this is not an official NVIDIA product.
 
 ## License
 
-All modifications are licensed under [Apache License 2.0](./LICENSE).
+All modifications are licensed under [Apache License 2.0](https://github.com/j3soon/ros2-essentials/blob/main/LICENSE).
 
 However, this repository includes many dependencies released under different licenses. For information on these licenses, please check the commit history. Make sure to review the license of each dependency before using this repository.
 
