@@ -1,5 +1,5 @@
 # Ref: https://squidfunk.github.io/mkdocs-material/publishing-your-site/
-name: ci
+name: Build Documentation
 on:
   push:
     branches:
@@ -29,7 +29,7 @@ jobs:
         env:
           MKDOCS_GIT_COMMITTERS_APIKEY: ${{ secrets.MKDOCS_GIT_COMMITTERS_APIKEY }}
 
-# TODO (Deploy the site):
+# DONE (Deploy the site):
 # - In the forked GitHub repo page, go to `Settings > Pages` and change `Branch` to `gh-pages`:
 #       https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
 # - Visit the site at `https://<username>.github.io/<repository>`
