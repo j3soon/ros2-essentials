@@ -11,8 +11,8 @@ on:
       - aloha_ws/docker/Dockerfile
       - aloha_ws/docker/.dockerignore
       - aloha_ws/docker/.bashrc
-      - aloha_ws/docker/script
-      - aloha_ws/docker/udev_rules
+      - aloha_ws/docker/script/**
+      - aloha_ws/docker/udev_rules/**
 
 jobs:
   docker:
