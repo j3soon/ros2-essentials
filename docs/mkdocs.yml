@@ -1,6 +1,11 @@
 site_name: Mkdocs Material Template
 # TODO (Set up site name):
 # - Replace the `site_name` value above with your site name.
+
+# Ref: https://github.com/oprypin/mkdocs-same-dir
+docs_dir: .
+site_dir: ../site
+
 theme:
   name: material
   # Ref: https://squidfunk.github.io/mkdocs-material/customization/#extending-the-theme
@@ -129,6 +134,8 @@ plugins:
   # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-tags/
   - tags:
       tags_file: tags.md
+  # Ref: https://github.com/oprypin/mkdocs-same-dir
+  - same-dir
 
 extra:
   # Variable for inserting images easily

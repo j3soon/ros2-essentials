@@ -14,3 +14,6 @@ mkdocs-macros-plugin
 # For showing contributors
 # Ref: https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#document-contributors
 mkdocs-git-committers-plugin-2
+# For placing `mkdocs.yml` in the same directory as documentation
+# Ref: https://github.com/oprypin/mkdocs-same-dir
+mkdocs-same-dir
