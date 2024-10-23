@@ -1,4 +1,4 @@
-# husky_ws
+# Clearpath Husky
 
 This repository will help you configure the environment for Husky quickly.
 

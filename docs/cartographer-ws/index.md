@@ -1,4 +1,4 @@
-# ROS2 Cartographer
+# Cartographer
 
 ### Run with docker
 

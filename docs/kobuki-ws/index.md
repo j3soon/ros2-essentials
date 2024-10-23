@@ -1,4 +1,4 @@
-# kobuki_ws
+# Yujin Robot Kobuki
 
 This repository facilitates the quick configuration of the simulation environment and real robot driver for Kobuki.
 

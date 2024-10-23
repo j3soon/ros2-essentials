@@ -1,4 +1,4 @@
-# ROS2 ORB-SLAM3
+# ORB-SLAM3
 
 ### Run with docker
 

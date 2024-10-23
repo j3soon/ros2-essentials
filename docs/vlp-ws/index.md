@@ -1,4 +1,4 @@
-# Velodyne Workspace
+# Velodyne VLP-16
 
 ## Simulation Setup
 

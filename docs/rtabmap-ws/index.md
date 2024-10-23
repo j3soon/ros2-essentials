@@ -1,4 +1,4 @@
-# ROS2 RTAB-Map
+# RTAB-Map
 
 ### Run with docker
 

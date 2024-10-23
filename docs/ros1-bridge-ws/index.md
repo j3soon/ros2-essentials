@@ -1,4 +1,4 @@
-# ros1_bridge_ws
+# ROS1 Bridge
 
 This workspace is utilized to create a bridge between ROS1 and ROS2-humble.
 

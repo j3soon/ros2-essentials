@@ -1,4 +1,4 @@
-# gazebo_world_ws
+# Gazebo World
 
 This repository contains several Gazebo worlds, which are valuable for testing robots or agents in both indoor and outdoor environments.
 

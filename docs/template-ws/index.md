@@ -1,4 +1,4 @@
-# template_ws
+# Template
 
 This template will help you set up a ROS-Humble environment quickly.
 
