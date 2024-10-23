@@ -14,7 +14,7 @@ cd ~/husky_driver_ws/src
 #
 #     E: Unable to locate package ros-humble-clearpath-robot
 #
-git clone https://github.com/clearpathrobotics/clearpath_robot -b 0.2.11
+git clone https://github.com/clearpathrobotics/clearpath_robot -b 0.3.2
 cd ..
 
 # Remove unnecessary dependencies (`micros_ros_agent`, `sevcon_traction`, `umx_driver`, `valence_bms_driver`)
