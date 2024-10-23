@@ -3,8 +3,10 @@ name: Build Documentation
 on:
   push:
     branches:
-      - master
       - main
+    paths:
+      - .github/workflows/build-docs.yaml
+      - docs/**
 permissions:
   contents: write
 jobs:
@@ -22,8 +24,8 @@ jobs:
         with:
           key: ${{ github.ref }}
           path: .cache
-      - run: pip install -r requirements.txt
-      - run: mkdocs gh-deploy --force
+      - run: pip install -r docs/requirements.txt
+      - run: cd docs && mkdocs gh-deploy --force
         # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2
         # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2/issues/51#issuecomment-1951450239
         env:

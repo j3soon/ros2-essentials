@@ -15,3 +15,6 @@ for filename in glob.glob(f"{repo_dir}/.github/workflows/*.yaml"):
         if content.count("@master") != content.count("master"):
             # Ref: https://github.com/j3soon/ros2-essentials/pull/44#pullrequestreview-2251404984
             raise ValueError(f"`master` should not exist since it's obsolete: '{filename}'")
+for filename in glob.glob(f"{repo_dir}/.github/workflows/*.yml"):
+    logging.debug(f"Checking: '{filename[len(repo_dir)+1:]}'...")
+    raise ValueError(f"workflows should use `.yaml` files instead of `.yml` files: '{filename}'")
