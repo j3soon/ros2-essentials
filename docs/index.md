@@ -24,16 +24,18 @@ Click on the following workspaces to navigate to their respective documentation.
 
 | Workspace | amd64 | arm64 | Notes | Maintainer |
 |-----------|-------|-------|-------|------------|
-| [Template](https://j3soon.github.io/ros2-essentials/template-ws/) | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Template](https://j3soon.github.io/ros2-essentials/template-ws/) | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson](https://github.com/j3soon) |
 | [ORB-SLAM3](https://j3soon.github.io/ros2-essentials/orbslam3_ws) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [RTAB-Map](https://j3soon.github.io/ros2-essentials/rtabmap_ws/) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [ROS1 Bridge](https://j3soon.github.io/ros2-essentials/ros1_bridge_ws/) | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Cartographer](https://j3soon.github.io/ros2-essentials/cartographer_ws/) | ✔️ | ✔️ | | [Assume Zhan](https://github.com/Assume-Zhan) |
-| [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky_ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky_ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson](https://github.com/j3soon) |
 | [Yujin Robot Kobuki](https://j3soon.github.io/ros2-essentials/kobuki_ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Velodyne VLP-16](https://j3soon.github.io/ros2-essentials/vlp_ws/) | ✔️ | ✔️ | Real-world support | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [Gazebo World](https://j3soon.github.io/ros2-essentials/gazebo_world_ws/) | ✔️ | ❌️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| [ALOHA](https://j3soon.github.io/ros2-essentials/aloha_ws/) | ✔️ | ✔️ | Simulation only | |
+| [ALOHA](https://j3soon.github.io/ros2-essentials/aloha_ws/) | ✔️ | ✔️ | Simulation only | [Johnson](https://github.com/j3soon) |
+
+If you have trouble using a workspace, please [open an issue](https://github.com/j3soon/ros2-essentials/issues) and tag the current maintainers mentioned above.
 
 ## Building Documentation
 
