@@ -1,8 +1,13 @@
 # Clearpath Husky
 
-[![DockerHub image](https://img.shields.io/badge/dockerhub-image-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-husky-ws/tags)
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/husky_ws)
+[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-husky-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-husky-ws.yaml)
 [![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=husky_ws)](https://github.com/j3soon/ros2-essentials/commits/main/husky_ws)
+
+[![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--husky--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-husky-ws/tags)
+![Docker image arch](https://img.shields.io/badge/arch-amd64_|_arm64-blueviolet)
+![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-husky-ws)
+![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-husky-ws)
 
 This repository will help you configure the environment for Husky quickly.
 

@@ -1,8 +1,13 @@
 # Yujin Robot Kobuki
 
-[![DockerHub image](https://img.shields.io/badge/dockerhub-image-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-kobuki-ws/tags)
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/kobuki_ws)
+[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-kobuki-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-kobuki-ws.yaml)
 [![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=kobuki_ws)](https://github.com/j3soon/ros2-essentials/commits/main/kobuki_ws)
+
+[![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--kobuki--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-kobuki-ws/tags)
+![Docker image arch](https://img.shields.io/badge/arch-amd64_|_arm64-blueviolet)
+![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-kobuki-ws)
+![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-kobuki-ws)
 
 This repository facilitates the quick configuration of the simulation environment and real robot driver for Kobuki.
 

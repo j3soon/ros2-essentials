@@ -1,8 +1,13 @@
 # Gazebo World
 
-[![DockerHub image](https://img.shields.io/badge/dockerhub-image-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-gazebo-world-ws/tags)
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/gazebo_world_ws)
+[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-gazebo-world-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-gazebo-world-ws.yaml)
 [![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=gazebo_world_ws)](https://github.com/j3soon/ros2-essentials/commits/main/gazebo_world_ws)
+
+[![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--gazebo--world--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-gazebo-world-ws/tags)
+![Docker image arch](https://img.shields.io/badge/arch-amd64_|_arm64-blueviolet)
+![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-gazebo-world-ws)
+![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-gazebo-world-ws)
 
 This repository contains several Gazebo worlds, which are valuable for testing robots or agents in both indoor and outdoor environments.
 
