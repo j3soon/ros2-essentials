@@ -142,6 +142,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-turtlebot3-msgs \
     && sudo rm -rf /var/lib/apt/lists/*
 
+# Install ros packages based on TurtleBot3 rosdeps to speed up build
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    ros-$ROS_DISTRO-hls-lfcd-lds-driver \
+    && sudo rm -rf /var/lib/apt/lists/*
+
 COPY .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
 ENTRYPOINT []
