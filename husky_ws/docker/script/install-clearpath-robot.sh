@@ -9,6 +9,7 @@ sudo apt-get update
 # Create custom global workspace
 mkdir -p ~/husky_driver_ws/src
 cd ~/husky_driver_ws/src
+
 # `clearpath_computer_installer.sh` requires `ros-humble-clearpath-robot`.
 # Install from source since package doesn't exist on arm64, error message:
 #
@@ -19,13 +20,11 @@ cd ..
 
 # Remove unnecessary dependencies (`micros_ros_agent`, `sevcon_traction`, `umx_driver`, `valence_bms_driver`)
 # Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/40b1c40a7d229ede7a674cb0fb359fc83c754adb/.github/workflows/ci.yml#L15-L16
-
 # Temporarily remove `micro_ros_agent` dependency
 # Ref: https://github.com/clearpathrobotics/clearpath_robot/pull/19
 # Ref: https://github.com/clearpathrobotics/clearpath_robot/pull/22
 # I think this package isn't used anyway.
 sed -i 's/<exec_depend>micro_ros_agent<\/exec_depend>/<!-- <exec_depend>micro_ros_agent<\/exec_depend> -->/' ~/husky_driver_ws/src/clearpath_robot/clearpath_generator_robot/package.xml
-
 # Temporarily remove `sevcon_traction` dependency
 # Ref: https://github.com/clearpathrobotics/clearpath_robot/commit/2ef406f30c074e578db6ea799f5c2714bce1c15d
 # This package is only used for W200, so it isn't required for Husky.
@@ -33,13 +32,11 @@ sed -i 's/<exec_depend>micro_ros_agent<\/exec_depend>/<!-- <exec_depend>micro_ro
 # On the other hand, we don't have access to the source code anyway.
 # Ref: https://github.com/clearpathrobotics/public-rosdistro/blob/master/humble/distribution.yaml#L262-L279
 sed -i 's/<exec_depend>sevcon_traction<\/exec_depend>/<!-- <exec_depend>sevcon_traction<\/exec_depend> -->/' ~/husky_driver_ws/src/clearpath_robot/clearpath_generator_robot/package.xml
-
 # Temporarily remove `umx_driver` dependency
 # This package is only used for redshift and chrobotics, so it isn't required for our case.
 # Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/40b1c40a7d229ede7a674cb0fb359fc83c754adb/clearpath_sensors/launch/redshift_um7.launch.py#L69
 # Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/40b1c40a7d229ede7a674cb0fb359fc83c754adb/clearpath_sensors/launch/chrobotics_um6.launch.py#L69
 sed -i 's/<exec_depend>umx_driver<\/exec_depend>/<!-- <exec_depend>umx_driver<\/exec_depend> -->/' ~/husky_driver_ws/src/clearpath_robot/clearpath_sensors/package.xml
-
 # Temporarily remove `valence_bms_driver` dependency
 # Ref: https://github.com/clearpathrobotics/clearpath_robot/pull/47
 # This type of batteries are only used in W200, so they aren't required for Husky.
@@ -55,6 +52,11 @@ sed -i 's/<exec_depend>valence_bms_driver<\/exec_depend>/<!-- <exec_depend>valen
 # Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/40b1c40a7d229ede7a674cb0fb359fc83c754adb/clearpath_sensors/launch/novatel_smart6.launch.py#L52-L58
 # Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/40b1c40a7d229ede7a674cb0fb359fc83c754adb/clearpath_sensors/launch/novatel_smart7.launch.py#L52-L58
 sed -i 's/<exec_depend>nmea_navsat_driver<\/exec_depend>/<!-- <exec_depend>nmea_navsat_driver<\/exec_depend> -->/' ~/husky_driver_ws/src/clearpath_robot/clearpath_sensors/package.xml
+
+# Remove missing dependencies (`kortex_driver`)
+# This package isn't available on arm64, and we don't use manipulators for now.
+# Ref: https://github.com/clearpathrobotics/clearpath_robot/blob/fbfe87214d5565c785b63d7257b5ca33e4482602/clearpath_robot/package.xml#L30
+sed -i 's/<exec_depend>kortex_driver<\/exec_depend>/<!-- <exec_depend>kortex_driver<\/exec_depend> -->/' ~/husky_driver_ws/src/clearpath_robot/clearpath_robot/package.xml
 
 # Continue building the workspace
 cd ~/husky_driver_ws
