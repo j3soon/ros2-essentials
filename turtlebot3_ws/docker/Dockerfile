@@ -128,6 +128,20 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     && sudo rm -rf /var/lib/apt/lists/*
 
 # TODO: Add more commands here
+
+# Install TurtleBot3 dependencies
+# Ref: https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    ros-$ROS_DISTRO-gazebo-* \
+    ros-$ROS_DISTRO-cartographer \
+    ros-$ROS_DISTRO-cartographer-ros \
+    ros-$ROS_DISTRO-navigation2 \
+    ros-$ROS_DISTRO-nav2-bringup \
+    ros-$ROS_DISTRO-dynamixel-sdk \
+    ros-$ROS_DISTRO-turtlebot3-msgs \
+    && sudo rm -rf /var/lib/apt/lists/*
+
 COPY .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
 ENTRYPOINT []
