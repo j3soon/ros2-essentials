@@ -117,8 +117,8 @@ RUN mkdir /home/$USERNAME/.gazebo
 RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \
         python3 -V | grep "Python 3.10" \
-        && pip install isaacsim==4.1.0.0 --extra-index-url https://pypi.nvidia.com \
-        && pip install isaacsim-extscache-physics==4.1.0.0 isaacsim-extscache-kit==4.1.0.0 isaacsim-extscache-kit-sdk==4.1.0.0 --extra-index-url https://pypi.nvidia.com; \
+        && pip install isaacsim==4.2.0.2 --extra-index-url https://pypi.nvidia.com \
+        && pip install isaacsim-extscache-physics==4.2.0.2 isaacsim-extscache-kit==4.2.0.2 isaacsim-extscache-kit-sdk==4.2.0.2 --extra-index-url https://pypi.nvidia.com; \
     fi
 
 # Install custom tools
