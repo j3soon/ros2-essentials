@@ -11,6 +11,7 @@ permissions:
   contents: write
 jobs:
   deploy:
+    if: github.repository == 'j3soon/ros2-essentials'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
