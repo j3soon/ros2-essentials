@@ -5,3 +5,6 @@
 /build
 /install
 /log
+
+# Soft Links
+/docs
