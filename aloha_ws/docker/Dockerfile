@@ -114,7 +114,7 @@ RUN mkdir /home/$USERNAME/.gazebo
 # Note that installing Isaac Sim with pip is experimental, keep this in mind when unexpected error occurs
 # TODO: Remove the note above when it is no longer experimental
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
-RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
+RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \
         python3 -V | grep "Python 3.10" \
         && pip install isaacsim==4.2.0.2 --extra-index-url https://pypi.nvidia.com \
@@ -138,7 +138,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 # Install Aloha Interbotix dependencies
 # Ref: https://docs.trossenrobotics.com/interbotix_xsarms_docs/ros_interface/ros2/software_setup.html#amd64-architecture
 # Ref: https://github.com/Interbotix/interbotix_ros_manipulators/blob/humble/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh
-# Install ros packages based on Interbotix rosdeps
+# Install ros packages based on Interbotix rosdeps to speed up build
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
     ros-$ROS_DISTRO-moveit-msgs \
@@ -165,14 +165,16 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-joint-state-publisher-gui \
     ros-$ROS_DISTRO-topic-based-ros2-control \
     && sudo rm -rf /var/lib/apt/lists/*
-COPY script/xsarm_amd64_install.sh /home/user
+COPY --chown=$USERNAME:$USERNAME \
+     script/xsarm_amd64_install.sh /home/$USERNAME
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     bash -ie ~/xsarm_amd64_install.sh -d humble -n \
     && sudo rm -rf /var/lib/apt/lists/* \
     && rm -rf $HOME/.ros/rosdep/sources.cache
 COPY udev_rules/99-interbotix-udev.rules /etc/udev/rules.d/
 
-COPY .bashrc /home/$USERNAME/.bashrc
+COPY --chown=$USERNAME:$USERNAME \
+     .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
 ENTRYPOINT []
 CMD ["/bin/bash"]

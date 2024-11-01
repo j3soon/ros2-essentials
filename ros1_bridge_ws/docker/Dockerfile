@@ -40,7 +40,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 ################################################################################################
 # - Build stage
 #   - In this stage, I will build ROS Humble and ros1-bridge from source.
-#   - Reference: 
+#   - Reference:
 #     - https://docs.ros.org/en/humble/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html
 #     - https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
 ################################################################################################
@@ -126,7 +126,7 @@ RUN colcon build
 # Delete packages.ros.org from sources.list and remove conflicts packages manually.
 # Removing those conflicts packages is necessary for install ros-core-dev.
 # Here is the dicussion about this issue: https://github.com/j3soon/ros2-essentials/pull/9#discussion_r1375303858
-# Reference: 
+# Reference:
 # - https://docs.ros.org/en/humble/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html#ros-2-via-debian-packages
 # - https://github.com/osrf/docker_images/issues/635#issuecomment-1217505552
 RUN rm -rf /etc/apt/sources.list.d/ros2.list \
@@ -149,7 +149,8 @@ RUN source install/setup.bash \
 
 # Other configurations
 USER $USERNAME
-COPY ./start-bridge.sh /start-bridge.sh 
+COPY --chown=$USERNAME:$USERNAME \
+    ./start-bridge.sh /start-bridge.sh
 ENTRYPOINT []
 CMD ["/bin/bash"]
 
@@ -169,7 +170,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     tzdata \
     && rm -rf /var/lib/apt/lists/*
 
-# Install ROS core and packages with their dependencies. 
+# Install ROS core and packages with their dependencies.
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get install -y \
     ros-core-dev \
@@ -182,6 +183,7 @@ COPY --from=build /ros2_humble/install /ros2_humble/install
 
 # Other configurations
 USER $USERNAME
-COPY ./start-bridge.sh /start-bridge.sh 
+COPY --chown=$USERNAME:$USERNAME \
+    ./start-bridge.sh /start-bridge.sh
 ENTRYPOINT []
 CMD ["./start-bridge.sh"]

@@ -116,7 +116,7 @@ RUN mkdir /home/$USERNAME/.gazebo
 # Note that installing Isaac Sim with pip is experimental, keep this in mind when unexpected error occurs
 # TODO: Remove the note above when it is no longer experimental
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
-RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
+RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \
         python3 -V | grep "Python 3.10" \
         && pip install isaacsim==4.2.0.2 --extra-index-url https://pypi.nvidia.com \
@@ -166,15 +166,18 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-slam-toolbox \
     ros-$ROS_DISTRO-robot-localization \
     && sudo rm -rf /var/lib/apt/lists/*
-COPY .bashrc /home/$USERNAME/.bashrc
+COPY --chown=$USERNAME:$USERNAME \
+     .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
 
 # Setup udev rules for Kobuki.
-COPY udev_rules /home/$USERNAME/udev_rules
+COPY --chown=$USERNAME:$USERNAME \
+    udev_rules /home/$USERNAME/udev_rules
 RUN /home/$USERNAME/udev_rules/install_udev_rules.sh
 
 # Build the kobuki driver workspace
-COPY --chown=$USER_UID kobuki_driver_ws /home/$USERNAME/kobuki_driver_ws
+COPY --chown=$USERNAME:$USERNAME \
+    kobuki_driver_ws /home/$USERNAME/kobuki_driver_ws
 RUN cd /home/$USERNAME/kobuki_driver_ws \
     && rm -rf COLCON_IGNORE \
     && /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build --symlink-install"

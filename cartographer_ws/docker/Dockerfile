@@ -116,7 +116,7 @@ RUN mkdir /home/$USERNAME/.gazebo
 # Note that installing Isaac Sim with pip is experimental, keep this in mind when unexpected error occurs
 # TODO: Remove the note above when it is no longer experimental
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
-RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
+RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \
         python3 -V | grep "Python 3.10" \
         && pip install isaacsim==4.2.0.2 --extra-index-url https://pypi.nvidia.com \
@@ -137,7 +137,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-rqt-robot-steering \
     && sudo rm -rf /var/lib/apt/lists/*
 
-COPY .bashrc /home/$USERNAME/.bashrc
+COPY --chown=$USERNAME:$USERNAME \
+     .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
 ENTRYPOINT []
 CMD ["/bin/bash"]

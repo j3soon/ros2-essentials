@@ -116,7 +116,7 @@ RUN mkdir /home/$USERNAME/.gazebo
 # Note that installing Isaac Sim with pip is experimental, keep this in mind when unexpected error occurs
 # TODO: Remove the note above when it is no longer experimental
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
-RUN --mount=type=cache,target=/home/user/.cache/pip,sharing=private \
+RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
     if [ "$TARGETARCH" = "amd64" ]; then \
         python3 -V | grep "Python 3.10" \
         && pip install isaacsim==4.2.0.2 --extra-index-url https://pypi.nvidia.com \
@@ -157,25 +157,29 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-imu-tools \
     ros-$ROS_DISTRO-teleop-twist-keyboard \
     && sudo rm -rf /var/lib/apt/lists/*
-COPY .bashrc /home/$USERNAME/.bashrc
+COPY --chown=$USERNAME:$USERNAME \
+     .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
 
 # Setup husky controller by the script.
 # Build certain packages from source for arm64.
-COPY script /home/$USERNAME/script
+COPY --chown=$USERNAME:$USERNAME \
+    script /home/$USERNAME/script
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update \
     && bash -ie /home/$USERNAME/script/install-clearpath-robot.sh \
     && sudo rm -rf /var/lib/apt/lists/*
 # Note: The script need to be run as user, not root.
 # Reference: https://github.com/clearpathrobotics/clearpath_computer_installer/tree/main
-COPY clearpath_computer_installer /home/$USERNAME/clearpath_computer_installer
+COPY --chown=$USERNAME:$USERNAME \
+    clearpath_computer_installer /home/$USERNAME/clearpath_computer_installer
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update \
     && bash -ie /home/$USERNAME/clearpath_computer_installer/clearpath_computer_installer.sh \
     && sudo rm -rf /var/lib/apt/lists/*
 # Setup udev rules.
-COPY udev_rules /home/$USERNAME/udev_rules
+COPY --chown=$USERNAME:$USERNAME \
+    udev_rules /home/$USERNAME/udev_rules
 RUN /home/$USERNAME/udev_rules/install_udev_rules.sh
 # Generate robot configuration files.
 RUN bash -ie /home/$USERNAME/script/husky-generate.sh
