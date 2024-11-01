@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
@@ -783,48 +783,52 @@
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/aloha_ws/docker
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>xhost<span class="w"> </span>+local:docker
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>up
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># The first build will take a while (~10 mins), please wait patiently.</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># The initial build will take a while (~10 mins), please wait patiently.</span>
 </span></code></pre></div>
 <p>The commands in the following sections assume that you are inside the Docker container:</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-aloha-ws<span class="w"> </span>bash
 </span></code></pre></div>
+<p>If the initial build somehow failed, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span></code></pre></div>
 <h2 id="view-robot-model-in-rviz">View Robot Model in RViz<a class="headerlink" href="#view-robot-model-in-rviz" title="Permanent link">&para;</a></h2>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_descriptions<span class="w"> </span>xsarm_description.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>use_joint_pub_gui:<span class="o">=</span><span class="nb">true</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_descriptions<span class="w"> </span>xsarm_description.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>use_joint_pub_gui:<span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div>
 <p>It is worth noting that <code>aloha_vx300s.urdf.xacro</code> and <code>vx300s.urdf.xacro</code> files are identical. We opt to use <code>vx300s</code> since <code>aloha_vx300s</code> seems to lack corresponding configs, such as those for MoveIt 2.</p>
 <p><img alt="" src="figure/rviz.png" /></p>
 <h2 id="view-robot-model-in-gazebo">View Robot Model in Gazebo<a class="headerlink" href="#view-robot-model-in-gazebo" title="Permanent link">&para;</a></h2>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_sim<span class="w"> </span>xsarm_gz_classic.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_sim<span class="w"> </span>xsarm_gz_classic.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s
 </span></code></pre></div>
 <h2 id="ros-2-control">ROS 2 Control<a class="headerlink" href="#ros-2-control" title="Permanent link">&para;</a></h2>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_control<span class="w"> </span>xsarm_control.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>use_sim:<span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># and then use the `Interbotix Control Panel`.</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_control<span class="w"> </span>xsarm_control.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>use_sim:<span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># and then use the `Interbotix Control Panel`.</span>
 </span></code></pre></div>
 <p><img alt="" src="figure/ros2-control.png" /></p>
 <h2 id="moveit-2-with-rviz">MoveIt 2 with RViz<a class="headerlink" href="#moveit-2-with-rviz" title="Permanent link">&para;</a></h2>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_moveit<span class="w"> </span>xsarm_moveit.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>hardware_type:<span class="o">=</span>fake
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_moveit<span class="w"> </span>xsarm_moveit.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>hardware_type:<span class="o">=</span>fake
 </span></code></pre></div>
 <p><img alt="" src="figure/moveit-rviz.png" /></p>
 <h2 id="moveit-2-with-gazebo">MoveIt 2 with Gazebo<a class="headerlink" href="#moveit-2-with-gazebo" title="Permanent link">&para;</a></h2>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_moveit<span class="w"> </span>xsarm_moveit.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>hardware_type:<span class="o">=</span>gz_classic
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_moveit<span class="w"> </span>xsarm_moveit.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>hardware_type:<span class="o">=</span>gz_classic
 </span></code></pre></div>
 <p><img alt="" src="figure/moveit-gazebo.png" /></p>
 <h2 id="moveit-2-with-isaac-sim">MoveIt 2 with Isaac Sim<a class="headerlink" href="#moveit-2-with-isaac-sim" title="Permanent link">&para;</a></h2>
 <p>Prepare USD files:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/aloha_ws/isaacsim/scripts
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>./create_urdf_from_xacro.sh
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>python3<span class="w"> </span>create_vx300s_from_urdf.py
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>python3<span class="w"> </span>create_vx300s_with_omnigraph.py
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/aloha_ws/isaacsim/scripts
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>./create_urdf_from_xacro.sh
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>python3<span class="w"> </span>create_vx300s_from_urdf.py
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>python3<span class="w"> </span>create_vx300s_with_omnigraph.py
 </span></code></pre></div>
 <p>and run:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_moveit<span class="w"> </span>xsarm_moveit.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>hardware_type:<span class="o">=</span>isaac
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># and then move the target and use the `MotionPlanning` panel.</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>interbotix_xsarm_moveit<span class="w"> </span>xsarm_moveit.launch.py<span class="w"> </span>robot_model:<span class="o">=</span>vx300s<span class="w"> </span>hardware_type:<span class="o">=</span>isaac
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># and then move the target and use the `MotionPlanning` panel.</span>
 </span></code></pre></div>
 <p><img alt="" src="figure/moveit-isaacsim.png" /></p>
 <h3 id="debugging-with-isaac-sim">Debugging with Isaac Sim<a class="headerlink" href="#debugging-with-isaac-sim" title="Permanent link">&para;</a></h3>
 <p>The Isaac Sim app can be launched with:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>isaacsim<span class="w"> </span>omni.isaac.sim
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>isaacsim<span class="w"> </span>omni.isaac.sim
 </span></code></pre></div>
 <p>Keep in mind that the standalone scripts can be easily debugged in Isaac Sim's <code>Script Editor</code>.
 Simply copy the code, omitting anything related to SimulationApp (remove the beginning and end),
@@ -832,19 +836,19 @@ and paste to the <code>Script Editor</code> and run it.</p>
 <p>To open pre-configured USD file with OmniGraph:</p>
 <ul>
 <li><code>File &gt; Open</code> and click <code>My Computer</code>, then in <code>File name:</code> type:
-  <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>/home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>/home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd
 </span></code></pre></div></li>
 <li>Click <code>Window &gt; Visual Scripting &gt; Action Graph</code></li>
 <li>In the <code>Action Graph</code> tab, click <code>Edit Action Graph</code> and select <code>/ActionGraph</code></li>
 <li>Click <code>Play (SPACE)</code></li>
 </ul>
 <p>View the current joint states:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># in a new terminal</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-aloha-ws<span class="w"> </span>bash
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/vx300s/joint_states
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-aloha-ws<span class="w"> </span>bash
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/vx300s/joint_states
 </span></code></pre></div>
 <p>A specific world can also be directly launched and played with:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>isaacsim<span class="w"> </span>omni.isaac.sim<span class="w"> </span>--exec<span class="w"> </span><span class="s1">&#39;/home/ros2-essentials/aloha_ws/isaacsim/scripts/open_isaacsim_stage.py --path /home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd&#39;</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>isaacsim<span class="w"> </span>omni.isaac.sim<span class="w"> </span>--exec<span class="w"> </span><span class="s1">&#39;/home/ros2-essentials/aloha_ws/isaacsim/scripts/open_isaacsim_stage.py --path /home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd&#39;</span>
 </span></code></pre></div>
 <p>To access Nucleus from Isaac Sim, you should <a href="https://docs.omniverse.nvidia.com/nucleus/latest/workstation/installation.html">install Nucleus</a> with default username/password <code>admin:admin</code> on your host machine or connect to an external Nucleus server.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
@@ -881,7 +885,7 @@ and paste to the <code>Script Editor</code> and run it.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 24, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 1, 2024</span>
   </span>
 
     
