@@ -15,7 +15,7 @@
 cd ~/ros2-essentials/aloha_ws/docker
 xhost +local:docker
 docker compose up
-# The first build will take a while (~10 mins), please wait patiently.
+# The initial build will take a while (~10 mins), please wait patiently.
 ```
 
 The commands in the following sections assume that you are inside the Docker container:
@@ -23,6 +23,13 @@ The commands in the following sections assume that you are inside the Docker con
 ```sh
 # in a new terminal
 docker exec -it ros2-aloha-ws bash
+```
+
+If the initial build somehow failed, run:
+
+```sh
+rm -r build install
+colcon build --symlink-install
 ```
 
 ## View Robot Model in RViz

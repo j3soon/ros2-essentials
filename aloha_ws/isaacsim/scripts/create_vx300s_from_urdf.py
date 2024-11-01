@@ -38,9 +38,9 @@ def create_vx300s_from_urdf(urdf_path, usd_path):
     # Unfortunately, the first option somehow reports a false-positive error when using OmniGraph.
     # The false-positive error message doesn't affect the actual functionalities, but may bring potential confusions.
     # Therefore, we opt to manually switch to using the second option.
+    # This is also mentioned in the docs: <https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_drive_turtlebot.html#graph-explained>
     # TODO: Switch back to the first option after this issue is fixed.
     prim = stage.GetPrimAtPath("/vx300s")
-    # Note that this somehow cannot be applied through GUI, and must be done through Python
     articulation = UsdPhysics.ArticulationRootAPI.Apply(prim)
     physx_articulation = PhysxSchema.PhysxArticulationAPI.Apply(articulation.GetPrim())
     physx_articulation.CreateEnabledSelfCollisionsAttr().Set(False)

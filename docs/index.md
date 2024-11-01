@@ -3,7 +3,9 @@
 [![tests](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/test-common.yaml?label=tests)](https://github.com/j3soon/ros2-essentials/actions/workflows/test-common.yaml)
 [![docs](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-docs.yaml?label=docs)](https://j3soon.github.io/ros2-essentials/)
 
-A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs). Please setup an Ubuntu environment before using this repo.
+A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs) and robotic arm manipulators. Please setup an Ubuntu environment before using this repo.
+
+The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by [Omniverse Isaac Sim](https://docs.omniverse.nvidia.com/isaacsim/latest/index.html) and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html). In general, the amd64 images support both simulation and real robot control, while the arm64 images only supports real robot control.
 
 > Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.
 
@@ -20,7 +22,7 @@ cd ros2-essentials
 
 Pre-built Docker images for each workspace can be pulled by running `docker compose pull` in the corresponding workspace directory. Pulling these images bypasses the time-consuming build process (for both Docker Compose and Dev Containers).
 
-Click on the following workspaces to navigate to their respective documentation.
+The docker image of the template workspace is share by most of the workspace, allowing saving spaces by sharing common packages. Click on the following workspaces to navigate to their respective documentation.
 
 | Workspace | amd64 | arm64 | Notes | Maintainer |
 |-----------|-------|-------|-------|------------|
@@ -36,6 +38,15 @@ Click on the following workspaces to navigate to their respective documentation.
 | [ALOHA](https://j3soon.github.io/ros2-essentials/aloha-ws/) | ✔️ | ✔️ | Simulation only | [Johnson](https://github.com/j3soon) |
 
 If you have trouble using a workspace, please [open an issue](https://github.com/j3soon/ros2-essentials/issues) and tag the current maintainers mentioned above.
+
+## System Requirements
+
+| Use Case | Platform | Hardware | Software | Notes |
+|----------|----------|----------|----------|-------|
+| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.omniverse.nvidia.com/isaacsim/latest/installation/requirements.html#system-requirements) for more details. |
+| Deployment-Only | Jetson | Jetson Orin, 500GB+ SSD | JetPack 6.0 | See [this page](https://nvidia-isaac-ros.github.io/getting_started/index.html) for more details.
+
+Some functionalities may still work on lower-spec systems, such as those without GPUs or on operating systems other than Ubuntu 22.04. However, these configurations are not officially supported and may require manual adjustments. Use them with caution.
 
 ## Building Documentation
 
