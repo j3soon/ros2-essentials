@@ -45,15 +45,15 @@ services:
       - ROS2_WS=/home/ros2-essentials/{PLACEHOLDER}_ws
       # TODO: Add more environment variables here.
 {PLACEHOLDER_MULTILINE}
-    # TODO: Uncomment the lines below to enable GPU support.
-    {PLACEHOLDER_#}# Reference: https://docs.docker.com/compose/gpu-support/
-    {PLACEHOLDER_#}deploy:
-    {PLACEHOLDER_#}  resources:
-    {PLACEHOLDER_#}    reservations:
-    {PLACEHOLDER_#}      devices:
-    {PLACEHOLDER_#}        - driver: nvidia
-    {PLACEHOLDER_#}          count: all
-    {PLACEHOLDER_#}          capabilities: [ gpu ]
+    # Enable GPU support.
+    # Reference: https://docs.docker.com/compose/gpu-support/
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
     volumes:
       # Mount local timezone into container.
       # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
