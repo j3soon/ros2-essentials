@@ -6,6 +6,9 @@
 /install
 /log
 
+# Soft Links
+/docs
+
 # Custom ignores
 /isaacsim/assets
 /src/interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_descriptions/urdf/*.urdf

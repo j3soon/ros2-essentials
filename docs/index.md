@@ -61,11 +61,10 @@ mkdocs serve
 # Go to https://127.0.0.1:8000 to view the site.
 ```
 
-## Linking the README
+## Link Documentation to ROS2 Workspaces
 
 ```sh
-rm docs/index.md
-ln "${PWD}/README.md" docs/index.md
+scripts/setup_link.sh
 ```
 
 ## Acknowledgement

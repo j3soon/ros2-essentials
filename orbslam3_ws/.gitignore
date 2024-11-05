@@ -6,6 +6,9 @@
 /install
 /log
 
+# Soft Links
+/docs
+
 # ROS2 bag files
 V1_02_medium.bag
 V1_02_medium/
