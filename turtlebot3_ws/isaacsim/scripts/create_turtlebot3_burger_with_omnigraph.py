@@ -59,12 +59,11 @@ def create_turtlebot3_burger_with_omnigraph():
     # Refs:
     # - https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_manipulation.html#add-joint-states-in-extension
     # - https://docs.omniverse.nvidia.com/isaacsim/latest/advanced_tutorials/tutorial_advanced_omnigraph_scripting.html
-    # - https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_drive_turtlebot.html#building-the-graph
     # - https://docs.omniverse.nvidia.com/kit/docs/omni.graph.docs/latest/howto/Controller.html
-    # TODO: Consider adding more OmniGraphs for publishing JointState and Clock
-    # TODO: Simplify the OmniGraph by removing unnecessary constant nodes
+    # OmniGraph for Articulation Controller
+    # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_drive_turtlebot.html#building-the-graph
     og.Controller.edit(
-        {"graph_path": "/ActionGraph", "evaluator_name": "execution"},
+        {"graph_path": "/ActionGraphController", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
                 ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
@@ -113,6 +112,24 @@ def create_turtlebot3_burger_with_omnigraph():
                         joint_name_1,
                     ],
                 ),
+            ],
+        },
+    )
+    # OmniGraph for Clock
+    # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_clock.html
+    og.Controller.edit(
+        {"graph_path": "/ActionGraphClock", "evaluator_name": "execution"},
+        {
+            og.Controller.Keys.CREATE_NODES: [
+                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
+                ("ReadSimTime", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
+                ("PublishClock", "omni.isaac.ros2_bridge.ROS2PublishClock"),
+            ],
+            og.Controller.Keys.CONNECT: [
+                ("OnPlaybackTick.outputs:tick", "PublishClock.inputs:execIn"),
+                ("ReadSimTime.outputs:simulationTime", "PublishClock.inputs:timeStamp"),
+                ("Context.outputs:context", "PublishClock.inputs:context"),
             ],
         },
     )
