@@ -62,7 +62,29 @@ ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
 
 ### Isaac Sim
 
-(TODO)
+Convert URDF file to USD file and generate OmniGraph:
+
+```sh
+cd /home/ros2-essentials/turtlebot3_ws/isaacsim/scripts
+python3 create_turtlebot3_burger_from_urdf.py
+python3 create_turtlebot3_burger_with_omnigraph.py
+```
+
+Start Isaac Sim:
+
+```sh
+isaacsim omni.isaac.sim
+```
+
+Open the file with OmniGraph we just generated in the bottom panel:
+
+```
+/home/ros2-essentials/turtlebot3_ws/isaacsim/assets/turtlebot3_burger_og.usd
+```
+
+and click `Play (SPACE)` to start simulation.
+
+To view the OmniGraph, right click the ActionGraph on the right panel and select `Open Graph`.
 
 ## 🧩 Features
 
@@ -85,6 +107,20 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:
 ```
 
 ## 🕹️ Control Robot
+
+### Raw Message
+
+Move forward:
+
+```sh
+ros2 topic pub /cmd_vel geometry_msgs/Twist "{'linear': {'x': 0.2, 'y': 0.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z': 0.0}}"
+```
+
+Stop:
+
+```sh
+ros2 topic pub /cmd_vel geometry_msgs/Twist "{'linear': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z': 0.0}}"
+```
 
 ### Teleoperate
 
