@@ -57,7 +57,6 @@ def create_turtlebot3_burger_with_omnigraph():
 
     # Create OmniGraph
     # Refs:
-    # - https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_manipulation.html#add-joint-states-in-extension
     # - https://docs.omniverse.nvidia.com/isaacsim/latest/advanced_tutorials/tutorial_advanced_omnigraph_scripting.html
     # - https://docs.omniverse.nvidia.com/kit/docs/omni.graph.docs/latest/howto/Controller.html
     # OmniGraph for Articulation Controller
@@ -130,6 +129,27 @@ def create_turtlebot3_burger_with_omnigraph():
                 ("OnPlaybackTick.outputs:tick", "PublishClock.inputs:execIn"),
                 ("ReadSimTime.outputs:simulationTime", "PublishClock.inputs:timeStamp"),
                 ("Context.outputs:context", "PublishClock.inputs:context"),
+            ],
+        },
+    )
+    # OmniGraph for Publishing Joint State
+    # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_manipulation.html
+    og.Controller.edit(
+        {"graph_path": "/ActionGraphPublishJointState", "evaluator_name": "execution"},
+        {
+            og.Controller.Keys.CREATE_NODES: [
+                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
+                ("ReadSimTime", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
+                ("PublishJointState", "omni.isaac.ros2_bridge.ROS2PublishJointState"),
+            ],
+            og.Controller.Keys.CONNECT: [
+                ("OnPlaybackTick.outputs:tick", "PublishJointState.inputs:execIn"),
+                ("ReadSimTime.outputs:simulationTime", "PublishJointState.inputs:timeStamp"),
+                ("Context.outputs:context", "PublishJointState.inputs:context"),
+            ],
+            og.Controller.Keys.SET_VALUES: [
+                ("PublishJointState.inputs:targetPrim", turtlebot3_burger_prim_path),
             ],
         },
     )
