@@ -68,20 +68,15 @@ def create_turtlebot3_burger_with_omnigraph():
                 ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
                 ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
                 ("SubscribeTwist", "omni.isaac.ros2_bridge.ROS2SubscribeTwist"),
-                ("ConstantStringCmdVelTopic", "omni.graph.nodes.ConstantString"),
                 ("ScaleToFromStageUnit", "omni.isaac.core_nodes.OgnIsaacScaleToFromStageUnit"),
                 ("Break3VectorAngularVel", "omni.graph.nodes.BreakVector3"),
                 ("Break3VectorLinearVel", "omni.graph.nodes.BreakVector3"),
                 ("DifferentialController", "omni.isaac.wheeled_robots.DifferentialController"),
-                ("ConstantTokenJointName0", "omni.graph.nodes.ConstantToken"),
-                ("ConstantTokenJointName1", "omni.graph.nodes.ConstantToken"),
                 ("MakeArray", "omni.graph.nodes.ConstructArray"),
-                ("ConstantTokenTarget", "omni.graph.nodes.ConstantToken"),
-                ("ToTarget", "omni.graph.nodes.ToTarget"),
                 ("ArticulationController", "omni.isaac.core_nodes.IsaacArticulationController"),
             ],
             og.Controller.Keys.CREATE_ATTRIBUTES: [
-                ("MakeArray.inputs:input1", og.Type(og.BaseDataType.TOKEN)),
+                ("MakeArray.inputs:input1", "token"),
             ],
             og.Controller.Keys.CONNECT: [
                 # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.action_nodes/latest/GeneratedNodeDocumentation/OgnOnPlaybackTick.html
@@ -90,9 +85,6 @@ def create_turtlebot3_burger_with_omnigraph():
 
                 # Ref: https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.ros2_bridge/docs/ogn/OgnROS2Context.html
                 ("Context.outputs:context", "SubscribeTwist.inputs:context"),
-
-                # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnConstantString.html
-                ("ConstantStringCmdVelTopic.inputs:value", "SubscribeTwist.inputs:topicName"),
 
                 # Ref: https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.ros2_bridge/docs/ogn/OgnROS2SubscribeTwist.html
                 ("SubscribeTwist.outputs:execOut", "DifferentialController.inputs:execIn"),
@@ -108,25 +100,18 @@ def create_turtlebot3_burger_with_omnigraph():
                 # Ref: https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.wheeled_robots/docs/ogn/OgnDifferentialController.html
                 ("DifferentialController.outputs:velocityCommand", "ArticulationController.inputs:velocityCommand"),
 
-                # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnConstantToken.html
-                ("ConstantTokenJointName0.inputs:value", "MakeArray.inputs:input0"),
-                ("ConstantTokenJointName1.inputs:value", "MakeArray.inputs:input1"),
                 # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnConstructArray.html
                 ("MakeArray.outputs:array", "ArticulationController.inputs:jointNames"),
-
-                # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnConstantToken.html
-                # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnToTarget.html
-                ("ConstantTokenTarget.inputs:value", "ToTarget.inputs:value"),
-                ("ToTarget.outputs:converted", "ArticulationController.inputs:targetPrim"),
 
                 # Ref: https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.core_nodes/docs/ogn/OgnIsaacArticulationController.html
             ],
             og.Controller.Keys.SET_VALUES: [
+                ("ArticulationController.inputs:targetPrim", turtlebot3_burger_prim_path),
+                ("MakeArray.inputs:arrayType", "token[]"),
+                ("MakeArray.inputs:input0", joint_name_0),
+                ("MakeArray.inputs:input1", joint_name_1),
                 ("MakeArray.inputs:arraySize", 2),
-                ("ConstantTokenTarget.inputs:value", turtlebot3_burger_prim_path),
-                ("ConstantTokenJointName0.inputs:value", joint_name_0),
-                ("ConstantTokenJointName1.inputs:value", joint_name_1),
-                ("ConstantStringCmdVelTopic.inputs:value", cmd_vel_topic),
+                ("SubscribeTwist.inputs:topicName", cmd_vel_topic),
                 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_drive_turtlebot.html#graph-explained
                 ("DifferentialController.inputs:maxLinearSpeed", 0.22),
                 ("DifferentialController.inputs:wheelDistance", 0.16),
