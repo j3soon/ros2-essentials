@@ -1,8 +1,10 @@
-# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/core_api_tutorials/tutorial_core_hello_world.html
-# launch Isaac Sim before any other imports
-# default first two lines in any standalone application
-from isaacsim import SimulationApp
-simulation_app = SimulationApp({"headless": False})
+debug = False
+if not debug:
+    # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/core_api_tutorials/tutorial_core_hello_world.html
+    # launch Isaac Sim before any other imports
+    # default first two lines in any standalone application
+    from isaacsim import SimulationApp
+    simulation_app = SimulationApp({"headless": False})
 
 import logging
 
@@ -72,11 +74,7 @@ def create_turtlebot3_burger_with_omnigraph():
                 ("Break3VectorAngularVel", "omni.graph.nodes.BreakVector3"),
                 ("Break3VectorLinearVel", "omni.graph.nodes.BreakVector3"),
                 ("DifferentialController", "omni.isaac.wheeled_robots.DifferentialController"),
-                ("MakeArray", "omni.graph.nodes.ConstructArray"),
                 ("ArticulationController", "omni.isaac.core_nodes.IsaacArticulationController"),
-            ],
-            og.Controller.Keys.CREATE_ATTRIBUTES: [
-                ("MakeArray.inputs:input1", "token"),
             ],
             og.Controller.Keys.CONNECT: [
                 # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.action_nodes/latest/GeneratedNodeDocumentation/OgnOnPlaybackTick.html
@@ -100,22 +98,21 @@ def create_turtlebot3_burger_with_omnigraph():
                 # Ref: https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.wheeled_robots/docs/ogn/OgnDifferentialController.html
                 ("DifferentialController.outputs:velocityCommand", "ArticulationController.inputs:velocityCommand"),
 
-                # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.nodes/latest/GeneratedNodeDocumentation/OgnConstructArray.html
-                ("MakeArray.outputs:array", "ArticulationController.inputs:jointNames"),
-
                 # Ref: https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.core_nodes/docs/ogn/OgnIsaacArticulationController.html
             ],
             og.Controller.Keys.SET_VALUES: [
                 ("ArticulationController.inputs:targetPrim", turtlebot3_burger_prim_path),
-                ("MakeArray.inputs:arrayType", "token[]"),
-                ("MakeArray.inputs:input0", joint_name_0),
-                ("MakeArray.inputs:input1", joint_name_1),
-                ("MakeArray.inputs:arraySize", 2),
                 ("SubscribeTwist.inputs:topicName", cmd_vel_topic),
                 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_drive_turtlebot.html#graph-explained
                 ("DifferentialController.inputs:maxLinearSpeed", 0.22),
                 ("DifferentialController.inputs:wheelDistance", 0.16),
                 ("DifferentialController.inputs:wheelRadius", 0.025),
+                ("ArticulationController.inputs:jointNames",
+                    [
+                        joint_name_0,
+                        joint_name_1,
+                    ],
+                ),
             ],
         },
     )
@@ -131,4 +128,5 @@ if __name__ == '__main__':
     omni.usd.get_context().save_as_stage(turtlebot3_burger_og_usd_path)
     print("Done")
     logger.info("Done")
-    simulation_app.close()
+    if not debug:
+        simulation_app.close()
