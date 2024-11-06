@@ -8,3 +8,6 @@
 
 # Soft Links
 /docs
+
+# Custom ignores
+/isaacsim/assets
