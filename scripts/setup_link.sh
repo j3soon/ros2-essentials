@@ -6,18 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 
 cd "$SCRIPT_DIR/.."
 
-workspaces=(
-    "template_ws"
-    "orbslam3_ws"
-    "rtabmap_ws"
-    "ros1_bridge_ws"
-    "cartographer_ws"
-    "husky_ws"
-    "kobuki_ws"
-    "vlp_ws"
-    "gazebo_world_ws"
-    "aloha_ws"
-)
+workspaces=( *_ws* )
 
 # Link docs index
 rm docs/index.md || true
