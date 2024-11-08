@@ -1,0 +1,56 @@
+
+[package]
+# Semantic Versioning is used: https://semver.org/
+version = "1.0.1"
+
+# Lists people or organizations that are considered the "authors" of the package.
+authors = ["Stereolabs"]
+
+# The title and description fields are primarly for displaying extension info in UI
+title = "ZED Camera Extension"
+description="Streams virtual ZED camera data to the ZED SDK. "
+
+# Path (relative to the root) or content of readme markdown file for UI.
+readme  = "docs/README.md"
+
+# URL of the extension source repository.
+repository="https://github.com/stereolabs/zed-isaac-sim"
+
+# One of categories for UI.
+category = "simulation"
+
+# Keywords for the extension
+keywords = ["kit", "omnigraph", "Camera", "ZED", "Stereolabs", "Sensor"]
+
+# Preview image and icon. Folder named "data" automatically goes in git lfs (see .gitattributes file).
+# Preview image is shown in "Overview" of Extensions window. Screenshot of an extension might be a good preview image.
+preview_image = "data/preview.png"
+
+# Icon is shown in Extensions window, it is recommended to be square, of size 256x256.
+icon = "data/icon.png"
+
+[package.target]
+platform = ["windows-x86_64", "linux-x86_64"]
+python = ["cp310"]
+
+# Watch the .ogn files for hot reloading (only works for Python files)
+[fswatcher.patterns]
+include = ["*.ogn", "*.py"]
+exclude = ["Ogn*Database.py"]
+
+[dependencies]
+"omni.kit.test" = {}
+"omni.graph" = {}
+"omni.replicator.core" = {}
+"omni.isaac.core_nodes" = {}
+"omni.isaac.core" = {}
+"omni.isaac.sensor" = {}
+
+
+# Main python module this extension provides, it will be publicly available as "sl.sensor.camera".
+[[python.module]]
+name = "sl.sensor.camera"
+
+[[native.library]]
+"filter:platform"."linux-x86_64"."path" = "bin/${platform}/${config}/libsl_zed_sim_streamer.so"
+"filter:platform"."windows-x86_64"."path" = "bin/${platform}/${config}/sl_zed_sim_streamer.dll"

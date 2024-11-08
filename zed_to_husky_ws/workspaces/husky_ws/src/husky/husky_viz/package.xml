@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>husky_viz</name>
+  <version>1.0.8</version>
+  <description>Visualization configuration for Clearpath Husky</description>
+
+  <author email="rgariepy@clearpathrobotics.com">Ryan Gariepy</author>
+  <author email="mpurvis@clearpathrobotics.com">Mike Purvis</author>
+
+  <maintainer email="tbaltovski@clearpathrobotics.com">Tony Baltovski</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/husky_viz</url>
+  <url type="bugtracker">https://github.com/husky/husky_desktop/issues</url>
+  <url type="repository">https://github.com/husky/husky_desktop</url>
+
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>husky_description</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <!-- <exec_depend>rviz_imu_plugin</exec_depend> -->
+
+  <depend>launch_ros</depend>
+
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
