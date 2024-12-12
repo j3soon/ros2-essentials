@@ -135,6 +135,13 @@ RUN mkdir -p /home/$USERNAME/.cache/ov \
     && mkdir -p /home/$USERNAME/.local/share/ov/data \
     && mkdir -p /home/$USERNAME/Documents
 
+# Set Isaac Sim environment variables
+# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim
+# Ref: https://github.com/NVIDIA-Omniverse/IsaacSim-dockerfiles/blob/e3c09375c2d110b39c3fab3611352870aa3ce6ee/Dockerfile.2023.1.0-ubuntu22.04#L49-L53
+ENV OMNI_USER=admin
+ENV OMNI_PASS=admin
+ENV OMNI_KIT_ACCEPT_EULA=YES
+
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
