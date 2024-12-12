@@ -121,6 +121,17 @@ RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
         && pip install isaacsim-extscache-physics==4.2.0.2 isaacsim-extscache-kit==4.2.0.2 isaacsim-extscache-kit-sdk==4.2.0.2 --extra-index-url https://pypi.nvidia.com; \
     fi
 
+# Create isaac sim cache directory with correct ownership to avoid permission issues after volume mount
+RUN sudo mkdir -p /isaac-sim/kit/cache \
+    && sudo chown -R $USERNAME:$USERNAME /isaac-sim/kit/cache
+RUN mkdir -p /home/$USERNAME/.cache/ov \
+    && mkdir -p /home/$USERNAME/.cache/pip \
+    && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
+    && mkdir -p /home/$USERNAME/.nv/ComputeCache \
+    && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
+    && mkdir -p /home/$USERNAME/.local/share/ov/data \
+    && mkdir -p /home/$USERNAME/Documents
+
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
