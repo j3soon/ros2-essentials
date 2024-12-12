@@ -121,6 +121,9 @@ RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
         && pip install isaacsim-extscache-physics==4.2.0.2 isaacsim-extscache-kit==4.2.0.2 isaacsim-extscache-kit-sdk==4.2.0.2 --extra-index-url https://pypi.nvidia.com; \
     fi
 
+# Fix SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) `numpy==1.26.0`.
+RUN pip install scipy==1.14.1 numpy==1.26.0
+
 # Create isaac sim cache directory with correct ownership to avoid permission issues after volume mount
 RUN sudo mkdir -p /isaac-sim/kit/cache \
     && sudo chown -R $USERNAME:$USERNAME /isaac-sim/kit/cache
