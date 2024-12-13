@@ -1,22 +1,51 @@
 name: Build Docker Image for aloha-ws
 
 on:
-  push:
-    branches:
-      - "main"
-    tags:
-      - v*
-    paths:
-      - .github/workflows/build-aloha-ws.yaml
-      - aloha_ws/docker/Dockerfile
-      - aloha_ws/docker/.dockerignore
-      - aloha_ws/docker/.bashrc
-      - aloha_ws/docker/script/**
-      - aloha_ws/docker/udev_rules/**
+  workflow_run:
+    workflows: ["Build Docker Image for template-ws"]
+    types: [completed]
 
 jobs:
+  paths-filter:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    outputs:
+      results: ${{ steps.filter.outputs.results }}
+    steps:
+    # Ref: https://github.com/dorny/paths-filter/issues/147#issuecomment-1287800590
+    - name: Download a single artifact
+      uses: dawidd6/action-download-artifact@v7
+      with:
+        workflow: build-template-ws.yaml
+        name: original-refs
+        workflow_conclusion: success
+    - name: set REF_BASE to env
+      run: |
+        echo "BASE=$(cat base.txt)" >> $GITHUB_ENV
+        echo "CURRENT_BRANCH=$(cat current-branch.txt)" >> $GITHUB_ENV
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        base: ${{ env.BASE }}
+        ref: ${{ env.CURRENT_BRANCH }}
+        filters: |
+          results:
+            - .github/workflows/build-aloha-ws.yaml
+            - aloha_ws/docker/Dockerfile
+            - aloha_ws/docker/.dockerignore
+            - aloha_ws/docker/.bashrc
+            - aloha_ws/docker/script/**
+            - aloha_ws/docker/udev_rules/**
+    - name: Changes matched
+      if: steps.filter.outputs.results == 'true'
+      run: echo "Changes matched, will build image"
+    - name: Changes didn't match
+      if: steps.filter.outputs.results != 'true'
+      run: echo "Changes didn't match, will NOT build image"
   docker:
-    if: github.repository == 'j3soon/ros2-essentials'
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.results == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Maximize build space
@@ -31,7 +60,7 @@ jobs:
       - name: Restart docker
         run: sudo service docker restart
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -48,25 +77,63 @@ jobs:
           # Output the environment variable
           # Ref: https://stackoverflow.com/a/57989070
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Print for debugging purpose
+          echo "VERSION=$VERSION"
       - name: Docker meta
         id: meta
         # Ref: https://github.com/docker/metadata-action
         uses: docker/metadata-action@v5
         with:
           # Link: https://hub.docker.com/repository/docker/j3soon/ros2-aloha-ws/tags
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/ros2-aloha-ws
+          images: j3soon/ros2-aloha-ws
           tags: |
             type=raw,value={{date 'YYYYMMDD'}}
             type=raw,value=${{ env.VERSION }}
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: j3soon
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
+      - name: Pull j3soon/ros2-template-ws (amd64)
+        run: docker pull --platform linux/amd64 j3soon/ros2-template-ws
+      - name: Pull j3soon/ros2-template-ws (arm64)
+        run: docker pull --platform linux/arm64 j3soon/ros2-template-ws
+      - name: Build image
+        uses: docker/build-push-action@v6
         with:
           context: aloha_ws/docker
+          cache-from: |
+            j3soon/ros2-template-ws:buildcache-amd64
+            j3soon/ros2-template-ws:buildcache-arm64
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+      - name: Push amd64 cache
+        uses: docker/build-push-action@v6
+        with:
+          context: aloha_ws/docker
+          cache-from: |
+            j3soon/ros2-template-ws:buildcache-amd64
+            j3soon/ros2-template-ws:buildcache-arm64
+          cache-to: type=registry,ref=j3soon/ros2-aloha-ws:buildcache-amd64,mode=max
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+      - name: Push arm64 cache
+        uses: docker/build-push-action@v6
+        with:
+          context: aloha_ws/docker
+          cache-from: |
+            j3soon/ros2-template-ws:buildcache-amd64
+            j3soon/ros2-template-ws:buildcache-arm64
+          cache-to: type=registry,ref=j3soon/ros2-aloha-ws:buildcache-arm64,mode=max
+          platforms: linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+      - name: Push image
+        uses: docker/build-push-action@v6
+        with:
+          context: aloha_ws/docker
+          cache-from: |
+            j3soon/ros2-template-ws:buildcache-amd64
+            j3soon/ros2-template-ws:buildcache-arm64
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
