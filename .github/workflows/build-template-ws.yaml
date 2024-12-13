@@ -96,12 +96,11 @@ jobs:
         with:
           username: j3soon
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+      - name: Build image
         uses: docker/build-push-action@v6
         with:
           context: template_ws/docker
           platforms: linux/amd64,linux/arm64
-          push: true
           tags: ${{ steps.meta.outputs.tags }}
       # Ref: https://github.com/docker/buildx/discussions/1382#discussioncomment-6252049
       - name: Push amd64 cache
@@ -117,4 +116,11 @@ jobs:
           context: template_ws/docker
           cache-to: type=registry,ref=j3soon/ros2-template-ws:buildcache-arm64,mode=max
           platforms: linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+      - name: Push image
+        uses: docker/build-push-action@v6
+        with:
+          context: template_ws/docker
+          platforms: linux/amd64,linux/arm64
+          push: true
           tags: ${{ steps.meta.outputs.tags }}

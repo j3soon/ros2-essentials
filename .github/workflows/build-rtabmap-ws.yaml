@@ -96,7 +96,7 @@ jobs:
         run: docker pull --platform linux/amd64 j3soon/ros2-template-ws
       - name: Pull j3soon/ros2-template-ws (arm64)
         run: docker pull --platform linux/arm64 j3soon/ros2-template-ws
-      - name: Build and push
+      - name: Build image
         uses: docker/build-push-action@v6
         with:
           context: rtabmap_ws/docker
@@ -104,7 +104,6 @@ jobs:
             j3soon/ros2-template-ws:buildcache-amd64
             j3soon/ros2-template-ws:buildcache-arm64
           platforms: linux/amd64
-          push: true
           tags: ${{ steps.meta.outputs.tags }}
       - name: Push amd64 cache
         uses: docker/build-push-action@v6
@@ -115,4 +114,14 @@ jobs:
             j3soon/ros2-template-ws:buildcache-arm64
           cache-to: type=registry,ref=j3soon/ros2-rtabmap-ws:buildcache-amd64,mode=max
           platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+      - name: Push image
+        uses: docker/build-push-action@v6
+        with:
+          context: rtabmap_ws/docker
+          cache-from: |
+            j3soon/ros2-template-ws:buildcache-amd64
+            j3soon/ros2-template-ws:buildcache-arm64
+          platforms: linux/amd64
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
