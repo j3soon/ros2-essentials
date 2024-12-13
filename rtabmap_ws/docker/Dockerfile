@@ -126,6 +126,27 @@ RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
         && pip install isaacsim-extscache-physics==4.2.0.2 isaacsim-extscache-kit==4.2.0.2 isaacsim-extscache-kit-sdk==4.2.0.2 --extra-index-url https://pypi.nvidia.com; \
     fi
 
+# Fix SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) `numpy==1.26.0`.
+RUN pip install scipy==1.14.1 numpy==1.26.0
+
+# Create isaac sim cache directory with correct ownership to avoid permission issues after volume mount
+RUN sudo mkdir -p /isaac-sim/kit/cache \
+    && sudo chown -R $USERNAME:$USERNAME /isaac-sim/kit/cache
+RUN mkdir -p /home/$USERNAME/.cache/ov \
+    && mkdir -p /home/$USERNAME/.cache/pip \
+    && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
+    && mkdir -p /home/$USERNAME/.nv/ComputeCache \
+    && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
+    && mkdir -p /home/$USERNAME/.local/share/ov/data \
+    && mkdir -p /home/$USERNAME/Documents
+
+# Set Isaac Sim environment variables
+# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim
+# Ref: https://github.com/NVIDIA-Omniverse/IsaacSim-dockerfiles/blob/e3c09375c2d110b39c3fab3611352870aa3ce6ee/Dockerfile.2023.1.0-ubuntu22.04#L49-L53
+ENV OMNI_USER=admin
+ENV OMNI_PASS=admin
+ENV OMNI_KIT_ACCEPT_EULA=YES
+
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
