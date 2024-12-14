@@ -119,16 +119,7 @@ USER $USERNAME
 RUN mkdir /home/$USERNAME/.gazebo
 
 # Temporarily remove Isaac Sim since Ubuntu 24 uses Python 3.12 by default.
-# # Install Isaac Sim (requires Python 3.10)
-# # Note that installing Isaac Sim with pip is experimental, keep this in mind when unexpected error occurs
-# # TODO: Remove the note above when it is no longer experimental
-# # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
-# RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
-#     if [ "$TARGETARCH" = "amd64" ]; then \
-#         python3 -V | grep "Python 3.10" \
-#         && pip install isaacsim==4.2.0.2 --extra-index-url https://pypi.nvidia.com \
-#         && pip install isaacsim-extscache-physics==4.2.0.2 isaacsim-extscache-kit==4.2.0.2 isaacsim-extscache-kit-sdk==4.2.0.2 --extra-index-url https://pypi.nvidia.com; \
-#     fi
+# TODO: Add back Isaac Sim
 
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
