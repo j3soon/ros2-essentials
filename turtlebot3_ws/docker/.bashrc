@@ -43,12 +43,6 @@ fi
 # TODO: Source other workspace environments as underlay
 # Use turtlebot3 burger by default
 export TURTLEBOT3_MODEL=burger
-# Set Isaac Sim environment variables
-# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim
-# Ref: https://github.com/NVIDIA-Omniverse/IsaacSim-dockerfiles/blob/e3c09375c2d110b39c3fab3611352870aa3ce6ee/Dockerfile.2023.1.0-ubuntu22.04#L49-L53
-export OMNI_USER=admin
-export OMNI_PASS=admin
-export OMNI_KIT_ACCEPT_EULA=YES
 # Source workspace environment
 source $ROS2_WS/install/setup.bash
 echo "Successfully built workspace and configured environment variables."
