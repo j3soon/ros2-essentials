@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>husky_description</name>
+  <version>1.0.8</version>
+  <description>Clearpath Husky URDF description</description>
+
+  <author email="rgariepy@clearpathrobotics.com">Ryan Gariepy</author>
+  <author email="pmukherj@clearpathrobotics.com">Prasenjit Mukherjee</author>
+  <author email="mpurvis@clearpathrobotics.com">Mike Purvis</author>
+  <author email="paul@bovbel.com">Paul Bovbel</author>
+  <author email="dash@clearpathrobotics.com">Devon Ash</author>
+
+  <maintainer email="tbaltovski@clearpathrobotics.com">Tony Baltovski</maintainer>
+
+  <url type="website">http://ros.org/wiki/husky_description</url>
+  <url type="bugtracker">https://github.com/husky/husky/issues</url>
+  <url type="repository">https://github.com/husky/husky</url>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>realsense2_description</depend>
+  <depend>urdf</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
