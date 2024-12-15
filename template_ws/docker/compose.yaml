@@ -21,6 +21,9 @@ services:
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
       # platforms:
       #   - "linux/arm64"
+      cache_from:
+        - j3soon/ros2-template-ws:buildcache-amd64
+        - j3soon/ros2-template-ws:buildcache-arm64
     image: j3soon/ros2-template-ws
     container_name: ros2-template-ws
     stdin_open: true

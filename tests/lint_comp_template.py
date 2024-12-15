@@ -88,6 +88,6 @@ compare_file_with_template(".devcontainer/devcontainer.json", ignored_workspaces
 compare_file_with_template(".gitignore")
 compare_file_with_template("docker/.bashrc")
 compare_file_with_template("docker/.dockerignore", ignored_workspaces=["ros1_bridge_ws"])
-compare_file_with_template("docker/compose.yaml", ignored_workspaces=["ros1_bridge_ws"])
+compare_file_with_template("docker/compose.yaml", ignored_workspaces=["ros1_bridge_ws", "jazzy_template_ws"])
 compare_file_with_template("docker/Dockerfile", ignored_workspaces=["ros1_bridge_ws", "jazzy_template_ws"])
 compare_file_with_template("README.md")
