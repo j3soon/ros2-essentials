@@ -379,14 +379,53 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Building Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#link-documentation-to-ros2-workspaces" class="md-nav__link">
     <span class="md-ellipsis">
       Link Documentation to ROS2 Workspaces
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reusing-docker-build-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reusing Docker Build Cache
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reusing Docker Build Cache">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#switching-to-docker-container-build-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Switching to docker-container Build Driver
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switching-back-to-docker-build-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Switching back to docker Build Driver
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -709,14 +748,53 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Building Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#link-documentation-to-ros2-workspaces" class="md-nav__link">
     <span class="md-ellipsis">
       Link Documentation to ROS2 Workspaces
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reusing-docker-build-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reusing Docker Build Cache
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reusing Docker Build Cache">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#switching-to-docker-container-build-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Switching to docker-container Build Driver
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switching-back-to-docker-build-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Switching back to docker Build Driver
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -928,8 +1006,26 @@
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>mkdocs<span class="w"> </span>serve
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Go to https://127.0.0.1:8000 to view the site.</span>
 </span></code></pre></div>
-<h2 id="link-documentation-to-ros2-workspaces">Link Documentation to ROS2 Workspaces<a class="headerlink" href="#link-documentation-to-ros2-workspaces" title="Permanent link">&para;</a></h2>
+<h3 id="link-documentation-to-ros2-workspaces">Link Documentation to ROS2 Workspaces<a class="headerlink" href="#link-documentation-to-ros2-workspaces" title="Permanent link">&para;</a></h3>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>scripts/setup_link.sh
+</span></code></pre></div>
+<h2 id="reusing-docker-build-cache">Reusing Docker Build Cache<a class="headerlink" href="#reusing-docker-build-cache" title="Permanent link">&para;</a></h2>
+<p>The default (<code>docker</code>) build driver does not support pulling pre-built build cache from Docker Hub. Changing to the <code>docker-container</code> build driver allow reusing build cache from Docker Hub, however may introduce a few minute overhead after building any image (for sending tarballs). This is a tradeoff you should consider.</p>
+<p>The default <code>docker</code> build driver cannot pull pre-built caches from Docker Hub. Using the <code>docker-container</code> driver <a href="https://docs.docker.com/build/builders/drivers/">enables cache reuse</a> but may add <a href="https://github.com/docker/buildx/issues/107">a few minutes of overhead</a> for sending tarballs after the build. You should consider this tradeoff if you choose to switch the build driver.</p>
+<h3 id="switching-to-docker-container-build-driver">Switching to <code>docker-container</code> Build Driver<a class="headerlink" href="#switching-to-docker-container-build-driver" title="Permanent link">&para;</a></h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Install buildx as `docker build` alias</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>docker<span class="w"> </span>buildx<span class="w"> </span>install
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Create and use new builder</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>docker<span class="w"> </span>buildx<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>docker-container<span class="w"> </span>--driver<span class="w"> </span>docker-container<span class="w"> </span>--driver-opt<span class="w"> </span>default-load<span class="o">=</span><span class="nb">true</span><span class="w"> </span>--use
+</span></code></pre></div>
+<p>After setting this, using <code>docker compose build</code> will use the build cache from Docker Hub. If you want to switch back to the default <code>docker</code> build driver, follow the instructions below.</p>
+<h3 id="switching-back-to-docker-build-driver">Switching back to <code>docker</code> Build Driver<a class="headerlink" href="#switching-back-to-docker-build-driver" title="Permanent link">&para;</a></h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Uninstall buildx as `docker build` alias</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>buildx<span class="w"> </span>uninstall
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Unuse the created builder and remove it</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>docker<span class="w"> </span>buildx<span class="w"> </span>use<span class="w"> </span>default
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>docker<span class="w"> </span>buildx<span class="w"> </span>stop<span class="w"> </span>docker-container
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>docker<span class="w"> </span>buildx<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>--all-inactive
 </span></code></pre></div>
 <h2 id="acknowledgement">Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permanent link">&para;</a></h2>
 <p>The code is mainly contributed by <a href="https://github.com/j3soon">Johnson</a>, <a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a>, <a href="https://github.com/Assume-Zhan">Assume Zhan</a>, <a href="https://github.com/ClassLongJoe1112">Lam Chon Hang</a>, and others. For a full list of contributors, please refer to the <a href="https://github.com/j3soon/ros2-essentials/graphs/contributors">contribution list</a>.</p>
@@ -968,7 +1064,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 5, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 15, 2024</span>
   </span>
 
     
