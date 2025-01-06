@@ -66,6 +66,7 @@ Convert URDF file to USD file and generate OmniGraph:
 
 ```sh
 cd /home/ros2-essentials/turtlebot3_ws/isaacsim/scripts
+./create_urdf_from_xacro.sh
 python3 create_turtlebot3_burger_from_urdf.py
 python3 create_turtlebot3_burger_with_omnigraph.py
 ```

@@ -48,7 +48,7 @@ def create_turtlebot3_burger_from_urdf(urdf_path, usd_path):
     omni.usd.get_context().save_stage()
 
 if __name__ == '__main__':
-    turtlebot3_burger_urdf_path = f'/home/ros2-essentials/turtlebot3_ws/src/turtlebot3/turtlebot3_description/urdf/turtlebot3_burger.urdf'
+    turtlebot3_burger_urdf_path = f'/home/ros2-essentials/turtlebot3_ws/src/turtlebot3/turtlebot3_description/urdf/turtlebot3_burger_isaacsim.urdf'
     turtlebot3_burger_usd_path = '/home/ros2-essentials/turtlebot3_ws/isaacsim/assets/turtlebot3_burger_urdf.usd'
     create_turtlebot3_burger_from_urdf(turtlebot3_burger_urdf_path, turtlebot3_burger_usd_path)
     print("Done")

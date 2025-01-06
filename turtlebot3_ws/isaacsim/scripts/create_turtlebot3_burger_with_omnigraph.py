@@ -1,3 +1,4 @@
+# By setting `debug` as True, this script can be executed in the `Script Editor` in Isaac Sim GUI
 debug = False
 if not debug:
     # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/core_api_tutorials/tutorial_core_hello_world.html
@@ -23,6 +24,8 @@ logger = logging.getLogger(__name__)
 def create_turtlebot3_burger_with_omnigraph():
     # Create turtlebot3_burger
     turtlebot3_burger_prim_path = "/World/turtlebot3_burger_urdf"
+    camera_prim_path = "/World/turtlebot3_burger_urdf/base_scan/camera"
+    camera_frame_id = "turtle"
     cmd_vel_topic = "/cmd_vel"
     joint_name_0 = "wheel_left_joint"
     joint_name_1 = "wheel_right_joint"
@@ -101,6 +104,7 @@ def create_turtlebot3_burger_with_omnigraph():
             og.Controller.Keys.SET_VALUES: [
                 ("ArticulationController.inputs:targetPrim", turtlebot3_burger_prim_path),
                 ("SubscribeTwist.inputs:topicName", cmd_vel_topic),
+                # These three properties are hardcoded here, maybe it's better to infer them from the URDF/USD file.
                 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_drive_turtlebot.html#graph-explained
                 ("DifferentialController.inputs:maxLinearSpeed", 0.22),
                 ("DifferentialController.inputs:wheelDistance", 0.16),
@@ -114,7 +118,7 @@ def create_turtlebot3_burger_with_omnigraph():
             ],
         },
     )
-    # OmniGraph for Clock
+    # OmniGraph for Publishing Clock
     # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_clock.html
     og.Controller.edit(
         {"graph_path": "/ActionGraphClock", "evaluator_name": "execution"},
@@ -150,6 +154,32 @@ def create_turtlebot3_burger_with_omnigraph():
             ],
             og.Controller.Keys.SET_VALUES: [
                 ("PublishJointState.inputs:targetPrim", turtlebot3_burger_prim_path),
+            ],
+        },
+    )
+    # OmniGraph for Publishing Camera RGB
+    og.Controller.edit(
+        {"graph_path": "/ActionGraphPublishCameraRGB", "evaluator_name": "execution"},
+        {
+            og.Controller.Keys.CREATE_NODES: [
+                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
+                ("RunOnce", "omni.isaac.core_nodes.OgnIsaacRunOneSimulationFrame"),
+                ("RenderProduct", "omni.isaac.core_nodes.IsaacCreateRenderProduct"),
+                ("RGBPublish", "omni.isaac.ros2_bridge.ROS2CameraHelper"),
+            ],
+            og.Controller.Keys.CONNECT: [
+                ("OnPlaybackTick.outputs:tick", "RunOnce.inputs:execIn"),
+                ("RunOnce.outputs:step", "RenderProduct.inputs:execIn"),
+                ("RenderProduct.outputs:execOut", "RGBPublish.inputs:execIn"),
+                ("RenderProduct.outputs:renderProductPath", "RGBPublish.inputs:renderProductPath"),
+                ("Context.outputs:context", "RGBPublish.inputs:context"),
+            ],
+            og.Controller.Keys.SET_VALUES: [
+                ("RenderProduct.inputs:cameraPrim", camera_prim_path),
+                ("RGBPublish.inputs:type", "rgb"),
+                ("RGBPublish.inputs:topicName", "rgb"),
+                ("RGBPublish.inputs:frameId", camera_frame_id),
             ],
         },
     )
