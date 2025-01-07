@@ -25,7 +25,7 @@ def create_turtlebot3_burger_with_omnigraph():
     # Create turtlebot3_burger
     turtlebot3_burger_prim_path = "/World/turtlebot3_burger_urdf"
     camera_prim_path = "/World/turtlebot3_burger_urdf/base_scan/camera"
-    camera_frame_id = "turtle"
+    camera_frame_id = "sim_camera"
     cmd_vel_topic = "/cmd_vel"
     joint_name_0 = "wheel_left_joint"
     joint_name_1 = "wheel_right_joint"
@@ -157,29 +157,43 @@ def create_turtlebot3_burger_with_omnigraph():
             ],
         },
     )
-    # OmniGraph for Publishing Camera RGB
+    # OmniGraph for Publishing Camera Info/RGB
     og.Controller.edit(
-        {"graph_path": "/ActionGraphPublishCameraRGB", "evaluator_name": "execution"},
+        {"graph_path": "/ActionGraphPublishCameraData", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
                 ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
                 ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
                 ("RunOnce", "omni.isaac.core_nodes.OgnIsaacRunOneSimulationFrame"),
                 ("RenderProduct", "omni.isaac.core_nodes.IsaacCreateRenderProduct"),
-                ("RGBPublish", "omni.isaac.ros2_bridge.ROS2CameraHelper"),
+                ("PublishCameraRGB", "omni.isaac.ros2_bridge.ROS2CameraHelper"),
+                ("PublishCameraInfo", "omni.isaac.ros2_bridge.ROS2CameraInfoHelper"),
             ],
             og.Controller.Keys.CONNECT: [
                 ("OnPlaybackTick.outputs:tick", "RunOnce.inputs:execIn"),
                 ("RunOnce.outputs:step", "RenderProduct.inputs:execIn"),
-                ("RenderProduct.outputs:execOut", "RGBPublish.inputs:execIn"),
-                ("RenderProduct.outputs:renderProductPath", "RGBPublish.inputs:renderProductPath"),
-                ("Context.outputs:context", "RGBPublish.inputs:context"),
+                # PublishCameraRGB
+                ("RenderProduct.outputs:execOut", "PublishCameraRGB.inputs:execIn"),
+                ("RenderProduct.outputs:renderProductPath", "PublishCameraRGB.inputs:renderProductPath"),
+                ("Context.outputs:context", "PublishCameraRGB.inputs:context"),
+                # PublishCameraInfo
+                ("RenderProduct.outputs:execOut", "PublishCameraInfo.inputs:execIn"),
+                ("RenderProduct.outputs:renderProductPath", "PublishCameraInfo.inputs:renderProductPath"),
+                ("Context.outputs:context", "PublishCameraInfo.inputs:context"),
             ],
             og.Controller.Keys.SET_VALUES: [
                 ("RenderProduct.inputs:cameraPrim", camera_prim_path),
-                ("RGBPublish.inputs:type", "rgb"),
-                ("RGBPublish.inputs:topicName", "rgb"),
-                ("RGBPublish.inputs:frameId", camera_frame_id),
+                # PublishCameraRGB
+                ("PublishCameraRGB.inputs:type", "rgb"),
+                ("PublishCameraRGB.inputs:topicName", "rgb"),
+                ("PublishCameraRGB.inputs:frameId", camera_frame_id),
+                # ("PublishCameraRGB.inputs:resetSimulationTimeOnStop", True),
+                # PublishCameraInfo
+                ("PublishCameraInfo.inputs:topicName", "camera_info"),
+                ("PublishCameraInfo.inputs:topicNameRight", "camera_info_right"),
+                ("PublishCameraInfo.inputs:frameId", camera_frame_id),
+                ("PublishCameraInfo.inputs:frameIdRight", f"{camera_frame_id}_right"),
+                # ("PublishCameraInfo.inputs:resetSimulationTimeOnStop", True),
             ],
         },
     )
