@@ -136,6 +136,28 @@ def create_turtlebot3_burger_with_omnigraph():
             ],
         },
     )
+    # OmniGraph for Publishing TF
+    # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_tf.html
+    og.Controller.edit(
+        {"graph_path": "/Graph/ROS_TF", "evaluator_name": "execution"},
+        {
+            og.Controller.Keys.CREATE_NODES: [
+                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
+                ("ReadSimTime", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
+                ("PublishTF", "omni.isaac.ros2_bridge.ROS2PublishTransformTree"),
+            ],
+            og.Controller.Keys.CONNECT: [
+                ("OnPlaybackTick.outputs:tick", "PublishTF.inputs:execIn"),
+                ("ReadSimTime.outputs:simulationTime", "PublishTF.inputs:timeStamp"),
+                ("Context.outputs:context", "PublishTF.inputs:context"),
+            ],
+            og.Controller.Keys.SET_VALUES: [
+                ("PublishTF.inputs:targetPrims", turtlebot3_burger_prim_path),
+                ("PublishTF.inputs:topicName", "tf"),
+            ]
+        },
+    )
     # OmniGraph for Publishing Joint State
     # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_manipulation.html
     og.Controller.edit(
