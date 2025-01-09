@@ -157,7 +157,7 @@ def create_turtlebot3_burger_with_omnigraph():
             ],
         },
     )
-    # OmniGraph for Publishing Camera RGB/Depth/Info
+    # OmniGraph for Publishing Camera RGB/Depth/DepthPCL/Info
     og.Controller.edit(
         {"graph_path": "/ActionGraphPublishCameraData", "evaluator_name": "execution"},
         {
@@ -168,6 +168,7 @@ def create_turtlebot3_burger_with_omnigraph():
                 ("RenderProduct", "omni.isaac.core_nodes.IsaacCreateRenderProduct"),
                 ("PublishCameraRGB", "omni.isaac.ros2_bridge.ROS2CameraHelper"),
                 ("PublishCameraDepth", "omni.isaac.ros2_bridge.ROS2CameraHelper"),
+                ("PublishCameraDepthPCL", "omni.isaac.ros2_bridge.ROS2CameraHelper"),
                 ("PublishCameraInfo", "omni.isaac.ros2_bridge.ROS2CameraInfoHelper"),
             ],
             og.Controller.Keys.CONNECT: [
@@ -181,6 +182,10 @@ def create_turtlebot3_burger_with_omnigraph():
                 ("RenderProduct.outputs:execOut", "PublishCameraDepth.inputs:execIn"),
                 ("RenderProduct.outputs:renderProductPath", "PublishCameraDepth.inputs:renderProductPath"),
                 ("Context.outputs:context", "PublishCameraDepth.inputs:context"),
+                # PublishCameraDepthPCL
+                ("RenderProduct.outputs:execOut", "PublishCameraDepthPCL.inputs:execIn"),
+                ("RenderProduct.outputs:renderProductPath", "PublishCameraDepthPCL.inputs:renderProductPath"),
+                ("Context.outputs:context", "PublishCameraDepthPCL.inputs:context"),
                 # PublishCameraInfo
                 ("RenderProduct.outputs:execOut", "PublishCameraInfo.inputs:execIn"),
                 ("RenderProduct.outputs:renderProductPath", "PublishCameraInfo.inputs:renderProductPath"),
@@ -196,6 +201,10 @@ def create_turtlebot3_burger_with_omnigraph():
                 ("PublishCameraDepth.inputs:type", "depth"),
                 ("PublishCameraDepth.inputs:topicName", "depth"),
                 ("PublishCameraDepth.inputs:frameId", camera_frame_id),
+                # PublishCameraDepthPCL
+                ("PublishCameraDepthPCL.inputs:type", "depth_pcl"),
+                ("PublishCameraDepthPCL.inputs:topicName", "depth_pcl"),
+                ("PublishCameraDepthPCL.inputs:frameId", camera_frame_id),
                 # PublishCameraInfo
                 ("PublishCameraInfo.inputs:topicName", "camera_info"),
                 ("PublishCameraInfo.inputs:topicNameRight", "camera_info_right"),
