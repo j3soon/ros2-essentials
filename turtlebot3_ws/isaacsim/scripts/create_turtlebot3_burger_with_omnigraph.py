@@ -65,7 +65,7 @@ def create_turtlebot3_burger_with_omnigraph():
     # OmniGraph for Articulation Controller
     # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_drive_turtlebot.html#building-the-graph
     og.Controller.edit(
-        {"graph_path": "/ActionGraphController", "evaluator_name": "execution"},
+        {"graph_path": "/Graph/ROS_DifferentialController", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
                 ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
@@ -121,7 +121,7 @@ def create_turtlebot3_burger_with_omnigraph():
     # OmniGraph for Publishing Clock
     # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_clock.html
     og.Controller.edit(
-        {"graph_path": "/ActionGraphClock", "evaluator_name": "execution"},
+        {"graph_path": "/Graph/ROS_Clock", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
                 ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
@@ -139,7 +139,7 @@ def create_turtlebot3_burger_with_omnigraph():
     # OmniGraph for Publishing Joint State
     # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_manipulation.html
     og.Controller.edit(
-        {"graph_path": "/ActionGraphPublishJointState", "evaluator_name": "execution"},
+        {"graph_path": "/Graph/ROS_JointState", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
                 ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
@@ -158,8 +158,9 @@ def create_turtlebot3_burger_with_omnigraph():
         },
     )
     # OmniGraph for Publishing Camera RGB/Depth/DepthPCL/Info
+    # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_camera.html
     og.Controller.edit(
-        {"graph_path": "/ActionGraphPublishCameraData", "evaluator_name": "execution"},
+        {"graph_path": "/Graph/ROS_Camera", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
                 ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
