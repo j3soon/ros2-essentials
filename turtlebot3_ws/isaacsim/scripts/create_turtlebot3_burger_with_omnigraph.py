@@ -25,7 +25,7 @@ def create_turtlebot3_burger_with_omnigraph():
     # Create turtlebot3_burger
     turtlebot3_burger_prim_path = "/World/turtlebot3_burger_urdf"
     camera_prim_path = "/World/turtlebot3_burger_urdf/base_scan/camera"
-    camera_frame_id = "sim_camera"
+    camera_frame_id = "camera" # same as camera prim name
     cmd_vel_topic = "/cmd_vel"
     joint_name_0 = "wheel_left_joint"
     joint_name_1 = "wheel_right_joint"
@@ -153,7 +153,10 @@ def create_turtlebot3_burger_with_omnigraph():
                 ("Context.outputs:context", "PublishTF.inputs:context"),
             ],
             og.Controller.Keys.SET_VALUES: [
-                ("PublishTF.inputs:targetPrims", turtlebot3_burger_prim_path),
+                ("PublishTF.inputs:targetPrims", [
+                    turtlebot3_burger_prim_path,
+                    camera_prim_path,
+                ]),
                 ("PublishTF.inputs:topicName", "tf"),
             ]
         },
