@@ -9,12 +9,13 @@ if not debug:
 
 import logging
 
+import carb
 import omni.graph.core as og
 import omni.kit.app
 import omni.usd
-
 from omni.isaac.core.objects.ground_plane import GroundPlane
 from omni.isaac.core.physics_context import PhysicsContext
+from omni.isaac.core.utils.carb import set_carb_setting
 
 # Ref: https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/logging.html
 # `print(...)` outputs to Script Editor, while `logger.info(...)` outputs to console.
@@ -44,6 +45,9 @@ def create_turtlebot3_burger_with_omnigraph():
     env_prim_path = "/World/environment"
     prim = stage.DefinePrim(env_prim_path)
     prim.GetReferences().AddReference(f"{assets_path}/Isaac/Environments/Office/office.usd")
+    # Add ambient light for office environment
+    carb_settings = carb.settings.get_settings()
+    set_carb_setting(carb_settings, "/rtx/sceneDb/ambientLightIntensity", 1.0)
 
     # OmniGraph Nodes References:
     # - OmniGraph Node Library
