@@ -30,14 +30,20 @@ def create_turtlebot3_burger_with_omnigraph():
     joint_name_0 = "wheel_left_joint"
     joint_name_1 = "wheel_right_joint"
     stage = omni.usd.get_context().get_stage()
-    stage.DefinePrim(turtlebot3_burger_prim_path)
-    prim = stage.GetPrimAtPath(turtlebot3_burger_prim_path)
+    prim = stage.DefinePrim(turtlebot3_burger_prim_path)
     prim.GetReferences().AddReference("/home/ros2-essentials/turtlebot3_ws/isaacsim/assets/turtlebot3_burger_urdf.usd")
 
     # Create Physics Scene and Ground Plane
     # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/gui_tutorials/tutorial_gui_interactive_scripting.html#isaac-sim-short-core-apis
     PhysicsContext()
-    GroundPlane("/World/GroundPlane")
+
+    # Create Empty Environment (Ground Plane) or Existing Environment
+    # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/features/environment_setup/assets/usd_assets_environments.html
+    # GroundPlane("/World/GroundPlane")
+    assets_path = "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.2/"
+    env_prim_path = "/World/environment"
+    prim = stage.DefinePrim(env_prim_path)
+    prim.GetReferences().AddReference(f"{assets_path}/Isaac/Environments/Office/office.usd")
 
     # OmniGraph Nodes References:
     # - OmniGraph Node Library
