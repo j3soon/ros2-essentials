@@ -16,6 +16,8 @@ import omni.usd
 from omni.isaac.core.objects.ground_plane import GroundPlane
 from omni.isaac.core.physics_context import PhysicsContext
 from omni.isaac.core.utils.carb import set_carb_setting
+from omni.isaac.core.utils.viewports import set_camera_view
+from pxr import Usd, UsdGeom
 
 # Ref: https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/logging.html
 # `print(...)` outputs to Script Editor, while `logger.info(...)` outputs to console.
@@ -30,7 +32,7 @@ def create_turtlebot3_burger_with_omnigraph():
     cmd_vel_topic = "/cmd_vel"
     joint_name_0 = "wheel_left_joint"
     joint_name_1 = "wheel_right_joint"
-    stage = omni.usd.get_context().get_stage()
+    stage: Usd.Stage = omni.usd.get_context().get_stage()
     prim = stage.DefinePrim(turtlebot3_burger_prim_path)
     prim.GetReferences().AddReference("/home/ros2-essentials/turtlebot3_ws/isaacsim/assets/turtlebot3_burger_urdf.usd")
 
@@ -48,6 +50,12 @@ def create_turtlebot3_burger_with_omnigraph():
     # Add ambient light for office environment
     carb_settings = carb.settings.get_settings()
     set_carb_setting(carb_settings, "/rtx/sceneDb/ambientLightIntensity", 1.0)
+    # Set camera position
+    camera_target = UsdGeom.Xformable(stage.GetPrimAtPath("/World/turtlebot3_burger_urdf")).GetLocalTransformation().ExtractTranslation()
+    # The perspective view camera `/OmniverseKit_Persp` seems to be a special prim, whose attributes cannot be set
+    # directly with normal APIs such as `Xformable.AddTranslateOp().Set`, `XformCommonAPI.SetTranslate`, and
+    # `GetAttribute("xformOp:translate").Set`.
+    set_camera_view(eye=camera_target + [0, 5, 3], target=camera_target, camera_prim_path="/OmniverseKit_Persp")
 
     # OmniGraph Nodes References:
     # - OmniGraph Node Library
@@ -59,7 +67,7 @@ def create_turtlebot3_burger_with_omnigraph():
     #   https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.core_nodes/docs/index.html
     # - omni.isaac.ros2_bridge
     #   https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.ros2_bridge/docs/index.html
-    # You can also hover your cursor on the OmniGraph node title to see its namespace and node name.
+    # You can also hover your cursor on the OmniGraph node title to see its namespace and node name through the Isaac Sim GUI.
 
     # OmniGraph Scripting Notes:
     # Assuming you already have an working OmniGraph in Isaac Sim GUI,
