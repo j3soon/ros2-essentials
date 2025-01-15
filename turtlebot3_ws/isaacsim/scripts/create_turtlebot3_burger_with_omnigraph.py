@@ -28,7 +28,9 @@ def create_turtlebot3_burger_with_omnigraph():
     # Create turtlebot3_burger
     turtlebot3_burger_prim_path = "/World/turtlebot3_burger_urdf"
     camera_prim_path = "/World/turtlebot3_burger_urdf/base_scan/camera"
-    camera_frame_id = "camera" # same as camera prim name
+    camera_frame_id = "camera" # same as USD camera prim name
+    lidar_prim_path = "/World/turtlebot3_burger_urdf/base_scan/lidar"
+    lidar_frame_id = "lidar" # same as USD lidar prim name
     cmd_vel_topic = "/cmd_vel"
     joint_name_0 = "wheel_left_joint"
     joint_name_1 = "wheel_right_joint"
@@ -174,6 +176,7 @@ def create_turtlebot3_burger_with_omnigraph():
                 ("PublishTF.inputs:targetPrims", [
                     turtlebot3_burger_prim_path,
                     camera_prim_path,
+                    lidar_prim_path,
                 ]),
                 ("PublishTF.inputs:topicName", "tf"),
             ]
@@ -254,6 +257,45 @@ def create_turtlebot3_burger_with_omnigraph():
                 ("PublishCameraInfo.inputs:topicNameRight", "camera_info_right"),
                 ("PublishCameraInfo.inputs:frameId", camera_frame_id),
                 ("PublishCameraInfo.inputs:frameIdRight", f"{camera_frame_id}_right"),
+            ],
+        },
+    )
+    # OmniGraph for Publishing (RTX) Lidar Laser Scan and Point Cloud
+    # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_rtx_lidar.html
+    og.Controller.edit(
+        {"graph_path": "/Graph/ROS_LidarRTX", "evaluator_name": "execution"},
+        {
+            og.Controller.Keys.CREATE_NODES: [
+                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
+                ("RunOnce", "omni.isaac.core_nodes.OgnIsaacRunOneSimulationFrame"),
+                ("RenderProduct", "omni.isaac.core_nodes.IsaacCreateRenderProduct"),
+                ("PublishLidarLaserScan", "omni.isaac.ros2_bridge.ROS2RtxLidarHelper"),
+                ("PublishLidarPointCloud", "omni.isaac.ros2_bridge.ROS2RtxLidarHelper"),
+            ],
+            og.Controller.Keys.CONNECT: [
+                ("OnPlaybackTick.outputs:tick", "RunOnce.inputs:execIn"),
+                ("RunOnce.outputs:step", "RenderProduct.inputs:execIn"),
+                # PublishLidarLaserScan
+                ("RenderProduct.outputs:execOut", "PublishLidarLaserScan.inputs:execIn"),
+                ("RenderProduct.outputs:renderProductPath", "PublishLidarLaserScan.inputs:renderProductPath"),
+                ("Context.outputs:context", "PublishLidarLaserScan.inputs:context"),
+                # PublishLidarPointCloud
+                ("RenderProduct.outputs:execOut", "PublishLidarPointCloud.inputs:execIn"),
+                ("RenderProduct.outputs:renderProductPath", "PublishLidarPointCloud.inputs:renderProductPath"),
+                ("Context.outputs:context", "PublishLidarPointCloud.inputs:context"),
+            ],
+            og.Controller.Keys.SET_VALUES: [
+                ("RenderProduct.inputs:cameraPrim", lidar_prim_path),
+                # PublishLidarLaserScan
+                ("PublishLidarLaserScan.inputs:type", "laser_scan"),
+                ("PublishLidarLaserScan.inputs:topicName", "laser_scan"),
+                ("PublishLidarLaserScan.inputs:frameId", lidar_frame_id),
+                # PublishLidarPointCloud
+                ("PublishLidarPointCloud.inputs:type", "point_cloud"),
+                ("PublishLidarPointCloud.inputs:topicName", "point_cloud"),
+                ("PublishLidarPointCloud.inputs:frameId", lidar_frame_id),
+                ("PublishLidarPointCloud.inputs:fullScan", True),
             ],
         },
     )

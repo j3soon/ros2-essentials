@@ -201,4 +201,13 @@
     </camera>
   </sensor>
 
+  <sensor name="lidar" type="ray" update_rate="30" isaac_sim_config="Example_Solid_State">
+    <parent link="base_scan"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <ray>
+      <horizontal samples="21" resolution="1" min_angle="-0.785398" max_angle="0.785398"/>
+      <vertical samples="20" resolution="1" min_angle="-0.523599" max_angle="0.523599"/>
+    </ray>
+  </sensor>
+
 </robot>
