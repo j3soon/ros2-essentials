@@ -83,13 +83,15 @@ Open the file with OmniGraph we just generated in the bottom panel:
 /home/ros2-essentials/turtlebot3_ws/isaacsim/assets/turtlebot3_burger_og.usd
 ```
 
-and click `Play (SPACE)` to start simulation.
+or use `File > Open Recent` to re-open it, and click `Play (SPACE)` to start simulation.
 
 To view the OmniGraph, right click the ActionGraph on the right panel and select `Open Graph`.
 
 ## 🧩 Features
 
 > Skip this section if you are not interested in enabling features.
+
+> Note that Cartographer and Nav2 features are only supported in Gazebo simulation for now.
 
 ### Cartographer
 
