@@ -11,13 +11,11 @@
       
       
       
-        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/vlp-ws/">
+        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/turtlebot3-ws/">
       
       
-        <link rel="prev" href="../kobuki-ws/">
+        <link rel="prev" href="../aloha-ws/">
       
-      
-        <link rel="next" href="../gazebo-world-ws/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -25,7 +23,7 @@
     
     
       
-        <title>Velodyne VLP-16 - ROS2 Essentials</title>
+        <title>TurtleBot3 - ROS2 Essentials</title>
       
     
     
@@ -60,11 +58,11 @@
       
         <meta  property="og:type"  content="website" >
       
-        <meta  property="og:title"  content="Velodyne VLP-16 - ROS2 Essentials" >
+        <meta  property="og:title"  content="TurtleBot3 - ROS2 Essentials" >
       
         <meta  property="og:description"  content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." >
       
-        <meta  property="og:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/vlp-ws/index.png" >
+        <meta  property="og:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/turtlebot3-ws/index.png" >
       
         <meta  property="og:image:type"  content="image/png" >
       
@@ -72,15 +70,15 @@
       
         <meta  property="og:image:height"  content="630" >
       
-        <meta  property="og:url"  content="https://j3soon.github.io/ros2-essentials/vlp-ws/" >
+        <meta  property="og:url"  content="https://j3soon.github.io/ros2-essentials/turtlebot3-ws/" >
       
         <meta  name="twitter:card"  content="summary_large_image" >
       
-        <meta  name="twitter:title"  content="Velodyne VLP-16 - ROS2 Essentials" >
+        <meta  name="twitter:title"  content="TurtleBot3 - ROS2 Essentials" >
       
         <meta  name="twitter:description"  content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." >
       
-        <meta  name="twitter:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/vlp-ws/index.png" >
+        <meta  name="twitter:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/turtlebot3-ws/index.png" >
       
     
     
@@ -103,7 +101,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#velodyne-vlp-16" class="md-skip">
+        <a href="#turtlebot3" class="md-skip">
           Skip to content
         </a>
       
@@ -140,7 +138,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Velodyne VLP-16
+              TurtleBot3
             
           </span>
         </div>
@@ -467,31 +465,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Velodyne VLP-16
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../vlp-ws/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -501,182 +478,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#simulation-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Simulation Setup
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Simulation Setup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#add-description-in-defined-robot" class="md-nav__link">
-    <span class="md-ellipsis">
-      Add description in defined robot
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#launch-lidar-driver-with-simulated-lidar" class="md-nav__link">
-    <span class="md-ellipsis">
-      Launch LiDAR driver with simulated LiDAR
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Launch LiDAR driver with simulated LiDAR">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sample-robot" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sample Robot
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#lidar-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      LiDAR setup
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="LiDAR setup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#hardware-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hardware Setup
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Hardware Setup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#directly-using-computer" class="md-nav__link">
-    <span class="md-ellipsis">
-      Directly Using Computer
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#launch-the-driver" class="md-nav__link">
-    <span class="md-ellipsis">
-      Launch the Driver
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Launch the Driver">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pipeline" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pipeline
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#operating-in-a-single-launch-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      Operating in a single launch file
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#published-topics" class="md-nav__link">
-    <span class="md-ellipsis">
-      Published topics
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#test-with-cartographer" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test with cartographer
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bringup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bringup
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reference
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -727,10 +528,31 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../turtlebot3-ws/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    TurtleBot3
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -740,6 +562,203 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#start-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐳 Start Container
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspect-robot-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 Inspect Robot Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      🪐 Launch Simulator
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🪐 Launch Simulator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rviz-fake-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      RViz Fake Node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gazebo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isaac-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac Sim
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧩 Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧩 Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cartographer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cartographer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nav2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nav2
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-robot" class="md-nav__link">
+    <span class="md-ellipsis">
+      🕹️ Control Robot
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🕹️ Control Robot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raw-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raw Message
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#teleoperate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Teleoperate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-auto-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Auto Drive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-with-rviz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualize with RViz
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 Save Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💾 Save Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#occupancy-grid-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      Occupancy Grid Map
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      📌 References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -771,19 +790,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#simulation-setup" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Simulation Setup
+      🐳 Start Container
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Simulation Setup">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspect-robot-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 Inspect Robot Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      🪐 Launch Simulator
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🪐 Launch Simulator">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#add-description-in-defined-robot" class="md-nav__link">
+  <a href="#rviz-fake-node" class="md-nav__link">
     <span class="md-ellipsis">
-      Add description in defined robot
+      RViz Fake Node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gazebo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isaac-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac Sim
     </span>
   </a>
   
@@ -795,19 +850,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#launch-lidar-driver-with-simulated-lidar" class="md-nav__link">
+  <a href="#features" class="md-nav__link">
     <span class="md-ellipsis">
-      Launch LiDAR driver with simulated LiDAR
+      🧩 Features
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Launch LiDAR driver with simulated LiDAR">
+    <nav class="md-nav" aria-label="🧩 Features">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#sample-robot" class="md-nav__link">
+  <a href="#cartographer" class="md-nav__link">
     <span class="md-ellipsis">
-      Sample Robot
+      Cartographer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nav2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nav2
     </span>
   </a>
   
@@ -819,29 +883,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lidar-setup" class="md-nav__link">
+  <a href="#control-robot" class="md-nav__link">
     <span class="md-ellipsis">
-      LiDAR setup
+      🕹️ Control Robot
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="LiDAR setup">
+    <nav class="md-nav" aria-label="🕹️ Control Robot">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#hardware-setup" class="md-nav__link">
+  <a href="#raw-message" class="md-nav__link">
     <span class="md-ellipsis">
-      Hardware Setup
+      Raw Message
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Hardware Setup">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#directly-using-computer" class="md-nav__link">
+  <a href="#teleoperate" class="md-nav__link">
     <span class="md-ellipsis">
-      Directly Using Computer
+      Teleoperate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-auto-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Auto Drive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-with-rviz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualize with RViz
     </span>
   </a>
   
@@ -851,39 +932,21 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#launch-the-driver" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#save-output" class="md-nav__link">
     <span class="md-ellipsis">
-      Launch the Driver
+      💾 Save Output
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Launch the Driver">
+    <nav class="md-nav" aria-label="💾 Save Output">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pipeline" class="md-nav__link">
+  <a href="#occupancy-grid-map" class="md-nav__link">
     <span class="md-ellipsis">
-      Pipeline
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#operating-in-a-single-launch-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      Operating in a single launch file
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#published-topics" class="md-nav__link">
-    <span class="md-ellipsis">
-      Published topics
+      Occupancy Grid Map
     </span>
   </a>
   
@@ -893,34 +956,11 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
-  <a href="#test-with-cartographer" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
-      Test with cartographer
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bringup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bringup
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reference
+      📌 References
     </span>
   </a>
   
@@ -945,155 +985,103 @@
   
 
 
-<h1 id="velodyne-vlp-16">Velodyne VLP-16<a class="headerlink" href="#velodyne-vlp-16" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/j3soon/ros2-essentials/tree/main/vlp_ws"><img alt="GitHub code" src="https://img.shields.io/badge/code-blue?logo=github&amp;label=github" /></a>
-<a href="https://github.com/j3soon/ros2-essentials/actions/workflows/build-vlp-ws.yaml"><img alt="build" src="https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-vlp-ws.yaml?label=build" /></a>
-<a href="https://github.com/j3soon/ros2-essentials/commits/main/vlp_ws"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=vlp_ws" /></a></p>
-<p><a href="https://hub.docker.com/r/j3soon/ros2-vlp-ws/tags"><img alt="DockerHub image" src="https://img.shields.io/badge/dockerhub-j3soon/ros2--vlp--ws-important.svg?logo=docker" /></a>
-<img alt="Docker image arch" src="https://img.shields.io/badge/arch-amd64_|_arm64-blueviolet" />
-<img alt="Docker image version" src="https://img.shields.io/docker/v/j3soon/ros2-vlp-ws" />
-<img alt="Docker image size" src="https://img.shields.io/docker/image-size/j3soon/ros2-vlp-ws" /></p>
-<h2 id="simulation-setup">Simulation Setup<a class="headerlink" href="#simulation-setup" title="Permanent link">&para;</a></h2>
-<h3 id="add-description-in-defined-robot">Add description in defined robot<a class="headerlink" href="#add-description-in-defined-robot" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<p>Declared necessary argument and  your own <code>robot_gazebo.urdf.xacro</code></p>
-<div class="language-xml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">&lt;xacro:arg</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;gpu&quot;</span><span class="w"> </span><span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">&lt;xacro:arg</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;organize_cloud&quot;</span><span class="w"> </span><span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nt">&lt;xacro:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;gpu&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;$(arg gpu)&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nt">&lt;xacro:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;organize_cloud&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;$(arg organize_cloud)&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<h1 id="turtlebot3">TurtleBot3<a class="headerlink" href="#turtlebot3" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>Please note that this workspace is only tested in simulation.</p>
+</blockquote>
+<h2 id="start-container">🐳 Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/turtlebot3_ws/docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"> </span><span class="c1"># or docker compose build</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># The initial build will take a while (~5 mins), please wait patiently.</span>
 </span></code></pre></div>
-</li>
-<li>
-<p>Include the <code>velodyne_description</code> package</p>
-<div class="language-xml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">&lt;xacro:include</span><span class="w"> </span><span class="na">filename=</span><span class="s">&quot;$(find velodyne_description)/urdf/VLP16.urdf.xacro&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<p>The commands in the following sections assume that you are inside the Docker container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-turtlebot3-ws<span class="w"> </span>bash
 </span></code></pre></div>
-</li>
-<li>
-<p>Add LiDAR in the robot</p>
-<div class="language-xml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">&lt;xacro:VLP-16</span><span class="w"> </span><span class="na">parent=</span><span class="s">&quot;base_footprint&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;velodyne&quot;</span><span class="w"> </span><span class="na">topic=</span><span class="s">&quot;/velodyne_points&quot;</span><span class="w"> </span><span class="na">organize_cloud=</span><span class="s">&quot;${organize_cloud}&quot;</span><span class="w"> </span><span class="na">hz=</span><span class="s">&quot;10&quot;</span><span class="w"> </span><span class="na">samples=</span><span class="s">&quot;440&quot;</span><span class="w"> </span><span class="na">gpu=</span><span class="s">&quot;${gpu}&quot;</span><span class="nt">&gt;</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nt">&lt;origin</span><span class="w"> </span><span class="na">xyz=</span><span class="s">&quot;0 0 0.1&quot;</span><span class="w"> </span><span class="na">rpy=</span><span class="s">&quot;0 0 0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">&lt;/xacro:VLP-16&gt;</span>
+<p>TurtleBot3 <code>burger</code> is used by default, you can change it by the following (such as <code>waffle</code> or <code>waffle_pi</code>):</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">TURTLEBOT3_MODEL</span><span class="o">=</span>waffle_pi
 </span></code></pre></div>
-</li>
-</ol>
-<ul>
-<li>You could refer to more information from <code>veloyne_simulator/velodyne_description/urdf/template.urdf.xacro</code></li>
-</ul>
-<hr />
-<h2 id="launch-lidar-driver-with-simulated-lidar">Launch LiDAR driver with simulated LiDAR<a class="headerlink" href="#launch-lidar-driver-with-simulated-lidar" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Launch example robot with LiDAR<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>velodyne_description<span class="w"> </span>example.launch.py
+<p>If the initial build somehow failed, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
 </span></code></pre></div>
-</li>
-</ul>
-<ul>
-<li>Launch the LiDAR data process without driver in another terminal<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>vlp_cartographer<span class="w"> </span>vlp_driver.launch.py<span class="w"> </span>is_sim:<span class="o">=</span>True
+<h2 id="inspect-robot-model">🔍 Inspect Robot Model<a class="headerlink" href="#inspect-robot-model" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Skip this section if you are not interested in inspecting the URDF/USD model.</p>
+</blockquote>
+<p>(TODO)</p>
+<h2 id="launch-simulator">🪐 Launch Simulator<a class="headerlink" href="#launch-simulator" title="Permanent link">&para;</a></h2>
+<p>Launch one of the following simulators (1) RViz Fake Node (2) Gazebo (3) Isaac Sim.</p>
+<h3 id="rviz-fake-node">RViz Fake Node<a class="headerlink" href="#rviz-fake-node" title="Permanent link">&para;</a></h3>
+<p>Note that RViz fake node doesn't simulate sensors such as LiDAR.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_fake_node<span class="w"> </span>turtlebot3_fake_node.launch.py
 </span></code></pre></div>
-</li>
-</ul>
-<h3 id="sample-robot">Sample Robot<a class="headerlink" href="#sample-robot" title="Permanent link">&para;</a></h3>
-<ul>
-<li>A given turtlebot waffle model with VLP-16 is provided in <code>velodyne_simulator/velodyne_simulator/urdf/sample_robot.urdf.xacro</code></li>
-<li>Launch the sample robot<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>velodyne_description<span class="w"> </span>example.launch.py<span class="w"> </span>robot:<span class="o">=</span><span class="m">1</span>
+<h3 id="gazebo">Gazebo<a class="headerlink" href="#gazebo" title="Permanent link">&para;</a></h3>
+<p>Launch one of the following worlds:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>empty_world.launch.py
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_world.launch.py
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_house.launch.py
 </span></code></pre></div>
-</li>
-</ul>
-<hr />
-<h2 id="lidar-setup">LiDAR setup<a class="headerlink" href="#lidar-setup" title="Permanent link">&para;</a></h2>
-<h3 id="hardware-setup">Hardware Setup<a class="headerlink" href="#hardware-setup" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Connect the LiDAR to power.</li>
-<li>Connect the LiDAR to the computer or router using the provided ethernet cable.</li>
-</ul>
-<h4 id="directly-using-computer">Directly Using Computer<a class="headerlink" href="#directly-using-computer" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Connect the LiDAR to the computer using the ethernet cable.</li>
-<li>Open the computer settings and navigate to <strong>Network</strong> &gt; <strong>Wired</strong>.</li>
-</ul>
-<p><center>
-    <img width="65%" src="assets/wireless-settings.png">
-</center></p>
-<ul>
-<li>Set the IPv4 configuration to 'manual' and configure the settings as shown in the image below:</li>
-</ul>
-<p><center>
-    <img width="65%" src="assets/network-settings.png">
-</center></p>
-<h3 id="launch-the-driver">Launch the Driver<a class="headerlink" href="#launch-the-driver" title="Permanent link">&para;</a></h3>
-<h4 id="pipeline">Pipeline<a class="headerlink" href="#pipeline" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Data process as following:
-  raw data -&gt; pointcloud -&gt; laser scan -&gt; slam method</li>
-</ul>
-<ul>
-<li>Velodyne driver: <code>velodyne_driver</code> get the raw data from LiDAR.</li>
-<li>Transform the raw data to pointcloud: <code>velodyne_pointcloud</code></li>
-<li>Transform the pointcloud to laser scan: <code>velodyne_laserscan</code></li>
-</ul>
-<h4 id="operating-in-a-single-launch-file">Operating in a single launch file<a class="headerlink" href="#operating-in-a-single-launch-file" title="Permanent link">&para;</a></h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>vlp_cartographer<span class="w"> </span>vlp_driver.launch.py
+<h3 id="isaac-sim">Isaac Sim<a class="headerlink" href="#isaac-sim" title="Permanent link">&para;</a></h3>
+<p>Convert URDF file to USD file and generate OmniGraph:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/turtlebot3_ws/isaacsim/scripts
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>./create_urdf_from_xacro.sh
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>python3<span class="w"> </span>create_turtlebot3_burger_from_urdf.py
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>python3<span class="w"> </span>create_turtlebot3_burger_with_omnigraph.py
 </span></code></pre></div>
-<ul>
-<li>By the above command, the driver, pointcloud and laserscan will be launched.</li>
-</ul>
-<h4 id="published-topics">Published topics<a class="headerlink" href="#published-topics" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Topic</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/velodyne_packets</code></td>
-<td><code>velodyne_msgs/VelodyneScan</code></td>
-<td>raw data</td>
-</tr>
-<tr>
-<td><code>/velodyne_points</code></td>
-<td><code>sensor_msgs/PointCloud2</code></td>
-<td>Point cloud message</td>
-</tr>
-<tr>
-<td><code>/scan</code></td>
-<td><code>sensor_msgs/LaserScan</code></td>
-<td>laser scan message</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="test-with-cartographer">Test with cartographer<a class="headerlink" href="#test-with-cartographer" title="Permanent link">&para;</a></h2>
-<ul>
-<li>In another terminal, launch the cartographer node:<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>vlp_cartographer<span class="w"> </span>cartographer_demo.launch.py
+<p>Start Isaac Sim:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>isaacsim<span class="w"> </span>omni.isaac.sim
 </span></code></pre></div>
-</li>
-</ul>
-<hr />
-<h2 id="bringup">Bringup<a class="headerlink" href="#bringup" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Build the docker image and workspace<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>--build
+<p>Open the file with OmniGraph we just generated in the bottom panel:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>/home/ros2-essentials/turtlebot3_ws/isaacsim/assets/turtlebot3_burger_og.usd
 </span></code></pre></div>
-</li>
-</ul>
-<ul>
-<li>LiDAR driver<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-vlp-ws<span class="w"> </span>/home/ros2-essentials/vlp_ws/scripts/lidar-driver-bringup.sh
+<p>or use <code>File &gt; Open Recent</code> to re-open it, and click <code>Play (SPACE)</code> to start simulation.</p>
+<p>To view the OmniGraph, right click the ActionGraph on the right panel and select <code>Open Graph</code>.</p>
+<h2 id="features">🧩 Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Skip this section if you are not interested in enabling features.</p>
+<p>Note that Cartographer and Nav2 features are only supported in Gazebo simulation for now.</p>
+</blockquote>
+<h3 id="cartographer">Cartographer<a class="headerlink" href="#cartographer" title="Permanent link">&para;</a></h3>
+<p>Basic LiDAR SLAM.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_cartographer<span class="w"> </span>cartographer.launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span>True
 </span></code></pre></div>
-</li>
-</ul>
-<ul>
-<li>After launching the driver, launch the cartographer in another terminal<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-vlp-ws<span class="w"> </span>/home/ros2-essentials/vlp_ws/scripts/lidar-slam-bringup.sh
+<h3 id="nav2">Nav2<a class="headerlink" href="#nav2" title="Permanent link">&para;</a></h3>
+<p>Requires a running SLAM or a pre-generated map.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_navigation2<span class="w"> </span>navigation2.launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span><span class="nb">true</span><span class="w"> </span>map:<span class="o">=</span><span class="nv">$ROS2_WS</span>/map.yaml
 </span></code></pre></div>
-</li>
-</ul>
-<hr />
-<h2 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h2>
+<h2 id="control-robot">🕹️ Control Robot<a class="headerlink" href="#control-robot" title="Permanent link">&para;</a></h2>
+<h3 id="raw-message">Raw Message<a class="headerlink" href="#raw-message" title="Permanent link">&para;</a></h3>
+<p>Move forward:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/Twist<span class="w"> </span><span class="s2">&quot;{&#39;linear&#39;: {&#39;x&#39;: 0.2, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}, &#39;angular&#39;: {&#39;x&#39;: 0.0, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}}&quot;</span>
+</span></code></pre></div>
+<p>Stop:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/Twist<span class="w"> </span><span class="s2">&quot;{&#39;linear&#39;: {&#39;x&#39;: 0.0, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}, &#39;angular&#39;: {&#39;x&#39;: 0.0, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}}&quot;</span>
+</span></code></pre></div>
+<h3 id="teleoperate">Teleoperate<a class="headerlink" href="#teleoperate" title="Permanent link">&para;</a></h3>
+<p>Teleoperate through keyboard:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlebot3_teleop<span class="w"> </span>teleop_keyboard
+</span></code></pre></div>
+<h3 id="simple-auto-drive">Simple Auto Drive<a class="headerlink" href="#simple-auto-drive" title="Permanent link">&para;</a></h3>
+<p>Simple collision avoidance:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_drive
+</span></code></pre></div>
+<h3 id="visualize-with-rviz">Visualize with RViz<a class="headerlink" href="#visualize-with-rviz" title="Permanent link">&para;</a></h3>
+<p>Open a new terminal and visualize published topics in RViz:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_bringup<span class="w"> </span>rviz2.launch.py
+</span></code></pre></div>
+<h2 id="save-output">💾 Save Output<a class="headerlink" href="#save-output" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Skip this section if you are not interested in saving maps.</p>
+</blockquote>
+<h3 id="occupancy-grid-map">Occupancy Grid Map<a class="headerlink" href="#occupancy-grid-map" title="Permanent link">&para;</a></h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>nav2_map_server<span class="w"> </span>map_saver_cli<span class="w"> </span>-f<span class="w"> </span><span class="nv">$ROS2_WS</span>/map
+</span></code></pre></div>
+<h2 id="references">📌 References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/ros-drivers/velodyne/tree/d8cf623a922b1f12995e8c71295924c2905bd9a3">Velodyne_driver with ROS2 Humble</a></li>
-<li><a href="https://github.com/cartographer-project/cartographer_ros/tree/c138034db0c47fe0ea5a2abe516acae02190dbf5">Cartographer ROS</a></li>
-<li><a href="https://github.com/ROBOTIS-GIT/turtlebot3/tree/a7dd05ae176f3f3778b0a36f7065dc9655b050e3">Turtlebot3 with Cartographer</a></li>
+<li><a href="https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/">TurtleBot3 | ROBOTIS Documentation</a></li>
 </ul>
 
 
@@ -1117,7 +1105,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 24, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 17, 2025</span>
   </span>
 
     
@@ -1127,7 +1115,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 19, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 5, 2024</span>
   </span>
 
     
