@@ -1,0 +1,103 @@
+version: '3'
+services:
+  zed-ws:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: j3soon/ros2-zed-ws
+    container_name: ros2-zed-ws
+    stdin_open: true
+    tty: true
+    privileged: true
+    command: /bin/bash
+    network_mode: host
+    working_dir: /home/ros2-agv-essentials/zed_ws
+    environment:
+      - DISPLAY=${DISPLAY}
+      # Set ros2 environment variables.
+      # References:
+      # - https://docs.ros.org/en/humble/Concepts/Intermediate/About-Domain-ID.html
+      # - https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html
+      # - https://docs.ros.org/en/humble/Tutorials/Demos/Logging-and-logger-configuration.html#console-output-colorizing
+      # - ROS_LOCALHOST_ONLY=1
+      - ROS_DOMAIN_ID=42
+      - ROS2_WS=/home/ros2-agv-essentials/zed_ws
+      - RCUTILS_COLORIZED_OUTPUT=1
+    # If you want to access GPU, please uncomment the lines below.
+    # Reference : https://docs.docker.com/compose/gpu-support/
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    volumes:
+      # Mount local timezone into container. ( Readonly )
+      # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      # Mount X11 server
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      # Mount devices
+      - /dev:/dev
+      # Mount Gazebo models directory to reuse models downloaded during first launch.
+      # Reference: https://answers.ros.org/question/365658
+      - ./cache/.gazebo:/home/user/.gazebo
+      # Mounting the following directories will forbid direct deletion.
+      # Consider mount these directories only if the build process is slow.
+      # "source=${localWorkspaceFolder}/../cache/humble/build,target=/home/ws/build,type=bind",
+      # "source=${localWorkspaceFolder}/../cache/humble/install,target=/home/ws/install,type=bind",
+      # "source=${localWorkspaceFolder}/../cache/humble/log,target=/home/ws/log,type=bind"
+      # Mount workspace
+      - ../..:/home/ros2-agv-essentials
+  zed-isaac-sim:
+    # The following configurations are based on the official Isaac Sim container installation guide.
+    # Reference: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_container.html
+    build:
+      context: .
+      dockerfile: Dockerfile.isaac-sim
+    image: j3soon/ros2-zed-isaac-sim
+    container_name: ros2-zed-isaac-sim
+    stdin_open: true
+    tty: true
+    privileged: true
+    entrypoint: bash
+    network_mode: host
+    working_dir: /isaac-sim
+    user: ubuntu
+    environment:
+      - DISPLAY=${DISPLAY}
+      # Set Isaac Sim environment variables.
+      - ACCEPT_EULA=Y
+      - PRIVACY_CONSENT=Y
+      # Set ROS2 environment variables.
+      - ROS_DOMAIN_ID=42
+      - RCUTILS_COLORIZED_OUTPUT=1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    volumes:
+      # Mount local timezone into container. ( Readonly )
+      # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      # Mount X11 server
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      # Mount device
+      - /dev:/dev
+      # Mount Isaac Sim Cache
+      - ./cache/kit:/isaac-sim/kit/cache
+      - ./cache/ov:/home/ubuntu/.cache/ov
+      - ./cache/pip:/home/ubuntu/.cache/pip
+      - ./cache/glcache:/home/ubuntu/.cache/nvidia/GLCache
+      - ./cache/computecache:/home/ubuntu/.nv/ComputeCache
+      - ./cache/logs:/home/ubuntu/.nvidia-omniverse/logs
+      - ./cache/data:/home/ubuntu/.local/share/ov/data
+      - ./cache/documents:/home/ubuntu/Documents
+      # Mount workspace
+      - ../..:/home/ros2-agv-essentials
