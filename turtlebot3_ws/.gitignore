@@ -1,0 +1,13 @@
+# Visual Studio Code
+.vscode
+
+# ROS2 basic directories
+/build
+/install
+/log
+
+# Soft Links
+/docs
+
+# Custom ignores
+/isaacsim/assets
