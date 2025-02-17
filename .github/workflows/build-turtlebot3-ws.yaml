@@ -103,7 +103,7 @@ jobs:
           cache-from: |
             j3soon/ros2-template-ws:buildcache-amd64
             j3soon/ros2-template-ws:buildcache-arm64
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
       - name: Push amd64 cache
         uses: docker/build-push-action@v6
@@ -115,16 +115,6 @@ jobs:
           cache-to: type=registry,ref=j3soon/ros2-turtlebot3-ws:buildcache-amd64,mode=max
           platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
-      - name: Push arm64 cache
-        uses: docker/build-push-action@v6
-        with:
-          context: turtlebot3_ws/docker
-          cache-from: |
-            j3soon/ros2-template-ws:buildcache-amd64
-            j3soon/ros2-template-ws:buildcache-arm64
-          cache-to: type=registry,ref=j3soon/ros2-turtlebot3-ws:buildcache-arm64,mode=max
-          platforms: linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
       - name: Push image
         uses: docker/build-push-action@v6
         with:
@@ -132,6 +122,6 @@ jobs:
           cache-from: |
             j3soon/ros2-template-ws:buildcache-amd64
             j3soon/ros2-template-ws:buildcache-arm64
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
