@@ -115,6 +115,13 @@ USER $USERNAME
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
 
+# Install `libxrandr2` to support Isaac Sim WebRTC streaming
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    if [ "$TARGETARCH" = "amd64" ]; then \
+        sudo apt-get update && sudo apt-get install -y \
+        libxrandr2 \
+        && sudo rm -rf /var/lib/apt/lists/*; \
+    fi
 # Install Isaac Sim (requires Python 3.10)
 # Note that installing Isaac Sim with pip is experimental, keep this in mind when unexpected error occurs
 # TODO: Remove the note above when it is no longer experimental
@@ -124,13 +131,6 @@ RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
         python3 -V | grep "Python 3.10" \
         && pip install isaacsim==4.2.0.2 --extra-index-url https://pypi.nvidia.com \
         && pip install isaacsim-extscache-physics==4.2.0.2 isaacsim-extscache-kit==4.2.0.2 isaacsim-extscache-kit-sdk==4.2.0.2 --extra-index-url https://pypi.nvidia.com; \
-    fi
-# Install `libxrandr2` to support Isaac Sim WebRTC streaming
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    if [ "$TARGETARCH" = "amd64" ]; then \
-        apt-get update && apt-get install -y \
-        libxrandr2 \
-        && rm -rf /var/lib/apt/lists/*; \
     fi
 
 # Fix SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) `numpy==1.26.0`.
