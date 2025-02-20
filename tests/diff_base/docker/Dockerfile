@@ -120,6 +120,13 @@ RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
         && pip install isaacsim==4.2.0.2 --extra-index-url https://pypi.nvidia.com \
         && pip install isaacsim-extscache-physics==4.2.0.2 isaacsim-extscache-kit==4.2.0.2 isaacsim-extscache-kit-sdk==4.2.0.2 --extra-index-url https://pypi.nvidia.com; \
     fi
+# Install `libxrandr2` to support Isaac Sim WebRTC streaming
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    if [ "$TARGETARCH" = "amd64" ]; then \
+        apt-get update && apt-get install -y \
+        libxrandr2 \
+        && rm -rf /var/lib/apt/lists/*; \
+    fi
 
 # Fix SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) `numpy==1.26.0`.
 RUN pip install scipy==1.14.1 numpy==1.26.0
