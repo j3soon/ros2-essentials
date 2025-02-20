@@ -1,5 +1,14 @@
 # TurtleBot3
 
+[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/turtlebot3_ws)
+[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-turtlebot3-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-turtlebot3-ws.yaml)
+[![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=turtlebot3_ws)](https://github.com/j3soon/ros2-essentials/commits/main/turtlebot3_ws)
+
+[![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--turtlebot3--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-turtlebot3-ws/tags)
+![Docker image arch](https://img.shields.io/badge/arch-amd64-blueviolet)
+![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-turtlebot3-ws)
+![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-turtlebot3-ws)
+
 > Please note that this workspace is only tested in simulation.
 
 ## 🐳 Start Container
@@ -71,11 +80,19 @@ python3 create_turtlebot3_burger_from_urdf.py
 python3 create_turtlebot3_burger_with_omnigraph.py
 ```
 
-Start Isaac Sim:
+Start Isaac Sim in GUI mode:
 
 ```sh
 isaacsim omni.isaac.sim
 ```
+
+> Alternatively, start Isaac Sim in headless WebRTC mode:
+> 
+> ```sh
+> isaacsim omni.isaac.sim.headless.webrtc --no-window
+> ```
+>
+> and visit <http://127.0.0.1:8211/streaming/webrtc-demo/?server=127.0.0.1> to stream through WebRTC.
 
 Open the file with OmniGraph we just generated in the bottom panel:
 
