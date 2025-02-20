@@ -56,6 +56,9 @@ services:
             - driver: nvidia
               count: all
               capabilities: [ gpu ]
+    # Enable NVIDIA runtime (recommended but optional).
+    # Reference: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html
+    runtime: nvidia
     volumes:
       # Mount local timezone into container.
       # Reference: https://stackoverflow.com/questions/57607381/how-do-i-change-timezone-in-a-docker-container
