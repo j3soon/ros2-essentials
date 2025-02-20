@@ -61,6 +61,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+        # Temporary hotfix for the setup-qemu-action
+        # Ref: https://github.com/tonistiigi/binfmt/issues/240
+        with:
+          platforms: linux/amd64,linux/arm64
+          image: tonistiigi/binfmt:qemu-v7.0.0-28
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - # Ref: https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#upgrading-a-workflow-that-accesses-a-registry-using-a-personal-access-token
