@@ -1,0 +1,9 @@
+<library path="dg3f_m_driver">
+  <class name="dg3f_m_driver/SystemInterface"
+         type="dg3f_m_driver::SystemInterface"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      A ROS2-control SystemInterface for DG-3F-M. 
+    </description>
+  </class>
+</library>

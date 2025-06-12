@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<robot name="delto_5f" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- 손 방향 설정 (right 또는 left) -->
+    <!-- <xacro:arg name="hand" default="right"/> -->
+
+    <!-- prefix 변수 지정 -->
+    <!-- <xacro:property name="prefix" value="${'rj' if hand == 'right' else 'lj'}"/> -->
+
+
+    <xacro:include filename="$(find dg_description)/urdf/dg3f_m.urdf"/>
+
+
+    <link name="base_link" />
+
+    <joint name="base_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="l_dg_base"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <ros2_control name="dg3f_m_driver" type="system">
+        <hardware>
+            <plugin>dg3f_m_driver/SystemInterface</plugin>
+            <param name="delto_ip">$(arg delto_ip)</param>
+            <param name="delto_port">$(arg delto_port)</param>
+            <param name="fingertip_sensor">false</param>
+            <param name="IO">false</param>
+        </hardware>
+
+        <!-- Finger 1 joints -->
+        <joint name="j_dg_1_1">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="j_dg_1_2">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="j_dg_1_3">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="j_dg_1_4">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <!-- Finger 2 joints -->
+        <joint name="j_dg_2_1">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="j_dg_2_2">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="j_dg_2_3">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="j_dg_2_4">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <!-- Finger 3 joints -->
+        <joint name="j_dg_3_1">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="j_dg_3_2">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="j_dg_3_3">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="j_dg_3_4">
+            <command_interface name="effort"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+    </ros2_control>
+</robot>

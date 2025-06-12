@@ -1,0 +1,32 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 500  # Hz
+
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+joint_trajectory_controller:
+  ros__parameters:
+    position_proportional_gain: 10.0
+    joints:
+    - j_dg_1_1
+    - j_dg_1_2
+    - j_dg_1_3
+    - j_dg_1_4
+    - j_dg_2_1
+    - j_dg_2_2
+    - j_dg_2_3
+    - j_dg_2_4
+    - j_dg_3_1
+    - j_dg_3_2
+    - j_dg_3_3
+    - j_dg_3_4
+    
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
