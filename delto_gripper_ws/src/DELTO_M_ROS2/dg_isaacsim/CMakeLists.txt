@@ -16,6 +16,7 @@ install(
 install(
   PROGRAMS 
   script/dg5f_right_isaacsim_test.py
+  script/joint_command_convertor.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
