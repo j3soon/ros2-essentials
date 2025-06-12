@@ -12,9 +12,9 @@
     </joint>
 
 
-    <ros2_control name="GazeboSimSystem" type="system">
+    <ros2_control name="Isaac" type="system">
         <hardware>
-            <plugin>ign_ros2_control/IgnitionSystem</plugin>
+            <plugin>fake_components/GenericSystem</plugin>
         </hardware>
 
         <!-- Finger 1 joints -->
