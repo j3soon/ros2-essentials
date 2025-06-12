@@ -166,19 +166,25 @@ RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
         && pip install isaacsim-extscache-physics==4.2.0.2 isaacsim-extscache-kit==4.2.0.2 isaacsim-extscache-kit-sdk==4.2.0.2 --extra-index-url https://pypi.nvidia.com; \
     fi
 
-# Fix SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) `numpy==1.26.0`.
-RUN pip install scipy==1.14.1 numpy==1.26.0
+# Fix SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) `numpy==1.26.0`, only for amd64
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        pip install scipy==1.14.1 numpy==1.26.0; \
+    fi
 
-# Create isaac sim cache directory with correct ownership to avoid permission issues after volume mount
-RUN sudo mkdir -p /isaac-sim/kit/cache \
-    && sudo chown -R $USERNAME:$USERNAME /isaac-sim/kit/cache
-RUN mkdir -p /home/$USERNAME/.cache/ov \
-    && mkdir -p /home/$USERNAME/.cache/pip \
-    && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
-    && mkdir -p /home/$USERNAME/.nv/ComputeCache \
-    && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
-    && mkdir -p /home/$USERNAME/.local/share/ov/data \
-    && mkdir -p /home/$USERNAME/Documents
+# Create isaac sim cache directory with correct ownership to avoid permission issues after volume mount, only for amd64
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        sudo mkdir -p /isaac-sim/kit/cache \
+        && sudo chown -R $USERNAME:$USERNAME /isaac-sim/kit/cache; \
+    fi
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        mkdir -p /home/$USERNAME/.cache/ov \
+        && mkdir -p /home/$USERNAME/.cache/pip \
+        && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
+        && mkdir -p /home/$USERNAME/.nv/ComputeCache \
+        && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
+        && mkdir -p /home/$USERNAME/.local/share/ov/data \
+        && mkdir -p /home/$USERNAME/Documents; \
+    fi
 
 # Set Isaac Sim environment variables
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim
