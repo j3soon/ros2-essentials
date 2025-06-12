@@ -11,10 +11,6 @@ ARG TARGETARCH
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 
-# Arguments for the default user
-ARG USERNAME=user
-ARG USER_UID=1000
-
 # Keep downloaded packages for caching purposes
 # Ref: https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/reference.md#example-cache-apt-packages
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
@@ -26,14 +22,6 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloa
 # Ref: https://github.com/moby/buildkit/issues/1673#issuecomment-1987107404
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get upgrade -y \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install sudo and create a user with sudo privileges
-# Ref: https://stackoverflow.com/a/65434659
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    apt-get update && apt-get install -y sudo \
-    && useradd -m -s /bin/bash -u $USER_UID -G sudo $USERNAME \
-    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
     && rm -rf /var/lib/apt/lists/*
 
 # Install common tools
@@ -138,6 +126,18 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-rviz2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Arguments for the default user
+ARG USERNAME=user
+ARG USER_UID=1000
+
+# Install sudo and create a user with sudo privileges
+# Ref: https://stackoverflow.com/a/65434659
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    apt-get update && apt-get install -y sudo \
+    && useradd -m -s /bin/bash -u $USER_UID -G sudo $USERNAME \
+    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
     && rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME
