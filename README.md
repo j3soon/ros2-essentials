@@ -52,12 +52,14 @@ Some functionalities may still work on lower-spec systems, such as those without
 ## Building Documentation
 
 ```sh
-# (Optional) Create and activate python virtual environment
-virtualenv venv -p python3
-source venv/bin/activate
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+# Create and activate python virtual environment
+uv venv --python 3.10
+source .venv/bin/activate
 # Install dependencies and start serving
 cd docs
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 mkdocs serve
 # Go to https://127.0.0.1:8000 to view the site.
 ```
