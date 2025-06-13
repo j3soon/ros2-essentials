@@ -37,6 +37,7 @@ The docker image of the template workspace is share by most of the workspace, al
 | [Gazebo World](https://j3soon.github.io/ros2-essentials/gazebo-world-ws/) | ✔️ | ❌️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [ALOHA](https://j3soon.github.io/ros2-essentials/aloha-ws/) | ✔️ | ✔️ | Simulation only | [Johnson](https://github.com/j3soon) |
 | [Turtlebot3](https://j3soon.github.io/ros2-essentials/turtlebot3-ws/) | ✔️ | ❌️ | Simulation only | [Johnson](https://github.com/j3soon) |
+| [Tesollo Delto Gripper](https://j3soon.github.io/ros2-essentials/delto-gripper-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 
 If you have trouble using a workspace, please [open an issue](https://github.com/j3soon/ros2-essentials/issues) and tag the current maintainers mentioned above.
 

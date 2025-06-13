@@ -1,4 +1,13 @@
-# delto_gripper_ws
+# Tesollo Delto Gripper
+
+[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/delto_gripper_ws)
+[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-delto-gripper-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-delto-gripper-ws.yaml)
+[![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=delto_gripper_ws)](https://github.com/j3soon/ros2-essentials/commits/main/delto_gripper_ws)
+
+[![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--delto--gripper--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-delto-gripper-ws/tags)
+![Docker image arch](https://img.shields.io/badge/arch-amd64-blueviolet)
+![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-delto-gripper-ws)
+![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-delto-gripper-ws)
 
 This repository will help you configure the environment for Delto Gripper quickly.
 
