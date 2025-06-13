@@ -130,8 +130,7 @@ echo -e "\e[94mSetup Open Robotics package server to install ROS 2 Humble\e[0m"
 # Check if ROS 2 sources are already installed
 if [ -e /etc/apt/sources.list.d/ros2.list ]; then
   echo -e "\e[33mWarn: ROS 2 sources exist, skipping\e[0m"
-elif [ -e /etc/apt/sources.list.d/ros2-latest.list ]; then
-  # Ref: https://github.com/osrf/docker_images/blob/8f0b09f0c031e23f27f57cdd82f60653d7ac34e4/ros2/source/devel/Dockerfile#L45
+elif [ -e /etc/apt/sources.list.d/ros2.sources ]; then
   echo -e "\e[33mWarn: ROS 2 docker sources exist, skipping\e[0m"
 else
   sudo apt -y -qq install software-properties-common
