@@ -9,10 +9,6 @@ FROM arm64v8/ros:humble AS arm64
 FROM $TARGETARCH
 ARG TARGETARCH
 
-# Arguments for the default user
-ARG USERNAME=user
-ARG USER_UID=1000
-
 # Keep downloaded packages for caching purposes
 # Ref: https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/reference.md#example-cache-apt-packages
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
@@ -24,14 +20,6 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloa
 # Ref: https://github.com/moby/buildkit/issues/1673#issuecomment-1987107404
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get upgrade -y \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install sudo and create a user with sudo privileges
-# Ref: https://stackoverflow.com/a/65434659
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    apt-get update && apt-get install -y sudo \
-    && useradd -m -s /bin/bash -u $USER_UID -G sudo $USERNAME \
-    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
     && rm -rf /var/lib/apt/lists/*
 
 # Install common tools
@@ -138,6 +126,18 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-rviz2 \
     && rm -rf /var/lib/apt/lists/*
 
+# Arguments for the default user
+ARG USERNAME=user
+ARG USER_UID=1000
+
+# Install sudo and create a user with sudo privileges
+# Ref: https://stackoverflow.com/a/65434659
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    apt-get update && apt-get install -y sudo \
+    && useradd -m -s /bin/bash -u $USER_UID -G sudo $USERNAME \
+    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+    && rm -rf /var/lib/apt/lists/*
+
 USER $USERNAME
 
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
@@ -161,19 +161,25 @@ RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
         && pip install isaacsim-extscache-physics==4.2.0.2 isaacsim-extscache-kit==4.2.0.2 isaacsim-extscache-kit-sdk==4.2.0.2 --extra-index-url https://pypi.nvidia.com; \
     fi
 
-# Fix SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) `numpy==1.26.0`.
-RUN pip install scipy==1.14.1 numpy==1.26.0
+# Fix SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) `numpy==1.26.0`, only for amd64
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        pip install scipy==1.14.1 numpy==1.26.0; \
+    fi
 
-# Create isaac sim cache directory with correct ownership to avoid permission issues after volume mount
-RUN sudo mkdir -p /isaac-sim/kit/cache \
-    && sudo chown -R $USERNAME:$USERNAME /isaac-sim/kit/cache
-RUN mkdir -p /home/$USERNAME/.cache/ov \
-    && mkdir -p /home/$USERNAME/.cache/pip \
-    && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
-    && mkdir -p /home/$USERNAME/.nv/ComputeCache \
-    && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
-    && mkdir -p /home/$USERNAME/.local/share/ov/data \
-    && mkdir -p /home/$USERNAME/Documents
+# Create isaac sim cache directory with correct ownership to avoid permission issues after volume mount, only for amd64
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        sudo mkdir -p /isaac-sim/kit/cache \
+        && sudo chown -R $USERNAME:$USERNAME /isaac-sim/kit/cache; \
+    fi
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        mkdir -p /home/$USERNAME/.cache/ov \
+        && mkdir -p /home/$USERNAME/.cache/pip \
+        && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
+        && mkdir -p /home/$USERNAME/.nv/ComputeCache \
+        && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
+        && mkdir -p /home/$USERNAME/.local/share/ov/data \
+        && mkdir -p /home/$USERNAME/Documents; \
+    fi
 
 # Set Isaac Sim environment variables
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim
