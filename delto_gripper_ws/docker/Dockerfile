@@ -188,6 +188,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     git-extras \
     && sudo rm -rf /var/lib/apt/lists/*
 
+# TODO: Add more commands here
+
 # Install delto gripper dependencies
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
@@ -199,7 +201,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-joint-state-publisher-gui \
     && sudo rm -rf /var/lib/apt/lists/*
 
-# TODO: Add more commands here
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
