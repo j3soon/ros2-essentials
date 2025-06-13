@@ -1,0 +1,193 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100 # Joint state pub rate
+    diagnostics:
+      threshold:
+        controller_manager:
+          periodicity:
+            mean_error:
+              warn: 1.0
+              error: 10.0
+            standard_deviation:
+              warn: 1.0
+              error: 10.0
+        controllers:
+          execution_time:
+            mean_error:
+              warn: 10.0
+              error: 2000.0
+            standard_deviation:
+              warn: 10.0
+              error: 200.0
+          periodicity:
+            mean_error:
+              warn: 1.0
+              error: 10.0
+            standard_deviation:
+              warn: 1.0
+              error: 10.0
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    dg5f_left_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+dg5f_left_controller:
+  ros__parameters:
+    state_publish_rate: 500.0 # 50Hz에서 500Hz로 변경
+    action_monitor_rate: 500.0 # 20Hz에서 500Hz로 변경
+    gains:
+      lj_dg_1_1:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_1_2:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_1_3:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_1_4:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_2_1:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_2_2:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_2_3:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_2_4:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_3_1:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_3_2:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_3_3:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_3_4:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_4_1:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_4_2:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_4_3:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_4_4:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_5_1:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_5_2:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_5_3:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+      lj_dg_5_4:
+        p: 50.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+
+    allow_partial_joints_goal: True
+    joints:
+      - lj_dg_1_1
+      - lj_dg_1_2
+      - lj_dg_1_3
+      - lj_dg_1_4
+      - lj_dg_2_1
+      - lj_dg_2_2
+      - lj_dg_2_3
+      - lj_dg_2_4
+      - lj_dg_3_1
+      - lj_dg_3_2
+      - lj_dg_3_3
+      - lj_dg_3_4
+      - lj_dg_4_1
+      - lj_dg_4_2
+      - lj_dg_4_3
+      - lj_dg_4_4
+      - lj_dg_5_1
+      - lj_dg_5_2
+      - lj_dg_5_3
+      - lj_dg_5_4
+
+    command_interfaces:
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+
+joint_state_broadcaster:
+  ros__parameters:
+    update_rate: 200 # Joint state pub rate
+    joints:
+      - lj_dg_1_1
+      - lj_dg_1_2
+      - lj_dg_1_3
+      - lj_dg_1_4
+      - lj_dg_2_1
+      - lj_dg_2_2
+      - lj_dg_2_3
+      - lj_dg_2_4
+      - lj_dg_3_1
+      - lj_dg_3_2
+      - lj_dg_3_3
+      - lj_dg_3_4
+      - lj_dg_4_1
+      - lj_dg_4_2
+      - lj_dg_4_3
+      - lj_dg_4_4
+      - lj_dg_5_1
+      - lj_dg_5_2
+      - lj_dg_5_3
+      - lj_dg_5_4

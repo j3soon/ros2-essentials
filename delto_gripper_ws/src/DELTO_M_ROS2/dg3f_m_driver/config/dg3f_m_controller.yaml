@@ -1,0 +1,148 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100 # Joint state pub rate
+    diagnostics:
+      threshold:
+        controller_manager:
+          periodicity:
+            mean_error:
+              warn: 1.0
+              error: 10.0
+            standard_deviation:
+              warn: 1.0
+              error: 10.0
+        controllers:
+          execution_time:
+            mean_error:
+              warn: 10.0
+              error: 2000.0
+            standard_deviation:
+              warn: 10.0
+              error: 200.0
+          periodicity:
+            mean_error:
+              warn: 1.0
+              error: 10.0
+            standard_deviation:
+              warn: 1.0
+              error: 10.0
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    dg3f_m_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+dg3f_m_controller:
+  ros__parameters:
+    state_publish_rate: 500.0 # 50Hz에서 500Hz로 변경
+    action_monitor_rate: 500.0 # 20Hz에서 500Hz로 변경
+    gains:
+      j_dg_1_1:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_1_2:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_1_3:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_1_4:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_2_1:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_2_2:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_2_3:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_2_4:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_3_1:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_3_2:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_3_3:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+      j_dg_3_4:
+        p: 150.0
+        i: 3.0
+        d: 5.0
+        i_clamp: 10.0
+        ff_velocity_scale: 0.0
+
+    allow_partial_joints_goal: True
+    joints:
+      - j_dg_1_1
+      - j_dg_1_2
+      - j_dg_1_3
+      - j_dg_1_4
+      - j_dg_2_1
+      - j_dg_2_2
+      - j_dg_2_3
+      - j_dg_2_4
+      - j_dg_3_1
+      - j_dg_3_2
+      - j_dg_3_3
+      - j_dg_3_4
+    command_interfaces:
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+
+joint_state_broadcaster:
+  ros__parameters:
+    update_rate: 200 # Joint state pub rate
+    joints:
+      - j_dg_1_1
+      - j_dg_1_2
+      - j_dg_1_3
+      - j_dg_1_4
+      - j_dg_2_1
+      - j_dg_2_2
+      - j_dg_2_3
+      - j_dg_2_4
+      - j_dg_3_1
+      - j_dg_3_2
+      - j_dg_3_3
+      - j_dg_3_4

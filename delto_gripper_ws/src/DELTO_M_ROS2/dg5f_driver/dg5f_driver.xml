@@ -1,0 +1,9 @@
+<library path="dg5f_driver">
+  <class name="dg5f_driver/SystemInterface"
+         type="dg5f_driver::SystemInterface"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      A ROS2-control SystemInterface for DG-5F. 
+    </description>
+  </class>
+</library>
