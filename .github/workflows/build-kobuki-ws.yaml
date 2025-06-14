@@ -8,7 +8,8 @@ on:
 jobs:
   paths-filter:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    # Attempt to fix: https://github.com/j3soon/ros2-essentials/issues/72
+    # Required to fix compilation error.
+    # Ref: https://github.com/j3soon/ros2-essentials/issues/72
     runs-on: ubuntu-22.04
     outputs:
       results: ${{ steps.filter.outputs.results }}
