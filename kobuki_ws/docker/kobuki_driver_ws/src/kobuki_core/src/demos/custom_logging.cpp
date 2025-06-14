@@ -52,25 +52,28 @@ public:
     }
   }
 
-  void logCustomDebug(const std::string& message) {
+  void logCustomDebug(const std::string &message)
+  {
     std::cout << ecl::green << "[DEBUG_WITH_COLANDERS] " << message << ecl::reset << std::endl;
   }
 
-  void logCustomInfo(const std::string& message) {
+  void logCustomInfo(const std::string &message)
+  {
     std::cout << "[INFO_WITH_COLANDERS] " << message << ecl::reset << std::endl;
   }
 
-  void logCustomWarning(const std::string& message) {
+  void logCustomWarning(const std::string &message)
+  {
     std::cout << ecl::yellow << "[WARNING_WITH_COLANDERS] " << message << ecl::reset << std::endl;
   }
 
-  void logCustomError(const std::string& message) {
+  void logCustomError(const std::string &message) {
     std::cout << ecl::red << "[ERROR_WITH_COLANDERS] " << message << ecl::reset << std::endl;
   }
 
 private:
   kobuki::Kobuki kobuki;
-  ecl::Slot<const std::string&> slot_debug, slot_info, slot_warning, slot_error;
+  ecl::Slot<const std::string &> slot_debug, slot_info, slot_warning, slot_error;
 };
 
 /*****************************************************************************

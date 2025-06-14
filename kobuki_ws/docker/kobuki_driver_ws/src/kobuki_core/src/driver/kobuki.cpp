@@ -14,11 +14,24 @@
 #include <stdexcept>
 
 #include <ecl/math.hpp>
+// Version 3.4.0 of Eigen in Ubuntu 22.04 has a bug that causes -Wclass-memaccess warnings on
+// aarch64.  Upstream Eigen has already fixed this in
+// https://gitlab.com/libeigen/eigen/-/merge_requests/645 .  The Debian fix for this is in
+// https://salsa.debian.org/science-team/eigen3/-/merge_requests/1 .
+// However, it is not clear that that fix is going to make it into Ubuntu 22.04 before it
+// freezes, so disable the warning here.
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wclass-memaccess"
+#endif
 #include <ecl/geometry/angle.hpp>
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
+
 #include <ecl/time/sleep.hpp>
 #include <ecl/converters.hpp>
 #include <ecl/sigslots.hpp>
-#include <ecl/geometry/angle.hpp>
 #include <ecl/time/timestamp.hpp>
 
 #include "../../include/kobuki_core/kobuki.hpp"
@@ -129,7 +142,7 @@ void Kobuki::init(Parameters &parameters)
   catch (const ecl::StandardException &e)
   {
     if (e.flag() == ecl::NotFoundError) {
-      sig_warn.emit("device does not (yet) available, is the usb connected?."); // not a failure mode.
+      sig_warn.emit("device is not (yet) available, is the usb connected?."); // not a failure mode.
     } else {
       throw ecl::StandardException(LOC, e);
     }
@@ -224,7 +237,7 @@ void Kobuki::spin()
       {
         // windows throws OpenError if not connected
         if (e.flag() == ecl::NotFoundError) {
-          sig_info.emit("device does not (yet) available on this port, waiting...");
+          sig_info.emit("device is not (yet) available on this port, waiting...");
         } else if (e.flag() == ecl::OpenError) {
           sig_info.emit("device failed to open, waiting... [" + std::string(e.what()) + "]");
         } else {

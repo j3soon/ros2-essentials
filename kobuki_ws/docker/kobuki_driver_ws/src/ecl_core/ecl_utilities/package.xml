@@ -6,7 +6,7 @@
      Includes various supporting tools and utilities for c++ programming.
   </description>
   <maintainer email="d.stonier@gmail.com">Daniel Stonier</maintainer>
-  <license>BSD</license>
+  <license>BSD-3-Clause</license>
   <url type="website">http://wiki.ros.org/ecl_utilities</url>
   <url type="repository">https://github.com/stonier/ecl_core</url>
   <url type="bugtracker">https://github.com/stonier/ecl_core/issues</url>

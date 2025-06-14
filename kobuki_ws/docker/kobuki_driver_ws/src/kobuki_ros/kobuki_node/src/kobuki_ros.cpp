@@ -596,7 +596,7 @@ void KobukiRos::publishWheelState()
   if (odom_update != nullptr) {
     odom_broadcaster_->sendTransform(*odom_update);
   }
-  odom_publisher_->publish(std::move(odometry_->getOdometry()));
+  odom_publisher_->publish(odometry_->getOdometry());
 
   joint_states_.header.stamp = this->get_clock()->now();
   joint_state_publisher_->publish(joint_states_);

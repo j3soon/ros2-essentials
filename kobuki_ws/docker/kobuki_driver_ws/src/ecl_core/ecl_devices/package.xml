@@ -6,7 +6,7 @@
      Provides an extensible and standardised framework for input-output devices.
   </description>
   <maintainer email="d.stonier@gmail.com">Daniel Stonier</maintainer>
-  <license>BSD</license>
+  <license>BSD-3-Clause</license>
   <url type="website">http://wiki.ros.org/ecl_devices</url>
   <url type="repository">https://github.com/stonier/ecl_core</url>
   <url type="bugtracker">https://github.com/stonier/ecl_core/issues</url>

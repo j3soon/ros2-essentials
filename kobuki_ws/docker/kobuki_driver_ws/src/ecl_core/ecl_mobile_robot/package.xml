@@ -7,7 +7,7 @@
     for the various types of mobile robot platforms.
   </description>
   <maintainer email="d.stonier@gmail.com">Daniel Stonier</maintainer>
-  <license>BSD</license>
+  <license>BSD-3-Clause</license>
   <url type="website">http://wiki.ros.org/ecl_mobile_robot</url>
   <url type="repository">https://github.com/stonier/ecl_navigation</url>
   <url type="bugtracker">https://github.com/stonier/ecl_navigation/issues</url>

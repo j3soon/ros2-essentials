@@ -20,7 +20,21 @@
 #include <vector>
 #include <climits>
 #include <stdint.h>
+// Version 3.4.0 of Eigen in Ubuntu 22.04 has a bug that causes -Wclass-memaccess warnings on
+// aarch64.  Upstream Eigen has already fixed this in
+// https://gitlab.com/libeigen/eigen/-/merge_requests/645 .  The Debian fix for this is in
+// https://salsa.debian.org/science-team/eigen3/-/merge_requests/1 .
+// However, it is not clear that that fix is going to make it into Ubuntu 22.04 before it
+// freezes, so disable the warning here.
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wclass-memaccess"
+#endif
 #include <ecl/geometry.hpp>
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
+
 #include <ecl/mobile_robot.hpp>
 #include <ecl/threads/mutex.hpp>
 #include "../macros.hpp"

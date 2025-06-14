@@ -32,12 +32,9 @@ public:
     kobuki::Parameters parameters;
     parameters.device_port = device;
 
-    try
-    {
+    try {
       kobuki.init(parameters);
-    }
-    catch (ecl::StandardException &e)
-    {
+    } catch (ecl::StandardException &e) {
       std::cout << e.what();
     }
     slot_stream_data.connect("/kobuki/stream_data");
@@ -49,8 +46,7 @@ public:
   void spin()
   {
     ecl::Sleep sleep(1);
-    while (true)
-    {
+    while (true) {
       sleep();
     }
   }

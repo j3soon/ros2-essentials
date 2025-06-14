@@ -43,7 +43,8 @@ public:
     }
   }
 
-  void logRawDataStream(kobuki::PacketFinder::BufferType& buffer) {
+  void logRawDataStream(kobuki::PacketFinder::BufferType& buffer)
+  {
     std::ostringstream ostream;
     ostream << ecl::cyan << "[" << ecl::TimeStamp() << "] " << ecl::yellow;
     ostream << std::setfill('0') << std::uppercase;
