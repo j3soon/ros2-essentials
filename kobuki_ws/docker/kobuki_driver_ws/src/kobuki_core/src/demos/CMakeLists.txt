@@ -23,10 +23,11 @@ endmacro()
 # Tests
 ###############################################################################
 
+kobuki_core_add_demo(buttons)
 kobuki_core_add_demo(chirp)
 kobuki_core_add_demo(custom_logging)
-kobuki_core_add_demo(buttons)
-kobuki_core_add_demo(raw_data_stream)
 kobuki_core_add_demo(data_stream)
-kobuki_core_add_demo(velocity_commands)
+kobuki_core_add_demo(log_levels)
+kobuki_core_add_demo(raw_data_stream)
 kobuki_core_add_demo(simple_loop)
+kobuki_core_add_demo(velocity_commands)

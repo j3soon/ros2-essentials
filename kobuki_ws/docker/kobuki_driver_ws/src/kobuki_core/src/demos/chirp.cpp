@@ -45,12 +45,9 @@ public:
     parameters.battery_dangerous = 13.2;
 
     // Initialise - exceptions are thrown if parameter validation or initialisation fails.
-    try
-    {
+    try {
       kobuki.init(parameters);
-    }
-    catch (ecl::StandardException &e)
-    {
+    } catch (ecl::StandardException &e) {
       std::cout << e.what();
     }
   }

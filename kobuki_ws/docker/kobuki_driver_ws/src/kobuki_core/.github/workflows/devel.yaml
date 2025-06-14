@@ -1,5 +1,5 @@
 
-name: doxygen
+name: doxygen-build-commit-push
 
 on:
   push:

@@ -34,12 +34,9 @@ public:
     kobuki::Parameters parameters;
     parameters.device_port = device;
 
-    try
-    {
+    try {
       kobuki.init(parameters);
-    }
-    catch (ecl::StandardException &e)
-    {
+    } catch (ecl::StandardException &e) {
       std::cout << e.what();
     }
     slot_button_event.connect("/kobuki/button_event");
@@ -51,8 +48,7 @@ public:
   void spin()
   {
     ecl::Sleep sleep(1);
-    while (true)
-    {
+    while (true) {
       sleep();
     }
   }
@@ -73,7 +69,7 @@ public:
     std::random_device r;
     std::default_random_engine generator(r());
     std::uniform_int_distribution<int> distribution(0, 5);
-    if (event.state == kobuki::ButtonEvent::Released ) {
+    if (event.state == kobuki::ButtonEvent::Released) {
       std::cout << quotes[distribution(generator)] << std::endl;
     }
   }

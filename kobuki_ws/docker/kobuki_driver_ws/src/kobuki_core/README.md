@@ -4,7 +4,7 @@
 
 ----
 
-The **Kobuki Core** stack consists of c++ libraries and utilities for working with a [Kobuki Robot](http:/kobuki.yujinrobot.com).
+The **Kobuki Core** stack consists of c++ libraries and utilities for working with a [Kobuki Robot](https://iclebo-kobuki.readthedocs.io/en/latest/).
 
 ----
 
