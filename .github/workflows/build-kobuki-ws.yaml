@@ -8,8 +8,7 @@ on:
 jobs:
   paths-filter:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    # Attempt to fix: https://github.com/j3soon/ros2-essentials/issues/72
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     outputs:
       results: ${{ steps.filter.outputs.results }}
     steps:
@@ -99,15 +98,23 @@ jobs:
         run: docker pull --platform linux/amd64 j3soon/ros2-template-ws
       - name: Pull j3soon/ros2-template-ws (arm64)
         run: docker pull --platform linux/arm64 j3soon/ros2-template-ws
-      - name: Build image
+      # Build multi-platform images sequentially to avoid resource exhaustion
+      - name: Build amd64 image
         uses: docker/build-push-action@v6
         with:
           context: kobuki_ws/docker
           cache-from: |
             j3soon/ros2-template-ws:buildcache-amd64
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}-amd64
+      - name: Build arm64 image
+        uses: docker/build-push-action@v6
+        with:
+          context: kobuki_ws/docker
+          cache-from: |
             j3soon/ros2-template-ws:buildcache-arm64
-          platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
+          platforms: linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}-arm64
       - name: Push amd64 cache
         uses: docker/build-push-action@v6
         with:

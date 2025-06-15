@@ -247,7 +247,7 @@ COPY --chown=$USERNAME:$USERNAME \
     kobuki_driver_ws /home/$USERNAME/kobuki_driver_ws
 RUN cd /home/$USERNAME/kobuki_driver_ws \
     && rm -rf COLCON_IGNORE \
-    && /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build --symlink-install"
+    && /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build --symlink-install --executor sequential"
 
 ENTRYPOINT []
 CMD ["/bin/bash"]
