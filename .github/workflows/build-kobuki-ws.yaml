@@ -65,13 +65,13 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-        # Build multi-platform images sequentially to avoid resource exhaustion
-        # Ref: https://github.com/j3soon/ros2-essentials/issues/72
-        # Ref: https://github.com/docker/build-push-action/issues/654
-        with:
-          config-inline: |
-            [worker.oci]
-              max-parallelism = 1
+        # # Build multi-platform images sequentially to avoid resource exhaustion
+        # # Ref: https://github.com/j3soon/ros2-essentials/issues/72
+        # # Ref: https://github.com/docker/build-push-action/issues/654
+        # with:
+        #   config-inline: |
+        #     [worker.oci]
+        #       max-parallelism = 1
       - # Ref: https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#upgrading-a-workflow-that-accesses-a-registry-using-a-personal-access-token
         name: Prepare tag name as environment variable
         run: |
@@ -105,14 +105,21 @@ jobs:
         run: docker pull --platform linux/amd64 j3soon/ros2-template-ws
       - name: Pull j3soon/ros2-template-ws (arm64)
         run: docker pull --platform linux/arm64 j3soon/ros2-template-ws
-      - name: Build image
+      - name: Build amd64 image
         uses: docker/build-push-action@v6
         with:
           context: kobuki_ws/docker
           cache-from: |
             j3soon/ros2-template-ws:buildcache-amd64
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+      - name: Build arm64 image
+        uses: docker/build-push-action@v6
+        with:
+          context: kobuki_ws/docker
+          cache-from: |
             j3soon/ros2-template-ws:buildcache-arm64
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
       - name: Push amd64 cache
         uses: docker/build-push-action@v6
