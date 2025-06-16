@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       results: ${{ steps.filter.outputs.results }}
+      original_ref: ${{ steps.set-ref.outputs.original_ref }}
     steps:
     # Ref: https://github.com/dorny/paths-filter/issues/147#issuecomment-1287800590
     - name: Download a single artifact
@@ -20,9 +21,11 @@ jobs:
         name: original-refs
         workflow_conclusion: success
     - name: set REF_BASE to env
+      id: set-ref
       run: |
         echo "BASE=$(cat base.txt)" >> $GITHUB_ENV
         echo "CURRENT_BRANCH=$(cat current-branch.txt)" >> $GITHUB_ENV
+        echo "original_ref=$(cat current-branch.txt)" >> $GITHUB_OUTPUT
     - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v3
       id: filter
@@ -45,7 +48,7 @@ jobs:
       run: echo "Changes didn't match, will NOT build image"
   docker:
     needs: paths-filter
-    if: ${{ needs.paths-filter.outputs.results == 'true' }}
+    if: ${{ needs.paths-filter.outputs.results == 'true' || startsWith(needs.paths-filter.outputs.original_ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
     steps:
       - name: Maximize build space
@@ -68,10 +71,12 @@ jobs:
       - # Ref: https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#upgrading-a-workflow-that-accesses-a-registry-using-a-personal-access-token
         name: Prepare tag name as environment variable
         run: |
+          # Use the original ref from the triggering workflow
+          ORIGINAL_REF="${{ needs.paths-filter.outputs.original_ref }}"
           # This strips the git ref prefix from the version.
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          VERSION=$(echo "$ORIGINAL_REF" | sed -e 's,.*/\(.*\),\1,')
           # This strips the "v" prefix from the tag name.
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          [[ "$ORIGINAL_REF" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # This uses the Docker `latest` tag convention.
           [ "$VERSION" == "main" ] && VERSION=latest
           # Output the environment variable

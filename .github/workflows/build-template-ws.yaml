@@ -48,7 +48,7 @@ jobs:
         retention-days: 1
   docker:
     needs: paths-filter
-    if: ${{ needs.paths-filter.outputs.results == 'true' }}
+    if: ${{ needs.paths-filter.outputs.results == 'true' || startsWith(github.ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
     steps:
       - name: Maximize build space
