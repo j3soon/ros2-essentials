@@ -45,3 +45,9 @@ isaacsim omni.isaac.sim
 ```bash
 ros2 launch dg5f_isaacsim dg5f_right_isaacsim.launch.py
 ```
+
+## References
+
+Dependencies:
+
+- [Tesollo-Delto/DELTO_M_ROS2](https://github.com/Tesollo-Delto/DELTO_M_ROS2) (at commit 942c166) is licensed under the BSD-3-Clause license.
