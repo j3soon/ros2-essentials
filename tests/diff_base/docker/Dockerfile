@@ -103,6 +103,17 @@ ENV OMNI_USER=admin
 ENV OMNI_PASS=admin
 ENV OMNI_KIT_ACCEPT_EULA=YES
 
+# Set TERM to prevent Isaac Lab error during docker build:
+#    'ansi+tabs': unknown terminal type.
+ENV TERM=xterm-256color
+# Isaac Lab version configuration
+ARG ISAAC_LAB_VERSION=2.1.0
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_isaac_lab.sh /tmp/install_isaac_lab.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
+    ISAAC_LAB_VERSION=$ISAAC_LAB_VERSION /tmp/install_isaac_lab.sh && rm /tmp/install_isaac_lab.sh
+
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \

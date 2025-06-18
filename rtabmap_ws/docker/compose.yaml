@@ -23,6 +23,9 @@ services:
       # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
       # args:
       #   ISAAC_SIM_VERSION: "4.5.0"
+      # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
+      # args:
+      #   ISAAC_LAB_VERSION: "2.1.0"
       cache_from:
         - j3soon/ros2-rtabmap-ws:buildcache-amd64
         - j3soon/ros2-rtabmap-ws:buildcache-arm64
