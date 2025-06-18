@@ -118,6 +118,15 @@ docker buildx rm -f --all-inactive
 
 The GitHub Actions workflow is designed to share build caches between workspaces efficiently. The template workspace is built first, and its cache is then reused by other workspaces. This means that while the template workspace build appears in the commit history, other workspace builds are triggered indirectly and only show up in the GitHub Actions tab. For implementation details, see [commit `024f52a`](https://github.com/j3soon/ros2-essentials/commit/024f52a2bb8a58ad20c03a067560215e8cef6307).
 
+Some current CI builds are flaky and may require re-running.
+
+### Docker Compose Cleanup
+
+```sh
+# cd into a workspace directory's docker directory
+docker compose down --volumes --remove-orphans
+```
+
 ## Acknowledgement
 
 The code is mainly contributed by [Johnson](https://github.com/j3soon), [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), [Lam Chon Hang](https://github.com/ClassLongJoe1112), and others. For a full list of contributors, please refer to the [contribution list](https://github.com/j3soon/ros2-essentials/graphs/contributors).
