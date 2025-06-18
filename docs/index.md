@@ -16,6 +16,7 @@ The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 ```sh
 git clone https://github.com/j3soon/ros2-essentials.git
 cd ros2-essentials
+./scripts/post_install.sh
 ```
 
 ## Pre-built Workspaces

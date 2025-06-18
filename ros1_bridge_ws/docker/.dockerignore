@@ -1,3 +1,5 @@
 *
+!.bashrc
+!modules
 !start-bridge.sh
 !.env

@@ -34,6 +34,7 @@ jobs:
         ref: ${{ env.CURRENT_BRANCH }}
         filters: |
           results:
+            - docker_modules/**
             - .github/workflows/build-gazebo-world-ws.yaml
             - gazebo_world_ws/docker/Dockerfile
             - gazebo_world_ws/docker/.dockerignore
@@ -62,6 +63,8 @@ jobs:
         run: sudo service docker restart
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Run post install script
+        run: scripts/post_install.sh
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx

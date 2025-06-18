@@ -16,8 +16,8 @@ ln "${PWD}/README.md" docs/index.md
 for ws in "${workspaces[@]}"
 do
     ws_hyphen="$(echo $ws | sed "s/_/-/g")"
-    rm "${ws}/docs" || true
+    rm "${ws}/docs" 2>/dev/null || true
     ln -s "${PWD}/docs/${ws_hyphen}" "${ws}/docs"
 done
 
-echo "Done."
+echo "Set up docs link done."

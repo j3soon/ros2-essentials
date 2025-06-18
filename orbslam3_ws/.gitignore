@@ -8,6 +8,7 @@
 
 # Soft Links
 /docs
+/docker/modules
 
 # ROS2 bag files
 V1_02_medium.bag

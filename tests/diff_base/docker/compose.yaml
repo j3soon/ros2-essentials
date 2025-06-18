@@ -21,6 +21,9 @@ services:
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
       # platforms:
       #   - "linux/arm64"
+      # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
+      # args:
+      #   ISAAC_SIM_VERSION: "4.2.0.2"
       cache_from:
         - j3soon/ros2-{PLACEHOLDER}-ws:buildcache-amd64
         - j3soon/ros2-{PLACEHOLDER}-ws:buildcache-arm64
