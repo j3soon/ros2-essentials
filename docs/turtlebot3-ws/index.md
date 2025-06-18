@@ -83,13 +83,13 @@ python3 create_turtlebot3_burger_with_omnigraph.py
 Start Isaac Sim in GUI mode:
 
 ```sh
-isaacsim isaacsim.exp.full
+~/isaacsim/isaac-sim.sh
 ```
 
 > Alternatively, start Isaac Sim in [headless WebRTC mode](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_python.html#launching-isaac-sim-experiences):
 > 
 > ```sh
-> isaacsim isaacsim.exp.full.streaming --no-window
+> isaac-sim.streaming.sh
 > ```
 >
 > and use the [WebRTC Streaming Client](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/manual_livestream_clients.html#isaac-sim-short-webrtc-streaming-client).

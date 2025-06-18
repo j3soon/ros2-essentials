@@ -88,7 +88,7 @@ USER $USERNAME
 RUN mkdir /home/$USERNAME/.gazebo
 
 # Isaac Sim version configuration
-ARG ISAAC_SIM_VERSION=4.5.0.0
+ARG ISAAC_SIM_VERSION=4.5.0
 # Copy and run Isaac Sim installation script
 COPY --chown=$USERNAME:$USERNAME \
      modules/install_isaac_sim.sh /tmp/install_isaac_sim.sh

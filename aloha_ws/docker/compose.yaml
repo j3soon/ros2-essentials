@@ -22,7 +22,7 @@ services:
       #   - "linux/arm64"
       # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
       # args:
-      #   ISAAC_SIM_VERSION: "4.5.0.0"
+      #   ISAAC_SIM_VERSION: "4.5.0"
       cache_from:
         - j3soon/ros2-aloha-ws:buildcache-amd64
         - j3soon/ros2-aloha-ws:buildcache-arm64
