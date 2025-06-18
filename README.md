@@ -72,13 +72,17 @@ mkdocs serve
 scripts/setup_docs_link.sh
 ```
 
+This is automatically done by running `./scripts/post_install.sh`.
+
 ## VSCode Intellisense
 
-If you have installed Isaac Sim 4.2.0 from [Omniverse Launcher](https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_workstation.html) to the default path `~/.local/share/ov/pkg/isaac-sim-4.2.0`, you can simply enable IntelliSense for editing any Isaac Sim scripts by running the following script:
+If you have installed [Isaac Sim 4.5.0](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_workstation.html) to the default path `~/isaacsim`, you can simply enable IntelliSense for editing any Isaac Sim scripts by running the following script:
 
 ```sh
 scripts/setup_isaac_link.sh
 ```
+
+This is automatically done by running `./scripts/post_install.sh`.
 
 ## Reusing Docker Build Cache
 

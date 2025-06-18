@@ -34,7 +34,7 @@ colcon build --symlink-install
 ### Launch the Isaacsim
 
 ```bash
-isaacsim omni.isaac.sim
+isaacsim isaacsim.exp.full
 ```
 
 > After the Isaacsim is launched, open the delto gripper usd file and play the simulation.  

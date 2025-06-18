@@ -98,7 +98,7 @@ ros2 launch interbotix_xsarm_moveit xsarm_moveit.launch.py robot_model:=vx300s h
 The Isaac Sim app can be launched with:
 
 ```sh
-isaacsim omni.isaac.sim
+isaacsim isaacsim.exp.full
 ```
 
 Keep in mind that the standalone scripts can be easily debugged in Isaac Sim's `Script Editor`.
@@ -126,7 +126,7 @@ ros2 topic echo /vx300s/joint_states
 A specific world can also be directly launched and played with:
 
 ```sh
-isaacsim omni.isaac.sim --exec '/home/ros2-essentials/aloha_ws/isaacsim/scripts/open_isaacsim_stage.py --path /home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd'
+isaacsim isaacsim.exp.full --exec '/home/ros2-essentials/aloha_ws/isaacsim/scripts/open_isaacsim_stage.py --path /home/ros2-essentials/aloha_ws/isaacsim/assets/vx300s_og.usd'
 ```
 
 To access Nucleus from Isaac Sim, you should [install Nucleus](https://docs.omniverse.nvidia.com/nucleus/latest/workstation/installation.html) with default username/password `admin:admin` on your host machine or connect to an external Nucleus server.

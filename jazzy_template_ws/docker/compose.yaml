@@ -23,7 +23,7 @@ services:
       #   - "linux/arm64"
       # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
       # args:
-      #   ISAAC_SIM_VERSION: "4.2.0.2"
+      #   ISAAC_SIM_VERSION: "4.5.0.0"
     image: j3soon/ros2-jazzy-template-ws
     container_name: ros2-jazzy-template-ws
     stdin_open: true

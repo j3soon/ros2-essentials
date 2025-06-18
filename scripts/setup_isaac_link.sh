@@ -7,6 +7,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 cd "$SCRIPT_DIR/.."
 
 rm _isaac_sim 2>/dev/null || true
-ln -s ~/.local/share/ov/pkg/isaac-sim-4.2.0 _isaac_sim
+ln -s ~/isaacsim _isaac_sim
 
 echo "Set up Isaac link done."

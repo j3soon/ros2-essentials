@@ -32,8 +32,8 @@ if [ "$TARGETARCH" = "amd64" ]; then
     # TODO: Remove the note above when it is no longer experimental
     # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#installation-using-pip
     python3 -V | grep "Python 3.10" \
-        && pip install isaacsim==$ISAAC_SIM_VERSION --extra-index-url https://pypi.nvidia.com \
-        && pip install isaacsim-extscache-physics==$ISAAC_SIM_VERSION isaacsim-extscache-kit==$ISAAC_SIM_VERSION isaacsim-extscache-kit-sdk==$ISAAC_SIM_VERSION --extra-index-url https://pypi.nvidia.com
+        && pip install isaacsim[all]==$ISAAC_SIM_VERSION --extra-index-url https://pypi.nvidia.com \
+        && pip install isaacsim[extscache]==$ISAAC_SIM_VERSION --extra-index-url https://pypi.nvidia.com
 
     echo "Fixing SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) numpy==1.26.0..."
     pip install scipy==1.14.1 numpy==1.26.0
