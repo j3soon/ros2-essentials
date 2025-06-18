@@ -7,8 +7,7 @@ services:
         mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
         mkdir -p /isaac-sim/{logs,data,documents} &&
         mkdir -p /isaac-sim/standalone/cache/ov &&
-        mkdir -p /isaac-sim/standalone/{logs,data} &&
-        chown -R 1000:1000 /isaac-sim"
+        mkdir -p /isaac-sim/standalone/{logs,data}"
     volumes:
       - isaac-sim-cache:/isaac-sim
   turtlebot3-ws:

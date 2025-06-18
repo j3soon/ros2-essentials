@@ -38,19 +38,6 @@ if [ "$TARGETARCH" = "amd64" ]; then
     echo "Fixing SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) numpy==1.26.0..."
     pip install scipy==1.14.1 numpy==1.26.0
 
-    echo "Creating isaac sim cache directory with correct ownership..."
-    sudo mkdir -p /isaac-sim/kit/cache \
-        && sudo chown -R $USERNAME:$USERNAME /isaac-sim/kit/cache
-
-    echo "Creating Isaac Sim user cache directories..."
-    mkdir -p /home/$USERNAME/.cache/ov \
-        && mkdir -p /home/$USERNAME/.cache/pip \
-        && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
-        && mkdir -p /home/$USERNAME/.nv/ComputeCache \
-        && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
-        && mkdir -p /home/$USERNAME/.local/share/ov/data \
-        && mkdir -p /home/$USERNAME/Documents
-
     echo "Isaac Sim installation completed successfully!"
 else
     echo "Skipping Isaac Sim installation for architecture: $TARGETARCH (only supported on amd64)"
