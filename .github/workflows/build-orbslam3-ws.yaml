@@ -35,10 +35,10 @@ jobs:
         filters: |
           results:
             - docker_modules/**
-          - .github/workflows/build-orbslam3-ws.yaml
-          - orbslam3_ws/docker/Dockerfile
-          - orbslam3_ws/docker/.dockerignore
-          - orbslam3_ws/docker/.bashrc
+            - .github/workflows/build-orbslam3-ws.yaml
+            - orbslam3_ws/docker/Dockerfile
+            - orbslam3_ws/docker/.dockerignore
+            - orbslam3_ws/docker/.bashrc
     - name: Changes matched
       if: steps.filter.outputs.results == 'true'
       run: echo "Changes matched, will build image"

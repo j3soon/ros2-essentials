@@ -35,10 +35,10 @@ jobs:
         filters: |
           results:
             - docker_modules/**
-          - .github/workflows/build-rtabmap-ws.yaml
-          - rtabmap_ws/docker/Dockerfile
-          - rtabmap_ws/docker/.dockerignore
-          - rtabmap_ws/docker/.bashrc
+            - .github/workflows/build-rtabmap-ws.yaml
+            - rtabmap_ws/docker/Dockerfile
+            - rtabmap_ws/docker/.dockerignore
+            - rtabmap_ws/docker/.bashrc
     - name: Changes matched
       if: steps.filter.outputs.results == 'true'
       run: echo "Changes matched, will build image"
