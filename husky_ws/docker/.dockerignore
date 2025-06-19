@@ -1,5 +1,6 @@
 *
 !.bashrc
+!modules
 !script
 !clearpath_computer_installer
 !udev_rules

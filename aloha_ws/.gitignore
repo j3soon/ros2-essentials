@@ -8,6 +8,7 @@
 
 # Soft Links
 /docs
+/docker/modules
 
 # Custom ignores
 /isaacsim/assets

@@ -16,6 +16,7 @@ The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 ```sh
 git clone https://github.com/j3soon/ros2-essentials.git
 cd ros2-essentials
+./scripts/post_install.sh
 ```
 
 ## Pre-built Workspaces
@@ -71,13 +72,17 @@ mkdocs serve
 scripts/setup_docs_link.sh
 ```
 
+This is automatically done by running `./scripts/post_install.sh`.
+
 ## VSCode Intellisense
 
-If you have installed Isaac Sim 4.2.0 from [Omniverse Launcher](https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_workstation.html) to the default path `~/.local/share/ov/pkg/isaac-sim-4.2.0`, you can simply enable IntelliSense for editing any Isaac Sim scripts by running the following script:
+If you have installed [Isaac Sim 4.5.0](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_workstation.html) to the default path `~/isaacsim`, you can simply enable IntelliSense for editing any Isaac Sim scripts by running the following script:
 
 ```sh
 scripts/setup_isaac_link.sh
 ```
+
+This is automatically done by running `./scripts/post_install.sh`.
 
 ## Reusing Docker Build Cache
 
@@ -112,6 +117,15 @@ docker buildx rm -f --all-inactive
 ### GitHub Actions
 
 The GitHub Actions workflow is designed to share build caches between workspaces efficiently. The template workspace is built first, and its cache is then reused by other workspaces. This means that while the template workspace build appears in the commit history, other workspace builds are triggered indirectly and only show up in the GitHub Actions tab. For implementation details, see [commit `024f52a`](https://github.com/j3soon/ros2-essentials/commit/024f52a2bb8a58ad20c03a067560215e8cef6307).
+
+Some current CI builds are flaky and may require re-running.
+
+### Docker Compose Cleanup
+
+```sh
+# cd into a workspace directory's docker directory
+docker compose down --volumes --remove-orphans
+```
 
 ## Acknowledgement
 

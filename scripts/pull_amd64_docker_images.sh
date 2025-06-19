@@ -19,6 +19,8 @@ images=(
     "j3soon/ros2-vlp-ws"
     "j3soon/ros2-gazebo-world-ws"
     "j3soon/ros2-aloha-ws"
+    "j3soon/ros2-turtlebot3-ws"
+    "j3soon/ros2-delto-gripper-ws"
 )
 
 # Loop through each image and pull it

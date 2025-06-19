@@ -7,8 +7,7 @@ services:
         mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
         mkdir -p /isaac-sim/{logs,data,documents} &&
         mkdir -p /isaac-sim/standalone/cache/ov &&
-        mkdir -p /isaac-sim/standalone/{logs,data} &&
-        chown -R 1000:1000 /isaac-sim"
+        mkdir -p /isaac-sim/standalone/{logs,data}"
     volumes:
       - isaac-sim-cache:/isaac-sim
   cartographer-ws:
@@ -21,6 +20,12 @@ services:
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
       # platforms:
       #   - "linux/arm64"
+      # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
+      # args:
+      #   ISAAC_SIM_VERSION: "4.5.0"
+      # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
+      # args:
+      #   ISAAC_LAB_VERSION: "2.1.0"
       cache_from:
         - j3soon/ros2-cartographer-ws:buildcache-amd64
         - j3soon/ros2-cartographer-ws:buildcache-arm64

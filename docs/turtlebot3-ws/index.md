@@ -83,16 +83,16 @@ python3 create_turtlebot3_burger_with_omnigraph.py
 Start Isaac Sim in GUI mode:
 
 ```sh
-isaacsim omni.isaac.sim
+~/isaacsim/isaac-sim.sh
 ```
 
-> Alternatively, start Isaac Sim in headless WebRTC mode:
+> Alternatively, start Isaac Sim in [headless WebRTC mode](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_python.html#launching-isaac-sim-experiences):
 > 
 > ```sh
-> isaacsim omni.isaac.sim.headless.webrtc --no-window
+> isaac-sim.streaming.sh
 > ```
 >
-> and visit <http://127.0.0.1:8211/streaming/webrtc-demo/?server=127.0.0.1> to stream through WebRTC.
+> and use the [WebRTC Streaming Client](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/manual_livestream_clients.html#isaac-sim-short-webrtc-streaming-client).
 
 Open the file with OmniGraph we just generated in the bottom panel:
 

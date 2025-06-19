@@ -61,71 +61,15 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install GUI debugging tools
-# - `x11-apps` and `x11-utils` for `xeyes` and `xdpyinfo`
-#   Ref: https://packages.debian.org/sid/x11-apps
-#   Ref: https://packages.debian.org/sid/x11-utils
-# - `mesa-utils` for `glxgears` and `glxinfo`
-#   Ref: https://wiki.debian.org/Mesa
-# - `vulkan-tools` for `vkcube` and `vulkaninfo`
-#   Ref: https://docs.vulkan.org/tutorial/latest/02_Development_environment.html#_vulkan_packages
-#   Ref: https://gitlab.com/nvidia/container-images/vulkan/-/blob/master/docker/Dockerfile.ubuntu
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    apt-get update && apt-get install -y \
-    x11-apps x11-utils \
-    mesa-utils \
-    libgl1 vulkan-tools \
-    && rm -rf /var/lib/apt/lists/*
-
 # Setup the required capabilities for the container runtime
 # Ref: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#driver-capabilities
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=all
 
-# Install Vulkan config files
-# Ref: https://gitlab.com/nvidia/container-images/vulkan
-# Ref: https://github.com/j3soon/docker-vulkan-runtime
-RUN cat > /etc/vulkan/icd.d/nvidia_icd.json <<EOF
-{
-    "file_format_version" : "1.0.0",
-    "ICD": {
-        "library_path": "libGLX_nvidia.so.0",
-        "api_version" : "1.3.194"
-    }
-}
-EOF
-RUN mkdir -p /usr/share/glvnd/egl_vendor.d && \
-    cat > /usr/share/glvnd/egl_vendor.d/10_nvidia.json <<EOF
-{
-    "file_format_version" : "1.0.0",
-    "ICD" : {
-        "library_path" : "libEGL_nvidia.so.0"
-    }
-}
-EOF
-RUN cat > /etc/vulkan/implicit_layer.d/nvidia_layers.json <<EOF
-{
-    "file_format_version" : "1.0.0",
-    "layer": {
-        "name": "VK_LAYER_NV_optimus",
-        "type": "INSTANCE",
-        "library_path": "libGLX_nvidia.so.0",
-        "api_version" : "1.3.194",
-        "implementation_version" : "1",
-        "description" : "NVIDIA Optimus layer",
-        "functions": {
-            "vkGetInstanceProcAddr": "vk_optimusGetInstanceProcAddr",
-            "vkGetDeviceProcAddr": "vk_optimusGetDeviceProcAddr"
-        },
-        "enable_environment": {
-            "__NV_PRIME_RENDER_OFFLOAD": "1"
-        },
-        "disable_environment": {
-            "DISABLE_LAYER_NV_OPTIMUS_1": ""
-        }
-    }
-}
-EOF
+# Install GUI debugging tools and configure Vulkan
+COPY --chown=root:root modules/install_x11_opengl_vulkan.sh /tmp/install_x11_opengl_vulkan.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_x11_opengl_vulkan.sh && rm /tmp/install_x11_opengl_vulkan.sh
 
 # Install ROS2 Gazebo packages for amd64
 # Note that Gazebo Classic is EOL and should switch to the latest Gazebo
