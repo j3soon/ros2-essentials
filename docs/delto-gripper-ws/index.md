@@ -46,6 +46,11 @@ colcon build --symlink-install
 ros2 launch dg5f_isaacsim dg5f_right_isaacsim.launch.py
 ```
 
+<video controls>
+  <source src="assets/preview-video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ## References
 
 Dependencies:
