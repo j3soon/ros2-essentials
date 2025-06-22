@@ -11,9 +11,13 @@
       
       
       
-        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/jazzy-template-ws/">
+        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/docker-modules/">
       
       
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../template-ws/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -21,7 +25,7 @@
     
     
       
-        <title>jazzy_template_ws - ROS2 Essentials</title>
+        <title>Docker Modules - ROS2 Essentials</title>
       
     
     
@@ -56,11 +60,11 @@
       
         <meta  property="og:type"  content="website" >
       
-        <meta  property="og:title"  content="jazzy_template_ws - ROS2 Essentials" >
+        <meta  property="og:title"  content="Docker Modules - ROS2 Essentials" >
       
         <meta  property="og:description"  content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." >
       
-        <meta  property="og:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/jazzy-template-ws/README.png" >
+        <meta  property="og:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/docker-modules/index.png" >
       
         <meta  property="og:image:type"  content="image/png" >
       
@@ -68,15 +72,15 @@
       
         <meta  property="og:image:height"  content="630" >
       
-        <meta  property="og:url"  content="https://j3soon.github.io/ros2-essentials/jazzy-template-ws/" >
+        <meta  property="og:url"  content="https://j3soon.github.io/ros2-essentials/docker-modules/" >
       
         <meta  name="twitter:card"  content="summary_large_image" >
       
-        <meta  name="twitter:title"  content="jazzy_template_ws - ROS2 Essentials" >
+        <meta  name="twitter:title"  content="Docker Modules - ROS2 Essentials" >
       
         <meta  name="twitter:description"  content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." >
       
-        <meta  name="twitter:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/jazzy-template-ws/README.png" >
+        <meta  name="twitter:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/docker-modules/index.png" >
       
     
     
@@ -99,7 +103,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#jazzy_template_ws" class="md-skip">
+        <a href="#docker-modules" class="md-skip">
           Skip to content
         </a>
       
@@ -136,7 +140,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              jazzy_template_ws
+              Docker Modules
             
           </span>
         </div>
@@ -320,10 +324,32 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../docker-modules/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Docker Modules
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -334,6 +360,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac Sim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac Lab
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -622,6 +686,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac Sim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac Lab
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -639,7 +729,36 @@
   
 
 
-<h1 id="jazzy_template_ws">jazzy_template_ws<a class="headerlink" href="#jazzy_template_ws" title="Permanent link">&para;</a></h1>
+<h1 id="docker-modules">Docker Modules<a class="headerlink" href="#docker-modules" title="Permanent link">&para;</a></h1>
+<h2 id="isaac-sim">Isaac Sim<a class="headerlink" href="#isaac-sim" title="Permanent link">&para;</a></h2>
+<p>Compatibility test:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/isaac-sim-comp-check
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>./omni.isaac.sim.compatibility_check.sh
+</span></code></pre></div>
+<p>Quick test:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>~/isaacsim
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>./python.sh<span class="w"> </span>standalone_examples/api/isaacsim.core.api/time_stepping.py
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># or</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>./python.sh<span class="w"> </span>standalone_examples/api/isaacsim.core.api/simulation_callbacks.py
+</span></code></pre></div>
+<p>Launch GUI:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>~/isaacsim
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>./isaac-sim.sh
+</span></code></pre></div>
+<h2 id="isaac-lab">Isaac Lab<a class="headerlink" href="#isaac-lab" title="Permanent link">&para;</a></h2>
+<p><a href="https://isaac-sim.github.io/IsaacLab/main/source/deployment/docker.html#running-pre-built-isaac-lab-container">Quick test</a>:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>~/IsaacLab
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/tutorials/00_sim/log_time.py<span class="w"> </span>--headless
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># View the logs and press Ctrl+C to stop</span>
+</span></code></pre></div>
+<p><a href="https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html">Train Cartpole</a>:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>~/IsaacLab
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/reinforcement_learning/rl_games/train.py<span class="w"> </span>--task<span class="o">=</span>Isaac-Cartpole-v0<span class="w"> </span>--headless
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># or</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/reinforcement_learning/rsl_rl/train.py<span class="w"> </span>--task<span class="o">=</span>Isaac-Cartpole-v0<span class="w"> </span>--headless
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># or</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/reinforcement_learning/skrl/train.py<span class="w"> </span>--task<span class="o">=</span>Isaac-Cartpole-v0<span class="w"> </span>--headless
+</span></code></pre></div>
 
 
 
@@ -662,7 +781,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 8, 2024 08:32:57 UTC">November 8, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 22, 2025 09:14:08 UTC">June 22, 2025</span>
   </span>
 
     
@@ -672,7 +791,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 8, 2024 08:32:57 UTC">November 8, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 22, 2025 09:14:08 UTC">June 22, 2025</span>
   </span>
 
     
