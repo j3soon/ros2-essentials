@@ -27,20 +27,28 @@ The docker image of the template workspace is share by most of the workspace, al
 
 | Workspace | amd64 | arm64 | Notes | Maintainer |
 |-----------|-------|-------|-------|------------|
-| [Template](https://j3soon.github.io/ros2-essentials/template-ws/) | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson](https://github.com/j3soon) |
+| [Template](https://j3soon.github.io/ros2-essentials/template-ws/) | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
 | [ORB-SLAM3](https://j3soon.github.io/ros2-essentials/orbslam3-ws) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [RTAB-Map](https://j3soon.github.io/ros2-essentials/rtabmap-ws/) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [ROS1 Bridge](https://j3soon.github.io/ros2-essentials/ros1-bridge-ws/) | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Cartographer](https://j3soon.github.io/ros2-essentials/cartographer-ws/) | ✔️ | ✔️ | | [Assume Zhan](https://github.com/Assume-Zhan) |
-| [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson](https://github.com/j3soon) |
+| [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
 | [Yujin Robot Kobuki](https://j3soon.github.io/ros2-essentials/kobuki-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Velodyne VLP-16](https://j3soon.github.io/ros2-essentials/vlp-ws/) | ✔️ | ✔️ | Real-world support | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [Gazebo World](https://j3soon.github.io/ros2-essentials/gazebo-world-ws/) | ✔️ | ❌️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| [ALOHA](https://j3soon.github.io/ros2-essentials/aloha-ws/) | ✔️ | ✔️ | Simulation only | [Johnson](https://github.com/j3soon) |
-| [Turtlebot3](https://j3soon.github.io/ros2-essentials/turtlebot3-ws/) | ✔️ | ❌️ | Simulation only | [Johnson](https://github.com/j3soon) |
+| [ALOHA](https://j3soon.github.io/ros2-essentials/aloha-ws/) | ✔️ | ✔️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
+| [Turtlebot3](https://j3soon.github.io/ros2-essentials/turtlebot3-ws/) | ✔️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
 | [Tesollo Delto Gripper](https://j3soon.github.io/ros2-essentials/delto-gripper-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Unitree H1](https://j3soon.github.io/ros2-essentials/h1-ws/) | ✔️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
 
 If you have trouble using a workspace, please [open an issue](https://github.com/j3soon/ros2-essentials/issues) and tag the current maintainers mentioned above.
+
+## Pre-configured Modules
+
+| Module | Notes | Maintainer |
+|--------|-------|------------|
+| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-sim) | Isaac Sim 4.5.0 Binary Install | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-lab) | Isaac Lab 2.1.0 Git Install | [Johnson Sun](https://github.com/j3soon) |
 
 ## System Requirements
 
@@ -129,7 +137,7 @@ docker compose down --volumes --remove-orphans
 
 ## Acknowledgement
 
-The code is mainly contributed by [Johnson](https://github.com/j3soon), [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), [Lam Chon Hang](https://github.com/ClassLongJoe1112), and others. For a full list of contributors, please refer to the [contribution list](https://github.com/j3soon/ros2-essentials/graphs/contributors).
+The code is mainly contributed by [Johnson Sun](https://github.com/j3soon), [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), and others. For a full list of contributors, please refer to the [contribution list](https://github.com/j3soon/ros2-essentials/graphs/contributors).
 
 We extend our gratitude to [ElsaLab][elsalab] and [NVIDIA AI Technology Center (NVAITC)][nvaitc] for their support in making this project possible.
 

@@ -2,6 +2,18 @@
 
 ## Isaac Sim
 
+Isaac Sim 4.5.0 Binary Install.
+
+### On Host
+
+Quick test using official Docker image:
+
+```sh
+scripts/docker_run_official_isaac_sim.sh
+```
+
+### In Container
+
 Compatibility test:
 
 ```sh
@@ -26,6 +38,18 @@ cd ~/isaacsim
 ```
 
 ## Isaac Lab
+
+Isaac Lab 2.1.0 Git Install.
+
+### On Host
+
+Quick test using official Docker image:
+
+```sh
+scripts/docker_run_official_isaac_lab.sh
+```
+
+### In Container
 
 [Quick test](https://isaac-sim.github.io/IsaacLab/main/source/deployment/docker.html#running-pre-built-isaac-lab-container):
 
