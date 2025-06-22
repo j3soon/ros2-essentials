@@ -1,4 +1,6 @@
 name: Build Docker Image for template-ws
+# Note: If this workflow fails due to flakiness, all remaining workflows will be skipped.
+# TODO: Fix this issue.
 
 on:
   push:

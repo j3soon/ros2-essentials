@@ -35,7 +35,7 @@ cp -r "${TEMPLATE_WS_DIR}" "${NEW_WS_DIR}"
 rm -rf "${NEW_WS_DIR}/.vscode" "${NEW_WS_DIR}/docs"
 rm -rf "${NEW_WS_DIR}/build" "${NEW_WS_DIR}/install" "${NEW_WS_DIR}/log"
 mkdir "${SCRIPT_DIR}/../docs/${NEW_WS_NAME_HYPHEN}"
-echo "# ${NEW_WS_NAME_UNDERSCORE}" > "${SCRIPT_DIR}/../docs/${NEW_WS_NAME_HYPHEN}/README.md"
+echo "# ${NEW_WS_NAME_UNDERSCORE}" > "${SCRIPT_DIR}/../docs/${NEW_WS_NAME_HYPHEN}/index.md"
 
 # Replace the "template_ws" with new workspace name in each file.
 sed -i 's/"name": "Template",/"name": "TODO",/g'   "${NEW_WS_DIR}/.devcontainer/devcontainer.json"

@@ -201,6 +201,7 @@ nav:
     # - Comment the `Tags` line above.
     # - Comment the `tags` entry in the `plugins` section.
     # - Delete the `docs/tags.md` file.
+  - docker-modules/index.md
   - template-ws/index.md
   - orbslam3-ws/index.md
   - rtabmap-ws/index.md
