@@ -1,7 +1,7 @@
-# Base Image: https://hub.docker.com/r/osrf/ros/tags?page=1&name=humble
-FROM osrf/ros:humble-desktop-full AS amd64
-# Base Image: https://hub.docker.com/r/arm64v8/ros/tags?page=1&name=humble
-FROM arm64v8/ros:humble AS arm64
+# Base Image: https://hub.docker.com/_/ubuntu/tags?name=22.04
+FROM ubuntu:22.04 AS amd64
+# Base Image: https://hub.docker.com/_/ubuntu/tags?name=22.04
+FROM ubuntu:22.04 AS arm64
 
 # Use docker automatic platform args to select the base image.
 # It may be `arm64` or `amd64` depending on the platform.
@@ -55,21 +55,6 @@ COPY --chown=root:root modules/install_x11_opengl_vulkan.sh /tmp/install_x11_ope
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_x11_opengl_vulkan.sh && rm /tmp/install_x11_opengl_vulkan.sh
 
-# Install ROS2 Gazebo packages for amd64
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    if [ "$TARGETARCH" = "amd64" ]; then \
-        apt-get update && apt-get install -y \
-        ros-$ROS_DISTRO-gazebo-ros-pkgs \
-        ros-$ROS_DISTRO-gazebo-ros2-control \
-        && rm -rf /var/lib/apt/lists/*; \
-    fi
-
-# Install ROS2 RVIZ and other custom ROS2 packages
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    apt-get update && apt-get install -y \
-    ros-$ROS_DISTRO-rviz2 \
-    && rm -rf /var/lib/apt/lists/*
-
 # Arguments for the default user
 ARG USERNAME=user
 ARG USER_UID=1000
@@ -84,6 +69,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 
 USER $USERNAME
 
+# ROS version configuration
+ARG ROS_DISTRO=humble
+ENV ROS_DISTRO=$ROS_DISTRO
+# Copy and run ROS installation script
+COPY --chown=$USERNAME:$USERNAME \
+    modules/install_ros.sh /tmp/install_ros.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_ros.sh && rm /tmp/install_ros.sh
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
 
