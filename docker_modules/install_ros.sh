@@ -76,6 +76,14 @@ sudo apt-get install -y \
 # Initialize rosdep
 sudo rosdep init
 
+# Install CycloneDDS
+# Ref:
+# - https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cyclone-dds-tuning
+# - https://github.com/ros2/rmw_cyclonedds/blob/406277084be4352fa48357047ed56be69e4942e5/README.md
+# - https://github.com/eclipse-cyclonedds/cyclonedds/blob/ad48dc88a1da2e362c56ff1325d085ba514c0c74/README.md#run-time-configuration
+sudo apt-get install -y \
+    ros-$ROS_DISTRO-rmw-cyclonedds-cpp
+
 # Install Gazebo
 # Ref: 
 # - https://gazebosim.org/docs/harmonic/ros_installation/#summary-of-compatible-ros-and-gazebo-combinations
