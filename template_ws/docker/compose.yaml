@@ -1,8 +1,9 @@
+name: ros2-template-ws
 services:
   volume-instantiation:
     # Ref: https://github.com/moby/moby/issues/47842#issuecomment-2249050939
     image: ubuntu:22.04
-    container_name: ros2-volume-instantiation
+    container_name: ros2-template-ws-volume-instantiation
     command: bash -c "
         mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
         mkdir -p /isaac-sim/{logs,data,documents} &&
@@ -161,5 +162,7 @@ services:
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache
+    external: true
   isaac-sim-cache:
     name: ros2-isaac-sim-cache
+    external: true
