@@ -59,7 +59,7 @@ ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=all
 
 # Install GUI debugging tools and configure Vulkan
-COPY --chown=root:root modules/install_x11_opengl_vulkan.sh /tmp/install_x11_opengl_vulkan.sh
+COPY modules/install_x11_opengl_vulkan.sh /tmp/install_x11_opengl_vulkan.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_x11_opengl_vulkan.sh && rm /tmp/install_x11_opengl_vulkan.sh
 

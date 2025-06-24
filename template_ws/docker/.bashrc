@@ -36,7 +36,7 @@ fi
 # Optionally perform rosdep update if it has not been executed yet
 if [ ! -d $HOME/.ros/rosdep/sources.cache ]; then
     echo "rosdep update has not been executed yet. Running rosdep update..."
-    rosdep update
+    rosdep update --rosdistro $ROS_DISTRO
     cd $ROS2_WS
     # Ref: https://docs.ros.org/en/humble/Tutorials/Intermediate/Rosdep.html
     rosdep install --from-paths src --ignore-src -y -r
