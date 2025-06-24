@@ -4,11 +4,8 @@
 # Reference: https://stackoverflow.com/q/59895
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 
-cd "$SCRIPT_DIR"
+# Create docker volume
+docker volume create ros2-gazebo-cache >/dev/null
+docker volume create ros2-isaac-sim-cache >/dev/null
 
-./setup_docker_modules_link.sh
-./setup_docker_volume.sh
-./setup_docs_link.sh
-./setup_isaac_link.sh
-
-echo "Post Install Done."
+echo "Set up docker volume done."

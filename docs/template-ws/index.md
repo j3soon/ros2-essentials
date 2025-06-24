@@ -86,6 +86,12 @@ Open the workspace folder using Visual Studio Code, spotting the workspace folde
 
 > We have pre-built some Docker images on Docker Hub. If the building time is too long, you might consider downloading them from Docker Hub instead. For more information, please refer to the `README.md` on the repository's main page.
 
+> Users are encouraged to set this argument in their shell configuration (e.g., `.bashrc` or `.zshrc`) if using UID different from `1000`:
+>
+> ```bash
+> export USER_UID=$(id -u)
+> ```
+
 Press `F1` and enter `> Dev Containers: Rebuild Container`.  
 Building the images and container will take some time. Please be patient.
 

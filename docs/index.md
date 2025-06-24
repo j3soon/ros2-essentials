@@ -94,13 +94,12 @@ This is automatically done by running `./scripts/post_install.sh`.
 
 ## Reusing Docker Build Cache
 
-The default (`docker`) build driver does not support pulling pre-built build cache from Docker Hub. Changing to the `docker-container` build driver allow reusing build cache from Docker Hub, however may introduce a few minute overhead after building any image (for sending tarballs). This is a tradeoff you should consider.
-
 The default `docker` build driver cannot pull pre-built caches from Docker Hub. Using the `docker-container` driver [enables cache reuse](https://docs.docker.com/build/builders/drivers/) but may add [a few minutes of overhead](https://github.com/docker/buildx/issues/107) for sending tarballs after the build. You should consider this tradeoff if you choose to switch the build driver.
 
 ### Switching to `docker-container` Build Driver
 
 ```sh
+docker buildx ls
 # Install buildx as `docker build` alias
 docker buildx install
 # Create and use new builder

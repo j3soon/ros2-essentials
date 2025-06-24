@@ -1,8 +1,9 @@
+name: ros2-template-ws
 services:
   volume-instantiation:
     # Ref: https://github.com/moby/moby/issues/47842#issuecomment-2249050939
     image: ubuntu:22.04
-    container_name: ros2-volume-instantiation
+    container_name: ros2-template-ws-volume-instantiation
     command: bash -c "
         mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
         mkdir -p /isaac-sim/{logs,data,documents} &&
@@ -20,12 +21,13 @@ services:
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
       # platforms:
       #   - "linux/arm64"
-      # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
-      # args:
-      #   ISAAC_SIM_VERSION: "4.5.0"
-      # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
-      # args:
-      #   ISAAC_LAB_VERSION: "2.1.0"
+      args:
+        # TODO: Set the USER_UID
+        USER_UID: "${USER_UID:-1000}"
+        # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
+        # ISAAC_SIM_VERSION: "4.5.0"
+        # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
+        # ISAAC_LAB_VERSION: "2.1.0"
       cache_from:
         - j3soon/ros2-template-ws:buildcache-amd64
         - j3soon/ros2-template-ws:buildcache-arm64
@@ -50,6 +52,14 @@ services:
       - ROS_DOMAIN_ID=0
         # Domain ID is set to 0 to allow communication through ros1_bridge.
       - RCUTILS_COLORIZED_OUTPUT=1
+      # TODO: Set the ROS middleware (RMW). Currently supported RMW implementations:
+      # - rmw_fastrtps_cpp (FastDDS) (default)
+      # - rmw_cyclonedds_cpp (CycloneDDS)
+      # Ref:
+      # - https://github.com/ros2/rmw_fastrtps/blob/d98cacec980df18810af232b75db80b5ce7da845/README.md
+      # - https://github.com/ros2/rmw_cyclonedds/blob/406277084be4352fa48357047ed56be69e4942e5/README.md
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+      # Set the ROS workspace path.
       - ROS2_WS=/home/ros2-essentials/template_ws
       # TODO: Add more environment variables here.
     # Enable GPU support.
@@ -86,6 +96,8 @@ services:
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
       - gazebo-cache:/home/user/.gazebo
+      # Mount CycloneDDS configuration file.
+      - ./cyclonedds.xml:/home/user/cyclonedds.xml
       # Mount Isaac Sim cache directories.
       # Reference: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_container.html#container-deployment
       # Note that this volume is shared among all workspaces.
@@ -150,5 +162,7 @@ services:
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache
+    external: true
   isaac-sim-cache:
     name: ros2-isaac-sim-cache
+    external: true
