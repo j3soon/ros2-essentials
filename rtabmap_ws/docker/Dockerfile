@@ -50,30 +50,23 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
+# ROS version configuration
+ARG ROS_DISTRO=humble
+ENV ROS_DISTRO=$ROS_DISTRO
+# Copy and run ROS installation script
+COPY modules/install_ros.sh /tmp/install_ros.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_ros.sh && rm /tmp/install_ros.sh
+
 # Setup the required capabilities for the container runtime
 # Ref: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#driver-capabilities
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=all
 
 # Install GUI debugging tools and configure Vulkan
-COPY --chown=root:root modules/install_x11_opengl_vulkan.sh /tmp/install_x11_opengl_vulkan.sh
+COPY modules/install_x11_opengl_vulkan.sh /tmp/install_x11_opengl_vulkan.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_x11_opengl_vulkan.sh && rm /tmp/install_x11_opengl_vulkan.sh
-
-# Install ROS2 Gazebo packages for amd64
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    if [ "$TARGETARCH" = "amd64" ]; then \
-        apt-get update && apt-get install -y \
-        ros-$ROS_DISTRO-gazebo-ros-pkgs \
-        ros-$ROS_DISTRO-gazebo-ros2-control \
-        && rm -rf /var/lib/apt/lists/*; \
-    fi
-
-# Install ROS2 RVIZ and other custom ROS2 packages
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    apt-get update && apt-get install -y \
-    ros-$ROS_DISTRO-rviz2 \
-    && rm -rf /var/lib/apt/lists/*
 
 # Arguments for the default user
 ARG USERNAME=user

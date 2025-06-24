@@ -14,6 +14,7 @@ DEFAULT_FILES = [
     "docker/.dockerignore",
     "docker/compose.yaml",
     "docker/Dockerfile",
+    "docker/cyclonedds.xml",
     ".devcontainer/devcontainer.json",
 ]
 for filename in DEFAULT_FILES:
@@ -24,7 +25,7 @@ for filename in DEFAULT_FILES:
             continue
         if not os.path.isfile(f"{workspace_path}/{filename}"):
             # Skip certain cases intentionally
-            if filename in (".gitignore", "docker/.bashrc") and os.path.basename(workspace_path) == "ros1_bridge_ws":
+            if filename in (".gitignore", "docker/.bashrc", "docker/cyclonedds.xml") and os.path.basename(workspace_path) == "ros1_bridge_ws":
                 continue
             # Report error
             raise ValueError(f"'{filename}' does not exist in: '{workspace_path}'")

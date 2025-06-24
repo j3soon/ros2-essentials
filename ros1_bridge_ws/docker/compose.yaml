@@ -1,3 +1,4 @@
+name: ros2-ros1-bridge-ws
 services:
   ros-core:
     # TODO: Change the image based on your platform.
