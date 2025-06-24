@@ -19,6 +19,14 @@ cd ros2-essentials
 ./scripts/post_install.sh
 ```
 
+and then configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
+
+```sh
+export USER_UID=$(id -u)
+```
+
+This step is optional if you have user ID 1000 on host.
+
 ## Pre-built Workspaces
 
 Pre-built Docker images for each workspace can be pulled by running `docker compose pull` in the corresponding workspace directory. Pulling these images bypasses the time-consuming build process (for both Docker Compose and Dev Containers).
