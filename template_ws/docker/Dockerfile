@@ -76,9 +76,7 @@ ENV ROS_DISTRO=$ROS_DISTRO
 COPY --chown=$USERNAME:$USERNAME \
     modules/install_ros.sh /tmp/install_ros.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    /tmp/install_ros.sh \
-    && rm /tmp/install_ros.sh \
-    && sudo rm -rf /var/lib/apt/lists/*
+    /tmp/install_ros.sh && rm /tmp/install_ros.sh
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
 
