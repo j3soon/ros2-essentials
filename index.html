@@ -1099,6 +1099,10 @@
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>ros2-essentials
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>./scripts/post_install.sh
 </span></code></pre></div>
+<p>and then configure the container user ID to match your host user ID by modifying the host <code>~/.bashrc</code> (or <code>~/.zshrc</code>) to include the following line:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">USER_UID</span><span class="o">=</span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span>
+</span></code></pre></div>
+<p>This step is optional if you have user ID 1000 on host.</p>
 <h2 id="pre-built-workspaces">Pre-built Workspaces<a class="headerlink" href="#pre-built-workspaces" title="Permanent link">&para;</a></h2>
 <p>Pre-built Docker images for each workspace can be pulled by running <code>docker compose pull</code> in the corresponding workspace directory. Pulling these images bypasses the time-consuming build process (for both Docker Compose and Dev Containers).</p>
 <p>The docker image of the template workspace is share by most of the workspace, allowing saving spaces by sharing common packages. Click on the following workspaces to navigate to their respective documentation.</p>
@@ -1259,51 +1263,51 @@
 </table>
 <p>Some functionalities may still work on lower-spec systems, such as those without GPUs or on operating systems other than Ubuntu 22.04. However, these configurations are not officially supported and may require manual adjustments. Use them with caution.</p>
 <h2 id="building-documentation">Building Documentation<a class="headerlink" href="#building-documentation" title="Permanent link">&para;</a></h2>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Install uv</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Create and activate python virtual environment</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>uv<span class="w"> </span>venv<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.10
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># Install dependencies and start serving</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nb">cd</span><span class="w"> </span>docs
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>mkdocs<span class="w"> </span>serve
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Go to https://127.0.0.1:8000 to view the site.</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Install uv</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Create and activate python virtual environment</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>uv<span class="w"> </span>venv<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.10
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># Install dependencies and start serving</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nb">cd</span><span class="w"> </span>docs
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>mkdocs<span class="w"> </span>serve
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Go to https://127.0.0.1:8000 to view the site.</span>
 </span></code></pre></div>
 <h3 id="link-documentation-to-ros2-workspaces">Link Documentation to ROS2 Workspaces<a class="headerlink" href="#link-documentation-to-ros2-workspaces" title="Permanent link">&para;</a></h3>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>scripts/setup_docs_link.sh
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>scripts/setup_docs_link.sh
 </span></code></pre></div>
 <p>This is automatically done by running <code>./scripts/post_install.sh</code>.</p>
 <h2 id="vscode-intellisense">VSCode Intellisense<a class="headerlink" href="#vscode-intellisense" title="Permanent link">&para;</a></h2>
 <p>If you have installed <a href="https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_workstation.html">Isaac Sim 4.5.0</a> to the default path <code>~/isaacsim</code>, you can simply enable IntelliSense for editing any Isaac Sim scripts by running the following script:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>scripts/setup_isaac_link.sh
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>scripts/setup_isaac_link.sh
 </span></code></pre></div>
 <p>This is automatically done by running <code>./scripts/post_install.sh</code>.</p>
 <h2 id="reusing-docker-build-cache">Reusing Docker Build Cache<a class="headerlink" href="#reusing-docker-build-cache" title="Permanent link">&para;</a></h2>
 <p>The default <code>docker</code> build driver cannot pull pre-built caches from Docker Hub. Using the <code>docker-container</code> driver <a href="https://docs.docker.com/build/builders/drivers/">enables cache reuse</a> but may add <a href="https://github.com/docker/buildx/issues/107">a few minutes of overhead</a> for sending tarballs after the build. You should consider this tradeoff if you choose to switch the build driver.</p>
 <h3 id="switching-to-docker-container-build-driver">Switching to <code>docker-container</code> Build Driver<a class="headerlink" href="#switching-to-docker-container-build-driver" title="Permanent link">&para;</a></h3>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>buildx<span class="w"> </span>ls
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Install buildx as `docker build` alias</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>docker<span class="w"> </span>buildx<span class="w"> </span>install
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Create and use new builder</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>docker<span class="w"> </span>buildx<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>docker-container<span class="w"> </span>--driver<span class="w"> </span>docker-container<span class="w"> </span>--driver-opt<span class="w"> </span>default-load<span class="o">=</span><span class="nb">true</span><span class="w"> </span>--use
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>buildx<span class="w"> </span>ls
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Install buildx as `docker build` alias</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>docker<span class="w"> </span>buildx<span class="w"> </span>install
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Create and use new builder</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>docker<span class="w"> </span>buildx<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>docker-container<span class="w"> </span>--driver<span class="w"> </span>docker-container<span class="w"> </span>--driver-opt<span class="w"> </span>default-load<span class="o">=</span><span class="nb">true</span><span class="w"> </span>--use
 </span></code></pre></div>
 <p>After setting this, using <code>docker compose build</code> will use the build cache from Docker Hub. If you want to switch back to the default <code>docker</code> build driver, follow the instructions below.</p>
 <h3 id="switching-back-to-docker-build-driver">Switching back to <code>docker</code> Build Driver<a class="headerlink" href="#switching-back-to-docker-build-driver" title="Permanent link">&para;</a></h3>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Uninstall buildx as `docker build` alias</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>docker<span class="w"> </span>buildx<span class="w"> </span>uninstall
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># Unuse the created builder and remove it</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>docker<span class="w"> </span>buildx<span class="w"> </span>use<span class="w"> </span>default
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>docker<span class="w"> </span>buildx<span class="w"> </span>stop<span class="w"> </span>docker-container
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>docker<span class="w"> </span>buildx<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>--all-inactive
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Uninstall buildx as `docker build` alias</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>docker<span class="w"> </span>buildx<span class="w"> </span>uninstall
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># Unuse the created builder and remove it</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>docker<span class="w"> </span>buildx<span class="w"> </span>use<span class="w"> </span>default
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>docker<span class="w"> </span>buildx<span class="w"> </span>stop<span class="w"> </span>docker-container
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>docker<span class="w"> </span>buildx<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>--all-inactive
 </span></code></pre></div>
 <h2 id="developer-notes">Developer Notes<a class="headerlink" href="#developer-notes" title="Permanent link">&para;</a></h2>
 <h3 id="github-actions">GitHub Actions<a class="headerlink" href="#github-actions" title="Permanent link">&para;</a></h3>
 <p>The GitHub Actions workflow is designed to share build caches between workspaces efficiently. The template workspace is built first, and its cache is then reused by other workspaces. This means that while the template workspace build appears in the commit history, other workspace builds are triggered indirectly and only show up in the GitHub Actions tab. For implementation details, see <a href="https://github.com/j3soon/ros2-essentials/commit/024f52a2bb8a58ad20c03a067560215e8cef6307">commit <code>024f52a</code></a>.</p>
 <p>Some current CI builds are flaky and may require re-running.</p>
 <h3 id="docker-compose-cleanup">Docker Compose Cleanup<a class="headerlink" href="#docker-compose-cleanup" title="Permanent link">&para;</a></h3>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># cd into a workspace directory&#39;s docker directory</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>--volumes<span class="w"> </span>--remove-orphans
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># cd into a workspace directory&#39;s docker directory</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>--volumes<span class="w"> </span>--remove-orphans
 </span></code></pre></div>
 <h2 id="acknowledgement">Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permanent link">&para;</a></h2>
 <p>The code is mainly contributed by <a href="https://github.com/j3soon">Johnson Sun</a>, <a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a>, <a href="https://github.com/Assume-Zhan">Assume Zhan</a>, and others. For a full list of contributors, please refer to the <a href="https://github.com/j3soon/ros2-essentials/graphs/contributors">contribution list</a>.</p>
@@ -1342,7 +1346,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 24, 2025 09:10:13 UTC">June 24, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 24, 2025 12:42:53 UTC">June 24, 2025</span>
   </span>
 
     
