@@ -21,12 +21,12 @@ fi
 echo "Installing ROS components for architecture: $TARGETARCH"
 
 # Update and upgrade the system
-sudo apt-get update
-sudo apt-get upgrade -y
+apt-get update
+apt-get upgrade -y
 
 # Check the Ubuntu version supported by the ROS distribution
 # Ref: https://docs.ros.org/en/humble/Releases.html
-sudo apt-get install -y lsb-release
+apt-get install -y lsb-release
 UBUNTU_VERSION=$(lsb_release -rs)
 case "$ROS_DISTRO:$UBUNTU_VERSION" in
     "foxy:20.04")
@@ -51,37 +51,37 @@ esac
 # Set timezone
 # Note: This step is not written in the ROS documentation,
 #       but it is required to avoid tzdata prompts during installation.
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
 # Set locale
-sudo apt-get install -y locales
-sudo locale-gen en_US en_US.UTF-8
-sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+apt-get install -y locales
+locale-gen en_US en_US.UTF-8
+update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Setup Sources
-sudo apt-get install -y software-properties-common
-sudo add-apt-repository universe
+apt-get install -y software-properties-common
+add-apt-repository universe
 export ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F "tag_name" | awk -F\" '{print $4}')
 curl -L -o /tmp/ros2-apt-source.deb "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo $VERSION_CODENAME)_all.deb" # If using Ubuntu derivates use $UBUNTU_CODENAME
-sudo apt-get install -y /tmp/ros2-apt-source.deb
-sudo rm -rf /tmp/ros2-apt-source.deb
+apt-get install -y /tmp/ros2-apt-source.deb
+rm -rf /tmp/ros2-apt-source.deb
 
 # Install ROS 2 packages
-sudo apt-get update && sudo apt-get upgrade -y
-sudo apt-get install -y \
+apt-get update && apt-get upgrade -y
+apt-get install -y \
     ros-$ROS_DISTRO-desktop \
     ros-dev-tools
 
 # Initialize rosdep
-sudo rosdep init
+rosdep init
 
 # Install CycloneDDS
 # Ref:
 # - https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cyclone-dds-tuning
 # - https://github.com/ros2/rmw_cyclonedds/blob/406277084be4352fa48357047ed56be69e4942e5/README.md
 # - https://github.com/eclipse-cyclonedds/cyclonedds/blob/ad48dc88a1da2e362c56ff1325d085ba514c0c74/README.md#run-time-configuration
-sudo apt-get install -y \
+apt-get install -y \
     ros-$ROS_DISTRO-rmw-cyclonedds-cpp
 
 # Install Gazebo
@@ -91,18 +91,18 @@ sudo apt-get install -y \
 # - https://gazebosim.org/docs/latest/migrating_gazebo_classic_ros2_packages/
 if { [ "$ROS_DISTRO" = "foxy" ] || [ "$ROS_DISTRO" = "humble" ]; } && [ "$TARGETARCH" = "amd64" ]; then
     echo "Installing Gazebo Classic (Fortress) for ROS $ROS_DISTRO..."
-    sudo apt-get install -y \
+    apt-get install -y \
         ros-$ROS_DISTRO-gazebo-ros-pkgs \
         ros-$ROS_DISTRO-gazebo-ros2-control
 elif [ "$ROS_DISTRO" = "jazzy" ] && [ "$TARGETARCH" = "amd64" ]; then
     echo "Installing Gazebo Harmonic for ROS Jazzy..."
-    sudo apt-get install -y \
+    apt-get install -y \
         ros-$ROS_DISTRO-ros-gz
 else
     echo "Skipping Gazebo installation for ROS $ROS_DISTRO (not supported)"
 fi
 
 # Remove the apt cache
-sudo rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/*
 
 echo "ROS $ROS_DISTRO installation completed successfully!"

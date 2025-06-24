@@ -45,6 +45,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
+# ROS version configuration
+ARG ROS_DISTRO=humble
+ENV ROS_DISTRO=$ROS_DISTRO
+# Copy and run ROS installation script
+COPY modules/install_ros.sh /tmp/install_ros.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_ros.sh && rm /tmp/install_ros.sh
+
 # Setup the required capabilities for the container runtime
 # Ref: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#driver-capabilities
 ENV NVIDIA_VISIBLE_DEVICES=all
@@ -69,14 +77,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 
 USER $USERNAME
 
-# ROS version configuration
-ARG ROS_DISTRO=humble
-ENV ROS_DISTRO=$ROS_DISTRO
-# Copy and run ROS installation script
-COPY --chown=$USERNAME:$USERNAME \
-    modules/install_ros.sh /tmp/install_ros.sh
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    /tmp/install_ros.sh && rm /tmp/install_ros.sh
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
 
