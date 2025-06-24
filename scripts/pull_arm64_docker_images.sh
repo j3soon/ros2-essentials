@@ -8,7 +8,6 @@ images=(
     "ros:jazzy"
     "ros:noetic"
     "j3soon/ros2-template-ws"
-    "j3soon/ros2-jazzy-template-ws"
     "j3soon/ros2-ros1-bridge-ws"
     "j3soon/ros2-ros1-bridge-build-ws"
     "j3soon/ros2-cartographer-ws"
