@@ -56,6 +56,8 @@ ENV ROS_DISTRO=$ROS_DISTRO
 COPY modules/install_ros.sh /tmp/install_ros.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_ros.sh && rm /tmp/install_ros.sh
+# Set the CycloneDDS configuration file
+ENV CYCLONEDDS_URI=/home/user/cyclonedds.xml
 
 # Setup the required capabilities for the container runtime
 # Ref: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#driver-capabilities

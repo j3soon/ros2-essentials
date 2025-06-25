@@ -24,8 +24,6 @@ sudo chown user:user /home/user/.nvidia-omniverse/logs
 sudo chown user:user /home/user/.local/share/ov
 sudo chown user:user /home/user/.local/share/ov/data
 sudo chown user:user /home/user/Documents
-# Set the CycloneDDS configuration file
-export CYCLONEDDS_URI=/home/user/cyclonedds.xml
 # Source global ROS2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Optionally perform apt update if it has not been executed yet
