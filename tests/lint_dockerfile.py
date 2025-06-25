@@ -29,5 +29,9 @@ for filename in glob.glob(f"{repo_dir}/*_ws/docker/Dockerfile*"):
         raise ValueError(f"`RUN apt-get install` should not exist, use with `apt-get update` instead: '{filename}'")
     if "    apt-get install" in content:
         raise ValueError(f"`    apt-get install` should not exist, use with `apt-get update` in the same line instead: '{filename}'")
+    if "${HOME}" in content:
+        raise ValueError(f"`${{HOME}}` should not exist, use environment variables instead: '{filename}'")
+    if "$HOME" in content:
+        raise ValueError(f"`$HOME` should not exist, use environment variables instead: '{filename}'")
     if "PLACEHOLDER" in content:
         raise ValueError(f"`PLACEHOLDER` should not exist: '{filename}'")

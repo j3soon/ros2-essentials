@@ -89,7 +89,7 @@ RUN mkdir /home/$USERNAME/.gazebo
 # Isaac Sim version configuration
 ARG ISAAC_SIM_VERSION=4.5.0
 # Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/setup/installation/binaries_installation.html
-ENV ISAACSIM_PATH="${HOME}/isaacsim"
+ENV ISAACSIM_PATH="/home/$USERNAME/isaacsim"
 # Copy and run Isaac Sim installation script
 COPY --chown=$USERNAME:$USERNAME \
      modules/install_isaac_sim.sh /tmp/install_isaac_sim.sh
@@ -111,12 +111,22 @@ ENV TERM=xterm-256color
 # Isaac Lab version configuration
 ARG ISAAC_LAB_VERSION=2.1.0
 # Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/policy_deployment/00_hover/hover_policy.html
-ENV ISAACLAB_PATH="${HOME}/IsaacLab"
+ENV ISAACLAB_PATH="/home/$USERNAME/IsaacLab"
 COPY --chown=$USERNAME:$USERNAME \
      modules/install_isaac_lab.sh /tmp/install_isaac_lab.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
     ISAAC_LAB_VERSION=$ISAAC_LAB_VERSION /tmp/install_isaac_lab.sh && rm /tmp/install_isaac_lab.sh
+
+# Isaac ROS version configuration
+ARG ISAAC_ROS=YES
+ENV ISAAC_ROS_WS="/home/$USERNAME/workspaces/isaac_ros-dev/"
+# Copy and run Isaac ROS installation script
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_isaac_ros.sh /tmp/install_isaac_ros.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    ISAAC_ROS=$ISAAC_ROS /tmp/install_isaac_ros.sh && rm /tmp/install_isaac_ros.sh
+# Ref: https://nvidia-isaac-ros.github.io/getting_started/dev_env_setup.html
 
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
