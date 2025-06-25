@@ -27,10 +27,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get install -y \
     curl \
     git \
+    git-lfs \
     htop \
     iputils-ping \
+    jq \
     nano \
     net-tools \
+    netcat-traditional \
+    nmap \
     tmux \
     tree \
     unzip \
