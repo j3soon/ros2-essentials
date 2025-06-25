@@ -88,6 +88,8 @@ RUN mkdir /home/$USERNAME/.gazebo
 
 # Isaac Sim version configuration
 ARG ISAAC_SIM_VERSION=4.5.0
+# Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/setup/installation/binaries_installation.html
+ENV ISAACSIM_PATH="${HOME}/isaacsim"
 # Copy and run Isaac Sim installation script
 COPY --chown=$USERNAME:$USERNAME \
      modules/install_isaac_sim.sh /tmp/install_isaac_sim.sh
@@ -100,12 +102,16 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 ENV OMNI_USER=admin
 ENV OMNI_PASS=admin
 ENV OMNI_KIT_ACCEPT_EULA=YES
+# Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/setup/installation/binaries_installation.html
+ENV ISAACSIM_PYTHON_EXE="${ISAACSIM_PATH}/python.sh"
 
 # Set TERM to prevent Isaac Lab error during docker build:
 #    'ansi+tabs': unknown terminal type.
 ENV TERM=xterm-256color
 # Isaac Lab version configuration
 ARG ISAAC_LAB_VERSION=2.1.0
+# Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/policy_deployment/00_hover/hover_policy.html
+ENV ISAACLAB_PATH="${HOME}/IsaacLab"
 COPY --chown=$USERNAME:$USERNAME \
      modules/install_isaac_lab.sh /tmp/install_isaac_lab.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \

@@ -16,6 +16,10 @@ if [ -z "$ISAAC_SIM_VERSION" ]; then
     echo "Skipping Isaac Sim installation as ISAAC_SIM_VERSION is not set"
     exit 0
 fi
+if [ -z "$ISAACSIM_PATH" ]; then
+    echo "Error: ISAACSIM_PATH environment variable is required but not set"
+    exit 1
+fi
 
 echo "Installing Isaac Sim components for architecture: $TARGETARCH"
 echo "Isaac Sim version: $ISAAC_SIM_VERSION"
@@ -35,18 +39,18 @@ if [ "$ISAAC_SIM_VERSION" = "4.5.0" ]; then
     echo "Installing Isaac Sim Compatibility Checker 4.5.0..."
     # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html#isaac-sim-compatibility-checker
     python3 -V | grep "Python 3.10" \
-        && cd ~ \
+        && cd /tmp \
         && wget -q https://download.isaacsim.omniverse.nvidia.com/isaac-sim-comp-check%404.5.0-rc.6%2Brelease.675.f1cca148.gl.linux-x86_64.release.zip \
         && unzip "isaac-sim-comp-check@4.5.0-rc.6+release.675.f1cca148.gl.linux-x86_64.release.zip" -d ~/isaac-sim-comp-check \
         && rm "isaac-sim-comp-check@4.5.0-rc.6+release.675.f1cca148.gl.linux-x86_64.release.zip"
     echo "Installing Isaac Sim 4.5.0 (requires Python 3.10)..."
     # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_workstation.html
     python3 -V | grep "Python 3.10" \
-        && cd ~ \
+        && cd /tmp \
         && wget -q https://download.isaacsim.omniverse.nvidia.com/isaac-sim-standalone%404.5.0-rc.36%2Brelease.19112.f59b3005.gl.linux-x86_64.release.zip \
-        && unzip "isaac-sim-standalone@4.5.0-rc.36+release.19112.f59b3005.gl.linux-x86_64.release.zip" -d ~/isaacsim \
+        && unzip "isaac-sim-standalone@4.5.0-rc.36+release.19112.f59b3005.gl.linux-x86_64.release.zip" -d "$ISAACSIM_PATH" \
         && rm "isaac-sim-standalone@4.5.0-rc.36+release.19112.f59b3005.gl.linux-x86_64.release.zip" \
-        && cd ~/isaacsim \
+        && cd "$ISAACSIM_PATH" \
         && ./post_install.sh
 else
     echo "Error: Unsupported Isaac Sim version: $ISAAC_SIM_VERSION"
