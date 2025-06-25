@@ -105,6 +105,20 @@ ENV OMNI_KIT_ACCEPT_EULA=YES
 # Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/setup/installation/binaries_installation.html
 ENV ISAACSIM_PYTHON_EXE="${ISAACSIM_PATH}/python.sh"
 
+# Create Isaac Sim directories with correct ownership to avoid permission issues after volume mount
+RUN sudo mkdir -p /isaac-sim && sudo chown $USERNAME:$USERNAME /isaac-sim
+RUN mkdir -p /isaac-sim/kit/cache \
+    && mkdir -p /home/$USERNAME/.cache/ov \
+    && mkdir -p /home/$USERNAME/.local/lib/python3.10/site-packages/omni/cache \
+    && mkdir -p /home/$USERNAME/.cache/pip \
+    && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
+    && mkdir -p /home/$USERNAME/.nv/ComputeCache \
+    && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
+    && mkdir -p /home/$USERNAME/.local/lib/python3.10/site-packages/omni/logs \
+    && mkdir -p /home/$USERNAME/.local/share/ov/data \
+    && mkdir -p /home/$USERNAME/.local/lib/python3.10/site-packages/omni/data \
+    && mkdir -p /home/$USERNAME/Documents
+
 # Set TERM to prevent Isaac Lab error during docker build:
 #    'ansi+tabs': unknown terminal type.
 ENV TERM=xterm-256color
