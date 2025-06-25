@@ -60,4 +60,18 @@ fi
 echo "Fixing SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) numpy==1.26.0..."
 pip install scipy==1.14.1 numpy==1.26.0
 
+echo "Creating Isaac Sim directories with correct ownership to avoid permission issues after volume mount..."
+sudo mkdir -p /isaac-sim && sudo chown $USERNAME:$USERNAME /isaac-sim
+mkdir -p /isaac-sim/kit/cache \
+    && mkdir -p /home/$USERNAME/.cache/ov \
+    && mkdir -p /home/$USERNAME/.local/lib/python3.10/site-packages/omni/cache \
+    && mkdir -p /home/$USERNAME/.cache/pip \
+    && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
+    && mkdir -p /home/$USERNAME/.nv/ComputeCache \
+    && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
+    && mkdir -p /home/$USERNAME/.local/lib/python3.10/site-packages/omni/logs \
+    && mkdir -p /home/$USERNAME/.local/share/ov/data \
+    && mkdir -p /home/$USERNAME/.local/lib/python3.10/site-packages/omni/data \
+    && mkdir -p /home/$USERNAME/Documents
+
 echo "Isaac Sim installation completed successfully!"
