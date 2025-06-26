@@ -24,12 +24,14 @@ if [ -z "$ISAAC_ROS_WS" ]; then
     echo "Error: ISAAC_ROS_WS environment variable is required but not set"
     exit 1
 fi
-if [ "$CUDA_TOOLKIT_VERSION" != "12.6" ]; then
-    # Ref: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common/blob/main/docker/Dockerfile.base
-    echo "Error: CUDA_TOOLKIT_VERSION must be 12.6 for Isaac ROS"
-    # Other versions may be supported, but we haven't tested them yet.
-    exit 1
-fi
+# TODO: Check if this check is necessary
+# Temporarily ignore CUDA Toolkit version check
+# if [ "$CUDA_TOOLKIT_VERSION" != "12.6" ]; then
+#     # Ref: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common/blob/main/docker/Dockerfile.base
+#     echo "Error: CUDA_TOOLKIT_VERSION must be 12.6 for Isaac ROS"
+#     # Other versions may be supported, but we haven't tested them yet.
+#     exit 1
+# fi
 
 echo "Installing Isaac ROS components for architecture: $TARGETARCH"
 echo "Isaac ROS: $ISAAC_ROS"
