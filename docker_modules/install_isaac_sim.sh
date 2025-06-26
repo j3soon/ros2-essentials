@@ -37,6 +37,7 @@ sudo apt-get update && sudo apt-get install -y \
 
 if [ "$ISAAC_SIM_VERSION" = "4.5.0" ]; then
     echo "Installing Isaac Sim Compatibility Checker 4.5.0..."
+    # Note: The Isaac Sim Compatibility Checker is installed since its usefulness outweighs the image size increase
     # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html#isaac-sim-compatibility-checker
     python3 -V | grep "Python 3.10" \
         && cd /tmp \
@@ -52,6 +53,10 @@ if [ "$ISAAC_SIM_VERSION" = "4.5.0" ]; then
         && rm "isaac-sim-standalone@4.5.0-rc.36+release.19112.f59b3005.gl.linux-x86_64.release.zip" \
         && cd "$ISAACSIM_PATH" \
         && ./post_install.sh
+
+    # Note: Optional dependencies and the Isaac Sim ROS workspace are not installed to minimize image size
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_ros.html#running-native-ros
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_ros.html#setting-up-workspaces
 else
     echo "Error: Unsupported Isaac Sim version: $ISAAC_SIM_VERSION"
     exit 1
