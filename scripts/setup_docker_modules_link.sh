@@ -15,7 +15,9 @@ do
     for file in "${ws}/docker/modules"/*; do
         # Check if the file is a hard link
         # Ref: https://unix.stackexchange.com/a/167616
-        if [ "$(stat -c %h -- "$file")" -gt 1 ]; then
+        if [ ! -f "$file" ]; then
+            continue
+        elif [ "$(stat -c %h -- "$file")" -gt 1 ]; then
             rm "$file" 2>/dev/null
         else
             echo "Error: Found regular file instead of symlink: $file"
