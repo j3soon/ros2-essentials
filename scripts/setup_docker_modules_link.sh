@@ -12,7 +12,16 @@ workspaces=( *_ws* )
 for ws in "${workspaces[@]}"
 do
     mkdir -p "${ws}/docker/modules"
-    rm -f "${ws}/docker/modules"/* 2>/dev/null || true
+    for file in "${ws}/docker/modules"/*; do
+        # Check if the file is a hard link
+        # Ref: https://unix.stackexchange.com/a/167616
+        if [ "$(stat -c %h -- "$file")" -gt 1 ]; then
+            rm "$file" 2>/dev/null
+        else
+            echo "Error: Found regular file instead of symlink: $file"
+            exit 1
+        fi
+    done
     for file in docker_modules/*; do
         if [ -f "$file" ]; then
             ln "$file" "${ws}/docker/modules/"

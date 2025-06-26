@@ -69,6 +69,16 @@ COPY modules/install_x11_opengl_vulkan.sh /tmp/install_x11_opengl_vulkan.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_x11_opengl_vulkan.sh && rm /tmp/install_x11_opengl_vulkan.sh
 
+# Install CUDA Toolkit
+ARG CUDA_TOOLKIT_VERSION=12.6
+# Copy and run CUDA Toolkit installation script
+COPY modules/install_cuda_toolkit.sh /tmp/install_cuda_toolkit.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    CUDA_TOOLKIT_VERSION=$CUDA_TOOLKIT_VERSION /tmp/install_cuda_toolkit.sh && rm /tmp/install_cuda_toolkit.sh
+# Ref: https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#post-installation-actions
+ENV PATH="${PATH}:/usr/local/cuda-${CUDA_TOOLKIT_VERSION}/bin"
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/cuda-${CUDA_TOOLKIT_VERSION}/lib64"
+
 # Arguments for the default user
 ARG USERNAME=user
 ARG USER_UID=1000
