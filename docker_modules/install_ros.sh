@@ -68,7 +68,7 @@ apt-get install -y /tmp/ros2-apt-source.deb
 rm -rf /tmp/ros2-apt-source.deb
 
 # Install ROS 2 packages
-apt-get update && apt-get upgrade -y
+apt-get update && apt-get upgrade -y || exit 1
 apt-get install -y \
     ros-$ROS_DISTRO-desktop \
     ros-dev-tools

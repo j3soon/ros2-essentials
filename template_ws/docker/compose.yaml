@@ -5,10 +5,20 @@ services:
     image: ubuntu:22.04
     container_name: ros2-template-ws-volume-instantiation
     command: bash -c "
+        echo 'Creating directories and setting ownership for UID ${USER_UID:-1000}...' &&
         mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
         mkdir -p /isaac-sim/{logs,data,documents} &&
         mkdir -p /isaac-sim/standalone/cache/ov &&
-        mkdir -p /isaac-sim/standalone/{logs,data}"
+        mkdir -p /isaac-sim/standalone/{logs,data} &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/cache &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/{logs,data,documents} &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache/ov &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/{logs,data}
+        "
     volumes:
       - isaac-sim-cache:/isaac-sim
   template-ws:
@@ -24,10 +34,14 @@ services:
       args:
         # TODO: Set the USER_UID
         USER_UID: "${USER_UID:-1000}"
+        # TODO: Set CUDA Toolkit version or set to "" if not using CUDA Toolkit
+        # CUDA_TOOLKIT_VERSION: ""
         # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
         # ISAAC_SIM_VERSION: "4.5.0"
         # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
         # ISAAC_LAB_VERSION: "2.1.0"
+        # TODO: Set Isaac ROS to "" if not using Isaac ROS
+        # ISAAC_ROS: "YES"
       cache_from:
         - j3soon/ros2-template-ws:buildcache-amd64
         - j3soon/ros2-template-ws:buildcache-arm64

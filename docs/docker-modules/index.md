@@ -1,8 +1,24 @@
 # Docker Modules
 
+## Robot Operating System 2 (ROS 2)
+
+ROS 2 Humble Apt Install.
+
+## CUDA Toolkit
+
+CUDA Toolkit 12.6 Deb Install.
+
+> This is often unnecessary when only Python is used, as `pip install torch` typically installs the appropriate version of the CUDA Toolkit automatically.
+
 ## Isaac Sim
 
 Isaac Sim 4.5.0 Binary Install.
+
+Depends on:
+- Vulkan Configuration
+- Username
+
+> Note that CUDA Toolkit is not required for Isaac Sim.
 
 ### On Host
 
@@ -41,6 +57,13 @@ cd ~/isaacsim
 
 Isaac Lab 2.1.0 Git Install.
 
+Depends on:
+- Vulkan Configuration
+- Username
+- Isaac Sim
+
+> Note that CUDA Toolkit is not required for Isaac Lab.
+
 ### On Host
 
 Quick test using official Docker image:
@@ -69,3 +92,14 @@ cd ~/IsaacLab
 # or
 ./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task=Isaac-Cartpole-v0 --headless
 ```
+
+## Isaac ROS
+
+> Note: This is a work in progress. Currently only the base Isaac ROS is installed. Running examples requires additional dependencies that are not yet included in this setup.
+
+Isaac ROS 3.2.
+
+Depends on:
+- ROS 2 Humble
+- CUDA Toolkit
+- and more...
