@@ -5,11 +5,20 @@ services:
     image: ubuntu:22.04
     container_name: ros2-vlp-ws-volume-instantiation
     command: bash -c "
+        echo 'Creating directories and setting ownership for UID ${USER_UID:-1000}...' &&
         mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
         mkdir -p /isaac-sim/{logs,data,documents} &&
         mkdir -p /isaac-sim/standalone/cache/ov &&
         mkdir -p /isaac-sim/standalone/{logs,data} &&
-        chown -R 1000:1000 /isaac-sim"
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/cache &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/{logs,data,documents} &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache/ov &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/{logs,data}
+        "
     volumes:
       - isaac-sim-cache:/isaac-sim
   vlp-ws:
