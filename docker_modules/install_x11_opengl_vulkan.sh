@@ -17,7 +17,8 @@ apt-get update && apt-get install -y \
     x11-apps x11-utils \
     mesa-utils \
     libgl1 vulkan-tools \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    || exit 1
 
 echo "Configuring Vulkan support..."
 # Install Vulkan config files

@@ -51,7 +51,7 @@ if [ "$ISAAC_ROS" = "YES" ]; then
     wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
     grep -qxF "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" /etc/apt/sources.list || \
     echo "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" | sudo tee -a /etc/apt/sources.list
-    sudo apt-get update && sudo rm -rf /var/lib/apt/lists/*
+    sudo apt-get update && sudo rm -rf /var/lib/apt/lists/* || exit 1
 
     # Ref: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_nvblox/isaac_ros_nvblox/index.html
     mkdir -p ${ISAAC_ROS_WS}/src

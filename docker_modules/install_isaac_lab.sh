@@ -43,11 +43,13 @@ if [ "$ISAAC_LAB_VERSION" = "2.1.0" ]; then
     # Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/setup/installation/binaries_installation.html
     sudo apt-get update && sudo apt-get install -y \
         cmake build-essential \
-        && sudo rm -rf /var/lib/apt/lists/*
+        && sudo rm -rf /var/lib/apt/lists/* \
+        || exit 1
     git clone -b v2.1.0 https://github.com/isaac-sim/IsaacLab.git "$ISAACLAB_PATH" \
         && cd "$ISAACLAB_PATH" \
         && ln -s "$ISAACSIM_PATH" _isaac_sim \
-        && ./isaaclab.sh --install
+        && ./isaaclab.sh --install \
+        || exit 1
 else
     echo "Error: Unsupported Isaac Lab version: $ISAAC_LAB_VERSION"
     exit 1
