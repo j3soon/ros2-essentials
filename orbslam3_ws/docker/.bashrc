@@ -7,25 +7,7 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-# Change ownership of Isaac Sim user cache directories to avoid permission issues after volume mount
-echo "changing ownership of Isaac Sim user cache directories..."
-sudo chown user:user /isaac-sim
-sudo chown user:user /isaac-sim/kit
-sudo chown user:user /isaac-sim/kit/cache
-sudo chown user:user /home/user/.cache
-sudo chown user:user /home/user/.cache/ov
-sudo chown user:user /home/user/.cache/pip
-sudo chown user:user /home/user/.cache/nvidia
-sudo chown user:user /home/user/.cache/nvidia/GLCache
-sudo chown user:user /home/user/.nv
-sudo chown user:user /home/user/.nv/ComputeCache
-sudo chown user:user /home/user/.nvidia-omniverse
-sudo chown user:user /home/user/.nvidia-omniverse/logs
-sudo chown user:user /home/user/.local/share/ov
-sudo chown user:user /home/user/.local/share/ov/data
-sudo chown user:user /home/user/Documents
-# Set the CycloneDDS configuration file
-export CYCLONEDDS_URI=/home/user/cyclonedds.xml
+
 # Source global ROS2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Optionally perform apt update if it has not been executed yet

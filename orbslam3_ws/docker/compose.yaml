@@ -8,7 +8,8 @@ services:
         mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
         mkdir -p /isaac-sim/{logs,data,documents} &&
         mkdir -p /isaac-sim/standalone/cache/ov &&
-        mkdir -p /isaac-sim/standalone/{logs,data}"
+        mkdir -p /isaac-sim/standalone/{logs,data} &&
+        chown -R 1000:1000 /isaac-sim"
     volumes:
       - isaac-sim-cache:/isaac-sim
   orbslam3-ws:
@@ -24,10 +25,14 @@ services:
       args:
         # TODO: Set the USER_UID
         USER_UID: "${USER_UID:-1000}"
+        # TODO: Set CUDA Toolkit version or set to "" if not using CUDA Toolkit
+        # CUDA_TOOLKIT_VERSION: ""
         # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
         # ISAAC_SIM_VERSION: "4.5.0"
         # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
         # ISAAC_LAB_VERSION: "2.1.0"
+        # TODO: Set Isaac ROS to "" if not using Isaac ROS
+        # ISAAC_ROS: "YES"
       cache_from:
         - j3soon/ros2-orbslam3-ws:buildcache-amd64
         - j3soon/ros2-orbslam3-ws:buildcache-arm64

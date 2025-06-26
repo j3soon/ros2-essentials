@@ -32,10 +32,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get install -y \
     curl \
     git \
+    git-lfs \
     htop \
     iputils-ping \
+    jq \
     nano \
     net-tools \
+    netcat-traditional \
+    nmap \
     tmux \
     tree \
     unzip \
@@ -89,34 +93,52 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 
 USER $USERNAME
 
+# Create cache directories with correct ownership to avoid permission issues after volume mount
+RUN mkdir -p /home/$USERNAME/.cache/pip
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
 RUN mkdir /home/$USERNAME/.gazebo
 
 # Isaac Sim version configuration
 ARG ISAAC_SIM_VERSION=4.5.0
+# Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/setup/installation/binaries_installation.html
+ENV ISAACSIM_PATH="/home/$USERNAME/isaacsim"
 # Copy and run Isaac Sim installation script
 COPY --chown=$USERNAME:$USERNAME \
      modules/install_isaac_sim.sh /tmp/install_isaac_sim.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
-    ISAAC_SIM_VERSION=$ISAAC_SIM_VERSION /tmp/install_isaac_sim.sh && rm /tmp/install_isaac_sim.sh
+    --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
+    /tmp/install_isaac_sim.sh && rm /tmp/install_isaac_sim.sh
 # Set Isaac Sim environment variables
 # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_python.html#running-isaac-sim
 # Ref: https://github.com/NVIDIA-Omniverse/IsaacSim-dockerfiles/blob/e3c09375c2d110b39c3fab3611352870aa3ce6ee/Dockerfile.2023.1.0-ubuntu22.04#L49-L53
 ENV OMNI_USER=admin
 ENV OMNI_PASS=admin
 ENV OMNI_KIT_ACCEPT_EULA=YES
+# Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/setup/installation/binaries_installation.html
+ENV ISAACSIM_PYTHON_EXE="${ISAACSIM_PATH}/python.sh"
 
 # Set TERM to prevent Isaac Lab error during docker build:
 #    'ansi+tabs': unknown terminal type.
 ENV TERM=xterm-256color
 # Isaac Lab version configuration
 ARG ISAAC_LAB_VERSION=2.1.0
+# Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/policy_deployment/00_hover/hover_policy.html
+ENV ISAACLAB_PATH="/home/$USERNAME/IsaacLab"
 COPY --chown=$USERNAME:$USERNAME \
      modules/install_isaac_lab.sh /tmp/install_isaac_lab.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private \
-    ISAAC_LAB_VERSION=$ISAAC_LAB_VERSION /tmp/install_isaac_lab.sh && rm /tmp/install_isaac_lab.sh
+    --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
+    /tmp/install_isaac_lab.sh && rm /tmp/install_isaac_lab.sh
+
+# Isaac ROS version configuration
+ARG ISAAC_ROS=YES
+ENV ISAAC_ROS_WS="/home/$USERNAME/workspaces/isaac_ros-dev/"
+# Copy and run Isaac ROS installation script
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_isaac_ros.sh /tmp/install_isaac_ros.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_isaac_ros.sh && rm /tmp/install_isaac_ros.sh
+# Ref: https://nvidia-isaac-ros.github.io/getting_started/dev_env_setup.html
 
 # Install custom tools
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \

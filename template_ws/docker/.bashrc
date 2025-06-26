@@ -7,6 +7,7 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
 # Source global ROS2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Optionally perform apt update if it has not been executed yet
