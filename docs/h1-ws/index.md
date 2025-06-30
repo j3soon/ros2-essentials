@@ -24,7 +24,7 @@ cd ~/isaacsim
 
 ### Isaac Lab Examples
 
-[Training](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html):
+[Training](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html) [environments](https://isaac-sim.github.io/IsaacLab/main/source/overview/environments.html#comprehensive-list-of-environments) (`Isaac-Velocity-Flat-H1-v0`, `Isaac-Velocity-Rough-H1-v0`):
 
 ```sh
 cd ~/IsaacLab
