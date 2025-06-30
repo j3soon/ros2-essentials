@@ -47,16 +47,20 @@ The docker image of the template workspace is share by most of the workspace, al
 | [ALOHA](https://j3soon.github.io/ros2-essentials/aloha-ws/) | ✔️ | ✔️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
 | [Turtlebot3](https://j3soon.github.io/ros2-essentials/turtlebot3-ws/) | ✔️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
 | [Tesollo Delto Gripper](https://j3soon.github.io/ros2-essentials/delto-gripper-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Unitree Go2](https://j3soon.github.io/ros2-essentials/go2-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), [Johnson Sun](https://github.com/j3soon) |
 | [Unitree H1](https://j3soon.github.io/ros2-essentials/h1-ws/) | ✔️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
 
 If you have trouble using a workspace, please [open an issue](https://github.com/j3soon/ros2-essentials/issues) and tag the current maintainers mentioned above.
 
 ## Pre-configured Modules
 
-| Module | Notes | Maintainer |
-|--------|-------|------------|
-| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-sim) | Isaac Sim 4.5.0 Binary Install | [Johnson Sun](https://github.com/j3soon) |
-| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-lab) | Isaac Lab 2.1.0 Git Install | [Johnson Sun](https://github.com/j3soon) |
+| Module | Notes | Default | Maintainer |
+|--------|-------|---------|------------|
+| [ROS2](https://j3soon.github.io/ros2-essentials/docker-modules/#robot-operating-system-2-ros-2) | ROS2 Humble | ✔️ | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/#cuda-toolkit) | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-sim) | Isaac Sim 4.5.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-lab) | Isaac Lab 2.1.0 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-ros) | Isaac ROS 3.2 Apt Install (Base only) | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 
 ## System Requirements
 

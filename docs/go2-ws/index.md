@@ -1,5 +1,16 @@
 # Unitree Go2
 
+[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/go2_ws)
+[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-go2-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-go2-ws.yaml)
+[![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=go2_ws)](https://github.com/j3soon/ros2-essentials/commits/main/go2_ws)
+
+[![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--go2--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-go2-ws/tags)
+![Docker image arch](https://img.shields.io/badge/arch-amd64-blueviolet)
+![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-go2-ws)
+![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-go2-ws)
+
+> Please note that this workspace is only tested in simulation.
+
 ## Run the container
 
 ```bash

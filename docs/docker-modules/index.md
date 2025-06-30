@@ -15,6 +15,7 @@ CUDA Toolkit 12.6 Deb Install.
 Isaac Sim 4.5.0 Binary Install.
 
 Depends on:
+
 - Vulkan Configuration
 - Username
 
@@ -58,6 +59,7 @@ cd ~/isaacsim
 Isaac Lab 2.1.0 Git Install.
 
 Depends on:
+
 - Vulkan Configuration
 - Username
 - Isaac Sim
@@ -100,6 +102,7 @@ cd ~/IsaacLab
 Isaac ROS 3.2.
 
 Depends on:
+
 - ROS 2 Humble
 - CUDA Toolkit
 - and more...
