@@ -21,6 +21,7 @@
             string boundCamera = "/OmniverseKit_Persp"
         }
         dictionary omni_layer = {
+            string authoring_layer = "./go2_og.usda"
             dictionary locked = {
             }
             dictionary muteness = {
@@ -39,6 +40,240 @@
 
 def Xform "World"
 {
+    def "warehouse" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.5/Isaac/Environments/Simple_Warehouse/warehouse.usd@
+    )
+    {
+    }
+
+    def "go2" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.5/Isaac/Robots/Unitree/Go2/go2.usd@
+    )
+    {
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0.35)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "base"
+        {
+            over "FL_hip_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "FR_hip_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "RL_hip_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "RR_hip_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "FL_hip"
+        {
+            over "FL_thigh_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "FL_hip_protector"
+        {
+        }
+
+        over "FL_thigh"
+        {
+            over "FL_calf_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "FL_calf"
+        {
+        }
+
+        over "FL_calflower"
+        {
+        }
+
+        over "FL_calflower1"
+        {
+        }
+
+        over "FL_foot"
+        {
+        }
+
+        over "FL_thigh_protector"
+        {
+        }
+
+        over "FR_hip"
+        {
+            over "FR_thigh_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "FR_hip_protector"
+        {
+        }
+
+        over "FR_thigh"
+        {
+            over "FR_calf_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "FR_calf"
+        {
+        }
+
+        over "FR_calflower"
+        {
+        }
+
+        over "FR_calflower1"
+        {
+        }
+
+        over "FR_foot"
+        {
+        }
+
+        over "FR_thigh_protector"
+        {
+        }
+
+        over "Head_upper"
+        {
+        }
+
+        over "Head_lower"
+        {
+        }
+
+        over "RL_hip"
+        {
+            over "RL_thigh_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "RL_hip_protector"
+        {
+        }
+
+        over "RL_thigh"
+        {
+            over "RL_calf_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "RL_calf"
+        {
+        }
+
+        over "RL_calflower"
+        {
+        }
+
+        over "RL_calflower1"
+        {
+        }
+
+        over "RL_foot"
+        {
+        }
+
+        over "RL_thigh_protector"
+        {
+        }
+
+        over "RR_hip"
+        {
+            over "RR_thigh_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "RR_hip_protector"
+        {
+        }
+
+        over "RR_thigh"
+        {
+            over "RR_calf_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "RR_calf"
+        {
+        }
+
+        over "RR_calflower"
+        {
+        }
+
+        over "RR_calflower1"
+        {
+        }
+
+        over "RR_foot"
+        {
+        }
+
+        over "RR_thigh_protector"
+        {
+        }
+
+        over "base_black"
+        {
+        }
+
+        over "base_white"
+        {
+        }
+
+        over "imu"
+        {
+        }
+
+        over "radar"
+        {
+        }
+    }
 }
 
 def Xform "Environment"
