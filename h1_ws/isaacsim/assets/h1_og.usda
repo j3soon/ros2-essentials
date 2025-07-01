@@ -40,6 +40,219 @@
 
 def Xform "World"
 {
+    def "warehouse" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.5/Isaac/Environments/Simple_Warehouse/warehouse.usd@
+    )
+    {
+    }
+
+    def "h1" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.5/Isaac/Robots/Unitree/H1/h1.usd@
+    )
+    {
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 1.05)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "pelvis"
+        {
+            over "left_hip_yaw_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "right_hip_yaw_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "torso_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_hip_yaw_link"
+        {
+            over "left_hip_roll_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_hip_roll_link"
+        {
+            over "left_hip_pitch_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_hip_pitch_link"
+        {
+            over "left_knee_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_knee_link"
+        {
+            over "left_ankle_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_ankle_link"
+        {
+        }
+
+        over "right_hip_yaw_link"
+        {
+            over "right_hip_roll_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "right_hip_roll_link"
+        {
+            over "right_hip_pitch_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "right_hip_pitch_link"
+        {
+            over "right_knee_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "right_knee_link"
+        {
+            over "right_ankle_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "right_ankle_link"
+        {
+        }
+
+        over "torso_link"
+        {
+            over "left_shoulder_pitch_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "right_shoulder_pitch_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "d435_left_imager_link"
+        {
+        }
+
+        over "d435_rgb_module_link"
+        {
+        }
+
+        over "imu_link"
+        {
+        }
+
+        over "left_shoulder_pitch_link"
+        {
+            over "left_shoulder_roll_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_shoulder_roll_link"
+        {
+            over "left_shoulder_yaw_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_shoulder_yaw_link"
+        {
+            over "left_elbow_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_elbow_link"
+        {
+        }
+
+        over "logo_link"
+        {
+        }
+
+        over "mid360_link"
+        {
+        }
+
+        over "right_shoulder_pitch_link"
+        {
+            over "right_shoulder_roll_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "right_shoulder_roll_link"
+        {
+            over "right_shoulder_yaw_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "right_shoulder_yaw_link"
+        {
+            over "right_elbow_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "right_elbow_link"
+        {
+        }
+    }
 }
 
 def Xform "Environment"
