@@ -73,3 +73,63 @@ export PYTHONPATH=""
 > ModuleNotFoundError: No module named 'catkin_pkg'
 > There was an error running python
 > ```
+
+### Custom Isaac Sim Environment
+
+Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/h1_ws/isaacsim/assets/h1_og.usda` in Omniverse, and then press Play.
+
+![](assets/01-isaac-sim-open-scene.png)
+![](assets/02-isaac-sim-play.png)
+
+In another terminal, exec into the container:
+
+```sh
+docker exec -it ros2-go2-ws bash
+```
+
+Inspect the joint states and clock:
+
+```sh
+ros2 topic echo /joint_states
+ros2 topic echo /clock
+```
+
+Inspect TF and Odom by launching `rviz2` and set `Fixed Frame` to `world` and `Add > TF`. Then, `Add > Odometry` and set `Topic` to `/odom`.
+
+![](assets/03-rviz2-tf-odom.png)
+
+Send a joint command:
+
+```sh
+ros2 topic pub --once /joint_command sensor_msgs/msg/JointState "{
+  name: [
+    'left_hip_yaw_joint',
+    'right_hip_yaw_joint',
+    'torso_joint',
+    'left_hip_roll_joint',
+    'right_hip_roll_joint',
+    'left_shoulder_pitch_joint',
+    'right_shoulder_pitch_joint',
+    'left_hip_pitch_joint',
+    'right_hip_pitch_joint',
+    'left_shoulder_roll_joint',
+    'right_shoulder_roll_joint',
+    'left_knee_joint',
+    'right_knee_joint',
+    'left_shoulder_yaw_joint',
+    'right_shoulder_yaw_joint',
+    'left_ankle_joint',
+    'right_ankle_joint',
+    'left_elbow_joint',
+    'right_elbow_joint'
+  ],
+  position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.57, -1.57, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+  velocity: [],
+  effort: []
+}"
+```
+
+The H1 should split its legs and fall to the ground, which can be seen in both Isaac Sim and RViz2.
+
+![](assets/04-isaac-sim-split-legs.png)
+![](assets/05-rviz2-split-legs.png)

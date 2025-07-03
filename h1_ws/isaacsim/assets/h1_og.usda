@@ -21,7 +21,7 @@
             string boundCamera = "/OmniverseKit_Persp"
         }
         dictionary omni_layer = {
-            string authoring_layer = "./go2_og.usda"
+            string authoring_layer = "./h1_og.usda"
             dictionary locked = {
             }
             dictionary muteness = {
@@ -46,236 +46,210 @@ def Xform "World"
     {
     }
 
-    def "go2" (
-        prepend apiSchemas = ["PhysicsArticulationRootAPI", "PhysxArticulationAPI"]
-        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.5/Isaac/Robots/Unitree/Go2/go2.usd@
+    def "h1" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.5/Isaac/Robots/Unitree/H1/h1.usd@
     )
     {
-        bool physxArticulation:enabledSelfCollisions = 0
-        int physxArticulation:solverVelocityIterationCount = 16
         quatd xformOp:orient = (1, 0, 0, 0)
         double3 xformOp:scale = (1, 1, 1)
-        double3 xformOp:translate = (0, 0, 0.35)
+        double3 xformOp:translate = (0, 0, 1.05)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        over "base" (
-            delete apiSchemas = ["PhysicsArticulationRootAPI", "PhysxArticulationAPI"]
-        )
+        over "pelvis"
         {
-            over "FL_hip_joint"
+            over "left_hip_yaw_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
 
-            over "FR_hip_joint"
+            over "right_hip_yaw_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
 
-            over "RL_hip_joint"
-            {
-                float state:angular:physics:position = 0
-                float state:angular:physics:velocity = 0
-            }
-
-            over "RR_hip_joint"
+            over "torso_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
         }
 
-        over "FL_hip"
+        over "left_hip_yaw_link"
         {
-            over "FL_thigh_joint"
+            over "left_hip_roll_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
         }
 
-        over "FL_hip_protector"
+        over "left_hip_roll_link"
         {
-        }
-
-        over "FL_thigh"
-        {
-            over "FL_calf_joint"
+            over "left_hip_pitch_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
         }
 
-        over "FL_calf"
+        over "left_hip_pitch_link"
         {
-        }
-
-        over "FL_calflower"
-        {
-        }
-
-        over "FL_calflower1"
-        {
-        }
-
-        over "FL_foot"
-        {
-        }
-
-        over "FL_thigh_protector"
-        {
-        }
-
-        over "FR_hip"
-        {
-            over "FR_thigh_joint"
+            over "left_knee_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
         }
 
-        over "FR_hip_protector"
+        over "left_knee_link"
         {
-        }
-
-        over "FR_thigh"
-        {
-            over "FR_calf_joint"
+            over "left_ankle_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
         }
 
-        over "FR_calf"
+        over "left_ankle_link"
         {
         }
 
-        over "FR_calflower"
+        over "right_hip_yaw_link"
         {
-        }
-
-        over "FR_calflower1"
-        {
-        }
-
-        over "FR_foot"
-        {
-        }
-
-        over "FR_thigh_protector"
-        {
-        }
-
-        over "Head_upper"
-        {
-        }
-
-        over "Head_lower"
-        {
-        }
-
-        over "RL_hip"
-        {
-            over "RL_thigh_joint"
+            over "right_hip_roll_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
         }
 
-        over "RL_hip_protector"
+        over "right_hip_roll_link"
         {
-        }
-
-        over "RL_thigh"
-        {
-            over "RL_calf_joint"
+            over "right_hip_pitch_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
         }
 
-        over "RL_calf"
+        over "right_hip_pitch_link"
         {
-        }
-
-        over "RL_calflower"
-        {
-        }
-
-        over "RL_calflower1"
-        {
-        }
-
-        over "RL_foot"
-        {
-        }
-
-        over "RL_thigh_protector"
-        {
-        }
-
-        over "RR_hip"
-        {
-            over "RR_thigh_joint"
+            over "right_knee_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
         }
 
-        over "RR_hip_protector"
+        over "right_knee_link"
         {
-        }
-
-        over "RR_thigh"
-        {
-            over "RR_calf_joint"
+            over "right_ankle_joint"
             {
                 float state:angular:physics:position = 0
                 float state:angular:physics:velocity = 0
             }
         }
 
-        over "RR_calf"
+        over "right_ankle_link"
         {
         }
 
-        over "RR_calflower"
+        over "torso_link"
+        {
+            over "left_shoulder_pitch_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "right_shoulder_pitch_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "d435_left_imager_link"
         {
         }
 
-        over "RR_calflower1"
+        over "d435_rgb_module_link"
         {
         }
 
-        over "RR_foot"
+        over "imu_link"
         {
         }
 
-        over "RR_thigh_protector"
+        over "left_shoulder_pitch_link"
+        {
+            over "left_shoulder_roll_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_shoulder_roll_link"
+        {
+            over "left_shoulder_yaw_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_shoulder_yaw_link"
+        {
+            over "left_elbow_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "left_elbow_link"
         {
         }
 
-        over "base_black"
+        over "logo_link"
         {
         }
 
-        over "base_white"
+        over "mid360_link"
         {
         }
 
-        over "imu"
+        over "right_shoulder_pitch_link"
         {
+            over "right_shoulder_roll_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
         }
 
-        over "radar"
+        over "right_shoulder_roll_link"
+        {
+            over "right_shoulder_yaw_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "right_shoulder_yaw_link"
+        {
+            over "right_elbow_joint"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "right_elbow_link"
         {
         }
     }
@@ -367,7 +341,7 @@ def "Graph"
             custom string inputs:nodeNamespace = ""
             custom string inputs:qosProfile
             custom uint64 inputs:queueSize
-            custom rel inputs:targetPrim = </World/go2> (
+            custom rel inputs:targetPrim = </World/h1> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
@@ -427,7 +401,7 @@ def "Graph"
             custom double[] inputs:positionCommand
             prepend double[] inputs:positionCommand.connect = </Graph/ROS_JointStates/SubscriberJointState.outputs:positionCommand>
             custom string inputs:robotPath
-            custom rel inputs:targetPrim = </World/go2> (
+            custom rel inputs:targetPrim = </World/h1> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
@@ -567,7 +541,7 @@ def "Graph"
             custom string inputs:qosProfile
             custom uint64 inputs:queueSize
             custom bool inputs:staticPublisher
-            custom rel inputs:targetPrims = </World/go2> (
+            custom rel inputs:targetPrims = </World/h1> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
@@ -678,7 +652,7 @@ def "Graph"
 
         def OmniGraphNode "ComputeOdometry"
         {
-            custom rel inputs:chassisPrim = </World/go2> (
+            custom rel inputs:chassisPrim = </World/h1> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
@@ -762,7 +736,7 @@ def "Graph"
             custom string inputs:qosProfile
             custom uint64 inputs:queueSize
             custom bool inputs:staticPublisher
-            custom rel inputs:targetPrims = </World/go2> (
+            custom rel inputs:targetPrims = </World/h1> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
