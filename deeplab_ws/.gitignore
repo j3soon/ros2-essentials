@@ -1,0 +1,6 @@
+docker/cache
+.hypothesis
+.vscode
+build
+install
+log
