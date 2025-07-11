@@ -29,9 +29,6 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution([FindPackageShare("go2_description"), "xacro", "robot.xacro"]),
-            " ",
-            "DEBUG:=",
-            LaunchConfiguration("enable_debug"),
         ]
     )
     robot_description = ParameterValue(robot_description_content, value_type=str)

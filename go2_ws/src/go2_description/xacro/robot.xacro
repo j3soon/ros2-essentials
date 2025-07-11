@@ -1,53 +1,40 @@
 <?xml version="1.0"?>
 
-<robot name="go2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="go2"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:arg name="DEBUG" default="false"/>
+    <!-- Declare argument -->
+    <xacro:arg name="enable_gazebo" default="False"/>
 
+    <!-- Declare parameters -->
+    <xacro:property name="enable_gazebo" value="$(arg enable_gazebo)"/>
+
+    <!-- Include other file -->
     <xacro:include filename="$(find go2_description)/xacro/const.xacro"/>
     <xacro:include filename="$(find go2_description)/xacro/materials.xacro"/>
     <xacro:include filename="$(find go2_description)/xacro/leg.xacro"/>
-    <!-- <xacro:include filename="$(find go2_description)/xacro/stairs.xacro"/> -->
-    <xacro:include filename="$(find go2_description)/xacro/gazebo.xacro"/>
-    <!-- <xacro:include filename="$(find go2_gazebo)/launch/stairs.urdf.xacro"/> -->
+    <xacro:if value="${enable_gazebo}">
+        <xacro:include filename="$(find go2_description)/xacro/gazebo.xacro"/>
+    </xacro:if>
 
-    <!-- <xacro:stairs stairs="15" xpos="0" ypos="0" zpos="0" /> -->
+    <!-- base_link -->
+    <link name="base_link"/>
 
-    <!-- Rotor related joint and link is only for demonstrate location. -->
-    <!-- Actually, the rotor will rotate and the joint is not fixed. Reduction ratio should be considered. -->
-
-    <!-- Debug mode will hung up the robot, use "true" or "false" to switch it. -->
-    <xacro:if value="$(arg DEBUG)">
-        <link name="world"/>
-        <joint name="base_static_joint" type="fixed">
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <parent link="world"/>
-            <child link="base_link"/>
-        </joint>
-    </xacro:if> 
-
-    <link name="base_link">
-        <visual>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <box size="0.001 0.001 0.001"/>
-            </geometry>
-        </visual>
-    </link>
-
-    <joint name="floating_base" type="fixed">
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+    <!-- base_footprint -->
+    <link name="base_footprint"/>
+    <joint name="base_footprint_joint" type="fixed">
         <parent link="base_link"/>
-        <child link="trunk"/>
+        <child link="base_footprint"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
+    <!-- trunk -->
     <link name="trunk">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <mesh filename="package://go2_description/meshes/trunk.dae" scale="1 1 1"/>
             </geometry>
-            <!-- <material name="orange"/> -->
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -58,68 +45,87 @@
         <inertial>
             <origin rpy="0 0 0" xyz="${trunk_com_x} ${trunk_com_y} ${trunk_com_z}"/>
             <mass value="${trunk_mass}"/>
-            <inertia
-                ixx="${trunk_ixx}" ixy="${trunk_ixy}" ixz="${trunk_ixz}"
-                iyy="${trunk_iyy}" iyz="${trunk_iyz}"
-                izz="${trunk_izz}"/>  
+            <inertia ixx="${trunk_ixx}" ixy="${trunk_ixy}" ixz="${trunk_ixz}" iyy="${trunk_iyy}" iyz="${trunk_iyz}" izz="${trunk_izz}"/>
         </inertial>
     </link>
+    <joint name="floating_base" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="trunk"/>
+    </joint>
 
+    <!-- Include four legs -->
+    <xacro:leg name="FR" mirror="-1" mirror_dae= "False" front_hind="1" front_hind_dae="True" />
+    <xacro:leg name="FL" mirror="1" mirror_dae="True" front_hind="1" front_hind_dae="True" />
+    <xacro:leg name="RR" mirror="-1" mirror_dae="False" front_hind="-1" front_hind_dae="False" />
+    <xacro:leg name="RL" mirror="1" mirror_dae="True" front_hind="-1" front_hind_dae="False" />
+
+    <!-- Head_upper -->
+    <link name="Head_upper">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="0.001" />
+            <inertia ixx="9.6e-06" ixy="0" ixz="0" iyy="9.6e-06" iyz="0" izz="9.6e-06" />
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.05" length="0.09" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="Head_upper_joint" type="fixed" dont_collapse="true">
+        <origin xyz="0.285 0 0.01" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="Head_upper" />
+        <axis xyz="0 0 0" />
+    </joint>
+
+    <!-- Head_lower -->
+    <link name="Head_lower">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="0.001" />
+            <inertia ixx="9.6e-06" ixy="0" ixz="0" iyy="9.6e-06" iyz="0" izz="9.6e-06" />
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <sphere radius="0.047" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="Head_lower_joint" type="fixed" dont_collapse="true">
+        <origin xyz="0.008 0 -0.07" rpy="0 0 0" />
+        <parent link="Head_upper" />
+        <child link="Head_lower" />
+        <axis xyz="0 0 0" />
+    </joint>
+
+    <!-- imu_link -->
+    <link name="imu_link"/>
     <joint name="imu_joint" type="fixed">
-        <parent link="trunk"/>
-        <child link="imu_link"/>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <origin xyz="-0.02557 0 0.04232" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="imu_link" />
+        <axis xyz="0 0 0" />
     </joint>
 
-    <link name="imu_link">
-        <inertial>
-            <mass value="0.001"/>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
-        </inertial>
-        <visual>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <box size="0.001 0.001 0.001"/>
-            </geometry>
-            <!-- <material name="red"/> -->
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <box size=".001 .001 .001"/>
-            </geometry>
-        </collision>
-    </link>
-    <!--
-    <joint name="load_joint" type="fixed">
-        <parent link="trunk"/>
-        <child link="load_link"/>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+    <!-- radar -->
+    <link name="radar_link"/>
+    <joint name="radar_joint" type="fixed">
+        <origin xyz="0.28945 0 -0.046825" rpy="0 2.8782 0" />
+        <parent link="base_link" />
+        <child link="radar_link" />
+        <axis xyz="0 0 0" />
     </joint>
 
-    <link name="load_link">
-        <inertial>
-            <mass value="5"/>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
-        </inertial>
-        <visual>
-            <origin rpy="0 0 0" xyz="0 0 0.2"/>
-            <geometry>
-                <box size="0.5 0.3 0.2"/>
-            </geometry>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <box size=".001 .001 .001"/>
-            </geometry>
-        </collision>
-    </link>
--->
-    <xacro:leg name="FR" mirror="-1" mirror_dae= "False" front_hind="1"  front_hind_dae="True"  />
-    <xacro:leg name="FL" mirror="1"  mirror_dae="True"   front_hind="1"  front_hind_dae="True"  />
-    <xacro:leg name="RR" mirror="-1" mirror_dae="False"  front_hind="-1" front_hind_dae="False" />
-    <xacro:leg name="RL" mirror="1"  mirror_dae="True"   front_hind="-1" front_hind_dae="False" />
+    <!-- front camera -->
+    <link name="front_camera_link"/>
+    <joint name="front_camera_joint" type="fixed">
+        <origin xyz="0.045 0 0.03" rpy="-1.5708 0 -1.5708" />
+        <parent link="Head_upper" />
+        <child link="front_camera_link" />
+        <axis xyz="0 0 0" />
+    </joint>
 </robot>

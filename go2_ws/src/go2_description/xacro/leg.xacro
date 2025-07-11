@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-
-    <xacro:include filename="$(find go2_description)/xacro/transmission.xacro"/>
-
     <xacro:macro name="leg" params="name mirror mirror_dae front_hind front_hind_dae">
 
         <joint name="${name}_hip_joint" type="revolute">
@@ -19,7 +16,7 @@
             <xacro:if value="${(mirror_dae == True) and (front_hind_dae == False)}">
                 <origin rpy="0 0 0" xyz="${-leg_offset_x} ${leg_offset_y} 0"/>
             </xacro:if>
-            <parent link="trunk"/>
+            <parent link="base_link"/>
             <child link="${name}_hip"/>
             <axis xyz="1 0 0"/>
             <dynamics damping="${damping}" friction="${friction}"/>
@@ -28,7 +25,7 @@
             </xacro:if>
             <xacro:if value="${(mirror_dae == False)}">
                 <limit effort="${hip_torque_max}" velocity="${hip_velocity_max}" lower="${-hip_position_max}" upper="${-hip_position_min}"/>
-            </xacro:if>            
+            </xacro:if>
         </joint>
 
 
@@ -60,10 +57,7 @@
             <inertial>
                 <origin rpy="0 0 0" xyz="${hip_com_x*front_hind} ${hip_com_y*mirror} ${hip_com_z}"/>
                 <mass value="${hip_mass}"/>
-                <inertia
-                    ixx="${hip_ixx}" ixy="${hip_ixy*mirror*front_hind}" ixz="${hip_ixz*front_hind}"
-                    iyy="${hip_iyy}" iyz="${hip_iyz*mirror}"
-                    izz="${hip_izz}"/>       
+                <inertia ixx="${hip_ixx}" ixy="${hip_ixy*mirror*front_hind}" ixz="${hip_ixz*front_hind}" iyy="${hip_iyy}" iyz="${hip_iyz*mirror}" izz="${hip_izz}"/>
             </inertial>
         </link>
 
@@ -94,15 +88,12 @@
                 <origin rpy="0 ${PI/2.0} 0" xyz="0 0 ${-thigh_length/2.0}"/>
                 <geometry>
                     <box size="${thigh_length} ${thigh_width} ${thigh_height}"/>
-                </geometry>      
+                </geometry>
             </collision>
             <inertial>
                 <origin rpy="0 0 0" xyz="${thigh_com_x} ${thigh_com_y*mirror} ${thigh_com_z}"/>
                 <mass value="${thigh_mass}"/>
-                <inertia
-                    ixx="${thigh_ixx}" ixy="${thigh_ixy*mirror}" ixz="${thigh_ixz}"
-                    iyy="${thigh_iyy}" iyz="${thigh_iyz*mirror}"
-                    izz="${thigh_izz}"/>       
+                <inertia ixx="${thigh_ixx}" ixy="${thigh_ixy*mirror}" ixz="${thigh_ixz}" iyy="${thigh_iyy}" iyz="${thigh_iyz*mirror}" izz="${thigh_izz}"/>
             </inertial>
         </link>
 
@@ -129,20 +120,17 @@
                 <origin rpy="0 ${PI/2.0} 0" xyz="0 0 ${-calf_length/2.0}"/>
                 <geometry>
                     <box size="${calf_length} ${calf_width} ${calf_height}"/>
-                </geometry>      
+                </geometry>
             </collision>
             <inertial>
                 <origin rpy="0 0 0" xyz="${calf_com_x} ${calf_com_y} ${calf_com_z}"/>
                 <mass value="${calf_mass}"/>
-                <inertia
-                    ixx="${calf_ixx}" ixy="${calf_ixy}" ixz="${calf_ixz}"
-                    iyy="${calf_iyy}" iyz="${calf_iyz}"
-                    izz="${calf_izz}"/>       
+                <inertia ixx="${calf_ixx}" ixy="${calf_ixy}" ixz="${calf_ixz}" iyy="${calf_iyy}" iyz="${calf_iyz}" izz="${calf_izz}"/>
             </inertial>
         </link>
 
 
-        <joint name="${name}_foot_fixed" type="fixed">0
+        <joint name="${name}_foot_joint" type="fixed">
             <origin rpy="0 0 0" xyz="0 0 ${-(calf_length)}"/>
             <parent link="${name}_calf"/>
             <child link="${name}_foot"/>
@@ -164,13 +152,8 @@
             </collision>
             <inertial>
                 <mass value="${foot_mass}"/>
-                <inertia
-                    ixx="${(2*foot_mass)/5.0*(foot_radius*foot_radius)}" ixy="0.0" ixz="0.0"
-                    iyy="${(2*foot_mass)/5.0*(foot_radius*foot_radius)}" iyz="0.0"
-                    izz="${(2*foot_mass)/5.0*(foot_radius*foot_radius)}"/>             
+                <inertia ixx="${(2*foot_mass)/5.0*(foot_radius*foot_radius)}" ixy="0.0" ixz="0.0" iyy="${(2*foot_mass)/5.0*(foot_radius*foot_radius)}" iyz="0.0" izz="${(2*foot_mass)/5.0*(foot_radius*foot_radius)}"/>
             </inertial>
         </link>
-
-        <xacro:leg_transmission name="${name}"/>
     </xacro:macro>
 </robot>
