@@ -143,14 +143,13 @@ def generate_launch_description():
     description_ld = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory("champ_description"),
+                get_package_share_directory("go2_description"),
                 "launch",
-                "description.launch.py",
+                "go2_description.launch.py",
             )
         ),
         launch_arguments={
             "use_sim_time": LaunchConfiguration("use_sim_time"),
-            "description_path": LaunchConfiguration("description_path"),
         }.items(),
     )
 
