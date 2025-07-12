@@ -23,6 +23,7 @@ install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY scripts DESTINATION share/${PROJECT_NAME})
 
 # Install python scripts
+install(PROGRAMS scripts/fake_map_publisher.py DESTINATION lib/${PROJECT_NAME})
 install(PROGRAMS scripts/odom_tf_publisher.py DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
