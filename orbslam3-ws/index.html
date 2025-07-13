@@ -421,9 +421,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-with-docker" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Run with docker
+      🐳 Start Container
     </span>
   </a>
   
@@ -436,20 +436,14 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Simple Test With Dataset">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference-repo-or-issues" class="md-nav__link">
     <span class="md-ellipsis">
       Reference repo or issues
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -752,9 +746,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-with-docker" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Run with docker
+      🐳 Start Container
     </span>
   </a>
   
@@ -767,20 +761,14 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Simple Test With Dataset">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference-repo-or-issues" class="md-nav__link">
     <span class="md-ellipsis">
       Reference repo or issues
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -811,39 +799,52 @@
 <img alt="Docker image arch" src="https://img.shields.io/badge/arch-amd64-blueviolet" />
 <img alt="Docker image version" src="https://img.shields.io/docker/v/j3soon/ros2-orbslam3-ws" />
 <img alt="Docker image size" src="https://img.shields.io/docker/image-size/j3soon/ros2-orbslam3-ws" /></p>
-<h3 id="run-with-docker">Run with docker<a class="headerlink" href="#run-with-docker" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/j3soon/ros2-essentials.git
+<h2 id="start-container">🐳 Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Make sure your system meets the <a href="https://j3soon.github.io/ros2-essentials/#system-requirements">system requirements</a> and have followed the <a href="https://j3soon.github.io/ros2-essentials/#setup">setup instructions</a> before using this workspace.</p>
+</blockquote>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/orbslam3_ws/docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"> </span><span class="c1"># or docker compose build</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>ros2-essentials/orbslam3_ws/docker
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
+<p>The commands in the following sections assume that you are inside the Docker container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-orbslam3-ws<span class="w"> </span>bash
 </span></code></pre></div>
-<h3 id="simple-test-with-dataset">Simple Test With Dataset<a class="headerlink" href="#simple-test-with-dataset" title="Permanent link">&para;</a></h3>
+<p>If the initial build somehow failed, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span></code></pre></div>
+<p>Once you have finished testing, you can stop and remove the container with:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
+</span></code></pre></div>
+<h2 id="simple-test-with-dataset">Simple Test With Dataset<a class="headerlink" href="#simple-test-with-dataset" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Attach to the container
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>attach<span class="w"> </span>ros2-orbslam3-ws
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/orbslam3_ws
+  <div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>attach<span class="w"> </span>ros2-orbslam3-ws
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/orbslam3_ws
 </span></code></pre></div></li>
 <li>Prepare data, only need to be done once<ul>
 <li>Download dataset (~1.2G)
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>wget<span class="w"> </span>-P<span class="w"> </span>.<span class="w"> </span>http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/vicon_room1/V1_02_medium/V1_02_medium.bag
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>wget<span class="w"> </span>-P<span class="w"> </span>.<span class="w"> </span>http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/vicon_room1/V1_02_medium/V1_02_medium.bag
 </span></code></pre></div></li>
 <li>ROS1 bag and ROS2 bag conversion <a href="https://docs.openvins.com/dev-ros1-to-ros2.html">reference</a>
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>rosbags
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>rosbags-convert<span class="w"> </span>./V1_02_medium.bag
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>rosbags
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>rosbags-convert<span class="w"> </span>./V1_02_medium.bag
 </span></code></pre></div></li>
 </ul>
 </li>
 <li>Play the bag file in <code>tmux</code>
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>bag<span class="w"> </span>play<span class="w"> </span>V1_02_medium/V1_02_medium.db3<span class="w"> </span>--remap<span class="w"> </span>/cam0/image_raw:<span class="o">=</span>/camera
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>bag<span class="w"> </span>play<span class="w"> </span>V1_02_medium/V1_02_medium.db3<span class="w"> </span>--remap<span class="w"> </span>/cam0/image_raw:<span class="o">=</span>/camera
 </span></code></pre></div></li>
 <li>Run the ORB-SLAM3 in a new <code>tmux</code> window
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">source</span><span class="w"> </span>~/test_ws/install/local_setup.bash
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>orbslam3<span class="w"> </span>mono<span class="w"> </span>~/ORB_SLAM3/Vocabulary/ORBvoc.txt<span class="w"> </span>~/ORB_SLAM3/Examples_old/Monocular/EuRoC.yaml<span class="w"> </span><span class="nb">false</span>
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">source</span><span class="w"> </span>~/test_ws/install/local_setup.bash
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>orbslam3<span class="w"> </span>mono<span class="w"> </span>~/ORB_SLAM3/Vocabulary/ORBvoc.txt<span class="w"> </span>~/ORB_SLAM3/Examples_old/Monocular/EuRoC.yaml<span class="w"> </span><span class="nb">false</span>
 </span></code></pre></div>
   2 windows will pop up, showing the results.</li>
 </ul>
-<h4 id="reference-repo-or-issues">Reference repo or issues<a class="headerlink" href="#reference-repo-or-issues" title="Permanent link">&para;</a></h4>
+<h2 id="reference-repo-or-issues">Reference repo or issues<a class="headerlink" href="#reference-repo-or-issues" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://github.com/UZ-SLAMLab/ORB_SLAM3/issues/566">Solve build failure</a></li>
 <li><a href="https://github.com/UZ-SLAMLab/ORB_SLAM3">ORB-SLAM3</a></li>
@@ -872,7 +873,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 24, 2024 15:31:58 UTC">October 24, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 13, 2025 16:14:09 UTC">July 13, 2025</span>
   </span>
 
     

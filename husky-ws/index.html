@@ -509,6 +509,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#start-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐳 Start Container
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#structure" class="md-nav__link">
     <span class="md-ellipsis">
       🌱 Structure 🌱
@@ -797,6 +806,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#start-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐳 Start Container
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#structure" class="md-nav__link">
     <span class="md-ellipsis">
       🌱 Structure 🌱
@@ -902,30 +920,50 @@
 <img alt="Docker image version" src="https://img.shields.io/docker/v/j3soon/ros2-husky-ws" />
 <img alt="Docker image size" src="https://img.shields.io/docker/image-size/j3soon/ros2-husky-ws" /></p>
 <p>This repository will help you configure the environment for Husky quickly.</p>
+<h2 id="start-container">🐳 Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Make sure your system meets the <a href="https://j3soon.github.io/ros2-essentials/#system-requirements">system requirements</a> and have followed the <a href="https://j3soon.github.io/ros2-essentials/#setup">setup instructions</a> before using this workspace.</p>
+</blockquote>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/husky_ws/docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"> </span><span class="c1"># or docker compose build</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</span></code></pre></div>
+<p>The commands in the following sections assume that you are inside the Docker container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-husky-ws<span class="w"> </span>bash
+</span></code></pre></div>
+<p>If the initial build somehow failed, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span></code></pre></div>
+<p>Once you have finished testing, you can stop and remove the container with:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
+</span></code></pre></div>
 <h2 id="structure">🌱 Structure 🌱<a class="headerlink" href="#structure" title="Permanent link">&para;</a></h2>
 <p>Here is the structure of this workspace:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>husky_ws
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── .devcontainer
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── docker
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── figure
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├── install
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├── build
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>├── log
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>├── script
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>|   ├── husky-bringup.sh
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>|   ├── husky-generate.sh
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>|   └── husky-teleop.sh
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>├── src
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>|   ├── husky
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>|   |   ├── husky_base
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>|   |   ├── husky_bringup
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>|   |   ├── husky_control
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>|   |   └── ...
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>├── udev_rules
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>|   ├── 41-clearpath.rules
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>|   └── install_udev_rules.sh
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>├── .gitignore
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>└── README.md
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>husky_ws
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>├── .devcontainer
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>├── docker
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>├── figure
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>├── install
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>├── build
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>├── log
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>├── script
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>|   ├── husky-bringup.sh
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>|   ├── husky-generate.sh
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>|   └── husky-teleop.sh
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>├── src
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>|   ├── husky
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>|   |   ├── husky_base
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>|   |   ├── husky_bringup
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>|   |   ├── husky_control
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>|   |   └── ...
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>├── udev_rules
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>|   ├── 41-clearpath.rules
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>|   └── install_udev_rules.sh
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>├── .gitignore
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>└── README.md
 </span></code></pre></div>
 <blockquote>
 <p><code>build</code> / <code>install</code> / <code>log</code> folders will appear once you've built the packages.</p>
@@ -946,17 +984,17 @@ However, the original repository was designed for ROS1, and it is in the process
 <h3 id="building-packages">Building packages<a class="headerlink" href="#building-packages" title="Permanent link">&para;</a></h3>
 <p>Before attempting any examples, please remember to build the packages first.<br />
 If you encounter any dependency errors, please use rosdep to resolve them.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/husky_ws
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>rosdep<span class="w"> </span>update
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>rosdep<span class="w"> </span>install<span class="w"> </span>--from-paths<span class="w"> </span>src<span class="w"> </span>--ignore-src<span class="w"> </span>--rosdistro<span class="w"> </span>humble<span class="w"> </span>-y
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>colcon<span class="w"> </span>build
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/husky_ws
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>rosdep<span class="w"> </span>update
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>rosdep<span class="w"> </span>install<span class="w"> </span>--from-paths<span class="w"> </span>src<span class="w"> </span>--ignore-src<span class="w"> </span>--rosdistro<span class="w"> </span>humble<span class="w"> </span>-y
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>colcon<span class="w"> </span>build
 </span></code></pre></div>
 <blockquote>
 <p>After the build process, make sure to source the <code>install/setup.bash</code> file.<br />
 Otherwise, ROS2 will not locate the executable files. You can open a new terminal to accomplish this.</p>
 </blockquote>
 <h3 id="view-the-model">View the model<a class="headerlink" href="#view-the-model" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>husky_viz<span class="w"> </span>view_model_launch.py
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>husky_viz<span class="w"> </span>view_model_launch.py
 </span></code></pre></div>
 <div align="center">
     <a href="./">
@@ -965,7 +1003,7 @@ Otherwise, ROS2 will not locate the executable files. You can open a new termina
 </div>
 
 <h3 id="demonstration-of-slam">Demonstration of SLAM.<a class="headerlink" href="#demonstration-of-slam" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>husky_navigation<span class="w"> </span>slam_launch.py
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>husky_navigation<span class="w"> </span>slam_launch.py
 </span></code></pre></div>
 <blockquote>
 <p>Rendering the model may take some time, so please be patient !</p>
@@ -981,13 +1019,13 @@ Otherwise, ROS2 will not locate the executable files. You can open a new termina
 <blockquote>
 <p>Before you proceed, please ensure that you've plugged the USB adapter of the Husky into the computer and mounted it into the container. (plugging in the USB adapter before creating the container is preferred but not required)</p>
 </blockquote>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Move to the workspace, source .bashrc, and bringup husky.</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/husky_ws
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>./script/husky-bringup.sh
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># (Optional) Open a new terminal &amp; control the robot via keyboard teleoperation.</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>./script/husky-teleop.sh
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Move to the workspace, source .bashrc, and bringup husky.</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/husky_ws
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>./script/husky-bringup.sh
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># (Optional) Open a new terminal &amp; control the robot via keyboard teleoperation.</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>./script/husky-teleop.sh
 </span></code></pre></div>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p>To maintain reproducibility, we have frozen the following packages at specific commits. The licenses of these packages are listed below:</p>
@@ -1021,7 +1059,7 @@ Otherwise, ROS2 will not locate the executable files. You can open a new termina
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 30, 2024 17:54:09 UTC">October 30, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 13, 2025 16:14:09 UTC">July 13, 2025</span>
   </span>
 
     

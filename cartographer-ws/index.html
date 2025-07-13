@@ -487,9 +487,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-with-docker" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Run with docker
+      🐳 Start Container
     </span>
   </a>
   
@@ -541,17 +541,17 @@
   
 </li>
         
-          <li class="md-nav__item">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       References
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -788,9 +788,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-with-docker" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Run with docker
+      🐳 Start Container
     </span>
   </a>
   
@@ -842,17 +842,17 @@
   
 </li>
         
-          <li class="md-nav__item">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       References
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -883,65 +883,77 @@
 <img alt="Docker image arch" src="https://img.shields.io/badge/arch-amd64_|_arm64-blueviolet" />
 <img alt="Docker image version" src="https://img.shields.io/docker/v/j3soon/ros2-cartographer-ws" />
 <img alt="Docker image size" src="https://img.shields.io/docker/image-size/j3soon/ros2-cartographer-ws" /></p>
-<h3 id="run-with-docker">Run with docker<a class="headerlink" href="#run-with-docker" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/j3soon/ros2-essentials.git
+<h2 id="start-container">🐳 Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Make sure your system meets the <a href="https://j3soon.github.io/ros2-essentials/#system-requirements">system requirements</a> and have followed the <a href="https://j3soon.github.io/ros2-essentials/#setup">setup instructions</a> before using this workspace.</p>
+</blockquote>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/cartographer_ws/docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"> </span><span class="c1"># or docker compose build</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>ros2-essentials/cartographer_ws/docker
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
+<p>The commands in the following sections assume that you are inside the Docker container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-cartographer-ws<span class="w"> </span>bash
 </span></code></pre></div>
-<h3 id="simple-test-with-turtlebot3">Simple Test With Turtlebot3<a class="headerlink" href="#simple-test-with-turtlebot3" title="Permanent link">&para;</a></h3>
+<p>If the initial build somehow failed, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span></code></pre></div>
+<p>Once you have finished testing, you can stop and remove the container with:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
+</span></code></pre></div>
+<h2 id="simple-test-with-turtlebot3">Simple Test With Turtlebot3<a class="headerlink" href="#simple-test-with-turtlebot3" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>Attach to the container</p>
-<p><div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>attach<span class="w"> </span>ros2-cartographer-ws
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/cartographer_ws
+<p><div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>attach<span class="w"> </span>ros2-cartographer-ws
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/cartographer_ws
 </span></code></pre></div>
 - Open the turtlebot simulation in <code>tmux</code></p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">TURTLEBOT3_MODEL</span><span class="o">=</span>burger
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_world.launch.py
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">TURTLEBOT3_MODEL</span><span class="o">=</span>burger
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_world.launch.py
 </span></code></pre></div>
 - Run the SLAM node in new window of <code>tmux</code></p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_cartographer<span class="w"> </span>cartographer.launch.py<span class="w"> </span>is_sim:<span class="o">=</span>True
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_cartographer<span class="w"> </span>cartographer.launch.py<span class="w"> </span>is_sim:<span class="o">=</span>True
 </span></code></pre></div>
 - Run the control tool in new window of <code>tmux</code></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>rqt_robot_steering
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>rqt_robot_steering
 </span></code></pre></div>
 </li>
 </ul>
-<h3 id="building-packages">Building Packages<a class="headerlink" href="#building-packages" title="Permanent link">&para;</a></h3>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>attach<span class="w"> </span>ros2-cartographer-ws
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/cartographer_ws
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>rosdep<span class="w"> </span>update
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>rosdep<span class="w"> </span>install<span class="w"> </span>--from-paths<span class="w"> </span>src<span class="w"> </span>--ignore-src<span class="w"> </span>--rosdistro<span class="w"> </span>humble<span class="w"> </span>-y
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>colcon<span class="w"> </span>build
+<h2 id="building-packages">Building Packages<a class="headerlink" href="#building-packages" title="Permanent link">&para;</a></h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/cartographer_ws
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>rosdep<span class="w"> </span>update
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>rosdep<span class="w"> </span>install<span class="w"> </span>--from-paths<span class="w"> </span>src<span class="w"> </span>--ignore-src<span class="w"> </span>--rosdistro<span class="w"> </span>humble<span class="w"> </span>-y
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>colcon<span class="w"> </span>build
 </span></code></pre></div>
 <blockquote>
 <p>After the build process, make sure to source the <code>install/setup.bash</code> file.<br />
 Otherwise, ROS2 will not locate the executable files. You can open a new terminal to accomplish this.</p>
 </blockquote>
-<h3 id="multi-lidar-single-robot-slam-test">Multi LiDAR - Single Robot SLAM test<a class="headerlink" href="#multi-lidar-single-robot-slam-test" title="Permanent link">&para;</a></h3>
-<h4 id="simulation">Simulation<a class="headerlink" href="#simulation" title="Permanent link">&para;</a></h4>
+<h2 id="multi-lidar-single-robot-slam-test">Multi LiDAR - Single Robot SLAM test<a class="headerlink" href="#multi-lidar-single-robot-slam-test" title="Permanent link">&para;</a></h2>
+<h3 id="simulation">Simulation<a class="headerlink" href="#simulation" title="Permanent link">&para;</a></h3>
 <ul>
 <li>multi_lidar_desp package: Description of a robot with multiple LiDARs.</li>
 <li>
 <p>multi_lidar_gazebo package: Gazebo simulation of the robot with robot state publisher.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>multi_lidar_gazebo<span class="w"> </span>multi_lidar_gazebo.launch.py
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>multi_lidar_gazebo<span class="w"> </span>multi_lidar_gazebo.launch.py
 </span></code></pre></div>
 </li>
 </ul>
-<h4 id="run-the-slam-node">Run the SLAM node<a class="headerlink" href="#run-the-slam-node" title="Permanent link">&para;</a></h4>
+<h3 id="run-the-slam-node">Run the SLAM node<a class="headerlink" href="#run-the-slam-node" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Run the cartographer SLAM node in new window of <code>tmux</code>
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>cartographer_demo<span class="w"> </span>cartographer_demo.launch.py<span class="w"> </span>is_sim:<span class="o">=</span>True
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>cartographer_demo<span class="w"> </span>cartographer_demo.launch.py<span class="w"> </span>is_sim:<span class="o">=</span>True
 </span></code></pre></div></li>
 </ul>
 <ul>
 <li>Run the control tool in new window of <code>tmux</code>
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>rqt_robot_steering
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>rqt_robot_steering
 </span></code></pre></div></li>
 </ul>
-<h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://google-cartographer-ros.readthedocs.io/en/latest/demos.html">Cartographer Demo</a></li>
 </ul>
@@ -967,7 +979,7 @@ Otherwise, ROS2 will not locate the executable files. You can open a new termina
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 24, 2024 15:21:32 UTC">October 24, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 13, 2025 16:14:09 UTC">July 13, 2025</span>
   </span>
 
     

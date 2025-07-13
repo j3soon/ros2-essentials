@@ -443,9 +443,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-with-docker" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Run with docker
+      🐳 Start Container
     </span>
   </a>
   
@@ -791,9 +791,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-with-docker" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Run with docker
+      🐳 Start Container
     </span>
   </a>
   
@@ -889,54 +889,60 @@
 <img alt="Docker image arch" src="https://img.shields.io/badge/arch-amd64-blueviolet" />
 <img alt="Docker image version" src="https://img.shields.io/docker/v/j3soon/ros2-rtabmap-ws" />
 <img alt="Docker image size" src="https://img.shields.io/docker/image-size/j3soon/ros2-rtabmap-ws" /></p>
-<h3 id="run-with-docker">Run with docker<a class="headerlink" href="#run-with-docker" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/j3soon/ros2-essentials.git
+<h2 id="start-container">🐳 Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Make sure your system meets the <a href="https://j3soon.github.io/ros2-essentials/#system-requirements">system requirements</a> and have followed the <a href="https://j3soon.github.io/ros2-essentials/#setup">setup instructions</a> before using this workspace.</p>
+</blockquote>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/rtabmap_ws/docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"> </span><span class="c1"># or docker compose build</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>ros2-essentials/rtabmap_ws/docker
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
+<p>The commands in the following sections assume that you are inside the Docker container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-rtabmap-ws<span class="w"> </span>bash
 </span></code></pre></div>
-<ul>
-<li>Attach to the container
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>attach<span class="w"> </span>ros2-rtabmap-ws
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/rtabmap_ws
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
-</span></code></pre></div></li>
-</ul>
-<h3 id="lidar-test-with-gazebo">LiDAR test with gazebo<a class="headerlink" href="#lidar-test-with-gazebo" title="Permanent link">&para;</a></h3>
+<p>If the initial build somehow failed, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span></code></pre></div>
+<p>Once you have finished testing, you can stop and remove the container with:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
+</span></code></pre></div>
+<h2 id="lidar-test-with-gazebo">LiDAR test with gazebo<a class="headerlink" href="#lidar-test-with-gazebo" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Launch Gazebo with turtlebot3 in <code>tmux</code>
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_sim<span class="w"> </span>sim_robot.launch.py
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_sim<span class="w"> </span>sim_robot.launch.py
 </span></code></pre></div></li>
 <li>Run rtabmap LiDAR demo in a new <code>tmux</code> window
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_demos<span class="w"> </span>turtlebot3_scan.launch.py
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_demos<span class="w"> </span>turtlebot3_scan.launch.py
 </span></code></pre></div></li>
 </ul>
-<h3 id="rgbd-test-with-gazebo">RGBD test with gazebo<a class="headerlink" href="#rgbd-test-with-gazebo" title="Permanent link">&para;</a></h3>
+<h2 id="rgbd-test-with-gazebo">RGBD test with gazebo<a class="headerlink" href="#rgbd-test-with-gazebo" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Launch Gazebo with turtlebot3 in <code>tmux</code>
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_sim<span class="w"> </span>sim_robot.launch.py
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_sim<span class="w"> </span>sim_robot.launch.py
 </span></code></pre></div></li>
 <li>Run rtabmap LiDAR demo in a new <code>tmux</code> window
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_demos<span class="w"> </span>turtlebot3_rgbd.launch.py
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_demos<span class="w"> </span>turtlebot3_rgbd.launch.py
 </span></code></pre></div></li>
 </ul>
-<h3 id="dual-sensor-test-with-gazebo">Dual sensor test with gazebo<a class="headerlink" href="#dual-sensor-test-with-gazebo" title="Permanent link">&para;</a></h3>
+<h2 id="dual-sensor-test-with-gazebo">Dual sensor test with gazebo<a class="headerlink" href="#dual-sensor-test-with-gazebo" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Launch Gazebo with turtlebot3 in <code>tmux</code>
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_sim<span class="w"> </span>sim_robot.launch.py
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_sim<span class="w"> </span>sim_robot.launch.py
 </span></code></pre></div></li>
 <li>Run dual sensor demo in a new <code>tmux</code> window
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_sim<span class="w"> </span>dual_sensor.launch.py
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>rtabmap_sim<span class="w"> </span>dual_sensor.launch.py
 </span></code></pre></div></li>
 </ul>
-<h3 id="run-with-rqt">Run with rqt<a class="headerlink" href="#run-with-rqt" title="Permanent link">&para;</a></h3>
+<h2 id="run-with-rqt">Run with rqt<a class="headerlink" href="#run-with-rqt" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Running in a new <code>tmux</code> window
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>rqt_robot_steering
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>rqt_robot_steering
 </span></code></pre></div></li>
 </ul>
-<h3 id="result">Result<a class="headerlink" href="#result" title="Permanent link">&para;</a></h3>
+<h2 id="result">Result<a class="headerlink" href="#result" title="Permanent link">&para;</a></h2>
 <ul>
 <li>After you've run the demo, you could find the following result directly.</li>
 </ul>
@@ -959,15 +965,15 @@
   <img src="./assets/dual_test.png" width="75%"/>
 </center>
 
-<h3 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h3>
+<h2 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://github.com/introlab/rtabmap/wiki">RTAB-Map wiki</a></li>
 </ul>
-<h3 id="existing-issues">Existing issues<a class="headerlink" href="#existing-issues" title="Permanent link">&para;</a></h3>
+<h2 id="existing-issues">Existing issues<a class="headerlink" href="#existing-issues" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>VTK</code> warning
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>QVTKOpenGLWidget:<span class="w"> </span>Warning:<span class="w"> </span>In<span class="w"> </span>/build/vtk6-6.3.0+dfsg1/Rendering/OpenGL2/vtkOpenGLRenderWindow.cxx,<span class="w"> </span>line<span class="w"> </span><span class="m">781</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>...
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>QVTKOpenGLWidget:<span class="w"> </span>Warning:<span class="w"> </span>In<span class="w"> </span>/build/vtk6-6.3.0+dfsg1/Rendering/OpenGL2/vtkOpenGLRenderWindow.cxx,<span class="w"> </span>line<span class="w"> </span><span class="m">781</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>...
 </span></code></pre></div><ul>
 <li>It seems that the warning isn't a big deal. But it will interrupt debugging in the future.</li>
 <li>Possible solution : set <code>VTK_LEGACY_REMOVE</code>, but it required to build from source.
@@ -998,7 +1004,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 24, 2024 15:31:58 UTC">October 24, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 13, 2025 16:14:09 UTC">July 13, 2025</span>
   </span>
 
     

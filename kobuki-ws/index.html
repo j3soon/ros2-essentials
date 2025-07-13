@@ -531,6 +531,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#start-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐳 Start Container
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       ◻️ Introduction ◻️
@@ -797,6 +806,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#start-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐳 Start Container
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       ◻️ Introduction ◻️
@@ -902,6 +920,26 @@
 <img alt="Docker image version" src="https://img.shields.io/docker/v/j3soon/ros2-kobuki-ws" />
 <img alt="Docker image size" src="https://img.shields.io/docker/image-size/j3soon/ros2-kobuki-ws" /></p>
 <p>This repository facilitates the quick configuration of the simulation environment and real robot driver for Kobuki.</p>
+<h2 id="start-container">🐳 Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Make sure your system meets the <a href="https://j3soon.github.io/ros2-essentials/#system-requirements">system requirements</a> and have followed the <a href="https://j3soon.github.io/ros2-essentials/#setup">setup instructions</a> before using this workspace.</p>
+</blockquote>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/kobuki_ws/docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"> </span><span class="c1"># or docker compose build</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</span></code></pre></div>
+<p>The commands in the following sections assume that you are inside the Docker container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-kobuki-ws<span class="w"> </span>bash
+</span></code></pre></div>
+<p>If the initial build somehow failed, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span></code></pre></div>
+<p>Once you have finished testing, you can stop and remove the container with:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
+</span></code></pre></div>
 <h2 id="introduction">◻️ Introduction ◻️<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This repository is primarily based on the <a href="https://github.com/kobuki-base">kobuki-base</a>. Below are the main packages for Kobuki:</p>
 <table>
@@ -955,12 +993,12 @@
 <blockquote>
 <p>If you only need to bring up the real Kobuki robot, you don't need to compile the workspace. The Kobuki driver is already included in the Docker image. After the Docker image is built, you can directly bring up the robot.</p>
 </blockquote>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/kobuki_ws
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># For x86_64 architecture</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># For arm64 architecture</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--packages-ignore<span class="w"> </span>velodyne_gazebo_plugins
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/kobuki_ws
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># For x86_64 architecture</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># For arm64 architecture</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--packages-ignore<span class="w"> </span>velodyne_gazebo_plugins
 </span></code></pre></div>
 <ul>
 <li>The <code>--symlink-install</code> flag is optional, adding this flag may provide more convenience. See <a href="https://answers.ros.org/question/371822/what-is-the-use-of-symlink-install-in-ros2-colcon-build/">this post</a> for more info.</li>
@@ -969,7 +1007,7 @@
 </ul>
 <p>After the build process, make sure to source the <code>install/setup.bash</code> file. Otherwise, ROS2 will not locate the executable files. You can open a new terminal to accomplish this.</p>
 <h3 id="visualize-the-model-in-rviz">Visualize the model in RViz<a class="headerlink" href="#visualize-the-model-in-rviz" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>kobuki_rviz<span class="w"> </span>view_model_launch.py
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>kobuki_rviz<span class="w"> </span>view_model_launch.py
 </span></code></pre></div>
 <div align="center">
     <a href="./">
@@ -979,7 +1017,7 @@
 
 <p>You can view the published states under <code>TF &gt; Frames &gt; wheel_left_link</code> and <code>TF &gt; Frames &gt; wheel_right_link</code> in RViz.</p>
 <h3 id="launch-the-robot-in-gazebo">Launch the robot in Gazebo<a class="headerlink" href="#launch-the-robot-in-gazebo" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>kobuki_launch<span class="w"> </span>kobuki.launch.py<span class="w"> </span>is_sim:<span class="o">=</span><span class="nb">true</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>kobuki_launch<span class="w"> </span>kobuki.launch.py<span class="w"> </span>is_sim:<span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div>
 <div align="center">
     <a href="./">
@@ -988,13 +1026,13 @@
 </div>
 
 <h3 id="launch-the-robot-in-the-real-world">Launch the robot in the real world<a class="headerlink" href="#launch-the-robot-in-the-real-world" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Inside the container</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/kobuki_ws
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>./script/kobuki-bringup.sh
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># or Outside the container</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nb">cd</span><span class="w"> </span>/path/to/kobuki_ws/docker
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>kobuki-ws<span class="w"> </span>/home/ros2-essentials/kobuki_ws/script/kobuki-bringup.sh
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Inside the container</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/kobuki_ws
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>./script/kobuki-bringup.sh
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># or Outside the container</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nb">cd</span><span class="w"> </span>/path/to/kobuki_ws/docker
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>kobuki-ws<span class="w"> </span>/home/ros2-essentials/kobuki_ws/script/kobuki-bringup.sh
 </span></code></pre></div>
 <p>If you have successfully connected to the Kobuki, you should hear a sound from it. Otherwise, there may be errors. You can try re-plugging the USB cable, restarting the Kobuki, or even restarting the container.</p>
 <div align="center">
@@ -1011,21 +1049,21 @@
 </div>
 
 <p>To control the Kobuki with a keyboard, you can use the <code>teleop_twist_keyboard</code> package.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Recommend speed: </span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># - Linear 0.1</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># - Angular 0.3</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># Inside the container</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/kobuki_ws
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>./script/kobuki-teleop.sh
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># or Outside the container</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nb">cd</span><span class="w"> </span>/path/to/kobuki_ws/docker
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>kobuki-ws<span class="w"> </span>/home/ros2-essentials/kobuki_ws/script/kobuki-teleop.sh
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Recommend speed: </span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># - Linear 0.1</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># - Angular 0.3</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># Inside the container</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/kobuki_ws
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>./script/kobuki-teleop.sh
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># or Outside the container</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="nb">cd</span><span class="w"> </span>/path/to/kobuki_ws/docker
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>kobuki-ws<span class="w"> </span>/home/ros2-essentials/kobuki_ws/script/kobuki-teleop.sh
 </span></code></pre></div>
 <h3 id="launch-the-demo-of-slam">Launch the demo of SLAM<a class="headerlink" href="#launch-the-demo-of-slam" title="Permanent link">&para;</a></h3>
 <p>This demo is based on the <a href="https://github.com/SteveMacenski/slam_toolbox">slam_toolbox</a> package and only supports the simulation environment.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>kobuki_navigation<span class="w"> </span>slam.launch.py
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>kobuki_navigation<span class="w"> </span>slam.launch.py
 </span></code></pre></div>
 <div align="center">
     <a href="./">
@@ -1036,43 +1074,43 @@
 <h3 id="cross-compilation">Cross-compilation<a class="headerlink" href="#cross-compilation" title="Permanent link">&para;</a></h3>
 <p>Since the embedded system may not have enough memory to build the packages, or it may take a long time to build them, you can build the packages on a x86_64 machine and then copy the executable files to the arm64 machine.</p>
 <p>First, you need to set up the Docker cross-compilation environment. See <a href="https://github.com/multiarch/qemu-user-static">this repo</a> and <a href="https://www.stereolabs.com/docs/docker/building-arm-container-on-x86">this website</a> for more info.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Install the QEMU packages</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>qemu<span class="w"> </span>binfmt-support<span class="w"> </span>qemu-user-static
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># This step will execute the registering scripts</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--privileged<span class="w"> </span>multiarch/qemu-user-static<span class="w"> </span>--reset<span class="w"> </span>-p<span class="w"> </span>yes<span class="w"> </span>--credential<span class="w"> </span>yes
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Testing the emulation environment</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-t<span class="w"> </span>arm64v8/ros:humble<span class="w"> </span>uname<span class="w"> </span>-m
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Install the QEMU packages</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>qemu<span class="w"> </span>binfmt-support<span class="w"> </span>qemu-user-static
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># This step will execute the registering scripts</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--privileged<span class="w"> </span>multiarch/qemu-user-static<span class="w"> </span>--reset<span class="w"> </span>-p<span class="w"> </span>yes<span class="w"> </span>--credential<span class="w"> </span>yes
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Testing the emulation environment</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-t<span class="w"> </span>arm64v8/ros:humble<span class="w"> </span>uname<span class="w"> </span>-m
 </span></code></pre></div>
 <p>Secondly, modify the target platform for the Docker image in <code>docker/compose.yaml</code> by uncommenting the two lines below.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">platforms</span><span class="p">:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;linux/arm64&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">platforms</span><span class="p">:</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;linux/arm64&quot;</span>
 </span></code></pre></div>
 <p>Next, navigate to the <code>docker</code> folder and use the command <code>docker compose build</code> to build the Docker image.</p>
 <p>Note that the arm64 architecture is emulated by the QEMU, so it may consume a lot of CPU and memory resources. You should not use the <code>devcontainer</code> when building the packages for the arm64 architecture on x86_64 architecture, Otherwise, you may encounter some problems such as running out of memory. If you really want to use <code>devcontainer</code>, remove all vscode extensions in the <code>.devcontainer/devcontainer.json</code> file first.</p>
 <p>When the building process ends, use <code>docker compose up -d</code> and attach to the container by running <code>docker attach ros2-kobuki-ws</code>. After that, we can start building the ROS packages. If you have built the packages for the x86_64 architecture before, remember to delete the <code>build</code>, <code>install</code>, and <code>log</code> folders.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/kobuki_ws
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--packages-ignore<span class="w"> </span>velodyne_gazebo_plugins
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/kobuki_ws
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--packages-ignore<span class="w"> </span>velodyne_gazebo_plugins
 </span></code></pre></div>
 <p>Once everything is built, we can start copying the files to the target machine (arm64 architecture).<br />
 Please modify the command below to match your settings, such as the IP address.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># (On Host) </span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">cd</span><span class="w"> </span>/path/to/kobuki_ws
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># Save the Docker image to the file.</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>docker<span class="w"> </span>save<span class="w"> </span>j3soon/ros2-kobuki-ws<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span>kobuki_image.tar.gz
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># Copy the file to the target machine.</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>scp<span class="w"> </span>-C<span class="w"> </span>kobuki_image.tar<span class="w"> </span>ubuntu@192.168.50.100:~/
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># Copy the kobuki_ws to the target machine. </span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1"># If the workspace exists on the target machine, you can simply copy the `build` and `install` folders to it.</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>rsync<span class="w"> </span>-aP<span class="w"> </span>kobuki_ws<span class="w"> </span>ubuntu@192.168.50.100:~/
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># (On Host) </span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">cd</span><span class="w"> </span>/path/to/kobuki_ws
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1"># Save the Docker image to the file.</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>docker<span class="w"> </span>save<span class="w"> </span>j3soon/ros2-kobuki-ws<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span>kobuki_image.tar.gz
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># Copy the file to the target machine.</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>scp<span class="w"> </span>-C<span class="w"> </span>kobuki_image.tar<span class="w"> </span>ubuntu@192.168.50.100:~/
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># Copy the kobuki_ws to the target machine. </span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># If the workspace exists on the target machine, you can simply copy the `build` and `install` folders to it.</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>rsync<span class="w"> </span>-aP<span class="w"> </span>kobuki_ws<span class="w"> </span>ubuntu@192.168.50.100:~/
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># (On Remote)</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">cd</span><span class="w"> </span>~/
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># Decompress the file.</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>gunzip<span class="w"> </span>kobuki_image.tar.gz
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Load the Docker image from the file.</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>docker<span class="w"> </span>load<span class="w"> </span>&lt;<span class="w"> </span>kobuki_image.tar
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># Verify that the Docker image has loaded successfully.</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>docker<span class="w"> </span>images<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ros2-kobuki-ws
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># (On Remote)</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>~/
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1"># Decompress the file.</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>gunzip<span class="w"> </span>kobuki_image.tar.gz
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="c1"># Load the Docker image from the file.</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>docker<span class="w"> </span>load<span class="w"> </span>&lt;<span class="w"> </span>kobuki_image.tar
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1"># Verify that the Docker image has loaded successfully.</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>docker<span class="w"> </span>images<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ros2-kobuki-ws
 </span></code></pre></div>
 <p>If you have completed all the commands above without encountering any errors, you can proceed to launch the robot.<br />
 Refer to the steps above for more information.</p>
@@ -1098,7 +1136,7 @@ Refer to the steps above for more information.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 24, 2024 15:21:32 UTC">October 24, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 13, 2025 16:14:09 UTC">July 13, 2025</span>
   </span>
 
     

@@ -663,9 +663,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-the-container" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Run the container
+      🐳 Start Container
     </span>
   </a>
   
@@ -761,9 +761,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-the-container" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Run the container
+      🐳 Start Container
     </span>
   </a>
   
@@ -832,48 +832,62 @@
 <blockquote>
 <p>Please note that this workspace is only tested in simulation.</p>
 </blockquote>
-<h2 id="run-the-container">Run the container<a class="headerlink" href="#run-the-container" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Run the container</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/go2_ws/docker
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-go2-ws<span class="w"> </span>bash
+<h2 id="start-container">🐳 Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Make sure your system meets the <a href="https://j3soon.github.io/ros2-essentials/#system-requirements">system requirements</a> and have followed the <a href="https://j3soon.github.io/ros2-essentials/#setup">setup instructions</a> before using this workspace.</p>
+</blockquote>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/go2_ws/docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"> </span><span class="c1"># or docker compose build</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</span></code></pre></div>
+<p>The commands in the following sections assume that you are inside the Docker container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-go2-ws<span class="w"> </span>bash
+</span></code></pre></div>
+<p>If the initial build somehow failed, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span></code></pre></div>
+<p>Once you have finished testing, you can stop and remove the container with:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
 </span></code></pre></div>
 <h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
 <h3 id="isaac-lab-examples">Isaac Lab Examples<a class="headerlink" href="#isaac-lab-examples" title="Permanent link">&para;</a></h3>
 <p><a href="https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html">Training</a> <a href="https://isaac-sim.github.io/IsaacLab/main/source/overview/environments.html#comprehensive-list-of-environments">environments</a> (<code>Isaac-Velocity-Flat-Unitree-Go2-v0</code>, <code>Isaac-Velocity-Rough-Unitree-Go2-v0</code>):</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>~/IsaacLab
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/reinforcement_learning/rsl_rl/train.py<span class="w"> </span>--task<span class="w"> </span>Isaac-Velocity-Rough-Unitree-Go2-v0<span class="w"> </span>--headless
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># or</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/reinforcement_learning/skrl/train.py<span class="w"> </span>--task<span class="w"> </span>Isaac-Velocity-Rough-Unitree-Go2-v0<span class="w"> </span>--headless
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>~/IsaacLab
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/reinforcement_learning/rsl_rl/train.py<span class="w"> </span>--task<span class="w"> </span>Isaac-Velocity-Rough-Unitree-Go2-v0<span class="w"> </span>--headless
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># or</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/reinforcement_learning/skrl/train.py<span class="w"> </span>--task<span class="w"> </span>Isaac-Velocity-Rough-Unitree-Go2-v0<span class="w"> </span>--headless
 </span></code></pre></div>
 <p>Run <a href="https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html">pre-trained model inference</a>:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>~/IsaacLab
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/reinforcement_learning/rsl_rl/play.py<span class="w"> </span>--task<span class="w"> </span>Isaac-Velocity-Rough-Unitree-Go2-v0<span class="w"> </span>--num_envs<span class="w"> </span><span class="m">32</span><span class="w"> </span>--use_pretrained_checkpoint
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>~/IsaacLab
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>./isaaclab.sh<span class="w"> </span>-p<span class="w"> </span>scripts/reinforcement_learning/rsl_rl/play.py<span class="w"> </span>--task<span class="w"> </span>Isaac-Velocity-Rough-Unitree-Go2-v0<span class="w"> </span>--num_envs<span class="w"> </span><span class="m">32</span><span class="w"> </span>--use_pretrained_checkpoint
 </span></code></pre></div>
 <h3 id="custom-isaac-sim-environment">Custom Isaac Sim Environment<a class="headerlink" href="#custom-isaac-sim-environment" title="Permanent link">&para;</a></h3>
 <p>Run <code>~/isaacsim/isaac-sim.sh</code> and open <code>/home/ros2-essentials/go2_ws/isaacsim/assets/go2_og.usda</code> in Omniverse, and then press Play.</p>
 <p><img alt="" src="assets/01-isaac-sim-open-scene.png" />
 <img alt="" src="assets/02-isaac-sim-play.png" /></p>
 <p>In another terminal, exec into the container:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-go2-ws<span class="w"> </span>bash
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-go2-ws<span class="w"> </span>bash
 </span></code></pre></div>
 <p>Inspect the joint states and clock:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/joint_states
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/clock
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/joint_states
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/clock
 </span></code></pre></div>
 <p>Inspect TF and Odom by launching <code>rviz2</code> and set <code>Fixed Frame</code> to <code>world</code> and <code>Add &gt; TF</code>. Then, <code>Add &gt; Odometry</code> and set <code>Topic</code> to <code>/odom</code>.</p>
 <p><img alt="" src="assets/03-rviz2-tf-odom.png" /></p>
 <p>Send a joint command:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/joint_command<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="s2">&quot;{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="s2">  name: [</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="s2">    &#39;FL_hip_joint&#39;, &#39;FR_hip_joint&#39;, &#39;RL_hip_joint&#39;, &#39;RR_hip_joint&#39;,</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="s2">    &#39;FL_thigh_joint&#39;, &#39;FR_thigh_joint&#39;, &#39;RL_thigh_joint&#39;, &#39;RR_thigh_joint&#39;,</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="s2">    &#39;FL_calf_joint&#39;, &#39;FR_calf_joint&#39;, &#39;RL_calf_joint&#39;, &#39;RR_calf_joint&#39;</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="s2">  ],</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="s2">  position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0],</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="s2">  velocity: [],</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="s2">  effort: []</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="s2">}&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/joint_command<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="s2">&quot;{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="s2">  name: [</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="s2">    &#39;FL_hip_joint&#39;, &#39;FR_hip_joint&#39;, &#39;RL_hip_joint&#39;, &#39;RR_hip_joint&#39;,</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="s2">    &#39;FL_thigh_joint&#39;, &#39;FR_thigh_joint&#39;, &#39;RL_thigh_joint&#39;, &#39;RR_thigh_joint&#39;,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="s2">    &#39;FL_calf_joint&#39;, &#39;FR_calf_joint&#39;, &#39;RL_calf_joint&#39;, &#39;RR_calf_joint&#39;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="s2">  ],</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="s2">  position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0],</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="s2">  velocity: [],</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="s2">  effort: []</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="s2">}&quot;</span>
 </span></code></pre></div>
 <p>The Go2 should move forward a little bit, which can be seen in both Isaac Sim and RViz2.</p>
 <p><img alt="" src="assets/04-isaac-sim-move-forward.png" />
@@ -900,7 +914,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 30, 2025 16:06:13 UTC">June 30, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 13, 2025 16:14:09 UTC">July 13, 2025</span>
   </span>
 
     
