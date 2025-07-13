@@ -5,13 +5,24 @@
 
 A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs) and robotic arm manipulators. Please setup an Ubuntu environment before using this repo.
 
-The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by [Omniverse Isaac Sim](https://docs.omniverse.nvidia.com/isaacsim/latest/index.html) and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html). In general, the amd64 images support both simulation and real robot control, while the arm64 images only supports real robot control.
+The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by [(Omniverse) Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/index.html), [Isaac Lab](https://isaac-sim.github.io/IsaacLab/main/index.html), and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html). In general, the amd64 images support both simulation and real robot control, while the arm64 images only supports real robot control.
 
 > Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.
 
 The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 
-## Cloning the Repository
+## System Requirements
+
+| Use Case | Platform | Hardware | Software | Notes |
+|----------|----------|----------|----------|-------|
+| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html) for more details. |
+| Deployment-Only | Jetson | Jetson Orin, 500GB+ SSD | JetPack 6 | See [this page](https://nvidia-isaac-ros.github.io/getting_started/index.html) for more details.
+
+Make sure to install the required software prerequisites before using this repo.
+
+> Some functionalities may still work on lower-spec systems, such as those without GPUs or on operating systems other than Ubuntu 22.04. However, these configurations are not officially supported and may require manual adjustments. Use them with caution.
+
+## Setup
 
 ```sh
 git clone https://github.com/j3soon/ros2-essentials.git
@@ -26,6 +37,8 @@ export USER_UID=$(id -u)
 ```
 
 This step is optional if you have user ID 1000 on host.
+
+> Next, choose a workspace from the table below and follow its documentation to get started. The rest of this document contains optional information.
 
 ## Pre-built Workspaces
 
@@ -61,15 +74,6 @@ If you have trouble using a workspace, please [open an issue](https://github.com
 | [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-sim) | Isaac Sim 4.5.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-lab) | Isaac Lab 2.1.0 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/#isaac-ros) | Isaac ROS 3.2 Apt Install (Base only) | ✔️ | [Johnson Sun](https://github.com/j3soon) |
-
-## System Requirements
-
-| Use Case | Platform | Hardware | Software | Notes |
-|----------|----------|----------|----------|-------|
-| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html) for more details. |
-| Deployment-Only | Jetson | Jetson Orin, 500GB+ SSD | JetPack 6 | See [this page](https://nvidia-isaac-ros.github.io/getting_started/index.html) for more details.
-
-Some functionalities may still work on lower-spec systems, such as those without GPUs or on operating systems other than Ubuntu 22.04. However, these configurations are not officially supported and may require manual adjustments. Use them with caution.
 
 ## Building Documentation
 

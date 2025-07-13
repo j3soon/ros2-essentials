@@ -9,19 +9,38 @@
 ![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-orbslam3-ws)
 ![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-orbslam3-ws)
 
-### Run with docker
+## 🐳 Start Container
 
-```bash
-git clone https://github.com/j3soon/ros2-essentials.git
+> Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
+
+```sh
+cd ~/ros2-essentials/orbslam3_ws/docker
+docker compose pull # or docker compose build
+xhost +local:docker
+docker compose up -d
 ```
 
-```bash
-cd ros2-essentials/orbslam3_ws/docker
-docker compose pull
-docker compose up -d --build
+The commands in the following sections assume that you are inside the Docker container:
+
+```sh
+# in a new terminal
+docker exec -it ros2-orbslam3-ws bash
 ```
 
-### Simple Test With Dataset
+If the initial build somehow failed, run:
+
+```sh
+rm -r build install
+colcon build --symlink-install
+```
+
+Once you have finished testing, you can stop and remove the container with:
+
+```sh
+docker compose down
+```
+
+## Simple Test With Dataset
 
 - Attach to the container
   ```sh
@@ -49,7 +68,7 @@ docker compose up -d --build
   ```
   2 windows will pop up, showing the results.
 
-#### Reference repo or issues
+## Reference repo or issues
 
 - [Solve build failure](https://github.com/UZ-SLAMLab/ORB_SLAM3/issues/566)
 - [ORB-SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3)

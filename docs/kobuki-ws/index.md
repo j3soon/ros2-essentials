@@ -11,6 +11,37 @@
 
 This repository facilitates the quick configuration of the simulation environment and real robot driver for Kobuki.
 
+## 🐳 Start Container
+
+> Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
+
+```sh
+cd ~/ros2-essentials/kobuki_ws/docker
+docker compose pull # or docker compose build
+xhost +local:docker
+docker compose up -d
+```
+
+The commands in the following sections assume that you are inside the Docker container:
+
+```sh
+# in a new terminal
+docker exec -it ros2-kobuki-ws bash
+```
+
+If the initial build somehow failed, run:
+
+```sh
+rm -r build install
+colcon build --symlink-install
+```
+
+Once you have finished testing, you can stop and remove the container with:
+
+```sh
+docker compose down
+```
+
 ## ◻️ Introduction ◻️
 
 This repository is primarily based on the [kobuki-base](https://github.com/kobuki-base). Below are the main packages for Kobuki:

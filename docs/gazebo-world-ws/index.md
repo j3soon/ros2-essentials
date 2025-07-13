@@ -11,6 +11,37 @@
 
 This repository contains several Gazebo worlds, which are valuable for testing robots or agents in both indoor and outdoor environments.
 
+## 🐳 Start Container
+
+> Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
+
+```sh
+cd ~/ros2-essentials/gazebo_world_ws/docker
+docker compose pull # or docker compose build
+xhost +local:docker
+docker compose up -d
+```
+
+The commands in the following sections assume that you are inside the Docker container:
+
+```sh
+# in a new terminal
+docker exec -it ros2-gazebo-world-ws bash
+```
+
+If the initial build somehow failed, run:
+
+```sh
+rm -r build install
+colcon build --symlink-install
+```
+
+Once you have finished testing, you can stop and remove the container with:
+
+```sh
+docker compose down
+```
+
 ## 🌱 Structure 🌱
 
 ```
