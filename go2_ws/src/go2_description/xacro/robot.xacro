@@ -18,18 +18,9 @@
     </xacro:if>
 
     <!-- base_link -->
-    <link name="base_link"/>
-
-    <!-- base_footprint -->
-    <link name="base_footprint"/>
-    <joint name="base_footprint_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="base_footprint"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-    </joint>
-
-    <!-- trunk -->
-    <link name="trunk">
+    <!-- Note: Since the `trunk` frame is completely redundant, -->
+    <!--       we remove it and move its settings to `base_link`. -->
+    <link name="base_link">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
@@ -48,10 +39,15 @@
             <inertia ixx="${trunk_ixx}" ixy="${trunk_ixy}" ixz="${trunk_ixz}" iyy="${trunk_iyy}" iyz="${trunk_iyz}" izz="${trunk_izz}"/>
         </inertial>
     </link>
-    <joint name="floating_base" type="fixed">
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+
+    <!-- base_footprint -->
+    <!-- Note: The `base_footprint` link is initially set at `base_link`, -->
+    <!--       but it will be updated based on the actual body height computed using forward kinematics. -->
+    <link name="base_footprint"/>
+    <joint name="base_footprint_joint" type="fixed">
         <parent link="base_link"/>
-        <child link="trunk"/>
+        <child link="base_footprint"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
     <!-- Include four legs -->
