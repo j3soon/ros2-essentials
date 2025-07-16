@@ -1,6 +1,7 @@
 /**:
   ros__parameters:
     gait:
+      # Go2 official parameters: https://support.unitree.com/home/en/developer/sports_services
       knee_orientation : ">>"
       pantograph_leg : false
       odom_scaler: 1.0
@@ -11,4 +12,4 @@
       swing_height : 0.04
       stance_depth : 0.00
       stance_duration : 0.25
-      nominal_height : 0.32
+      nominal_height : 0.33
