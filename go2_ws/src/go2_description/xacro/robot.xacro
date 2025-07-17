@@ -18,8 +18,8 @@
     </xacro:if>
 
     <!-- base_link -->
-    <!-- Note: Since the `trunk` frame is completely redundant, -->
-    <!--       we remove it and move its settings to `base_link`. -->
+    <!-- Since the `trunk` frame is completely redundant,
+         we remove it and move its settings to `base_link`. -->
     <link name="base_link">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -41,8 +41,8 @@
     </link>
 
     <!-- base_footprint -->
-    <!-- Note: The `base_footprint` link is initially set at `base_link`, -->
-    <!--       but it will be updated based on the actual body height computed using forward kinematics. -->
+    <!-- The `base_footprint` link is initially set at `base_link`,
+         but it will be updated based on the actual body height computed using forward kinematics. -->
     <link name="base_footprint"/>
     <joint name="base_footprint_joint" type="fixed">
         <parent link="base_link"/>
