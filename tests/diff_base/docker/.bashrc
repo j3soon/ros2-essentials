@@ -11,6 +11,8 @@ fi
 
 # Source global ROS2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
+# Source colcon-argcomplete
+source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 # Optionally perform apt update if it has not been executed yet
 if [ -z "$( ls -A '/var/lib/apt/lists' )" ]; then
     echo "apt-get update has not been executed yet. Running sudo apt-get update..."
