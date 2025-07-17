@@ -9,19 +9,38 @@
 ![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-cartographer-ws)
 ![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-cartographer-ws)
 
-### Run with docker
+## 🐳 Start Container
 
-```bash
-git clone https://github.com/j3soon/ros2-essentials.git
+> Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
+
+```sh
+cd ~/ros2-essentials/cartographer_ws/docker
+docker compose pull # or docker compose build
+xhost +local:docker
+docker compose up -d
 ```
 
-```bash
-cd ros2-essentials/cartographer_ws/docker
-docker compose pull
-docker compose up -d --build
+The commands in the following sections assume that you are inside the Docker container:
+
+```sh
+# in a new terminal
+docker exec -it ros2-cartographer-ws bash
 ```
 
-### Simple Test With Turtlebot3
+If the initial build somehow failed, run:
+
+```sh
+rm -r build install
+colcon build --symlink-install
+```
+
+Once you have finished testing, you can stop and remove the container with:
+
+```sh
+docker compose down
+```
+
+## Simple Test With Turtlebot3
 
 - Attach to the container
 
@@ -46,10 +65,9 @@ docker compose up -d --build
   rqt_robot_steering
   ```
 
-### Building Packages
+## Building Packages
 
 ```sh
-docker attach ros2-cartographer-ws
 cd /home/ros2-essentials/cartographer_ws
 rosdep update
 rosdep install --from-paths src --ignore-src --rosdistro humble -y
@@ -59,9 +77,9 @@ colcon build
 > After the build process, make sure to source the `install/setup.bash` file.  
 > Otherwise, ROS2 will not locate the executable files. You can open a new terminal to accomplish this.
 
-### Multi LiDAR - Single Robot SLAM test
+## Multi LiDAR - Single Robot SLAM test
 
-#### Simulation
+### Simulation
 
 - multi_lidar_desp package: Description of a robot with multiple LiDARs.
 - multi_lidar_gazebo package: Gazebo simulation of the robot with robot state publisher.
@@ -70,7 +88,7 @@ colcon build
   ros2 launch multi_lidar_gazebo multi_lidar_gazebo.launch.py
   ```
 
-#### Run the SLAM node
+### Run the SLAM node
 
 - Run the cartographer SLAM node in new window of `tmux`
   ```bash
@@ -82,6 +100,6 @@ colcon build
   rqt_robot_steering
   ```
 
-#### References
+## References
 
 - [Cartographer Demo](https://google-cartographer-ros.readthedocs.io/en/latest/demos.html)

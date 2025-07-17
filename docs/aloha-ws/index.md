@@ -9,12 +9,15 @@
 ![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-aloha-ws)
 ![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-aloha-ws)
 
-## Start Container
+## 🐳 Start Container
+
+> Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
 
 ```sh
 cd ~/ros2-essentials/aloha_ws/docker
+docker compose pull # or docker compose build
 xhost +local:docker
-docker compose up
+docker compose up -d
 # The initial build will take a while (~10 mins), please wait patiently.
 ```
 
@@ -30,6 +33,12 @@ If the initial build somehow failed, run:
 ```sh
 rm -r build install
 colcon build --symlink-install
+```
+
+Once you have finished testing, you can stop and remove the container with:
+
+```sh
+docker compose down
 ```
 
 ## View Robot Model in RViz

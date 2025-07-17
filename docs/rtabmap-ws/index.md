@@ -9,26 +9,38 @@
 ![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-rtabmap-ws)
 ![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-rtabmap-ws)
 
-### Run with docker
+## 🐳 Start Container
 
-```bash
-git clone https://github.com/j3soon/ros2-essentials.git
+> Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
+
+```sh
+cd ~/ros2-essentials/rtabmap_ws/docker
+docker compose pull # or docker compose build
+xhost +local:docker
+docker compose up -d
 ```
 
-```bash
-cd ros2-essentials/rtabmap_ws/docker
-docker compose pull
-docker compose up -d --build
+The commands in the following sections assume that you are inside the Docker container:
+
+```sh
+# in a new terminal
+docker exec -it ros2-rtabmap-ws bash
 ```
 
-- Attach to the container
-  ```sh
-  docker attach ros2-rtabmap-ws
-  cd /home/ros2-essentials/rtabmap_ws
-  colcon build --symlink-install
-  ```
+If the initial build somehow failed, run:
 
-### LiDAR test with gazebo
+```sh
+rm -r build install
+colcon build --symlink-install
+```
+
+Once you have finished testing, you can stop and remove the container with:
+
+```sh
+docker compose down
+```
+
+## LiDAR test with gazebo
 
 - Launch Gazebo with turtlebot3 in `tmux`
   ```bash
@@ -39,7 +51,7 @@ docker compose up -d --build
   ros2 launch rtabmap_demos turtlebot3_scan.launch.py
   ```
 
-### RGBD test with gazebo
+## RGBD test with gazebo
 
 - Launch Gazebo with turtlebot3 in `tmux`
   ```bash
@@ -50,7 +62,7 @@ docker compose up -d --build
   ros2 launch rtabmap_demos turtlebot3_rgbd.launch.py
   ```
 
-### Dual sensor test with gazebo
+## Dual sensor test with gazebo
 
 - Launch Gazebo with turtlebot3 in `tmux`
   ```bash
@@ -61,14 +73,14 @@ docker compose up -d --build
   ros2 launch rtabmap_sim dual_sensor.launch.py
   ```
 
-### Run with rqt
+## Run with rqt
 
 - Running in a new `tmux` window
   ```bash
   rqt_robot_steering
   ```
 
-### Result
+## Result
 
 - After you've run the demo, you could find the following result directly.
 
@@ -85,11 +97,11 @@ docker compose up -d --build
   <img src="./assets/dual_test.png" width="75%"/>
 </center>
 
-### Reference
+## Reference
 
 - [RTAB-Map wiki](https://github.com/introlab/rtabmap/wiki)
 
-### Existing issues
+## Existing issues
 
 - `VTK` warning
   ```bash

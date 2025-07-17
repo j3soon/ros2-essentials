@@ -11,22 +11,35 @@
 
 This repository will help you configure the environment for Delto Gripper quickly.
 
-## Run the container
+## 🐳 Start Container
 
-```bash
-# Run the container
-cd /home/ros2-essentials/delto_gripper_ws/docker
-docker compose up -d --build
+> Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
+
+```sh
+cd ~/ros2-essentials/delto_gripper_ws/docker
+docker compose pull # or docker compose build
+xhost +local:docker
+docker compose up -d
+```
+
+The commands in the following sections assume that you are inside the Docker container:
+
+```sh
+# in a new terminal
 docker exec -it ros2-delto-gripper-ws bash
 ```
 
-## Building Packages
+If the initial build somehow failed, run:
 
-> Normally, when you enter the container, the packages will be built automatically.
-
-```bash
-cd /home/ros2-essentials/delto_gripper_ws
+```sh
+rm -r build install
 colcon build --symlink-install
+```
+
+Once you have finished testing, you can stop and remove the container with:
+
+```sh
+docker compose down
 ```
 
 ## Testing

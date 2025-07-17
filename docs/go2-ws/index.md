@@ -11,13 +11,35 @@
 
 > Please note that this workspace is only tested in simulation.
 
-## Run the container
+## 🐳 Start Container
 
-```bash
-# Run the container
-cd /home/ros2-essentials/go2_ws/docker
-docker compose up -d --build
+> Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
+
+```sh
+cd ~/ros2-essentials/go2_ws/docker
+docker compose pull # or docker compose build
+xhost +local:docker
+docker compose up -d
+```
+
+The commands in the following sections assume that you are inside the Docker container:
+
+```sh
+# in a new terminal
 docker exec -it ros2-go2-ws bash
+```
+
+If the initial build somehow failed, run:
+
+```sh
+rm -r build install
+colcon build --symlink-install
+```
+
+Once you have finished testing, you can stop and remove the container with:
+
+```sh
+docker compose down
 ```
 
 ## Testing
