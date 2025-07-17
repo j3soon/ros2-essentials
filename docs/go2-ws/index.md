@@ -54,6 +54,8 @@ ros2 launch go2_bringup go2_bringup.launch.py
 ros2 launch champ_bringup go2.launch.py
 ```
 
+> On the first launch, the Go2 in Isaac Sim may initially stand on its rear legs, which can cause it to fall backwards or sideways during the next step. To fix this, simply stop and restart the Isaac Sim simulation (leave the CHAMP controller running), then proceed with the remaining steps.
+
 3. Send a command to the Go2
 
 > We use the `teleop_twist_keyboard` for demonstration.  
