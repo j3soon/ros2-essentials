@@ -141,14 +141,14 @@ extra:
   # Variable for inserting images easily
   imgroot: /../assets/images/
   # Ref: https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-analytics
-  # analytics:
-  #   provider: google
-  #   property: G-XXXXXXXXXX # Google Analytics 4
-  # TODO (Set up site analytics):
+  analytics:
+    provider: google
+    property: G-6XNKT8P1RQ # Google Analytics 4
+  # DONE (Set up site analytics):
   # - Uncomment the `analytics` section above
   # - Refer to the link below for remaining steps:
   #       https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-analytics
-  # TODO (Search console):
+  # DONE (Search console):
   # - After setting up Google Analytics, you might want to set up Google Search Console as well:
   #       https://search.google.com/search-console/
 
