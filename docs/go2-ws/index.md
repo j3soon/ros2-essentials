@@ -62,6 +62,57 @@ cd ~/IsaacLab
 ./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/play.py --task Isaac-Velocity-Rough-Unitree-Go2-v0 --num_envs 32 --use_pretrained_checkpoint
 ```
 
+### Champ Controller Demo
+
+1. Launch the Go2 in the Isaac Sim.
+
+```bash
+ros2 launch go2_bringup go2_bringup.launch.py
+```
+
+2. Launch the Champ controller
+
+```bash
+ros2 launch champ_bringup go2.launch.py
+```
+
+> On the first launch, the Go2 in Isaac Sim may initially stand on its rear legs, which can cause it to fall backwards or sideways during the next step. To fix this, simply stop and restart the Isaac Sim simulation (leave the CHAMP controller running), then proceed with the remaining steps.
+
+3. Send a command to the Go2
+
+> We use the `teleop_twist_keyboard` for demonstration.  
+> You can use any other method as well.
+
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
+### Nav2 Demo with Champ Controller
+
+> Note: This demo is only a quick verification that Nav2 can be used to control the Go2 to reach a target point. Many important steps, such as the Go2's odometry and SLAM, are omitted in this demonstration. In the current pipeline, Nav2 simply uses the ground-truth odometry data provided by Isaac Sim to control and move the Go2 to the target point.
+
+1. Launch the Go2 in the Isaac Sim.
+
+```bash
+ros2 launch go2_bringup go2_bringup.launch.py
+```
+
+2. Launch the Champ controller
+
+```bash
+ros2 launch champ_bringup go2.launch.py
+```
+
+3. Launch the Nav2
+
+```bash
+ros2 launch go2_navigation go2_navigation.launch.py
+```
+
+You can use the `2D Goal Pose` in RViz to set the target position, then Nav2 will plan a path and control the Go2 to reach it.
+
+![](assets/06-navigation-demo.png)
+
 ### Custom Isaac Sim Environment
 
 Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/go2_ws/isaacsim/assets/go2_og.usda` in Omniverse, and then press Play.

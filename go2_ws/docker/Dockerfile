@@ -147,6 +147,22 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     && sudo rm -rf /var/lib/apt/lists/*
 
 # TODO: Add more commands here
+
+# Install ros packages
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    # Install champ dependencies
+    ros-$ROS_DISTRO-xacro \
+    ros-$ROS_DISTRO-nav2-bringup \
+    ros-$ROS_DISTRO-ros2-control \
+    ros-$ROS_DISTRO-ros2-controllers \
+    ros-$ROS_DISTRO-ecl-threads \
+    ros-$ROS_DISTRO-robot-localization \
+    ros-$ROS_DISTRO-joint-state-publisher \
+    ros-$ROS_DISTRO-joint-state-publisher-gui \
+    ros-$ROS_DISTRO-velodyne-gazebo-plugins \
+    && sudo rm -rf /var/lib/apt/lists/*
+
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
