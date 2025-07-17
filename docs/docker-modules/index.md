@@ -21,16 +21,6 @@ Depends on:
 
 > Note that CUDA Toolkit is not required for Isaac Sim.
 
-### On Host
-
-Quick test using official Docker image:
-
-```sh
-scripts/docker_run_official_isaac_sim.sh
-```
-
-### In Container
-
 Compatibility test:
 
 ```sh
@@ -54,6 +44,34 @@ cd ~/isaacsim
 ./isaac-sim.sh
 ```
 
+> **On Host**:
+> 
+> Quick test using official Docker image:
+> 
+> ```sh
+> scripts/docker_run_official_isaac_sim.sh
+> ```
+
+### Importing URDF
+
+`File > Import` and select the URDF file.
+
+If your URDF file is in the Xacro format, you may need to convert it to the URDF format first:
+
+```sh
+XACRO_FILE=<XACRO_FILE>.xacro
+URDF_FILE=<URDF_FILE>.urdf
+xacro $XACRO_FILE > $URDF_FILE
+```
+
+You can also check the URDF hierarchy:
+
+```sh
+check_urdf $URDF_FILE
+```
+
+> Note: URDF files are often not self-contained and may reference additional resources within their ROS package. For successful import, consider downloading/moving the entire package (such as the `<ROBOT_NAME>_description` directory) along with the URDF file. Otherwise, the import will fail.
+
 ## Isaac Lab
 
 Isaac Lab 2.1.0 Git Install.
@@ -65,16 +83,6 @@ Depends on:
 - Isaac Sim
 
 > Note that CUDA Toolkit is not required for Isaac Lab.
-
-### On Host
-
-Quick test using official Docker image:
-
-```sh
-scripts/docker_run_official_isaac_lab.sh
-```
-
-### In Container
 
 [Quick test](https://isaac-sim.github.io/IsaacLab/main/source/deployment/docker.html#running-pre-built-isaac-lab-container):
 
@@ -94,6 +102,14 @@ cd ~/IsaacLab
 # or
 ./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task=Isaac-Cartpole-v0 --headless
 ```
+
+> **On Host**:
+> 
+> Quick test using official Docker image:
+> 
+> ```sh
+> scripts/docker_run_official_isaac_lab.sh
+> ```
 
 ## Isaac ROS
 
