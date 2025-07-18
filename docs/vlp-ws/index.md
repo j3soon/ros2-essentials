@@ -13,12 +13,17 @@
 
 > Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
 
+Run the following commands in a Ubuntu desktop environment. If you are using a remote server, make sure you're using a terminal within a remote desktop session (e.g., VNC) instead of SSH (i.e., don't use `ssh -X` or `ssh -Y`).
+
 ```sh
 cd ~/ros2-essentials/vlp_ws/docker
-docker compose pull # or docker compose build
+docker compose build
 xhost +local:docker
 docker compose up -d
+# The initial build will take a while, please wait patiently.
 ```
+
+> If your user's UID is `1000`, you may replace the `docker compose build` command with `docker compose pull`.
 
 The commands in the following sections assume that you are inside the Docker container:
 
