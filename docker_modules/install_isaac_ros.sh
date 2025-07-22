@@ -64,4 +64,9 @@ else
     exit 1
 fi
 
+echo "Creating Isaac ROS directories with correct ownership to avoid permission issues after volume mount..."
+sudo mkdir -p ${ISAAC_ROS_WS}/isaac_ros_assets \
+    && sudo chown $USERNAME:$USERNAME ${ISAAC_ROS_WS}/isaac_ros_assets \
+    || exit 1
+
 echo "Isaac ROS installation completed successfully!"

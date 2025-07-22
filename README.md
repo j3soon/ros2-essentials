@@ -150,6 +150,7 @@ Some current CI builds are flaky and may require re-running.
 docker compose down --volumes --remove-orphans
 docker volume rm ros2-gazebo-cache
 docker volume rm ros2-isaac-sim-cache
+docker volume rm ros2-isaac-ros-assets
 ```
 
 ## Acknowledgement
