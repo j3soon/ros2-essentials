@@ -6,9 +6,11 @@ ROS 2 Humble Apt Install.
 
 ## CUDA Toolkit
 
-CUDA Toolkit 12.6 Deb Install.
+CUDA Toolkit 12.6 Deb Install. (Not installed by default.)
 
 > This is often unnecessary when only Python is used, as `pip install torch` typically installs the appropriate version of the CUDA Toolkit automatically.
+
+Please note that if CUDA Toolkit 12.6 is installed while using Isaac Sim 4.5, will need to apply the workaround in the [Isaac ROS](#isaac-ros) section to prevent CUDA error.
 
 ## Isaac Sim
 
@@ -115,7 +117,7 @@ cd ~/IsaacLab
 
 > Note: This is a work in progress. Currently only the base Isaac ROS is installed. Running examples requires additional dependencies that are not yet included in this setup.
 
-Isaac ROS 3.2.
+Isaac ROS 3.2. (Not installed by default.)
 
 Depends on:
 
@@ -149,9 +151,11 @@ Start the pre-composed pipeline:
 ros2 launch isaac_ros_apriltag isaac_ros_apriltag_isaac_sim_pipeline.launch.py
 ```
 
-In another terminal, launch Isaac Sim:
+In another terminal, apply [the workaround](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/overview/known_issues.html) and launch Isaac Sim:
 
 ```sh
+# Workaround for CUDA error
+export LD_LIBRARY_PATH=/home/user/isaacsim/extscache/omni.sensors.nv.common-2.5.0-coreapi+lx64.r.cp310/bin:$LD_LIBRARY_PATH
 ~/isaacsim/isaac-sim.sh
 ```
 
