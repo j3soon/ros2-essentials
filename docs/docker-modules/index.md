@@ -122,3 +122,51 @@ Depends on:
 - ROS 2 Humble
 - CUDA Toolkit
 - and more...
+
+### Setup
+
+On host:
+
+1. Edit `~/template_ws/docker/compose.yaml` to set `CUDA_TOOLKIT_VERSION: "12.6"` and `ISAAC_ROS: "YES"`.
+2. Re-build the docker image with `docker compose build`.
+
+The remaining steps should all be executed within the docker container.
+
+### Isaac ROS AprilTag
+
+Follow the [Quickstart](https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#quickstart) and [Isaac Sim](https://nvidia-isaac-ros.github.io/concepts/fiducials/apriltag/tutorial_isaac_sim.html) tutorials.
+
+Install Isaac ROS AprilTag package and examples:
+
+```sh
+sudo apt-get install -y ros-humble-isaac-ros-apriltag
+sudo apt-get install -y ros-humble-isaac-ros-examples
+```
+
+Start the pre-composed pipeline:
+
+```sh
+ros2 launch isaac_ros_apriltag isaac_ros_apriltag_isaac_sim_pipeline.launch.py
+```
+
+In another terminal, launch Isaac Sim:
+
+```sh
+~/isaacsim/isaac-sim.sh
+```
+
+Click `Window > Examples > Robotics Examples`. In the `Robotics Examples` window, select `ROS2 > Isaac ROS > Sample Scene` and click `Load Sample Scene`. After the scene loaded, click the `Play` button to start the simulation.
+
+In another terminal, launch RViz:
+
+```sh
+rviz2 -d $(ros2 pkg prefix isaac_ros_apriltag --share)/rviz/default.rviz
+# or
+ros2 topic echo /tag_detections
+```
+
+![](assets/isaac-ros-apriltag-isaac-sim.png)
+
+![](assets/isaac-ros-apriltag-rviz.png)
+
+For further info, see more tutorials in [the official documentation](https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#try-more-examples).
