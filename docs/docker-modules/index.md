@@ -8,6 +8,8 @@ ROS 2 Humble Apt Install.
 
 CUDA Toolkit 12.6 Deb Install. (Not installed by default.)
 
+Make sure your GPU driver version supports the CUDA Toolkit version you want to install. For example, CUDA 12.6 requires Linux driver version >=560.35.05 on x86_64. See [Table 3 in the CUDA Toolkit Release Notes](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html) for more information.
+
 > This is often unnecessary when only Python is used, as `pip install torch` typically installs the appropriate version of the CUDA Toolkit automatically.
 
 Please note that if CUDA Toolkit 12.6 is installed while using Isaac Sim 4.5, will need to apply the workaround in the [Isaac ROS](#isaac-ros) section to prevent CUDA error.
@@ -134,24 +136,15 @@ On host:
 
 The remaining steps should all be executed within the docker container.
 
-### Isaac ROS AprilTag
-
-Follow the [Quickstart](https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#quickstart) and [Isaac Sim](https://nvidia-isaac-ros.github.io/concepts/fiducials/apriltag/tutorial_isaac_sim.html) tutorials.
-
-Install Isaac ROS AprilTag package and examples:
+Install Isaac ROS Examples package (optional):
 
 ```sh
-sudo apt-get install -y ros-humble-isaac-ros-apriltag
 sudo apt-get install -y ros-humble-isaac-ros-examples
 ```
 
-Start the pre-composed pipeline:
+### Start Isaac Sim (Simulation Environment)
 
-```sh
-ros2 launch isaac_ros_apriltag isaac_ros_apriltag_isaac_sim_pipeline.launch.py
-```
-
-In another terminal, apply [the workaround](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/overview/known_issues.html) and launch Isaac Sim:
+Apply [the CUDA workaround](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/overview/known_issues.html) and launch Isaac Sim:
 
 ```sh
 # Workaround for CUDA error
@@ -160,6 +153,24 @@ export LD_LIBRARY_PATH=/home/user/isaacsim/extscache/omni.sensors.nv.common-2.5.
 ```
 
 Click `Window > Examples > Robotics Examples`. In the `Robotics Examples` window, select `ROS2 > Isaac ROS > Sample Scene` and click `Load Sample Scene`. After the scene loaded, click the `Play` button to start the simulation.
+
+Open another terminal and exec into the docker container. Then, follow one of the tutorials below.
+
+### Isaac ROS AprilTag
+
+Follow the [Quickstart](https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#quickstart) and [Isaac Sim](https://nvidia-isaac-ros.github.io/concepts/fiducials/apriltag/tutorial_isaac_sim.html) tutorials.
+
+Install Isaac ROS AprilTag package and examples:
+
+```sh
+sudo apt-get install -y ros-humble-isaac-ros-apriltag
+```
+
+Start the pre-composed pipeline:
+
+```sh
+ros2 launch isaac_ros_apriltag isaac_ros_apriltag_isaac_sim_pipeline.launch.py
+```
 
 In another terminal, launch RViz:
 
