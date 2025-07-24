@@ -71,26 +71,26 @@ cd ~/IsaacLab
 
 1. Launch the Go2 in the Isaac Sim.
 
-```bash
-ros2 launch go2_bringup go2_bringup.launch.py
-```
+   ```bash
+   ros2 launch go2_bringup go2_bringup.launch.py
+   ```
 
 2. Launch the Champ controller
 
-```bash
-ros2 launch champ_bringup go2.launch.py
-```
+   ```bash
+   ros2 launch champ_bringup go2.launch.py
+   ```
 
-> On the first launch, the Go2 in Isaac Sim may initially stand on its rear legs, which can cause it to fall backwards or sideways during the next step. To fix this, simply stop and restart the Isaac Sim simulation (leave the CHAMP controller running), then proceed with the remaining steps.
+   > On the first launch, the Go2 in Isaac Sim may initially stand on its rear legs, which can cause it to fall backwards or sideways during the next step. To fix this, simply stop and restart the Isaac Sim simulation (leave the CHAMP controller running), then proceed with the remaining steps.
 
 3. Send a command to the Go2
 
-> We use the `teleop_twist_keyboard` for demonstration.  
-> You can use any other method as well.
+   > We use the `teleop_twist_keyboard` for demonstration.  
+   > You can use any other method as well.
 
-```bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
-```
+   ```bash
+   ros2 run teleop_twist_keyboard teleop_twist_keyboard
+   ```
 
 ### Nav2 Demo with Champ Controller
 
@@ -98,25 +98,25 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 
 1. Launch the Go2 in the Isaac Sim.
 
-```bash
-ros2 launch go2_bringup go2_bringup.launch.py
-```
+   ```bash
+   ros2 launch go2_bringup go2_bringup.launch.py
+   ```
 
 2. Launch the Champ controller
 
-```bash
-ros2 launch champ_bringup go2.launch.py
-```
+   ```bash
+   ros2 launch champ_bringup go2.launch.py
+   ```
 
-3. Launch the Nav2
+3. Launch Nav2
 
-```bash
-ros2 launch go2_navigation go2_navigation.launch.py
-```
+   ```bash
+   ros2 launch go2_navigation go2_navigation.launch.py
+   ```
 
-You can use the `2D Goal Pose` in RViz to set the target position, then Nav2 will plan a path and control the Go2 to reach it.
+   You can use the `2D Goal Pose` in RViz to set the target position, then Nav2 will plan a path and control the Go2 to reach it.
 
-![](assets/06-navigation-demo.png)
+   ![](assets/06-navigation-demo.png)
 
 ### Custom Isaac Sim Environment
 
