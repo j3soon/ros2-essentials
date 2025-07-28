@@ -201,18 +201,26 @@ nav:
     # - Comment the `Tags` line above.
     # - Comment the `tags` entry in the `plugins` section.
     # - Delete the `docs/tags.md` file.
-  - docker-modules/index.md
-  - template-ws/index.md
-  - orbslam3-ws/index.md
-  - rtabmap-ws/index.md
-  - ros1-bridge-ws/index.md
-  - cartographer-ws/index.md
-  - husky-ws/index.md
-  - kobuki-ws/index.md
-  - vlp-ws/index.md
-  - gazebo-world-ws/index.md
-  - aloha-ws/index.md
-  - turtlebot3-ws/index.md
-  - delto-gripper-ws/index.md
-  - go2-ws/index.md
-  - h1-ws/index.md
+  - Docker Modules:
+    - docker-modules/index.md
+    - docker-modules/ros2.md
+    - docker-modules/cuda-toolkit.md
+    - docker-modules/isaac-sim.md
+    - docker-modules/isaac-lab.md
+    - docker-modules/isaac-ros.md
+  - Workspaces:
+    - workspaces/index.md
+    - template-ws/index.md
+    - orbslam3-ws/index.md
+    - rtabmap-ws/index.md
+    - ros1-bridge-ws/index.md
+    - cartographer-ws/index.md
+    - husky-ws/index.md
+    - kobuki-ws/index.md
+    - vlp-ws/index.md
+    - gazebo-world-ws/index.md
+    - aloha-ws/index.md
+    - turtlebot3-ws/index.md
+    - delto-gripper-ws/index.md
+    - go2-ws/index.md
+    - h1-ws/index.md
