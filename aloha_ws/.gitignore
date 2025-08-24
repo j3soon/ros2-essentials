@@ -6,8 +6,7 @@
 /install
 /log
 
-# Soft Links
-/docs
+# Hard Links
 /docker/modules
 
 # Custom ignores

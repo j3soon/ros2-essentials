@@ -98,14 +98,6 @@ mkdocs serve
 # Go to https://127.0.0.1:8000 to view the site.
 ```
 
-### Link Documentation to ROS2 Workspaces
-
-```sh
-scripts/setup_docs_link.sh
-```
-
-This is automatically done by running `./scripts/post_install.sh`.
-
 ## VSCode Intellisense
 
 If you have installed [Isaac Sim 4.5.0](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_workstation.html) to the default path `~/isaacsim`, you can simply enable IntelliSense for editing any Isaac Sim scripts by running the following script:

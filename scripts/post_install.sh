@@ -25,7 +25,6 @@ cd "$SCRIPT_DIR"
 
 ./setup_docker_modules_link.sh $FORCE_FLAG
 ./setup_docker_volume.sh
-./setup_docs_link.sh
 ./setup_isaac_link.sh
 
 echo "Post Install Done."
