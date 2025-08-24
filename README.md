@@ -30,6 +30,9 @@ cd ros2-essentials
 ./scripts/post_install.sh
 ```
 
+> Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes).
+> In addition, the script can be run with the `-f` or `--force` flag to force removal of hard links if needed.
+
 and then configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
 
 ```sh
