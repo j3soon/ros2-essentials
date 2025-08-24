@@ -11,13 +11,13 @@
       
       
       
-        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/cartographer-ws/">
+        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/contributing/">
       
       
-        <link rel="prev" href="../ros1-bridge-ws/">
+        <link rel="prev" href="..">
       
       
-        <link rel="next" href="../husky-ws/">
+        <link rel="next" href="../docker-modules/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -25,7 +25,7 @@
     
     
       
-        <title>Cartographer - ROS2 Essentials</title>
+        <title>Contribution Guide - ROS2 Essentials</title>
       
     
     
@@ -70,11 +70,11 @@
       
         <meta  property="og:type"  content="website" >
       
-        <meta  property="og:title"  content="Cartographer - ROS2 Essentials" >
+        <meta  property="og:title"  content="Contribution Guide - ROS2 Essentials" >
       
         <meta  property="og:description"  content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." >
       
-        <meta  property="og:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/cartographer-ws/index.png" >
+        <meta  property="og:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/contributing.png" >
       
         <meta  property="og:image:type"  content="image/png" >
       
@@ -82,15 +82,15 @@
       
         <meta  property="og:image:height"  content="630" >
       
-        <meta  property="og:url"  content="https://j3soon.github.io/ros2-essentials/cartographer-ws/" >
+        <meta  property="og:url"  content="https://j3soon.github.io/ros2-essentials/contributing/" >
       
         <meta  name="twitter:card"  content="summary_large_image" >
       
-        <meta  name="twitter:title"  content="Cartographer - ROS2 Essentials" >
+        <meta  name="twitter:title"  content="Contribution Guide - ROS2 Essentials" >
       
         <meta  name="twitter:description"  content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." >
       
-        <meta  name="twitter:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/cartographer-ws/index.png" >
+        <meta  name="twitter:image"  content="https://j3soon.github.io/ros2-essentials/assets/images/social/contributing.png" >
       
     
     
@@ -113,7 +113,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cartographer" class="md-skip">
+        <a href="#contribution-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -150,7 +150,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Cartographer
+              Contribution Guide
             
           </span>
         </div>
@@ -334,10 +334,32 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../contributing/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Contribution Guide
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -348,6 +370,53 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Guidelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linting
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -543,8 +612,6 @@
       
   
   
-    
-  
   
   
     
@@ -586,11 +653,13 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -613,7 +682,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Workspaces
@@ -718,32 +787,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Cartographer
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../cartographer-ws/" class="md-nav__link">
         
   
   
@@ -754,95 +801,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#start-container" class="md-nav__link">
-    <span class="md-ellipsis">
-      🐳 Start Container
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simple-test-with-turtlebot3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Simple Test With Turtlebot3
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#building-packages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Building Packages
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#multi-lidar-single-robot-slam-test" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multi LiDAR - Single Robot SLAM test
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Multi LiDAR - Single Robot SLAM test">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Simulation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-the-slam-node" class="md-nav__link">
-    <span class="md-ellipsis">
-      Run the SLAM node
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1089,69 +1047,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#start-container" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      🐳 Start Container
+      Overview
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#simple-test-with-turtlebot3" class="md-nav__link">
+  <a href="#guidelines" class="md-nav__link">
     <span class="md-ellipsis">
-      Simple Test With Turtlebot3
+      Guidelines
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#building-packages" class="md-nav__link">
+  <a href="#linting" class="md-nav__link">
     <span class="md-ellipsis">
-      Building Packages
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#multi-lidar-single-robot-slam-test" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multi LiDAR - Single Robot SLAM test
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Multi LiDAR - Single Robot SLAM test">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Simulation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-the-slam-node" class="md-nav__link">
-    <span class="md-ellipsis">
-      Run the SLAM node
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
+      Linting
     </span>
   </a>
   
@@ -1176,93 +1092,33 @@
   
 
 
-<h1 id="cartographer">Cartographer<a class="headerlink" href="#cartographer" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/j3soon/ros2-essentials/tree/main/cartographer_ws"><img alt="GitHub code" src="https://img.shields.io/badge/code-blue?logo=github&amp;label=github" /></a>
-<a href="https://github.com/j3soon/ros2-essentials/actions/workflows/build-cartographer-ws.yaml"><img alt="build" src="https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-cartographer-ws.yaml?label=build" /></a>
-<a href="https://github.com/j3soon/ros2-essentials/commits/main/cartographer_ws"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=cartographer_ws" /></a></p>
-<p><a href="https://hub.docker.com/r/j3soon/ros2-cartographer-ws/tags"><img alt="DockerHub image" src="https://img.shields.io/badge/dockerhub-j3soon/ros2--cartographer--ws-important.svg?logo=docker" /></a>
-<img alt="Docker image arch" src="https://img.shields.io/badge/arch-amd64_|_arm64-blueviolet" />
-<img alt="Docker image version" src="https://img.shields.io/docker/v/j3soon/ros2-cartographer-ws" />
-<img alt="Docker image size" src="https://img.shields.io/docker/image-size/j3soon/ros2-cartographer-ws" /></p>
-<h2 id="start-container">🐳 Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>Make sure your system meets the <a href="https://j3soon.github.io/ros2-essentials/#system-requirements">system requirements</a> and have followed the <a href="https://j3soon.github.io/ros2-essentials/#setup">setup instructions</a> before using this workspace.</p>
-</blockquote>
-<p>Run the following commands in a Ubuntu desktop environment. If you are using a remote server, make sure you're using a terminal within a remote desktop session (e.g., VNC) instead of SSH (i.e., don't use <code>ssh -X</code> or <code>ssh -Y</code>).</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/cartographer_ws/docker
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>build
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># The initial build will take a while, please wait patiently.</span>
+<h1 id="contribution-guide">Contribution Guide<a class="headerlink" href="#contribution-guide" title="Permanent link">&para;</a></h1>
+<p>We welcome all kinds of contributions, including but not limited to bug reports, documentation improvements, new features, and bug fixes. Please ensure to always open an issue to discuss the changes you want to make before sending a pull request.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ensure there is an <a href="https://github.com/j3soon/ros2-essentials/issues">opened GitHub issue</a> corresponding to the changes you want to make.</li>
+<li>Self-assign the GitHub issue.</li>
+<li>Fork the repository by visiting <a href="https://github.com/j3soon/ros2-essentials">ros2-essentials</a> and clicking the "Fork" button.</li>
+<li>Clone the forked repository to your local machine, e.g., <code>git clone git@github.com:username/ros2-essentials.git</code></li>
+<li>Create a new branch for your changes, e.g., <code>git checkout -b feat/your-feature-name</code> for a feature branch or <code>git checkout -b fix/your-bug-name</code> for a bug fix branch.</li>
+<li>Make your changes and ensure they are tested.</li>
+<li>Push your local changes to your forked repository, e.g., <code>git push origin feat/your-feature-name</code>.</li>
+<li>Create a pull request to merge your changes into the main repository's <code>main</code> branch.</li>
+</ol>
+<h2 id="guidelines">Guidelines<a class="headerlink" href="#guidelines" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Commit messages should follow the <a href="https://www.conventionalcommits.org/en/v1.0.0/">conventional commit</a> format.</li>
+<li>Commit description should include as much details as possible. Try to include references you consulted and your rationale behind the changes. This will be essential for reviewers to understand the changes and for future reference. (e.g., <a href="https://github.com/j3soon/ros2-essentials/commit/058ff598ae705c95516353cd14a71945176c337e"><code>058ff59</code></a>)</li>
+<li>If copied files from other sources, please include the source in the commit message. If copied from GitHub, include the permalink (link with commit ID) and the branch name. (e.g., <a href="https://github.com/j3soon/ros2-essentials/commit/6a2dac186e1321dc7f7ec961ad22628bffc352d3"><code>6a2dac1</code></a>)</li>
+<li>Each commit should be atomic and self-contained.</li>
+<li>If anyone helped you during the development, please include them in the commit message using the <code>Co-authored-by</code> format. (e.g., <a href="https://github.com/j3soon/ros2-essentials/commit/4f9832d7a0c4156449d95b3503f9928d2d7de376"><code>4f9832d</code></a>)</li>
+<li>Refrain from force-pushes after a reviewer has started reviewing your changes.</li>
+</ol>
+<p>Use <code>git log</code> and search for related commits to understand the commit message format.</p>
+<h2 id="linting">Linting<a class="headerlink" href="#linting" title="Permanent link">&para;</a></h2>
+<p>Basic linting is done by running the following script:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>tests/test_all.sh
 </span></code></pre></div>
-<blockquote>
-<p>If your user's UID is <code>1000</code>, you may replace the <code>docker compose build</code> command with <code>docker compose pull</code>.</p>
-</blockquote>
-<p>The commands in the following sections assume that you are inside the Docker container:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-cartographer-ws<span class="w"> </span>bash
-</span></code></pre></div>
-<p>If the initial build somehow failed, run:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
-</span></code></pre></div>
-<p>Once you have finished testing, you can stop and remove the container with:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
-</span></code></pre></div>
-<h2 id="simple-test-with-turtlebot3">Simple Test With Turtlebot3<a class="headerlink" href="#simple-test-with-turtlebot3" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p>Attach to the container</p>
-<p><div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>attach<span class="w"> </span>ros2-cartographer-ws
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/cartographer_ws
-</span></code></pre></div>
-- Open the turtlebot simulation in <code>tmux</code></p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">TURTLEBOT3_MODEL</span><span class="o">=</span>burger
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_world.launch.py
-</span></code></pre></div>
-- Run the SLAM node in new window of <code>tmux</code></p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_cartographer<span class="w"> </span>cartographer.launch.py<span class="w"> </span>is_sim:<span class="o">=</span>True
-</span></code></pre></div>
-- Run the control tool in new window of <code>tmux</code></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>rqt_robot_steering
-</span></code></pre></div>
-</li>
-</ul>
-<h2 id="building-packages">Building Packages<a class="headerlink" href="#building-packages" title="Permanent link">&para;</a></h2>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/cartographer_ws
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>rosdep<span class="w"> </span>update
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>rosdep<span class="w"> </span>install<span class="w"> </span>--from-paths<span class="w"> </span>src<span class="w"> </span>--ignore-src<span class="w"> </span>--rosdistro<span class="w"> </span>humble<span class="w"> </span>-y
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>colcon<span class="w"> </span>build
-</span></code></pre></div>
-<blockquote>
-<p>After the build process, make sure to source the <code>install/setup.bash</code> file.<br />
-Otherwise, ROS2 will not locate the executable files. You can open a new terminal to accomplish this.</p>
-</blockquote>
-<h2 id="multi-lidar-single-robot-slam-test">Multi LiDAR - Single Robot SLAM test<a class="headerlink" href="#multi-lidar-single-robot-slam-test" title="Permanent link">&para;</a></h2>
-<h3 id="simulation">Simulation<a class="headerlink" href="#simulation" title="Permanent link">&para;</a></h3>
-<ul>
-<li>multi_lidar_desp package: Description of a robot with multiple LiDARs.</li>
-<li>
-<p>multi_lidar_gazebo package: Gazebo simulation of the robot with robot state publisher.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>multi_lidar_gazebo<span class="w"> </span>multi_lidar_gazebo.launch.py
-</span></code></pre></div>
-</li>
-</ul>
-<h3 id="run-the-slam-node">Run the SLAM node<a class="headerlink" href="#run-the-slam-node" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Run the cartographer SLAM node in new window of <code>tmux</code>
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>cartographer_demo<span class="w"> </span>cartographer_demo.launch.py<span class="w"> </span>is_sim:<span class="o">=</span>True
-</span></code></pre></div></li>
-</ul>
-<ul>
-<li>Run the control tool in new window of <code>tmux</code>
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>rqt_robot_steering
-</span></code></pre></div></li>
-</ul>
-<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="https://google-cartographer-ros.readthedocs.io/en/latest/demos.html">Cartographer Demo</a></li>
-</ul>
 
 
 
@@ -1285,7 +1141,7 @@ Otherwise, ROS2 will not locate the executable files. You can open a new termina
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 18, 2025 14:28:39 UTC">July 18, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 17:37:30 UTC">August 24, 2025</span>
   </span>
 
     
@@ -1295,7 +1151,7 @@ Otherwise, ROS2 will not locate the executable files. You can open a new termina
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 28, 2023 07:22:25 UTC">October 28, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 17:37:30 UTC">August 24, 2025</span>
   </span>
 
     
