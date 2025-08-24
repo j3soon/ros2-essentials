@@ -122,9 +122,9 @@ plugins:
   # Ref: https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#document-contributors
   # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2
   # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2/issues/51#issuecomment-1951450239
-  - git-committers:
-      repository: j3soon/ros2-essentials
-      branch: main
+  # - git-committers:
+  #     repository: j3soon/ros2-essentials
+  #     branch: main
   # DONE (Set up git contributors):
   # - Replace the `git-committers` settings above to match your repository.
   # - Generate a GitHub API key as described in the link above.
@@ -201,6 +201,7 @@ nav:
     # - Comment the `Tags` line above.
     # - Comment the `tags` entry in the `plugins` section.
     # - Delete the `docs/tags.md` file.
+  - contributing.md
   - Docker Modules:
     - docker-modules/index.md
     - docker-modules/ros2.md
