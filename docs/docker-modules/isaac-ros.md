@@ -11,6 +11,10 @@ Depends on:
 - ROS 2 Humble
 - CUDA Toolkit 12.6
 
+Including:
+
+- VPI
+
 Note that most packages are not installed by default to save disk space. Feel free to open an issue for requesting more packages to be installed along with Isaac ROS.
 
 ## Setup
@@ -125,8 +129,9 @@ Follow the [Quickstart](https://nvidia-isaac-ros.github.io/repositories_and_pack
 Install Isaac ROS Nvblox package:
 
 ```sh
-sudo apt-get install -y ros-humble-isaac-ros-nvblox
 sudo apt-get install -y ros-humble-navigation2 ros-humble-nav2-bringup
+
+sudo apt-get install -y ros-humble-isaac-ros-nvblox
 ```
 
 Start the pre-composed pipeline:
