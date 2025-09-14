@@ -147,6 +147,20 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     git-extras \
     && sudo rm -rf /var/lib/apt/lists/*
 
+# Install cartographer and turtlebot3 packages
+ARG CARTOGRAPHER=YES
+ENV CARTOGRAPHER=$CARTOGRAPHER
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_cartographer.sh /tmp/install_cartographer.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    chmod +x /tmp/install_cartographer.sh && /tmp/install_cartographer.sh && rm /tmp/install_cartographer.sh
+# RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+#     sudo apt-get update && sudo apt-get install -y \
+#     ros-$ROS_DISTRO-cartographer \
+#     ros-$ROS_DISTRO-turtlebot3* \
+#     ros-$ROS_DISTRO-rqt-robot-steering \
+#     && sudo rm -rf /var/lib/apt/lists/*
+
 # TODO: Add more commands here
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
