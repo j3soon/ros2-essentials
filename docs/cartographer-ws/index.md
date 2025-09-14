@@ -16,7 +16,7 @@
 Run the following commands in a Ubuntu desktop environment. If you are using a remote server, make sure you're using a terminal within a remote desktop session (e.g., VNC) instead of SSH (i.e., don't use `ssh -X` or `ssh -Y`).
 
 ```sh
-cd ~/ros2-essentials/cartographer_ws/docker
+cd ~/ros2-essentials/template_ws/docker
 docker compose build
 xhost +local:docker
 docker compose up -d
@@ -29,7 +29,7 @@ The commands in the following sections assume that you are inside the Docker con
 
 ```sh
 # in a new terminal
-docker exec -it ros2-cartographer-ws bash
+docker exec -it ros2-template-ws bash
 ```
 
 If the initial build somehow failed, run:
@@ -50,8 +50,8 @@ docker compose down
 - Attach to the container
 
   ```sh
-  docker attach ros2-cartographer-ws
-  cd /home/ros2-essentials/cartographer_ws
+  docker attach ros2-template-ws
+  cd /home/ros2-essentials/template_ws
   ```
 - Open the turtlebot simulation in `tmux`
 
@@ -67,13 +67,13 @@ docker compose down
 - Run the control tool in new window of `tmux`
 
   ```bash
-  rqt_robot_steering
+  ros2 run rqt_robot_steering rqt_robot_steering
   ```
 
 ## Building Packages
 
 ```sh
-cd /home/ros2-essentials/cartographer_ws
+cd /home/ros2-essentials/template_ws
 rosdep update
 rosdep install --from-paths src --ignore-src --rosdistro humble -y
 colcon build
@@ -102,7 +102,7 @@ colcon build
 
 - Run the control tool in new window of `tmux`
   ```bash
-  rqt_robot_steering
+  ros2 run rqt_robot_steering rqt_robot_steering
   ```
 
 ## References

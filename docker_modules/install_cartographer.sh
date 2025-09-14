@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ -z "$CARTOGRAPHER" ]; then
+    echo "Skipping CUDA Toolkit installation as CARTOGRAPHER is not set"
+    exit 0
+fi
+
 # Install Cartographer, TurtleBot3 packages and rqt steering
 # This script is intended to be run inside the Dockerfile during build.
 if [ "$CARTOGRAPHER" = "YES" ]; then
