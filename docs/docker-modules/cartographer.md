@@ -1,13 +1,8 @@
 # Cartographer
 
-[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/cartographer_ws)
-[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-cartographer-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-cartographer-ws.yaml)
-[![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=cartographer_ws)](https://github.com/j3soon/ros2-essentials/commits/main/cartographer_ws)
+[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_cartographer.sh)
 
-[![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--cartographer--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-cartographer-ws/tags)
-![Docker image arch](https://img.shields.io/badge/arch-amd64_|_arm64-blueviolet)
-![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-cartographer-ws)
-![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-cartographer-ws)
+> TODO: Remove duplicate content from the template workspace.
 
 ## 🐳 Start Container
 
