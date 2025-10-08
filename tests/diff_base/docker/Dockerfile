@@ -147,6 +147,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     git-extras \
     && sudo rm -rf /var/lib/apt/lists/*
 
+# Cartographer configuration
+ARG CARTOGRAPHER=NO
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_cartographer.sh /tmp/install_cartographer.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_cartographer.sh && rm /tmp/install_cartographer.sh
+
 # TODO: Add more commands here
 {PLACEHOLDER_MULTILINE}
 COPY --chown=$USERNAME:$USERNAME \

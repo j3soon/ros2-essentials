@@ -205,6 +205,7 @@ nav:
   - Docker Modules:
     - docker-modules/index.md
     - docker-modules/ros2.md
+    - docker-modules/cartographer.md
     - docker-modules/cuda-toolkit.md
     - docker-modules/isaac-sim.md
     - docker-modules/isaac-lab.md
