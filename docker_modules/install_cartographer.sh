@@ -2,7 +2,7 @@
 set -e
 
 if [ -z "$CARTOGRAPHER" ]; then
-    echo "Skipping CUDA Toolkit installation as CARTOGRAPHER is not set"
+    echo "Skipping Cartographer installation as CARTOGRAPHER is not set"
     exit 0
 fi
 
@@ -18,4 +18,4 @@ if [ "$CARTOGRAPHER" = "YES" ]; then
         && sudo rm -rf /var/lib/apt/lists/*
 fi
 
-echo "Install script completed"
+echo "Cartographer installation completed successfully!"

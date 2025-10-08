@@ -48,7 +48,7 @@ if [ "$ISAAC_LAB_VERSION" = "2.2.1" ]; then
     git clone -b v2.2.1 https://github.com/isaac-sim/IsaacLab.git "$ISAACLAB_PATH" \
         && cd "$ISAACLAB_PATH" \
         && ln -s "$ISAACSIM_PATH" _isaac_sim \
-        && ./isaaclab.sh --install rsl_rl\
+        && ./isaaclab.sh --install \
         || exit 1
 else
     echo "Error: Unsupported Isaac Lab version: $ISAAC_LAB_VERSION"
