@@ -216,7 +216,6 @@ nav:
     - orbslam3-ws/index.md
     - rtabmap-ws/index.md
     - ros1-bridge-ws/index.md
-    - cartographer-ws/index.md
     - husky-ws/index.md
     - kobuki-ws/index.md
     - vlp-ws/index.md

@@ -39,7 +39,8 @@ do
         elif [ "$FORCE_REMOVE" = true ]; then
             rm "$file" 2>/dev/null
         else
-            echo "Error: Found regular file instead of symlink: $file. Consider removing it manually if not modified."
+            echo "Error: Found regular file instead of symlink: $file."
+            echo "If the file is unmodified, consider removing it manually or add -f for force removal."
             exit 1
         fi
     done
