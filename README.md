@@ -43,6 +43,15 @@ This step is optional if you have user ID 1000 on host.
 
 > Next, choose a workspace from the table below and follow its documentation to get started. The rest of this document contains optional information.
 
+## Updating the Repository
+
+Make sure to run the `post_install.sh` script after pulling the latest changes to ensure that the hard links are properly set up.
+
+```sh
+git pull
+./scripts/post_install.sh -f
+```
+
 ## Pre-built Workspaces
 
 Pre-built Docker images for each workspace can be pulled by running `docker compose pull` in the corresponding workspace directory. Pulling these images bypasses the time-consuming build process (for both Docker Compose and Dev Containers).
