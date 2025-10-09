@@ -77,7 +77,7 @@ Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild 
 | [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/) | ✔️ | ️TODO | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | Isaac Sim 4.5.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | Isaac Lab 2.1.0 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
-| [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | ✔️ | TODO | Isaac ROS 3.2 Apt Install (Base only) | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | ✔️ | TODO | Isaac ROS 3.2 Apt Install (Base only) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 
 ## Building Documentation
 

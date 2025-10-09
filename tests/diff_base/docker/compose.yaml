@@ -111,6 +111,8 @@ services:
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
       - gazebo-cache:/home/user/.gazebo
+      # Note that this volume is shared among all workspaces.
+      - isaac-ros-assets:/home/user/workspaces/isaac_ros-dev/isaac_ros_assets
       # Mount CycloneDDS configuration file.
       - ./cyclonedds.xml:/home/user/cyclonedds.xml
       # Mount Isaac Sim cache directories.
@@ -181,4 +183,7 @@ volumes:
     external: true
   isaac-sim-cache:
     name: ros2-isaac-sim-cache
+    external: true
+  isaac-ros-assets:
+    name: ros2-isaac-ros-assets
     external: true
