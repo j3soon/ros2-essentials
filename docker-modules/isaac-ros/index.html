@@ -550,6 +550,19 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Isaac ROS
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -561,6 +574,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-simulation-environment-isaac-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start Simulation Environment (Isaac Sim)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-ros-apriltag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac ROS AprilTag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-ros-visual-slam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac ROS Visual SLAM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-ros-nvblox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac ROS Nvblox
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -981,6 +1058,59 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-simulation-environment-isaac-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start Simulation Environment (Isaac Sim)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-ros-apriltag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac ROS AprilTag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-ros-visual-slam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac ROS Visual SLAM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isaac-ros-nvblox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isaac ROS Nvblox
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1003,13 +1133,101 @@
 <blockquote>
 <p>Note: This is a work in progress. Currently only the base Isaac ROS is installed. Running examples requires additional dependencies that are not yet included in this setup.</p>
 </blockquote>
-<p>Isaac ROS 3.2.</p>
+<p>Isaac ROS 3.2. (Not installed by default.)</p>
 <p>Depends on:</p>
 <ul>
 <li>ROS 2 Humble</li>
-<li>CUDA Toolkit</li>
-<li>and more...</li>
+<li>CUDA Toolkit 12.6</li>
 </ul>
+<p>Including:</p>
+<ul>
+<li>VPI</li>
+</ul>
+<p>To enable Isaac ROS, set the <code>ISAAC_ROS</code> argument to <code>YES</code> and the <code>CUDA_TOOLKIT_VERSION</code> argument to <code>12.6</code> in the <code>compose.yaml</code> file of your desired workspace (e.g., <code>husky_ws/docker/compose.yaml</code>). After making these changes, rebuild the Docker image.</p>
+<p>Note that most packages are not installed by default to save disk space. Feel free to open an issue for requesting more packages to be installed along with Isaac ROS.</p>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<p>On host:</p>
+<ol>
+<li>Edit <code>~/template_ws/docker/compose.yaml</code> to set <code>CUDA_TOOLKIT_VERSION: "12.6"</code> and <code>ISAAC_ROS: "YES"</code>.</li>
+<li>Re-build the docker image with <code>docker compose build</code>.</li>
+</ol>
+<p>The remaining steps should all be executed within the docker container.</p>
+<p>Install Isaac ROS Examples package (optional):</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-isaac-ros-examples
+</span></code></pre></div>
+<h2 id="start-simulation-environment-isaac-sim">Start Simulation Environment (Isaac Sim)<a class="headerlink" href="#start-simulation-environment-isaac-sim" title="Permanent link">&para;</a></h2>
+<p>Apply <a href="https://docs.isaacsim.omniverse.nvidia.com/4.5.0/overview/known_issues.html">the CUDA workaround</a> and launch Isaac Sim:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Workaround for CUDA error</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/home/user/isaacsim/extscache/omni.sensors.nv.common-2.5.0-coreapi+lx64.r.cp310/bin:<span class="nv">$LD_LIBRARY_PATH</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>~/isaacsim/isaac-sim.sh
+</span></code></pre></div>
+<ul>
+<li>
+<p>For AprilTag and Visual SLAM:</p>
+<p>Click <code>Window &gt; Examples &gt; Robotics Examples</code>. In the <code>Robotics Examples</code> window, select <code>ROS2 &gt; Isaac ROS &gt; Sample Scene</code> and click <code>Load Sample Scene</code>. After the scene loaded, click the <code>Play</code> button to start the simulation.</p>
+<p><img alt="" src="../assets/isaac-ros-isaac-sim.png" /></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>For Nvblox:</p>
+<p>Click <code>Isaac Sim Assets [Beta] &gt; SAMPLES</code>, search for <code>nvblox_sample_scene.usd</code>, select it and click <code>Open File</code>. After the scene loaded, click the <code>Play</code> button to start the simulation. If a warning message appears, click <code>OK</code> to allow script execution.</p>
+<p><img alt="" src="../assets/isaac-ros-isaac-sim-nvblox.png" /></p>
+</li>
+</ul>
+<p>Open another terminal and exec into the docker container. Then, follow one of the tutorials below.</p>
+<h2 id="isaac-ros-apriltag">Isaac ROS AprilTag<a class="headerlink" href="#isaac-ros-apriltag" title="Permanent link">&para;</a></h2>
+<p>Follow the <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#quickstart">Quickstart</a> and <a href="https://nvidia-isaac-ros.github.io/concepts/fiducials/apriltag/tutorial_isaac_sim.html">Isaac Sim</a> tutorials.</p>
+<p>Install Isaac ROS AprilTag package:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-isaac-ros-apriltag
+</span></code></pre></div>
+<p>Start the pre-composed pipeline:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>isaac_ros_apriltag<span class="w"> </span>isaac_ros_apriltag_isaac_sim_pipeline.launch.py
+</span></code></pre></div>
+<p>In another terminal, launch RViz:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>rviz2<span class="w"> </span>-d<span class="w"> </span><span class="k">$(</span>ros2<span class="w"> </span>pkg<span class="w"> </span>prefix<span class="w"> </span>isaac_ros_apriltag<span class="w"> </span>--share<span class="k">)</span>/rviz/default.rviz
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># or</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/tag_detections
+</span></code></pre></div>
+<p><img alt="" src="../assets/isaac-ros-apriltag-rviz.png" /></p>
+<p>For further info, see more tutorials in <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#try-more-examples">the official documentation</a>.</p>
+<h2 id="isaac-ros-visual-slam">Isaac ROS Visual SLAM<a class="headerlink" href="#isaac-ros-visual-slam" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Using <a href="https://nvidia-isaac-ros.github.io/concepts/visual_slam/cuvslam/index.html">cuVSLAM</a> under the hood.</p>
+</blockquote>
+<p>Follow the <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_visual_slam/index.html#quickstarts">Quickstart</a> and <a href="https://nvidia-isaac-ros.github.io/concepts/visual_slam/cuvslam/tutorial_isaac_sim.html">Isaac Sim</a> tutorials.</p>
+<p>Install Isaac ROS Visual SLAM package:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-isaac-ros-visual-slam
+</span></code></pre></div>
+<p>Start the pre-composed pipeline:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>isaac_ros_visual_slam<span class="w"> </span>isaac_ros_visual_slam_isaac_sim.launch.py
+</span></code></pre></div>
+<p>In another terminal, send the control command to the robot:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/msg/Twist<span class="w"> </span><span class="s2">&quot;{linear: {x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.2}}&quot;</span>
+</span></code></pre></div>
+<p>Then, launch RViz:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>rviz2<span class="w"> </span>-d<span class="w"> </span><span class="k">$(</span>ros2<span class="w"> </span>pkg<span class="w"> </span>prefix<span class="w"> </span>isaac_ros_visual_slam<span class="w"> </span>--share<span class="k">)</span>/rviz/isaac_sim.cfg.rviz
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># or</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/visual_slam/tracking/odometry
+</span></code></pre></div>
+<p><img alt="" src="../assets/isaac-ros-vslam-rviz.png" /></p>
+<p>For further info, see more tutorials in <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_visual_slam/isaac_ros_visual_slam/index.html#try-more-examples">the official documentation</a>.</p>
+<h2 id="isaac-ros-nvblox">Isaac ROS Nvblox<a class="headerlink" href="#isaac-ros-nvblox" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Using <a href="https://nvidia-isaac-ros.github.io/concepts/scene_reconstruction/nvblox/technical_details.html">Nvblox</a> under the hood.</p>
+</blockquote>
+<p>Follow the <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_nvblox/isaac_ros_nvblox/index.html#quickstart">Quickstart</a> and <a href="https://nvidia-isaac-ros.github.io/concepts/scene_reconstruction/nvblox/tutorials/tutorial_isaac_sim.html">Isaac Sim</a> tutorials.</p>
+<p>Install Isaac ROS Nvblox package:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-navigation2<span class="w"> </span>ros-humble-nav2-bringup
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-isaac-ros-nvblox
+</span></code></pre></div>
+<p>Start the pre-composed pipeline:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nvblox_examples_bringup<span class="w"> </span>isaac_sim_example.launch.py
+</span></code></pre></div>
+<p>Then, click <code>2D Goal Pose</code> in the RViz window to set the goal pose.</p>
+<p><img alt="" src="../assets/isaac-ros-nvblox-rviz.png" /></p>
+<p>For further info, see more tutorials in <a href="https://nvidia-isaac-ros.github.io/concepts/scene_reconstruction/nvblox/index.html#examples">the official documentation</a>.</p>
 
 
 
@@ -1032,7 +1250,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 28, 2025 07:42:09 UTC">July 28, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 9, 2025 18:19:40 UTC">October 9, 2025</span>
   </span>
 
     
