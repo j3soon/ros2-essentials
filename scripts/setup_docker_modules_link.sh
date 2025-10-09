@@ -1,5 +1,22 @@
 #!/bin/bash -e
 
+# Parse command line arguments
+FORCE_REMOVE=false
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -f|--force)
+            FORCE_REMOVE=true
+            shift
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Usage: $0 [-f|--force]"
+            echo "  -f, --force    Force removal of files even if they're regular files"
+            exit 1
+            ;;
+    esac
+done
+
 # Get the directory of this script.
 # Reference: https://stackoverflow.com/q/59895
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
@@ -19,8 +36,11 @@ do
             continue
         elif [ "$(stat -c %h -- "$file")" -gt 1 ]; then
             rm "$file" 2>/dev/null
+        elif [ "$FORCE_REMOVE" = true ]; then
+            rm "$file" 2>/dev/null
         else
-            echo "Error: Found regular file instead of symlink: $file"
+            echo "Error: Found regular file instead of symlink: $file."
+            echo "If the file is unmodified, consider removing it manually or add -f for force removal."
             exit 1
         fi
     done

@@ -42,6 +42,8 @@ cd ~/isaacsim
 > scripts/docker_run_official_isaac_sim.sh
 > ```
 
+Always make sure to check the console output for any errors.
+
 ## Importing URDF
 
 `File > Import` and select the URDF file.
@@ -61,3 +63,14 @@ check_urdf $URDF_FILE
 ```
 
 > Note: URDF files are often not self-contained and may reference additional resources within their ROS package. For successful import, consider downloading/moving the entire package (such as the `<ROBOT_NAME>_description` directory) along with the URDF file. Otherwise, the import will fail.
+
+## Known Issues
+
+```sh
+2025-07-10 21:42:18 [11,579ms] [Error] [omni.ext._impl._internal] Failed to import python module isaacsim.core.simulation_manager from /isaac-sim/exts/isaacsim.core.simulation_manager. Error: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject. Traceback:
+Traceback (most recent call last):
+
+A NumPy version >=1.19.5 and <1.27.0 is required for this version of SciPy (detected version 2.2.6)
+```
+
+See [Issue #86](https://github.com/j3soon/ros2-essentials/issues/86) for more details.

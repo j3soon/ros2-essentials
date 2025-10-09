@@ -47,6 +47,8 @@ Once you have finished testing, you can stop and remove the container with:
 docker compose down
 ```
 
+> If you encountered unexpected issues when using Isaac Sim, see [Known Issues](../docker-modules/isaac-sim.md#known-issues) for more details.
+
 ## Testing
 
 ### Isaac Lab Examples

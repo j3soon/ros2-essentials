@@ -35,6 +35,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     net-tools \
     netcat-traditional \
     nmap \
+    p7zip-full \
     tmux \
     tree \
     unzip \
@@ -99,8 +100,8 @@ RUN mkdir -p /home/$USERNAME/.cache/pip
 RUN mkdir /home/$USERNAME/.gazebo
 
 # Isaac Sim version configuration
-ARG ISAAC_SIM_VERSION=4.5.0
-# Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/setup/installation/binaries_installation.html
+ARG ISAAC_SIM_VERSION=5.0.0
+# Ref: https://isaac-sim.github.io/IsaacLab/v2.2.1/source/setup/installation/binaries_installation.html
 ENV ISAACSIM_PATH="/home/$USERNAME/isaacsim"
 # Copy and run Isaac Sim installation script
 COPY --chown=$USERNAME:$USERNAME \
@@ -114,15 +115,15 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 ENV OMNI_USER=admin
 ENV OMNI_PASS=admin
 ENV OMNI_KIT_ACCEPT_EULA=YES
-# Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/setup/installation/binaries_installation.html
+# Ref: https://isaac-sim.github.io/IsaacLab/v2.2.1/source/setup/installation/binaries_installation.html
 ENV ISAACSIM_PYTHON_EXE="${ISAACSIM_PATH}/python.sh"
 
 # Set TERM to prevent Isaac Lab error during docker build:
 #    'ansi+tabs': unknown terminal type.
 ENV TERM=xterm-256color
 # Isaac Lab version configuration
-ARG ISAAC_LAB_VERSION=2.1.0
-# Ref: https://isaac-sim.github.io/IsaacLab/v2.1.0/source/policy_deployment/00_hover/hover_policy.html
+ARG ISAAC_LAB_VERSION=2.2.1
+# Ref: https://isaac-sim.github.io/IsaacLab/v2.2.1/source/policy_deployment/00_hover/hover_policy.html
 ENV ISAACLAB_PATH="/home/$USERNAME/IsaacLab"
 COPY --chown=$USERNAME:$USERNAME \
      modules/install_isaac_lab.sh /tmp/install_isaac_lab.sh
@@ -145,6 +146,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
     git-extras \
     && sudo rm -rf /var/lib/apt/lists/*
+
+# Cartographer configuration
+ARG CARTOGRAPHER=NO
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_cartographer.sh /tmp/install_cartographer.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_cartographer.sh && rm /tmp/install_cartographer.sh
 
 # TODO: Add more commands here
 

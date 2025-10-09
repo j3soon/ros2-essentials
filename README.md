@@ -30,6 +30,9 @@ cd ros2-essentials
 ./scripts/post_install.sh
 ```
 
+> Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes).
+> In addition, the script can be run with the `-f` or `--force` flag to force removal of hard links if needed.
+
 and then configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
 
 ```sh
@@ -52,7 +55,6 @@ The docker image of the template workspace is share by most of the workspace, al
 | [ORB-SLAM3](https://j3soon.github.io/ros2-essentials/orbslam3-ws) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [RTAB-Map](https://j3soon.github.io/ros2-essentials/rtabmap-ws/) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [ROS1 Bridge](https://j3soon.github.io/ros2-essentials/ros1-bridge-ws/) | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| [Cartographer](https://j3soon.github.io/ros2-essentials/cartographer-ws/) | ✔️ | ✔️ | | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
 | [Yujin Robot Kobuki](https://j3soon.github.io/ros2-essentials/kobuki-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Velodyne VLP-16](https://j3soon.github.io/ros2-essentials/vlp-ws/) | ✔️ | ✔️ | Real-world support | [Assume Zhan](https://github.com/Assume-Zhan) |
@@ -74,9 +76,10 @@ Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild 
 | Module | amd64 | arm64 | Notes | Default | Maintainer |
 |--------|-------|-------|-------|---------|------------|
 | [ROS2](https://j3soon.github.io/ros2-essentials/docker-modules/ros2/) | ✔️ | ✔️ | ROS2 Humble | ✔️ | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Cartographer](https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/) | ✔️ | ✔️ | ROS2 Cartographer | ❌ | [Assume Zhan](https://github.com/Assume-Zhan), [@yuhsiang1117](https://github.com/yuhsiang1117) |
 | [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/) | ✔️ | ️TODO | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
-| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | Isaac Sim 4.5.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
-| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | Isaac Lab 2.1.0 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | Isaac Sim 5.0.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
+| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | Isaac Lab 2.2.1 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | ✔️ | TODO | Isaac ROS 3.2 Apt Install (Base only) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 
 ## Building Documentation
@@ -94,14 +97,6 @@ uv pip install -r requirements.txt
 mkdocs serve
 # Go to https://127.0.0.1:8000 to view the site.
 ```
-
-### Link Documentation to ROS2 Workspaces
-
-```sh
-scripts/setup_docs_link.sh
-```
-
-This is automatically done by running `./scripts/post_install.sh`.
 
 ## VSCode Intellisense
 
