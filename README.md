@@ -43,6 +43,15 @@ This step is optional if you have user ID 1000 on host.
 
 > Next, choose a workspace from the table below and follow its documentation to get started. The rest of this document contains optional information.
 
+## Updating the Repository
+
+Make sure to run the `post_install.sh` script after pulling the latest changes to ensure that the hard links are properly set up.
+
+```sh
+git pull
+./scripts/post_install.sh -f
+```
+
 ## Pre-built Workspaces
 
 Pre-built Docker images for each workspace can be pulled by running `docker compose pull` in the corresponding workspace directory. Pulling these images bypasses the time-consuming build process (for both Docker Compose and Dev Containers).
@@ -73,14 +82,14 @@ Modules with `Default: ✔️` are installed by default in all workspaces.
 
 Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild the workspace to add or remove modules.
 
-| Module | Notes | Default | Maintainer |
-|--------|-------|---------|------------|
-| [ROS2](https://j3soon.github.io/ros2-essentials/docker-modules/ros2/) | ROS2 Humble | ✔️ | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| [Cartographer](https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/) | ROS2 Cartographer | ❌ | [Assume Zhan](https://github.com/Assume-Zhan), [@yuhsiang1117](https://github.com/yuhsiang1117) |
-| [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/) | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
-| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | Isaac Sim 5.0.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
-| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | Isaac Lab 2.2.1 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
-| [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | Isaac ROS 3.2 Apt Install (Base only) | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| Module | amd64 | arm64 | Notes | Default | Maintainer |
+|--------|-------|-------|-------|---------|------------|
+| [ROS2](https://j3soon.github.io/ros2-essentials/docker-modules/ros2/) | ✔️ | ✔️ | ROS2 Humble | ✔️ | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Cartographer](https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/) | ✔️ | ✔️ | ROS2 Cartographer | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@yuhsiang1117](https://github.com/yuhsiang1117) |
+| [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/) | ✔️ | ️TODO | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | Isaac Sim 5.0.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
+| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | Isaac Lab 2.2.1 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | ✔️ | TODO | Isaac ROS 3.2 Apt Install (Base only) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 
 ## Building Documentation
 
@@ -150,6 +159,7 @@ Some current CI builds are flaky and may require re-running.
 docker compose down --volumes --remove-orphans
 docker volume rm ros2-gazebo-cache
 docker volume rm ros2-isaac-sim-cache
+docker volume rm ros2-isaac-ros-assets
 ```
 
 ## Acknowledgement

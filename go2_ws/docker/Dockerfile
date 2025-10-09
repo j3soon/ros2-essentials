@@ -132,7 +132,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_isaac_lab.sh && rm /tmp/install_isaac_lab.sh
 
 # Isaac ROS version configuration
-ARG ISAAC_ROS=""
+ARG ISAAC_ROS=NO
 ENV ISAAC_ROS_WS="/home/$USERNAME/workspaces/isaac_ros-dev/"
 # Copy and run Isaac ROS installation script
 COPY --chown=$USERNAME:$USERNAME \

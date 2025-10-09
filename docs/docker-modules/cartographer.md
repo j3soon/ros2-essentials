@@ -2,7 +2,11 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_cartographer.sh)
 
-> TODO: Remove duplicate content from the template workspace.
+ROS2 Cartographer. (Only installed by default for the template workspace.)
+
+To enable Cartographer, set the `CARTOGRAPHER` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `husky_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
+
+> TODO: Remove duplicate content from the template workspace below.
 
 ## 🐳 Start Container
 

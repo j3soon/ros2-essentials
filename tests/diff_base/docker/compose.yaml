@@ -40,8 +40,8 @@ services:
         # ISAAC_SIM_VERSION: "5.0.0"
         # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
         # ISAAC_LAB_VERSION: "2.2.1"
-        # TODO: Set Isaac ROS to "" if not using Isaac ROS
-        # ISAAC_ROS: "YES"
+        # TODO: Set to "YES" if using Isaac ROS
+        # ISAAC_ROS: "NO"
         # TODO: Set to "YES" if using Cartographer
         {PLACEHOLDER_#}CARTOGRAPHER: "{PLACEHOLDER}"
       cache_from:
@@ -113,6 +113,8 @@ services:
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
       - gazebo-cache:/home/user/.gazebo
+      # Note that this volume is shared among all workspaces.
+      - isaac-ros-assets:/home/user/workspaces/isaac_ros-dev/isaac_ros_assets
       # Mount CycloneDDS configuration file.
       - ./cyclonedds.xml:/home/user/cyclonedds.xml
       # Mount Isaac Sim cache directories.
@@ -183,4 +185,7 @@ volumes:
     external: true
   isaac-sim-cache:
     name: ros2-isaac-sim-cache
+    external: true
+  isaac-ros-assets:
+    name: ros2-isaac-ros-assets
     external: true
