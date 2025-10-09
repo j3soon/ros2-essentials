@@ -147,3 +147,64 @@ Then, click `2D Goal Pose` in the RViz window to set the goal pose.
 ![](assets/isaac-ros-nvblox-rviz.png)
 
 For further info, see more tutorials in [the official documentation](https://nvidia-isaac-ros.github.io/concepts/scene_reconstruction/nvblox/index.html#examples).
+
+## Isaac ROS cuMotion
+
+https://nvidia-isaac-ros.github.io/concepts/manipulation/cumotion_moveit/tutorial_isaac_sim.html
+
+```
+sudo apt-get install -y ros-humble-moveit
+```
+
+```sh
+sudo apt-get update
+sudo apt-get install -y ros-humble-isaac-ros-cumotion-examples
+```
+
+https://nvidia-isaac-ros.github.io/getting_started/isaac_sim/index.html
+
+Launch Isaac Sim 5.0 and load
+
+```
+https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/Samples/ROS2/Scenario/isaac_manipulator_ur10e_robotiq_2f_140.usd
+```
+
+Play
+
+Sanity check:
+
+```sh
+ros2 topic list
+ros2 topic echo /clock
+```
+
+Xacro:
+
+```sh
+UR_TYPE=ur10e
+URDF_FILE=${ISAAC_ROS_WS}/isaac_ros_assets/urdf/${UR_TYPE}.urdf
+mkdir -p ${ISAAC_ROS_WS}/isaac_ros_assets/urdf && \
+   xacro -o ${URDF_FILE} \
+   /opt/ros/humble/share/ur_description/urdf/ur.urdf.xacro \
+   ur_type:=${UR_TYPE} name:=${UR_TYPE}
+# sed
+cp ${URDF_FILE} ${URDF_FILE}.bak
+sed -i '/<ros2_control/,/<\/ros2_control>/d' "${URDF_FILE}"
+```
+
+MoveIt and RViz:
+
+```sh
+UR_TYPE=ur10e
+ros2 launch isaac_ros_cumotion_examples ur_isaac_sim.launch.py ur_type:=${UR_TYPE}
+```
+
+new terminal
+
+cuMotion Planner:
+
+```sh
+ros2 run isaac_ros_cumotion cumotion_planner_node --ros-args
+   -p robot:=$(ros2 pkg prefix --share isaac_ros_cumotion_robot_description)/xrdf/ur10e.xrdf \
+   -p urdf_path:=${ISAAC_ROS_WS}/isaac_ros_assets/urdf/ur10e.urdf
+```
