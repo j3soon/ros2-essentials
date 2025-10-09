@@ -40,10 +40,10 @@ services:
         # ISAAC_SIM_VERSION: "5.0.0"
         # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
         # ISAAC_LAB_VERSION: "2.2.1"
-        # TODO: Set to "YES" if using Isaac ROS
-        # ISAAC_ROS: "NO"
-        # TODO: Set to "YES" if using Cartographer
-        # CARTOGRAPHER: "NO"
+        # TODO: Set to "YES" if using Isaac ROS or set to "" if not using Isaac ROS
+        # ISAAC_ROS: ""
+        # TODO: Set to "YES" if using Cartographer or set to "" if not using Cartographer
+        # CARTOGRAPHER: ""
       cache_from:
         - j3soon/ros2-rtabmap-ws:buildcache-amd64
         - j3soon/ros2-rtabmap-ws:buildcache-arm64

@@ -132,7 +132,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_isaac_lab.sh && rm /tmp/install_isaac_lab.sh
 
 # Isaac ROS version configuration
-ARG ISAAC_ROS=NO
+ARG ISAAC_ROS=""
 ENV ISAAC_ROS_WS="/home/$USERNAME/workspaces/isaac_ros-dev/"
 # Copy and run Isaac ROS installation script
 COPY --chown=$USERNAME:$USERNAME \
@@ -148,7 +148,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     && sudo rm -rf /var/lib/apt/lists/*
 
 # Cartographer configuration
-ARG CARTOGRAPHER=NO
+ARG CARTOGRAPHER=""
 COPY --chown=$USERNAME:$USERNAME \
      modules/install_cartographer.sh /tmp/install_cartographer.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
