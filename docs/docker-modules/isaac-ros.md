@@ -15,6 +15,8 @@ Including:
 
 - VPI
 
+To enable Isaac ROS, set the `ISAAC_ROS` argument to `YES` and the `CUDA_TOOLKIT_VERSION` argument to `12.6` in the `compose.yaml` file of your desired workspace (e.g., `husky_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
+
 Note that most packages are not installed by default to save disk space. Feel free to open an issue for requesting more packages to be installed along with Isaac ROS.
 
 ## Setup
