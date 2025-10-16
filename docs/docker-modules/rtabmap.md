@@ -16,7 +16,7 @@
 Run the following commands in a Ubuntu desktop environment. If you are using a remote server, make sure you're using a terminal within a remote desktop session (e.g., VNC) instead of SSH (i.e., don't use `ssh -X` or `ssh -Y`).
 
 ```sh
-cd ~/ros2-essentials/rtabmap_ws/docker
+cd ~/ros2-essentials/template_ws/docker
 docker compose build
 xhost +local:docker
 docker compose up -d
@@ -29,7 +29,7 @@ The commands in the following sections assume that you are inside the Docker con
 
 ```sh
 # in a new terminal
-docker exec -it ros2-rtabmap-ws bash
+docker exec -it ros2-template-ws bash
 ```
 
 If the initial build somehow failed, run:
@@ -82,7 +82,7 @@ docker compose down
 
 - Running in a new `tmux` window
   ```bash
-  rqt_robot_steering
+  ros2 run rqt_robot_steering rqt_robot_steering
   ```
 
 ## Result
@@ -91,15 +91,17 @@ docker compose down
 
 1. LiDAR test
 <center>
-  <img src="./assets/lidar_test.png" width="75%"/>
+  <img src="assets/rtabmap_lidar_test.png" width="75%"/>
 </center>
+
 2. RGBD test
 <center>
-  <img src="./assets/rgbd_test.png" width="75%"/>
+  <img src="assets/rtabmap_rgbd_test.png" width="75%"/>
 </center>
+
 3. Dual sensor test
 <center>
-  <img src="./assets/dual_test.png" width="75%"/>
+  <img src="assets/rtabmap_dual_test.png" width="75%"/>
 </center>
 
 ## Reference
