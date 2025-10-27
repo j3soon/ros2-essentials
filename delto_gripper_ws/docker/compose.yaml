@@ -44,6 +44,8 @@ services:
         # ISAAC_ROS: ""
         # TODO: Set to "YES" if using Cartographer or set to "" if not using Cartographer
         # CARTOGRAPHER: ""
+        # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
+        # RTABMAP: ""
       cache_from:
         - j3soon/ros2-delto-gripper-ws:buildcache-amd64
         - j3soon/ros2-delto-gripper-ws:buildcache-arm64

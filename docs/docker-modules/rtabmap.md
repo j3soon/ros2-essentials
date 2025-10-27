@@ -1,13 +1,6 @@
 # RTAB-Map
 
-[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/rtabmap_ws)
-[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-rtabmap-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-rtabmap-ws.yaml)
-[![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=rtabmap_ws)](https://github.com/j3soon/ros2-essentials/commits/main/rtabmap_ws)
-
-[![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--rtabmap--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-rtabmap-ws/tags)
-![Docker image arch](https://img.shields.io/badge/arch-amd64-blueviolet)
-![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-rtabmap-ws)
-![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-rtabmap-ws)
+[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_rtabmap.sh)
 
 ## 🐳 Start Container
 
@@ -117,5 +110,5 @@ docker compose down
   ```
   - It seems that the warning isn't a big deal. But it will interrupt debugging in the future.
   - Possible solution : set `VTK_LEGACY_REMOVE`, but it required to build from source.
-      - Still not tested yet.
+    - Still not tested yet.
   - [Issue Reference](https://discourse.vtk.org/t/vtk-9-0-rc1/2916)
