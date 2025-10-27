@@ -206,6 +206,7 @@ nav:
     - docker-modules/index.md
     - docker-modules/ros2.md
     - docker-modules/cartographer.md
+    - docker-modules/rtabmap.md
     - docker-modules/cuda-toolkit.md
     - docker-modules/isaac-sim.md
     - docker-modules/isaac-lab.md
@@ -214,7 +215,6 @@ nav:
     - workspaces/index.md
     - template-ws/index.md
     - orbslam3-ws/index.md
-    - rtabmap-ws/index.md
     - ros1-bridge-ws/index.md
     - husky-ws/index.md
     - kobuki-ws/index.md

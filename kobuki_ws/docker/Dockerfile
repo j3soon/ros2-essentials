@@ -154,6 +154,13 @@ COPY --chown=$USERNAME:$USERNAME \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_cartographer.sh && rm /tmp/install_cartographer.sh
 
+# rtabmap configuration
+ARG RTABMAP=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_rtabmap.sh /tmp/install_rtabmap.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
+
 # TODO: Add more commands here
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
         # Fix the issue of Eigen
