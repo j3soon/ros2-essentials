@@ -83,19 +83,16 @@ docker compose down
 - After you've run the demo, you could find the following result directly.
 
 1. LiDAR test
-<center>
-  <img src="assets/rtabmap_lidar_test.png" width="75%"/>
-</center>
+
+  ![](assets/rtabmap_lidar_test.png)
 
 2. RGBD test
-<center>
-  <img src="assets/rtabmap_rgbd_test.png" width="75%"/>
-</center>
+
+   ![](assets/rtabmap_rgbd_test.png)
 
 3. Dual sensor test
-<center>
-  <img src="assets/rtabmap_dual_test.png" width="75%"/>
-</center>
+
+   ![](assets/rtabmap_dual_test.png)
 
 ## Reference
 
