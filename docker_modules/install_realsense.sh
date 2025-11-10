@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+if [ -z "$REALSENSE" ] || [ "$REALSENSE" != "YES" ]; then
+    echo "Skipping RealSense installation (REALSENSE is not set or not 'YES')"
+    exit 0
+fi
+
+# Install RealSense, TurtleBot3 packages and rqt steering
+# This script is intended to be run inside the Dockerfile during build.
+if [ "$REALSENSE" = "YES" ]; then
+    echo "Installing RealSense ros packages for ROS distro: ${ROS_DISTRO:-humble}"
+
+    sudo apt-get update && sudo apt-get install -y \
+        ros-humble-point-cloud-transport \
+        ros-humble-librealsense2* \
+        ros-humble-realsense2-* \
+        ros-${ROS_DISTRO}-turtlebot3* \
+        ros-${ROS_DISTRO}-rqt-robot-steering \
+        && sudo rm -rf /var/lib/apt/lists/*
+
+    echo "RealSense installation completed successfully!"
+fi

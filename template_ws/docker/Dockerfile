@@ -161,6 +161,13 @@ COPY --chown=$USERNAME:$USERNAME \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
+# realsense configuration
+ARG REALSENSE=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_realsense.sh /tmp/install_realsense.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_realsense.sh && rm /tmp/install_realsense.sh
+
 # TODO: Add more commands here
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
