@@ -12,9 +12,9 @@ if [ "$REALSENSE" = "YES" ]; then
     echo "Installing RealSense ros packages for ROS distro: ${ROS_DISTRO:-humble}"
 
     sudo apt-get update && sudo apt-get install -y \
-        ros-humble-point-cloud-transport \
-        ros-humble-librealsense2* \
-        ros-humble-realsense2-* \
+        ros-${ROS_DISTRO}-point-cloud-transport \
+        ros-${ROS_DISTRO}-librealsense2* \
+        ros-${ROS_DISTRO}-realsense2-* \
         ros-${ROS_DISTRO}-turtlebot3* \
         ros-${ROS_DISTRO}-rqt-robot-steering \
         && sudo rm -rf /var/lib/apt/lists/*
