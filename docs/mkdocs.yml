@@ -225,3 +225,4 @@ nav:
     - delto-gripper-ws/index.md
     - go2-ws/index.md
     - h1-ws/index.md
+  - dependencies.md

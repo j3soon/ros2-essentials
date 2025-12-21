@@ -179,7 +179,7 @@ All modifications are licensed under [Apache License 2.0](https://github.com/j3s
 
 However, this repository includes many dependencies released under different licenses. For information on these licenses, please check the commit history. Make sure to review the license of each dependency before using this repository.
 
-> The licenses for dependencies will be clearly documented in the workspace README in the future.
+The detailed license information is documented [here](https://j3soon.github.io/ros2-essentials/dependencies/).
 
 ## Supplementary
 
