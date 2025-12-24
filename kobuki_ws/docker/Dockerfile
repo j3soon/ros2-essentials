@@ -33,7 +33,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     jq \
     nano \
     net-tools \
-    netcat-traditional \
+    netcat-openbsd \
     nmap \
     p7zip-full \
     tmux \
