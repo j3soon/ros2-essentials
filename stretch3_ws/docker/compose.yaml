@@ -10,14 +10,7 @@ services:
         mkdir -p /isaac-sim/{logs,data,documents} &&
         mkdir -p /isaac-sim/standalone/cache/ov &&
         mkdir -p /isaac-sim/standalone/{logs,data} &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/cache &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/{logs,data,documents} &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache/ov &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/{logs,data}
+        chown -R ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim
         "
     volumes:
       - isaac-sim-cache:/isaac-sim

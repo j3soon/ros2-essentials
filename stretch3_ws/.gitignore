@@ -3,6 +3,7 @@
 
 # ROS basic directories
 /build
+/install
 /devel
 /log
 /install
