@@ -24,7 +24,7 @@ def generate_launch_description():
 
     # Get Stretch3 USD file path
     # reference: https://github.com/hello-robot/stretch_isaacsim.git
-    stretch3_usd_path = PathJoinSubstitution([FindPackageShare("isaacsim"), "assets", "stretch.usd"])
+    stretch3_usd_path = PathJoinSubstitution([FindPackageShare("isaacsim"), "stretch", "stretch.usd"])
 
     # Launch Isaac Sim if the platform is isaacsim
     # Reference:
