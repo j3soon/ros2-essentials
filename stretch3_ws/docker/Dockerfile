@@ -161,19 +161,35 @@ COPY --chown=$USERNAME:$USERNAME \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
-# TODO: Add more commands here
-
 # Install ros packages
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    python3-opencv \
+    ros-humble-navigation2 \
+    ros-humble-nav2-bringup \
+    ros-humble-slam-toolbox \
+    ros-humble-realsense2-camera \
+    ros-humble-realsense2-description \
+    ros-humble-urdf \
+    ros-humble-xacro \
+    ros-humble-robot-state-publisher \
+    ros-humble-joint-state-publisher \
+    ros-humble-joy \
+    ros-humble-teleop-twist-joy \
+    ros-humble-teleop-twist-keyboard \
+    && sudo rm -rf /var/lib/apt/lists/*
 
 # Install Stretch3
-COPY --chown=$USERNAME:$USERNAME \
-    scripts/install_stretch.sh /tmp/install_stretch.sh
-     
-RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-    chmod +x /tmp/install_stretch.sh && \
-    /tmp/install_stretch.sh && \
-    rm /tmp/install_stretch.sh
+# COPY --chown=$USERNAME:$USERNAME \
+#     scripts/install_stretch.sh /tmp/install_stretch.sh
+# RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+#     chmod +x /tmp/install_stretch.sh && \
+#     /tmp/install_stretch.sh && \
+#     rm /tmp/install_stretch.sh
 
+# TODO: Add more commands here
+COPY --chown=$USERNAME:$USERNAME \
+     .bashrc /home/$USERNAME/.bashrc
 
 # TODO: Copy additional files here
 ENTRYPOINT []
