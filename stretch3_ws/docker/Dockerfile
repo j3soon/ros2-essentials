@@ -166,6 +166,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 # Install ros packages
 
 # Install Stretch3
+COPY --chown=$USERNAME:$USERNAME \
+    scripts/install_stretch.sh /tmp/install_stretch.sh
+     
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    chmod +x /tmp/install_stretch.sh && \
+    /tmp/install_stretch.sh && \
+    rm /tmp/install_stretch.sh
 
 
 # TODO: Copy additional files here

@@ -7,8 +7,7 @@ find_package(rclpy REQUIRED)
 install(DIRECTORY
   scripts
   launch
-  assets
-  stretch
+  model
   DESTINATION share/${PROJECT_NAME})
 
 # Install Python executables

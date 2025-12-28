@@ -17,6 +17,6 @@ find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 
 # Install launch files
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch scripts DESTINATION share/${PROJECT_NAME})
 
 ament_package()

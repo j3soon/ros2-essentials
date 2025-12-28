@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="stretch_d405">
+
+  <xacro:arg name="use_nominal_extrinsics" default="true"/>
+  <xacro:arg name="add_plug" default="false"/>
+  <xacro:include filename="d405/_d405.urdf.xacro"/>
+  
+  <xacro:sensor_d405 parent="link_gripper_s3_body" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+    <origin
+      xyz="0 0.044142 0.042067"
+      rpy="0 -1.3963 -1.5708" />
+  </xacro:sensor_d405>
+
+  
+</robot>
+
+  
+
