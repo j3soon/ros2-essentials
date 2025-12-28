@@ -5,20 +5,26 @@ Please visit <https://j3soon.github.io/ros2-essentials/> for documentation.
 # Quick README
 
 ## Launch and Development
-1. build the workspace at stretch3_ws if you changed anything
+1. docker environment
+```
+docker compose build
+docker compose up -d
+docker exec -it ros2-stretch3-ws bash
+```
+2. build the workspace at stretch3_ws if you changed anything
 ```
 colcon build
 ```
 > the dependencies of the usda and usdz is very trick, some in install and some in src, **it is very important to not delete any exist file and keep the project structure**
 > since I have know idea what is depend on original src what is depend on install, it is better to rebuild the workspace
 
-2. launch via stretch3_bringup
+3. launch via stretch3_bringup
 ```
 ros2 launch stretch3_bringup stretch3_bringup.launch.py
 ```
 
-3. Do what ever you want in isaacsim
-4. Go to `File` -> `Save`, if you see `stretch_movable.usda` is marked `modified` by Git, you have saved your modifiy.
+4. Do what ever you want in isaacsim
+5. Go to `File` -> `Save`, if you see `stretch_movable.usda` is marked `modified` by Git, you have saved your modifiy.
 
 ## Important file
 1. isaacsim/model/stretch_movable.usda
