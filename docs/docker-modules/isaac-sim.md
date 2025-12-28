@@ -64,6 +64,10 @@ check_urdf $URDF_FILE
 
 > Note: URDF files are often not self-contained and may reference additional resources within their ROS package. For successful import, consider downloading/moving the entire package (such as the `<ROBOT_NAME>_description` directory) along with the URDF file. Otherwise, the import will fail.
 
+## Generating OmniGraph for ROS2
+
+Instead of manually creating the OmniGraph via Isaac Sim GUI or Python code, the easier way is to use the [Graph Shortcut tool](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/ros2_tutorials/tutorial_ros2_manipulation.html#graph-shortcut). A concrete example can be found in [PR#83](https://github.com/j3soon/ros2-essentials/pull/83).
+
 ## Known Issues
 
 ```sh

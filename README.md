@@ -5,7 +5,7 @@
 
 A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs) and robotic arm manipulators. Please setup an Ubuntu environment before using this repo.
 
-The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by [(Omniverse) Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/index.html), [Isaac Lab](https://isaac-sim.github.io/IsaacLab/main/index.html), and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html). In general, the amd64 images support both simulation and real robot control, while the arm64 images only supports real robot control.
+The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by [(Omniverse) Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/index.html), [Isaac Lab](https://isaac-sim.github.io/IsaacLab/main/index.html), and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html). In general, the amd64 images support both simulation and real robot control, while the arm64 images only supports real robot control.
 
 > Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.
 
@@ -15,12 +15,12 @@ The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 
 | Use Case | Platform | Hardware | Software | Notes |
 |----------|----------|----------|----------|-------|
-| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html) for more details. |
+| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/requirements.html) for more details. |
 | Deployment-Only | Jetson | Jetson Orin, 500GB+ SSD | JetPack 6 | See [this page](https://nvidia-isaac-ros.github.io/getting_started/index.html) for more details.
 
 Make sure to install the required software prerequisites before using this repo.
 
-> Some functionalities may still work on lower-spec systems, such as those without GPUs or on operating systems other than Ubuntu 22.04. However, these configurations are not officially supported and may require manual adjustments. Use them with caution.
+> The code may still work on lower-spec systems, such as those without GPUs or on older operating systems. However, these are not tested and may require manual adjustments. Proceed with caution.
 
 ## Setup
 
@@ -30,10 +30,9 @@ cd ros2-essentials
 ./scripts/post_install.sh
 ```
 
-> Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes).
-> In addition, the script can be run with the `-f` or `--force` flag to force removal of hard links if needed.
+> Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes). In addition, the script can be run with the `-f` or `--force` flag to force removal of hard links if needed.
 
-and then configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
+Then, configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
 
 ```sh
 export USER_UID=$(id -u)
@@ -41,7 +40,7 @@ export USER_UID=$(id -u)
 
 This step is optional if you have user ID 1000 on host.
 
-> Next, choose a workspace from the table below and follow its documentation to get started. The rest of this document contains optional information.
+Next, choose a workspace from the table below and follow its documentation to get started. The rest of this document contains optional information. The search bar at the top right corner of the [documentation site](https://j3soon.github.io/ros2-essentials/) and [GitHub repository](https://github.com/j3soon/ros2-essentials) is a good way to navigate to the relevant documentation and commits.
 
 ## Updating the Repository
 
@@ -90,6 +89,16 @@ Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild 
 | [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | Isaac Sim 5.0.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
 | [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | Isaac Lab 2.2.1 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | ✔️ | TODO | Isaac ROS 3.2 Apt Install (Base only) | ❌ | [Johnson Sun](https://github.com/j3soon) |
+
+## Docker Compose Cleanup
+
+```sh
+# cd into a workspace directory's docker directory
+docker compose down --volumes --remove-orphans
+docker volume rm ros2-gazebo-cache
+docker volume rm ros2-isaac-sim-cache
+docker volume rm ros2-isaac-ros-assets
+```
 
 ## Building Documentation
 
@@ -151,16 +160,6 @@ docker buildx rm -f --all-inactive
 The GitHub Actions workflow is designed to share build caches between workspaces efficiently. The template workspace is built first, and its cache is then reused by other workspaces. This means that while the template workspace build appears in the commit history, other workspace builds are triggered indirectly and only show up in the GitHub Actions tab. For implementation details, see [commit `024f52a`](https://github.com/j3soon/ros2-essentials/commit/024f52a2bb8a58ad20c03a067560215e8cef6307).
 
 Some current CI builds are flaky and may require re-running.
-
-### Docker Compose Cleanup
-
-```sh
-# cd into a workspace directory's docker directory
-docker compose down --volumes --remove-orphans
-docker volume rm ros2-gazebo-cache
-docker volume rm ros2-isaac-sim-cache
-docker volume rm ros2-isaac-ros-assets
-```
 
 ## Acknowledgement
 
