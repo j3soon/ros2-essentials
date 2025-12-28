@@ -1,0 +1,968 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (3.3122454217925195, 3.3122454217925204, 3.3122454620762336)
+                double3 target = (-3.978038076724033e-8, -3.978037854679428e-8, 7.956077130444328e-8)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./stretch_movable.usda"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def DistantLight "DistantLight" (
+        prepend apiSchemas = ["ShapingAPI"]
+    )
+    {
+        float inputs:angle = 1
+        float inputs:intensity = 3000
+        float inputs:shaping:cone:angle = 180
+        float inputs:shaping:cone:softness
+        float inputs:shaping:focus
+        color3f inputs:shaping:focusTint
+        asset inputs:shaping:ies:file
+        quatd xformOp:orient = (0.6532814824381883, 0.2705980500730985, 0.27059805007309845, 0.6532814824381882)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def "flat_plane" (
+        prepend payload = @../../../install/isaacsim/share/isaacsim/model/stretch.project.usdz[SubUSDs/flat_plane.usd]@
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.7994327545166016, 2.1499600410461426, 0.000002384185791015625)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    over "stretch" (
+        prepend references = @../../../install/isaacsim/share/isaacsim/model/stretch.project.usdz[SubUSDs/stretch_description_SE3_eoa_wrist_dw3_tool_sg3.usd]@
+    )
+    {
+        over "base_link"
+        {
+            vector3f physics:angularVelocity = (0.01643068, 0.0035789716, 0.009259345)
+            vector3f physics:velocity = (-0.0000055661685, 0.0000147806295, 0.0000032902049)
+            quatd xformOp:orient = (0.9999895193429265, -4.778848914350168e-7, 1.243315624975878e-7, -0.004578340753928027)
+            double3 xformOp:translate = (-0.014587260782718658, -0.0011787880212068558, 0.00000356137752532959)
+        }
+
+        over "link_head_pan"
+        {
+            vector3f physics:angularVelocity = (0.016430449, 0.0035788878, 0.043038797)
+            vector3f physics:velocity = (0.000058279067, -0.00030176432, -0.0000022983231)
+            quatd xformOp:orient = (0.9999895151237889, 0.0000013560055803095413, -0.000003546476133117334, -0.00457926064702586)
+            double3 xformOp:translate = (-0.00848717987537384, -0.0012380527332425117, 1.3552073240280151)
+        }
+
+        over "link_head_tilt"
+        {
+            vector3f physics:angularVelocity = (-0.011920298, -3.0918734, 0.043030206)
+            vector3f physics:velocity = (0.0011396842, -0.0002866388, 0.0006654354)
+            quatd xformOp:orient = (0.7070988142646465, 0.7070999145518158, -0.0033025424927521385, -0.003173471195627922)
+            double3 xformOp:translate = (-0.009532487019896507, 0.026535332202911377, 1.3018966913223267)
+        }
+
+        over "link_left_wheel" (
+            prepend apiSchemas = ["PhysxRigidBodyAPI"]
+        )
+        {
+            string isaac:nameOverride (
+                displayName = "Name Override"
+                doc = "Name override for prim lookup in base name search"
+            )
+            vector3f physics:angularVelocity = (0.016814172, 0.045458145, 0.009259154)
+            vector3f physics:velocity = (-0.000034795183, 0.00006712835, 0.000034923283)
+            float physxRigidBody:linearDamping = 0
+            quatd xformOp:orient = (-0.7070978126608501, 0.7071009278302991, -0.0032405236270304206, 0.003234222996982499)
+            double3 xformOp:translate = (-0.013027443550527096, 0.16916416585445404, 0.050803400576114655)
+        }
+
+        over "link_lift"
+        {
+            vector3f physics:angularVelocity = (0.01643068, 0.0035789716, 0.009259345)
+            vector3f physics:velocity = (-0.000018335875, -0.0000018458243, 0.000051111772)
+            quatd xformOp:orient = (0.7103355484946955, -2.5890767555036963e-7, -0.0000022426247580046406, 0.7038632030015803)
+            double3 xformOp:translate = (-0.1177317276597023, 0.13477100431919098, 0.1950048804283142)
+        }
+
+        over "link_arm_l3"
+        {
+            vector3f physics:angularVelocity = (0.01643068, 0.0035789716, 0.009259345)
+            vector3f physics:velocity = (-0.00001322245, -0.0013687916, 0.000015563548)
+            quatd xformOp:orient = (0.7070971568782817, 0.7071015834814304, -0.0032386723905829056, -0.0032361047342446864)
+            double3 xformOp:translate = (-0.12018664181232452, -0.13341999053955078, 0.19500403106212616)
+        }
+
+        over "link_arm_l2"
+        {
+            vector3f physics:angularVelocity = (0.01643068, 0.0035789716, 0.009259345)
+            vector3f physics:velocity = (-0.000023854063, -0.0028306127, 0.000010685912)
+            quatd xformOp:orient = (0.7070971570381785, 0.7071015834814326, -0.0032386549282846407, -0.003236087271946424)
+            double3 xformOp:translate = (-0.12031085044145584, -0.14698512852191925, 0.1950039565563202)
+        }
+
+        over "link_arm_l1"
+        {
+            vector3f physics:angularVelocity = (0.01643068, 0.0035789716, 0.009259345)
+            vector3f physics:velocity = (-0.000033790486, -0.0041942373, 0.000006155876)
+            quatd xformOp:orient = (0.7070971570850815, 0.7071015834814333, -0.0032386498060104846, -0.0032360821496722663)
+            double3 xformOp:translate = (-0.12043557316064835, -0.1606053113937378, 0.19500386714935303)
+        }
+
+        over "link_arm_l0"
+        {
+            vector3f physics:angularVelocity = (0.01643068, 0.0035789716, 0.009259345)
+            vector3f physics:velocity = (-0.000017477312, -0.0036189859, -0.000015676296)
+            quatd xformOp:orient = (0.7070971572270731, 0.7071015834822465, -0.003238644450909405, -0.0032360563054745434)
+            double3 xformOp:translate = (-0.12031567096710205, -0.1475113332271576, 0.195003941655159)
+        }
+
+        over "link_wrist_yaw"
+        {
+            vector3f physics:angularVelocity = (0.01643089, 0.0035793202, -0.045073763)
+            vector3f physics:velocity = (-0.0000054620496, -0.0035725047, -0.000022418502)
+            quatd xformOp:orient = (0.0000018561256199303081, 0.004578091912479255, 0.9999895204752994, 0.000003252178272135968)
+            double3 xformOp:translate = (-0.03731905296444893, -0.1482711136341095, 0.16425424814224243)
+        }
+
+        over "link_wrist_pitch"
+        {
+            vector3f physics:angularVelocity = (-18.705692, 0.17487906, -0.04507119)
+            vector3f physics:velocity = (-0.000061624356, -0.008407145, 0.00021020272)
+            quatd xformOp:orient = (0.5025859758887532, 0.5019777951364648, 0.4980143545286492, 0.49740057570663887)
+            double3 xformOp:translate = (-0.05677312612533569, -0.14809277653694153, 0.133754163980484)
+        }
+
+        over "link_wrist_roll"
+        {
+            vector3f physics:angularVelocity = (-18.710363, -0.33594745, -0.044443257)
+            vector3f physics:velocity = (-0.0002570274, -0.0056999093, 0.027273927)
+            quatd xformOp:orient = (0.0032287759258939155, -0.0032380305542722785, -0.7066646475957884, 0.7075338620889253)
+            double3 xformOp:translate = (-0.03739675506949425, -0.16715916991233826, 0.10977722704410553)
+        }
+
+        over "link_gripper_finger_left"
+        {
+            vector3f physics:angularVelocity = (-18.710363, -0.33595335, -0.04923073)
+            vector3f physics:velocity = (-0.0002469074, -0.011389717, 0.062068023)
+            quatd xformOp:orient = (-0.00041149143239050225, -0.6738253268478205, 0.7388904188065792, -0.000456693624848225)
+            double3 xformOp:translate = (-0.01342700980603695, -0.22557175159454346, 0.10984920710325241)
+        }
+
+        over "link_gripper_finger_right"
+        {
+            vector3f physics:angularVelocity = (-18.710363, -0.33595106, -0.047375984)
+            vector3f physics:velocity = (-0.00024299258, -0.011360919, 0.06172807)
+            quatd xformOp:orient = (0.0004211010962332342, 0.6805545451410036, 0.7326971634174586, -0.00044775193865347236)
+            double3 xformOp:translate = (-0.06262083351612091, -0.22512184083461761, 0.10984829068183899)
+        }
+
+        over "link_right_wheel" (
+            prepend apiSchemas = ["PhysxRigidBodyAPI"]
+        )
+        {
+            string isaac:nameOverride (
+                displayName = "Name Override"
+                doc = "Name override for prim lookup in base name search"
+            )
+            vector3f physics:angularVelocity = (0.015918821, -0.052318387, 0.009259604)
+            vector3f physics:velocity = (0.00001132526, 0.000066705994, -0.00004675406)
+            float physxRigidBody:linearDamping = 0
+            quatd xformOp:orient = (-0.7070978721567317, 0.7071008682264004, -0.0032443646341622045, 0.003230393631389728)
+            double3 xformOp:translate = (-0.016147101297974586, -0.17152155935764313, 0.05080374330282211)
+        }
+
+        over "joints"
+        {
+            over "joint_head_pan"
+            {
+                float state:angular:physics:position = -0.00010934107
+                float state:angular:physics:velocity = 0.033779453
+            }
+
+            over "joint_lift"
+            {
+                float state:linear:physics:position = 0.0000013955691
+                float state:linear:physics:velocity = 0.000018735358
+            }
+
+            over "joint_head_tilt"
+            {
+                float state:angular:physics:position = 0.010047402
+                float state:angular:physics:velocity = 3.095583
+            }
+
+            over "joint_arm_l3"
+            {
+                float state:linear:physics:position = 0.0005022626
+                float state:linear:physics:velocity = 0.0013775666
+            }
+
+            over "joint_arm_l2"
+            {
+                float state:linear:physics:position = 0.00056572864
+                float state:linear:physics:velocity = 0.001461836
+            }
+
+            over "joint_arm_l1"
+            {
+                float state:linear:physics:position = 0.00062078086
+                float state:linear:physics:velocity = 0.0013636724
+            }
+
+            over "joint_arm_l0"
+            {
+                float state:linear:physics:position = 0.00065551954
+                float state:linear:physics:velocity = -0.0005697256
+            }
+
+            over "joint_wrist_yaw"
+            {
+                float state:angular:physics:position = 0.000032301978
+                float state:angular:physics:velocity = -0.054333113
+            }
+
+            over "joint_wrist_pitch"
+            {
+                float state:angular:physics:position = 0.07039797
+                float state:angular:physics:velocity = 18.72291
+            }
+
+            over "joint_wrist_roll"
+            {
+                float state:angular:physics:position = 0.001075476
+                float state:angular:physics:velocity = 0.51084834
+            }
+
+            over "joint_gripper_finger_left"
+            {
+                float state:angular:physics:position = -2.802012e-7
+                float state:angular:physics:velocity = -0.0047874735
+            }
+
+            over "joint_gripper_finger_right"
+            {
+                float state:angular:physics:position = 0.000008250586
+                float state:angular:physics:velocity = 0.0029327297
+            }
+
+            over "joint_left_wheel" (
+                active = true
+            )
+            {
+                float drive:angular:physics:damping = 10000
+                float drive:angular:physics:stiffness = 0
+                string isaac:nameOverride (
+                    displayName = "Name Override"
+                    doc = "Name override for prim lookup in base name search"
+                )
+            }
+
+            over "joint_right_wheel"
+            {
+                float drive:angular:physics:damping = 10000
+                float drive:angular:physics:stiffness = 0
+                string isaac:nameOverride (
+                    displayName = "Name Override"
+                    doc = "Name override for prim lookup in base name search"
+                )
+            }
+        }
+    }
+
+    def OmniGraph "RosActionGraph"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "Shared"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "ros2_context" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (109, 122)
+        }
+
+        def OmniGraphNode "on_playback_tick" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (87, 308)
+        }
+
+        def OmniGraphNode "ros2_subscribe_twist" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/RosActionGraph/ros2_context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </World/RosActionGraph/on_playback_tick.outputs:tick>
+            custom string inputs:nodeNamespace
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom string inputs:topicName
+            token node:type = "isaacsim.ros2.bridge.ROS2SubscribeTwist"
+            int node:typeVersion = 1
+            custom vector3d outputs:angularVelocity
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom vector3d outputs:linearVelocity
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (464.6667, 84.999985)
+        }
+
+        def OmniGraphNode "scale_to_from_stage_units" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:conversion (
+                allowedTokens = ["Convert to stage units", "Convert to meters"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </World/RosActionGraph/ros2_subscribe_twist.outputs:linearVelocity>
+            token node:type = "isaacsim.core.nodes.OgnIsaacScaleToFromStageUnit"
+            int node:typeVersion = 1
+            custom token outputs:result
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (747.33325, 333.66663)
+        }
+
+        def OmniGraphNode "break_3_vector" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:tuple
+            prepend token inputs:tuple.connect = </World/RosActionGraph/ros2_subscribe_twist.outputs:angularVelocity>
+            token node:type = "omni.graph.nodes.BreakVector3"
+            int node:typeVersion = 1
+            custom token outputs:x
+            custom token outputs:y
+            custom token outputs:z
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1085.1237, 74.70222)
+        }
+
+        def OmniGraphNode "break_3_vector_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:tuple
+            prepend token inputs:tuple.connect = </World/RosActionGraph/scale_to_from_stage_units.outputs:result>
+            token node:type = "omni.graph.nodes.BreakVector3"
+            int node:typeVersion = 1
+            custom token outputs:x
+            custom token outputs:y
+            custom token outputs:z
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1042.3123, 288.75946)
+        }
+
+        def OmniGraphNode "differential_controller" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom double inputs:angularVelocity
+            prepend double inputs:angularVelocity.connect = </World/RosActionGraph/break_3_vector.outputs:z>
+            custom double inputs:dt
+            prepend double inputs:dt.connect = </World/RosActionGraph/on_playback_tick.outputs:deltaSeconds>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </World/RosActionGraph/on_playback_tick.outputs:tick>
+            custom double inputs:linearVelocity
+            prepend double inputs:linearVelocity.connect = </World/RosActionGraph/break_3_vector_01.outputs:x>
+            custom double inputs:maxAcceleration
+            custom double inputs:maxAngularAcceleration
+            custom double inputs:maxAngularSpeed = 10000
+            custom double inputs:maxDeceleration
+            custom double inputs:maxLinearSpeed = 10000
+            custom double inputs:maxWheelSpeed
+            custom double inputs:wheelDistance = 0.341
+            custom double inputs:wheelRadius = 0.05
+            token node:type = "isaacsim.robot.wheeled_robots.DifferentialController"
+            int node:typeVersion = 1
+            custom double[] outputs:velocityCommand
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1344.3707, 151.60431)
+        }
+
+        def OmniGraphNode "articulation_controller" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom double[] inputs:effortCommand
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </World/RosActionGraph/on_playback_tick.outputs:tick>
+            custom int[] inputs:jointIndices
+            custom token[] inputs:jointNames
+            prepend token[] inputs:jointNames.connect = </World/RosActionGraph/make_array.outputs:array>
+            custom double[] inputs:positionCommand
+            custom string inputs:robotPath
+            custom rel inputs:targetPrim = </World/stretch/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double[] inputs:velocityCommand
+            prepend double[] inputs:velocityCommand.connect = </World/RosActionGraph/multiply.outputs:product>
+            token node:type = "isaacsim.core.nodes.IsaacArticulationController"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1919.9469, 379.13922)
+        }
+
+        def OmniGraphNode "make_array" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom int inputs:arraySize = 2
+            custom token inputs:arrayType (
+                allowedTokens = ["auto", "bool[]", "double[]", "float[]", "half[]", "int[]", "int64[]", "token[]", "uchar[]", "uint[]", "uint64[]", "double[2][]", "double[3][]", "double[4][]", "matrixd[2][]", "matrixd[3][]", "matrixd[4][]", "float[2][]", "float[3][]", "float[4][]", "half[2][]", "half[3][]", "half[4][]", "int[2][]", "int[3][]", "int[4][]", "timecode[]", "frame[4][]", "colord[3][]", "colorf[3][]", "colorh[3][]", "colord[4][]", "colorf[4][]", "colorh[4][]", "normald[3][]", "normalf[3][]", "normalh[3][]", "pointd[3][]", "pointf[3][]", "pointh[3][]", "quatd[4][]", "quatf[4][]", "quath[4][]", "texcoordd[2][]", "texcoordf[2][]", "texcoordh[2][]", "texcoordd[3][]", "texcoordf[3][]", "texcoordh[3][]", "vectord[3][]", "vectorf[3][]", "vectorh[3][]"]
+            )
+            custom token inputs:input0
+            delete token inputs:input0.connect = </World/RosActionGraph/constant_token.inputs:value>
+            prepend token inputs:input0.connect = </World/RosActionGraph/constant_token.inputs:value>
+            custom token inputs:input1 (
+                customData = {
+                    string ExtendedAttributeType = "Union-->bool,colord[3],colord[4],colorf[3],colorf[4],colorh[3],colorh[4],double,double[2],double[3],double[4],float,float[2],float[3],float[4],frame[4],half,half[2],half[3],half[4],int,int64,int[2],int[3],int[4],matrixd[2],matrixd[3],matrixd[4],normald[3],normalf[3],normalh[3],pointd[3],pointf[3],pointh[3],quatd[4],quatf[4],quath[4],texcoordd[2],texcoordd[3],texcoordf[2],texcoordf[3],texcoordh[2],texcoordh[3],timecode,token,transform[4],uchar,uint,uint64,vectord[3],vectorf[3],vectorh[3]"
+                    dictionary omni = {
+                        dictionary graph = {
+                            string attrType = "Union-->bool,colord[3],colord[4],colorf[3],colorf[4],colorh[3],colorh[4],double,double[2],double[3],double[4],float,float[2],float[3],float[4],frame[4],half,half[2],half[3],half[4],int,int64,int[2],int[3],int[4],matrixd[2],matrixd[3],matrixd[4],normald[3],normalf[3],normalh[3],pointd[3],pointf[3],pointh[3],quatd[4],quatf[4],quath[4],texcoordd[2],texcoordd[3],texcoordf[2],texcoordf[3],texcoordh[2],texcoordh[3],timecode,token,transform[4],uchar,uint,uint64,vectord[3],vectorf[3],vectorh[3]"
+                        }
+                    }
+                }
+            )
+            delete token inputs:input1.connect = </World/RosActionGraph/constant_token_01.inputs:value>
+            prepend token inputs:input1.connect = </World/RosActionGraph/constant_token_01.inputs:value>
+            token node:type = "omni.graph.nodes.ConstructArray"
+            int node:typeVersion = 1
+            custom token outputs:array
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (818.74133, 688.333)
+        }
+
+        def OmniGraphNode "multiply" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </World/RosActionGraph/constant_double.inputs:value>
+            custom token inputs:b
+            prepend token inputs:b.connect = </World/RosActionGraph/differential_controller.outputs:velocityCommand>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1696.3761, 169.83876)
+        }
+
+        def OmniGraphNode "constant_double" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom double inputs:value = 10.000000149011612
+            token node:type = "omni.graph.nodes.ConstantDouble"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1460.9131, 27.133934)
+        }
+
+        def OmniGraphNode "constant_token" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:value = "joint_right_wheel"
+            token node:type = "omni.graph.nodes.ConstantToken"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (406.08655, 569.41235)
+        }
+
+        def OmniGraphNode "constant_token_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:value = "joint_left_wheel"
+            token node:type = "omni.graph.nodes.ConstantToken"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (456.03323, 757.30707)
+        }
+    }
+
+    def Mesh "Cube" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxConvexHullCollisionAPI", "PhysicsMeshCollisionAPI"]
+    )
+    {
+        float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+        int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+        int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+        normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+            interpolation = "faceVarying"
+        )
+        uniform token physics:approximation = "convexHull"
+        bool physics:collisionEnabled = 1
+        bool physics:kinematicEnabled = 0
+        bool physics:rigidBodyEnabled = 1
+        point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+        texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+            interpolation = "faceVarying"
+        )
+        uniform token subdivisionScheme = "none"
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (1.7805492088881871, 0, 0.5)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+}
+
+def Xform "Environment"
+{
+    quatd xformOp:orient = (1, 0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def DistantLight "defaultLight" (
+        prepend apiSchemas = ["ShapingAPI"]
+    )
+    {
+        float inputs:angle = 1
+        float inputs:intensity = 3000
+        float inputs:shaping:cone:angle = 180
+        float inputs:shaping:cone:softness
+        float inputs:shaping:focus
+        color3f inputs:shaping:focusTint
+        asset inputs:shaping:ies:file
+        quatd xformOp:orient = (0.6532814824381883, 0.2705980500730985, 0.27059805007309845, 0.6532814824381882)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+}
+
+def "Render" (
+    hide_in_stage_window = true
+    no_delete = true
+)
+{
+    def "OmniverseKit"
+    {
+        def "HydraTextures" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            def RenderProduct "omni_kit_widget_viewport_ViewportTexture_0" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </OmniverseKit_Persp>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+        }
+    }
+
+    def RenderSettings "OmniverseGlobalRenderSettings" (
+        prepend apiSchemas = ["OmniRtxSettingsGlobalRtAdvancedAPI_1", "OmniRtxSettingsGlobalPtAdvancedAPI_1"]
+        no_delete = true
+    )
+    {
+        rel products = </Render/OmniverseKit/HydraTextures/omni_kit_widget_viewport_ViewportTexture_0>
+    }
+
+    def "Vars"
+    {
+        def RenderVar "LdrColor" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            uniform string sourceName = "LdrColor"
+        }
+    }
+}
+
+def PhysicsScene "physicsScene" (
+    prepend apiSchemas = ["PhysxSceneAPI"]
+)
+{
+}
+
+def "Graphs"
+{
+    def OmniGraph "differential_controller"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "DifferentialController"
+        {
+            custom double inputs:angularVelocity
+            prepend double inputs:angularVelocity.connect = </Graphs/differential_controller/SpeedAngular.outputs:product>
+            custom double inputs:dt
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graphs/differential_controller/OnPlaybackTick.outputs:tick>
+            custom double inputs:linearVelocity
+            prepend double inputs:linearVelocity.connect = </Graphs/differential_controller/SpeedLinear.outputs:product>
+            custom double inputs:maxAcceleration
+            custom double inputs:maxAngularAcceleration
+            custom double inputs:maxAngularSpeed
+            custom double inputs:maxDeceleration
+            custom double inputs:maxLinearSpeed
+            custom double inputs:maxWheelSpeed
+            custom double inputs:wheelDistance = 341
+            custom double inputs:wheelRadius = 0.05000000074505806
+            token node:type = "isaacsim.robot.wheeled_robots.DifferentialController"
+            int node:typeVersion = 1
+            custom double[] outputs:velocityCommand
+        }
+
+        def OmniGraphNode "ArticulationController"
+        {
+            custom double[] inputs:effortCommand
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graphs/differential_controller/OnPlaybackTick.outputs:tick>
+            custom int[] inputs:jointIndices
+            custom token[] inputs:jointNames
+            prepend token[] inputs:jointNames.connect = </Graphs/differential_controller/ArrayNames.outputs:array>
+            custom double[] inputs:positionCommand
+            custom string inputs:robotPath
+            custom rel inputs:targetPrim = </World/stretch/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double[] inputs:velocityCommand
+            prepend double[] inputs:velocityCommand.connect = </Graphs/differential_controller/DifferentialController.outputs:velocityCommand>
+            token node:type = "isaacsim.core.nodes.IsaacArticulationController"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "ArrayNames"
+        {
+            custom int inputs:arraySize = 2
+            custom token inputs:arrayType = "token[]" (
+                allowedTokens = ["auto", "bool[]", "double[]", "float[]", "half[]", "int[]", "int64[]", "token[]", "uchar[]", "uint[]", "uint64[]", "double[2][]", "double[3][]", "double[4][]", "matrixd[2][]", "matrixd[3][]", "matrixd[4][]", "float[2][]", "float[3][]", "float[4][]", "half[2][]", "half[3][]", "half[4][]", "int[2][]", "int[3][]", "int[4][]", "timecode[]", "frame[4][]", "colord[3][]", "colorf[3][]", "colorh[3][]", "colord[4][]", "colorf[4][]", "colorh[4][]", "normald[3][]", "normalf[3][]", "normalh[3][]", "pointd[3][]", "pointf[3][]", "pointh[3][]", "quatd[4][]", "quatf[4][]", "quath[4][]", "texcoordd[2][]", "texcoordf[2][]", "texcoordh[2][]", "texcoordd[3][]", "texcoordf[3][]", "texcoordh[3][]", "vectord[3][]", "vectorf[3][]", "vectorh[3][]"]
+            )
+            custom token inputs:input0 (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            token attrValue = "joint_right_wheel"
+                            string resolvedType = "token"
+                        }
+                    }
+                }
+            )
+            custom token inputs:input1 = "joint_left_wheel"
+            token node:type = "omni.graph.nodes.ConstructArray"
+            int node:typeVersion = 1
+            custom token outputs:array
+        }
+
+        def OmniGraphNode "W"
+        {
+            custom token inputs:key = "W" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "A"
+        {
+            custom token inputs:key = "A" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "S"
+        {
+            custom token inputs:key = "S" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "D"
+        {
+            custom token inputs:key = "D" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "ToDoubleW"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </Graphs/differential_controller/W.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleA"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </Graphs/differential_controller/A.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleS"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </Graphs/differential_controller/S.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleD"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </Graphs/differential_controller/D.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "NegateLinear"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/ToDoubleS.outputs:converted>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/NegOne.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "NegateAngular"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/ToDoubleD.outputs:converted>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/NegOne.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "AddLinear"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/ToDoubleW.outputs:converted>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/NegateLinear.outputs:product>
+            token node:type = "omni.graph.nodes.Add"
+            int node:typeVersion = 2
+            custom token outputs:sum
+        }
+
+        def OmniGraphNode "AddAngular"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/ToDoubleA.outputs:converted>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/NegateAngular.outputs:product>
+            token node:type = "omni.graph.nodes.Add"
+            int node:typeVersion = 2
+            custom token outputs:sum
+        }
+
+        def OmniGraphNode "SpeedLinear"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/AddLinear.outputs:sum>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/ScaleLinear.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "ScaleLinear"
+        {
+            custom double inputs:value = 5
+            token node:type = "omni.graph.nodes.ConstantDouble"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "SpeedAngular"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/AddAngular.outputs:sum>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/ScaleAngular.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "ScaleAngular"
+        {
+            custom double inputs:value = 6
+            token node:type = "omni.graph.nodes.ConstantDouble"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "NegOne"
+        {
+            custom int inputs:value = -1
+            token node:type = "omni.graph.nodes.ConstantInt"
+            int node:typeVersion = 1
+        }
+    }
+}
+

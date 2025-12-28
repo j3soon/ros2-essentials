@@ -5,6 +5,7 @@ from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node, SetParameter
 from ament_index_python.packages import get_package_share_directory
 from launch.conditions import IfCondition
+import os
 
 ARGUMENTS = [
     DeclareLaunchArgument(
@@ -24,8 +25,11 @@ def generate_launch_description():
 
     # Get Stretch3 USD file path
     # reference: https://github.com/hello-robot/stretch_isaacsim.git
-    stretch3_usd_path = PathJoinSubstitution([FindPackageShare("isaacsim"), "model", "stretch.project.usdz"])
-
+    # stretch3_usd_path = PathJoinSubstitution([FindPackageShare("isaacsim"), "model", "stretch_movable.usda"])
+    launch_file_dir = os.path.dirname(os.path.abspath(__file__))
+    workspace_root = os.path.abspath(os.path.join(launch_file_dir, "../../../../../"))
+    stretch3_usd_path = os.path.join(workspace_root, "src/isaacsim/model/stretch_movable.usda")
+    
     # Launch Isaac Sim if the platform is isaacsim
     # Reference:
     # https://docs.isaacsim.omniverse.nvidia.com/latest/ros2_tutorials/tutorial_ros2_launch.html
