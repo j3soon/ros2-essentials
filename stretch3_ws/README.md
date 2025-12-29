@@ -26,6 +26,17 @@ ros2 launch stretch3_bringup stretch3_bringup.launch.py
 4. Do what ever you want in isaacsim
 5. Go to `File` -> `Save`, if you see `stretch_movable.usda` is marked `modified` by Git, you have saved your modifiy.
 
+### ros2 command
+- publish cmd_vel
+```
+ros2 topc pub /cmd_vel geometry_msgs/Twist "{'linear': {'x': 0.2, 'y': 0.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z': 0.0}}"
+```
+
+- keyboard drive
+```
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
 ## Important file
 1. isaacsim/model/stretch_movable.usda
     - description of the stretch3 isaacsim environment, launch it with isaccsim and you can have a movable stretch3 in a clean playground
