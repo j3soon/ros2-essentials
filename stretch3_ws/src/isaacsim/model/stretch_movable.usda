@@ -7,12 +7,12 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (3.3122454217925195, 3.3122454217925204, 3.3122454620762336)
-                double3 target = (-3.978038076724033e-8, -3.978037854679428e-8, 7.956077130444328e-8)
+                double3 position = (31.176585051258535, 25.212763038410376, 7.065300087368424)
+                double3 target = (0.4577974520808077, -0.01707847778657623, -5.532167575937306)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
-                double radius = 5
+                double radius = 7.301616668701172
             }
             dictionary Top = {
                 double3 position = (0, 0, 5)
@@ -27,6 +27,7 @@
             dictionary muteness = {
             }
         }
+        int refinementOverrideImplVersion = 0
         dictionary renderSettings = {
         }
     }
@@ -71,12 +72,41 @@ def Xform "World"
         prepend references = @../../../install/isaacsim/share/isaacsim/model/stretch.project.usdz[SubUSDs/stretch_description_SE3_eoa_wrist_dw3_tool_sg3.usd]@
     )
     {
+        string isaac:namespace (
+            displayName = "Namespace"
+            doc = "Namespace of the prim in Isaac Sim"
+        )
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (9.316327031859293, 6.530520820073489, 3.25982996266742)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
         over "base_link"
         {
+            string isaac:nameOverride (
+                displayName = "Name Override"
+                doc = "Name override for prim lookup in base name search"
+            )
             vector3f physics:angularVelocity = (0.01643068, 0.0035789716, 0.009259345)
             vector3f physics:velocity = (-0.0000055661685, 0.0000147806295, 0.0000032902049)
+            int physxArticulation:solverVelocityIterationCount = 16
             quatd xformOp:orient = (0.9999895193429265, -4.778848914350168e-7, 1.243315624975878e-7, -0.004578340753928027)
             double3 xformOp:translate = (-0.014587260782718658, -0.0011787880212068558, 0.00000356137752532959)
+
+            over "caster_link" (
+                delete apiSchemas = ["PhysxMeshMergeCollisionAPI", "PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+            )
+            {
+            }
+
+            over "collisions" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </World/ZeroFriction> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+            }
         }
 
         over "link_head_pan"
@@ -184,6 +214,10 @@ def Xform "World"
 
         over "link_gripper_finger_right"
         {
+            string isaac:nameOverride (
+                displayName = "Name Override"
+                doc = "Name override for prim lookup in base name search"
+            )
             vector3f physics:angularVelocity = (-18.710363, -0.33595106, -0.047375984)
             vector3f physics:velocity = (-0.00024299258, -0.011360919, 0.06172807)
             quatd xformOp:orient = (0.0004211010962332342, 0.6805545451410036, 0.7326971634174586, -0.00044775193865347236)
@@ -209,6 +243,10 @@ def Xform "World"
         {
             over "joint_head_pan"
             {
+                string isaac:nameOverride (
+                    displayName = "Name Override"
+                    doc = "Name override for prim lookup in base name search"
+                )
                 float state:angular:physics:position = -0.00010934107
                 float state:angular:physics:velocity = 0.033779453
             }
@@ -283,7 +321,7 @@ def Xform "World"
                 active = true
             )
             {
-                float drive:angular:physics:damping = 10000
+                float drive:angular:physics:damping = 500
                 float drive:angular:physics:stiffness = 0
                 string isaac:nameOverride (
                     displayName = "Name Override"
@@ -293,7 +331,7 @@ def Xform "World"
 
             over "joint_right_wheel"
             {
-                float drive:angular:physics:damping = 10000
+                float drive:angular:physics:damping = 500
                 float drive:angular:physics:stiffness = 0
                 string isaac:nameOverride (
                     displayName = "Name Override"
@@ -474,7 +512,10 @@ def Xform "World"
                 }
             )
             custom double[] inputs:velocityCommand
-            prepend double[] inputs:velocityCommand.connect = </World/RosActionGraph/multiply.outputs:product>
+            prepend double[] inputs:velocityCommand.connect = [
+                </World/RosActionGraph/multiply.outputs:product>,
+                </World/RosActionGraph/differential_controller.outputs:velocityCommand>,
+            ]
             token node:type = "isaacsim.core.nodes.IsaacArticulationController"
             int node:typeVersion = 1
             uniform token ui:nodegraph:node:expansionState = "open"
@@ -511,32 +552,6 @@ def Xform "World"
             uniform float2 ui:nodegraph:node:pos = (818.74133, 688.333)
         }
 
-        def OmniGraphNode "multiply" (
-            prepend apiSchemas = ["NodeGraphNodeAPI"]
-        )
-        {
-            custom token inputs:a
-            prepend token inputs:a.connect = </World/RosActionGraph/constant_double.inputs:value>
-            custom token inputs:b
-            prepend token inputs:b.connect = </World/RosActionGraph/differential_controller.outputs:velocityCommand>
-            token node:type = "omni.graph.nodes.Multiply"
-            int node:typeVersion = 2
-            custom token outputs:product
-            uniform token ui:nodegraph:node:expansionState = "open"
-            uniform float2 ui:nodegraph:node:pos = (1696.3761, 169.83876)
-        }
-
-        def OmniGraphNode "constant_double" (
-            prepend apiSchemas = ["NodeGraphNodeAPI"]
-        )
-        {
-            custom double inputs:value = 10.000000149011612
-            token node:type = "omni.graph.nodes.ConstantDouble"
-            int node:typeVersion = 1
-            uniform token ui:nodegraph:node:expansionState = "open"
-            uniform float2 ui:nodegraph:node:pos = (1460.9131, 27.133934)
-        }
-
         def OmniGraphNode "constant_token" (
             prepend apiSchemas = ["NodeGraphNodeAPI"]
         )
@@ -558,6 +573,34 @@ def Xform "World"
             uniform token ui:nodegraph:node:expansionState = "open"
             uniform float2 ui:nodegraph:node:pos = (456.03323, 757.30707)
         }
+    }
+
+    def Material "ZeroFriction" (
+        prepend apiSchemas = ["PhysicsMaterialAPI", "PhysxMaterialAPI"]
+    )
+    {
+        uniform token physxMaterial:frictionCombineMode = "min"
+        uniform token physxMaterial:restitutionCombineMode = "min"
+    }
+
+    def Sphere "Sphere" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsCollisionAPI", "PhysxCollisionAPI", "MaterialBindingAPI"]
+    )
+    {
+        float3[] extent = [(-0.035, -0.035, -0.035), (0.035, 0.035, 0.035)]
+        rel material:binding:physics = </World/ZeroFriction> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        bool physics:collisionEnabled = 1
+        bool physics:kinematicEnabled = 0
+        bool physics:rigidBodyEnabled = 1
+        double radius = 0.035
+        custom bool refinementEnableOverride = 1
+        custom int refinementLevel = 2
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (9.064475866586129, 6.5321990992125105, 3.29215814842234)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }
 
