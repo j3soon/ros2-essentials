@@ -11,12 +11,11 @@ docker compose build
 docker compose up -d
 docker exec -it ros2-stretch3-ws bash
 ```
-2. build the workspace at stretch3_ws if you changed anything
+2. build the workspace at /stretch3_ws
 ```
 colcon build
 ```
 > the dependencies of the usda and usdz is very trick, some in install and some in src, **it is very important to not delete any exist file and keep the project structure**
-> since I have know idea what is depend on original src what is depend on install, it is better to rebuild the workspace
 
 3. launch via stretch3_bringup
 ```
@@ -56,4 +55,3 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard
     workspace_root = os.path.abspath(os.path.join(launch_file_dir, "../../../../../"))
     stretch3_usd_path = os.path.join(workspace_root, "src/isaacsim/model/stretch_movable.usda")
     ```
-    **again, I have no idea about the dependency chain, so be careful, always keep the orginal file and backup the file**
