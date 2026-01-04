@@ -58,10 +58,13 @@ def generate_launch_description():
     # Other nodes
 
     # RViz
+    rviz_config = PathJoinSubstitution([FindPackageShare("realsense_gazebo"), "rviz", "realsense.rviz"])
     rviz = Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', 'src/realsense_example/realsense_gazebo/rviz/realsense.rviz']
+        name='rviz',
+        output='screen',
+        arguments=['-d', rviz_config]
     )
 
     #####################################
