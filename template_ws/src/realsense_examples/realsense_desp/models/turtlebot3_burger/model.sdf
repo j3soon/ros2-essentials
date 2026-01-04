@@ -424,9 +424,9 @@
     <!-- Realsense D435 -->
 
     <link name="realsense_link">
-      <pose>0.2 0 0.172 0 0 0</pose>
+      <pose>-0.02 0 0.201 0 0 0</pose>
       <visual name="realsense_link_visual">
-        <pose>0 0 0 -1.57 0 -1.57</pose>
+        <pose>0 0 0 1.57 0 1.57</pose>
         <geometry>
           <mesh>
             <uri>package://realsense2_description/meshes/d435.dae</uri>
@@ -435,7 +435,7 @@
         </geometry>
       </visual>
       <collision name="realsense_link_collision">
-        <pose>0 0 0 -1.57 0 -1.57</pose>
+        <pose>0 0 0 1.57 0 1.57</pose>
         <geometry>
           <box>
             <size>0.02505 0.090 0.025</size>
