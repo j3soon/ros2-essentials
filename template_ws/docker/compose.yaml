@@ -182,6 +182,7 @@ services:
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
     # Add device cgroup rules to allow access to specific devices (like realsense).
+    # Ref: https://github.com/2b-t/realsense-ros2-docker
     device_cgroup_rules:
       - 'c 81:* rmw'
       - 'c 189:* rmw'

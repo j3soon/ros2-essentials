@@ -17,6 +17,8 @@ if [ "$REALSENSE" = "YES" ]; then
         ros-humble-realsense2-* \
         ros-${ROS_DISTRO}-turtlebot3* \
         ros-${ROS_DISTRO}-rqt-robot-steering \
+        ros-${ROS_DISTRO}-launch-pytest \ 
+        python3-tqdm \
         && sudo rm -rf /var/lib/apt/lists/*
 fi
 
