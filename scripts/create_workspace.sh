@@ -34,6 +34,7 @@ cp -r "${TEMPLATE_WS_DIR}" "${NEW_WS_DIR}"
 # Remove the files that should not be copied.
 rm -rf "${NEW_WS_DIR}/.vscode" "${NEW_WS_DIR}/docs"
 rm -rf "${NEW_WS_DIR}/build" "${NEW_WS_DIR}/install" "${NEW_WS_DIR}/log"
+rm -rf "${NEW_WS_DIR}/src/"*
 mkdir "${SCRIPT_DIR}/../docs/${NEW_WS_NAME_HYPHEN}"
 echo "# ${NEW_WS_NAME_UNDERSCORE}" > "${SCRIPT_DIR}/../docs/${NEW_WS_NAME_HYPHEN}/index.md"
 
