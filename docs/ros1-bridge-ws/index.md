@@ -1,7 +1,7 @@
 # ROS1 Bridge
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/ros1_bridge_ws)
-[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-ros1-bridge-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-ros1-bridge-ws-ws.yaml)
+[![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-ros1-bridge-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-ros1-bridge-ws.yaml)
 [![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=ros1_bridge_ws)](https://github.com/j3soon/ros2-essentials/commits/main/ros1_bridge_ws)
 
 [![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--ros1--bridge--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-ros1-bridge-ws/tags)

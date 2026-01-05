@@ -24,6 +24,10 @@ We welcome all kinds of contributions, including but not limited to bug reports,
 
 Use `git log` and search for related commits to understand the commit message format.
 
+## Scripts
+
+When creating a new workspace, use the `scripts/create_workspace.sh <workspace_name>` script to set up the workspace structure.
+
 ## Linting
 
 Basic linting is done by running the following script:
@@ -31,3 +35,9 @@ Basic linting is done by running the following script:
 ```sh
 tests/test_all.sh
 ```
+
+## Pull Request References
+
+- Creating a new module, see [PR#93](https://github.com/j3soon/ros2-essentials/pull/93) and [PR#95](https://github.com/j3soon/ros2-essentials/pull/95).
+- Updating Isaac Sim/Lab, see [PR#92](https://github.com/j3soon/ros2-essentials/pull/92).
+- Using OmniGraph and USDA, see [PR#83](https://github.com/j3soon/ros2-essentials/pull/83).

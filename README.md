@@ -15,7 +15,7 @@ The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 
 | Use Case | Platform | Hardware | Software | Notes |
 |----------|----------|----------|----------|-------|
-| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/requirements.html) for more details. |
+| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04/24.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/requirements.html) for more details. |
 | Deployment-Only | Jetson | Jetson Orin, 500GB+ SSD | JetPack 6 | See [this page](https://nvidia-isaac-ros.github.io/getting_started/index.html) for more details.
 
 Make sure to install the required software prerequisites before using this repo.
