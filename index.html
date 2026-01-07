@@ -1668,10 +1668,14 @@
 <p>This step is optional if you have user ID 1000 on host.</p>
 <p>Next, choose a workspace from the table below and follow its documentation to get started. The rest of this document contains optional information. The search bar at the top right corner of the <a href="https://j3soon.github.io/ros2-essentials/">documentation site</a> and <a href="https://github.com/j3soon/ros2-essentials">GitHub repository</a> is a good way to navigate to the relevant documentation and commits.</p>
 <h2 id="updating-the-repository">Updating the Repository<a class="headerlink" href="#updating-the-repository" title="Permanent link">&para;</a></h2>
-<p>Make sure to run the <code>post_install.sh</code> script after pulling the latest changes to ensure that the hard links are properly set up.</p>
+<p>To update to the latest commit of the repository, run the following commands:</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>pull
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>./scripts/post_install.sh<span class="w"> </span>-f
 </span></code></pre></div>
+<p>Make sure to run the <code>post_install.sh</code> script after pulling the latest changes to ensure that the hard links are properly set up. In addition, you should be prepared to rebuild the Docker images of the workspaces you are using, as some updates may require rebuilding the images to take effect.</p>
+<blockquote>
+<p>Building Docker images can be time-consuming. Start the build before taking a break so they can finish while you're away.</p>
+</blockquote>
 <h2 id="pre-built-workspaces">Pre-built Workspaces<a class="headerlink" href="#pre-built-workspaces" title="Permanent link">&para;</a></h2>
 <p>Pre-built Docker images for each workspace can be pulled by running <code>docker compose pull</code> in the corresponding workspace directory. Pulling these images bypasses the time-consuming build process (for both Docker Compose and Dev Containers).</p>
 <p>The docker image of the template workspace is share by most of the workspace, allowing saving spaces by sharing common packages. Click on the following workspaces to navigate to their respective documentation.</p>
@@ -1927,7 +1931,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 5, 2026 12:08:21 UTC">January 5, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 7, 2026 10:17:04 UTC">January 7, 2026</span>
   </span>
 
     
