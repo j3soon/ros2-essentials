@@ -24,7 +24,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 cd "$SCRIPT_DIR"
 
 ./setup_docker_modules_link.sh $FORCE_FLAG
-./setup_docker_volume.sh
+./setup_docker_volume.sh $FORCE_FLAG
 ./setup_isaac_link.sh
 
 echo "Post Install Done."
