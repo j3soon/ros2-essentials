@@ -94,6 +94,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 
 USER $USERNAME
 
+# Create user bin directories specified in `~/.profile`
+# Together with .bashrc, this allows invoking executables in the same shell after installing to either location
+RUN mkdir /home/$USERNAME/bin
+RUN mkdir -p /home/$USERNAME/.local/bin
+
 # Create cache directories with correct ownership to avoid permission issues after volume mount
 RUN mkdir -p /home/$USERNAME/.cache/pip
 # Create Gazebo cache directory with correct ownership to avoid permission issues after volume mount
