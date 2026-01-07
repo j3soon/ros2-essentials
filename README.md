@@ -44,12 +44,16 @@ Next, choose a workspace from the table below and follow its documentation to ge
 
 ## Updating the Repository
 
-Make sure to run the `post_install.sh` script after pulling the latest changes to ensure that the hard links are properly set up.
+To update to the latest commit of the repository, run the following commands:
 
 ```sh
 git pull
 ./scripts/post_install.sh -f
 ```
+
+Make sure to run the `post_install.sh` script after pulling the latest changes to ensure that the hard links are properly set up. In addition, you should be prepared to rebuild the Docker images of the workspaces you are using, as some updates may require rebuilding the images to take effect.
+
+> Building Docker images can be time-consuming. Start the build before taking a break so they can finish while you're away.
 
 ## Pre-built Workspaces
 

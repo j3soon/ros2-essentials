@@ -2,7 +2,7 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_sim.sh)
 
-Isaac Sim 4.5.0 Binary Install.
+Isaac Sim 5.0.0 Binary Install.
 
 Depends on:
 

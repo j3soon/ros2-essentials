@@ -36,34 +36,7 @@ sudo apt-get update && sudo apt-get install -y \
     && sudo rm -rf /var/lib/apt/lists/* \
     || exit 1
 
-if [ "$ISAAC_SIM_VERSION" = "4.5.0" ]; then
-    echo "Installing Isaac Sim Compatibility Checker 4.5.0..."
-    # Note: The Isaac Sim Compatibility Checker is installed since its usefulness outweighs the image size increase
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html#isaac-sim-compatibility-checker
-    python3 -V | grep "Python 3.10" \
-        && cd /tmp \
-        && wget -q https://download.isaacsim.omniverse.nvidia.com/isaac-sim-comp-check%404.5.0-rc.6%2Brelease.675.f1cca148.gl.linux-x86_64.release.zip \
-        && 7z x "isaac-sim-comp-check@4.5.0-rc.6+release.675.f1cca148.gl.linux-x86_64.release.zip" -o/home/$USERNAME/isaac-sim-comp-check \
-        && rm "isaac-sim-comp-check@4.5.0-rc.6+release.675.f1cca148.gl.linux-x86_64.release.zip" \
-        || exit 1
-    echo "Installing Isaac Sim 4.5.0 (requires Python 3.10)..."
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_workstation.html
-    python3 -V | grep "Python 3.10" \
-        && cd /tmp \
-        && wget -q https://download.isaacsim.omniverse.nvidia.com/isaac-sim-standalone%404.5.0-rc.36%2Brelease.19112.f59b3005.gl.linux-x86_64.release.zip \
-        && 7z x "isaac-sim-standalone@4.5.0-rc.36+release.19112.f59b3005.gl.linux-x86_64.release.zip" -o"$ISAACSIM_PATH" \
-        && rm "isaac-sim-standalone@4.5.0-rc.36+release.19112.f59b3005.gl.linux-x86_64.release.zip" \
-        && cd "$ISAACSIM_PATH" \
-        && ./post_install.sh \
-        || exit 1
-
-    # Note: Optional dependencies and the Isaac Sim ROS workspace are not installed to minimize image size
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_ros.html#running-native-ros
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_ros.html#setting-up-workspaces
-
-    echo "Fixing SciPy (in base image) incompatibility with NumPy version (in Isaac Sim) numpy==1.26.0..."
-    pip install scipy==1.14.1 numpy==1.26.0
-elif [ "$ISAAC_SIM_VERSION" = "5.0.0" ]; then
+if [ "$ISAAC_SIM_VERSION" = "5.0.0" ]; then
     echo "Installing Isaac Sim Compatibility Checker 5.0.0..."
     # Note: The Isaac Sim Compatibility Checker is installed since its usefulness outweighs the image size increase
     # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.0.0/installation/requirements.html#isaac-sim-compatibility-checker
@@ -73,7 +46,7 @@ elif [ "$ISAAC_SIM_VERSION" = "5.0.0" ]; then
         && rm "isaac-sim-comp-check-5.0.0-linux-x86_64.zip" \
         || exit 1
     echo "Installing Isaac Sim 5.0.0 (packaged with Python 3.11)..."
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_workstation.html
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.0.0/installation/install_workstation.html
     cd /tmp \
         && wget -q https://download.isaacsim.omniverse.nvidia.com/isaac-sim-standalone-5.0.0-linux-x86_64.zip \
         && 7z x "isaac-sim-standalone-5.0.0-linux-x86_64.zip" -o"$ISAACSIM_PATH" \
@@ -93,21 +66,7 @@ fi
 echo "Creating Isaac Sim directories with correct ownership to avoid permission issues after volume mount..."
 sudo mkdir -p /isaac-sim && sudo chown $USERNAME:$USERNAME /isaac-sim || exit 1
 
-if [ "$ISAAC_SIM_VERSION" = "4.5.0" ]; then
-    echo "Creating Isaac Sim 4.5.0 specific directories with correct ownership to avoid permission issues after volume mount..."
-    mkdir -p /isaac-sim/kit/cache \
-        && mkdir -p /home/$USERNAME/.cache/ov \
-        && mkdir -p /home/$USERNAME/.local/lib/python3.10/site-packages/omni/cache \
-        && mkdir -p /home/$USERNAME/.cache/pip \
-        && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
-        && mkdir -p /home/$USERNAME/.nv/ComputeCache \
-        && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
-        && mkdir -p /home/$USERNAME/.local/lib/python3.10/site-packages/omni/logs \
-        && mkdir -p /home/$USERNAME/.local/share/ov/data \
-        && mkdir -p /home/$USERNAME/.local/lib/python3.10/site-packages/omni/data \
-        && mkdir -p /home/$USERNAME/Documents \
-        || exit 1
-elif [ "$ISAAC_SIM_VERSION" = "5.0.0" ]; then
+if [ "$ISAAC_SIM_VERSION" = "5.0.0" ]; then
     echo "Creating Isaac Sim 5.0.0 specific directories with correct ownership to avoid permission issues after volume mount..."
     mkdir -p /isaac-sim/kit/cache \
         && mkdir -p /home/$USERNAME/.cache/ov \
