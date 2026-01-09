@@ -1302,7 +1302,7 @@
 <li>Fork the repository by visiting <a href="https://github.com/j3soon/ros2-essentials">ros2-essentials</a> and clicking the "Fork" button.</li>
 <li>Clone the forked repository to your local machine, e.g., <code>git clone git@github.com:username/ros2-essentials.git</code></li>
 <li>Create a new branch for your changes, e.g., <code>git checkout -b feat/your-feature-name</code> for a feature branch or <code>git checkout -b fix/your-bug-name</code> for a bug fix branch.</li>
-<li>Make your changes and ensure they are tested.</li>
+<li>Make your changes and ensure they are tested. To ensure reproducibility, consider re-clone your pushed branch and rerun the <code>post_install.sh</code> script to clear all untracked files and cached data.</li>
 <li>Push your local changes to your forked repository, e.g., <code>git push origin feat/your-feature-name</code>.</li>
 <li>Create a pull request to merge your changes into the main repository's <code>main</code> branch.</li>
 </ol>
@@ -1312,8 +1312,9 @@
 <li>Commit description should include as much details as possible. Try to include references you consulted and your rationale behind the changes. This will be essential for reviewers to understand the changes and for future reference. (e.g., <a href="https://github.com/j3soon/ros2-essentials/commit/058ff598ae705c95516353cd14a71945176c337e"><code>058ff59</code></a>)</li>
 <li>If copied files from other sources, please include the source in the commit message. If copied from GitHub, include the permalink (link with commit ID) and the branch name. (e.g., <a href="https://github.com/j3soon/ros2-essentials/commit/6a2dac186e1321dc7f7ec961ad22628bffc352d3"><code>6a2dac1</code></a>)</li>
 <li>Each commit should be atomic and self-contained.</li>
-<li>If anyone helped you during the development, please include them in the commit message using the <code>Co-authored-by</code> format. (e.g., <a href="https://github.com/j3soon/ros2-essentials/commit/4f9832d7a0c4156449d95b3503f9928d2d7de376"><code>4f9832d</code></a>)</li>
-<li>Refrain from force-pushes after a reviewer has started reviewing your changes.</li>
+<li>If anyone helped you during the development, please include them in the commit message using the <code>Co-authored-by</code> format (e.g., <a href="https://github.com/j3soon/ros2-essentials/commit/4f9832d7a0c4156449d95b3503f9928d2d7de376"><code>4f9832d</code></a> due to <a href="https://github.com/j3soon/ros2-essentials/pull/85#discussion_r2204978905">this comment</a>). These include, but are not limited to, feedback from reviewers, in-person discussions, and pair programming sessions.</li>
+<li>Refrain from force-pushes after a reviewer has started reviewing your changes. The only exception is for new contributors when a reviewer has explicitly asked you to rebase your branch or modify commit messages.</li>
+<li>Use USDA instead of USD file format whenever possible for better readability and version control. (e.g., <a href="https://github.com/j3soon/ros2-essentials/pull/101">PR#101</a>)</li>
 </ol>
 <p>Use <code>git log</code> and search for related commits to understand the commit message format.</p>
 <h2 id="scripts">Scripts<a class="headerlink" href="#scripts" title="Permanent link">&para;</a></h2>
@@ -1325,6 +1326,7 @@
 <h2 id="pull-request-references">Pull Request References<a class="headerlink" href="#pull-request-references" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Creating a new module, see <a href="https://github.com/j3soon/ros2-essentials/pull/93">PR#93</a> and <a href="https://github.com/j3soon/ros2-essentials/pull/95">PR#95</a>.</li>
+<li>Creating and updating a workspace, see <a href="https://github.com/j3soon/ros2-essentials/pull/83">PR#83</a>, <a href="https://github.com/j3soon/ros2-essentials/pull/85">PR#85</a>, and <a href="https://github.com/j3soon/ros2-essentials/pull/101">PR#101</a>.</li>
 <li>Updating Isaac Sim/Lab, see <a href="https://github.com/j3soon/ros2-essentials/pull/92">PR#92</a>.</li>
 <li>Using OmniGraph and USDA, see <a href="https://github.com/j3soon/ros2-essentials/pull/83">PR#83</a>.</li>
 </ul>
@@ -1350,7 +1352,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 5, 2026 12:08:21 UTC">January 5, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 9, 2026 22:28:13 UTC">January 9, 2026</span>
   </span>
 
     
