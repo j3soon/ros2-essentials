@@ -48,3 +48,23 @@ docker compose down
 ```
 
 > If you encountered unexpected issues when using Isaac Sim, see [Known Issues](../docker-modules/isaac-sim.md#known-issues) for more details.
+
+### Isaac Sim Keyboard Control
+
+Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/stretch3_ws/isaacsim/assets/stretch3_og_wasd.usda` in Isaac Sim, and then press Play and use WASD to control the robot.
+
+<video controls>
+  <source src="assets/stretch3_og_wasd.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+### Known Issues
+
+If the robot moves too fast, it will become a bit unstable and starts rotating. This may be due to the tool causing mass inbalance.
+
+### References
+
+- [Stretch Docs](https://docs.hello-robot.com/0.3/)
+  - [Stretch 3 Hardware Guide - Stretch Docs](https://docs.hello-robot.com/0.3/hardware/hardware_guide_stretch_3)
+- [Hello Robot GitHub](https://github.com/hello-robot)
+  - [hello-robot/stretch_urdf](https://github.com/hello-robot/stretch_urdf)
