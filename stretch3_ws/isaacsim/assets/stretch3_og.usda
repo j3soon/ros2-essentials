@@ -8,7 +8,7 @@
             }
             dictionary Perspective = {
                 double3 position = (5, 5, 5)
-                double3 target = (-3.978038431995401e-8, -3.978038254359717e-8, 7.95607677517296e-8)
+                double3 target = (-3.978038431995401e-8, -3.978038254359717e-8, 7.956076863990802e-8)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -48,6 +48,163 @@ def Xform "World"
             displayName = "Namespace"
             doc = "Namespace of the prim in Isaac Sim"
         )
+
+        over "base_link"
+        {
+        }
+
+        over "link_head_pan"
+        {
+        }
+
+        over "link_head_tilt"
+        {
+        }
+
+        over "link_left_wheel"
+        {
+            string isaac:nameOverride (
+                displayName = "Name Override"
+                doc = "Name override for prim lookup in base name search"
+            )
+        }
+
+        over "link_lift"
+        {
+        }
+
+        over "link_arm_l3"
+        {
+        }
+
+        over "link_arm_l2"
+        {
+        }
+
+        over "link_arm_l1"
+        {
+        }
+
+        over "link_arm_l0"
+        {
+        }
+
+        over "link_wrist_yaw"
+        {
+        }
+
+        over "link_wrist_pitch"
+        {
+        }
+
+        over "link_wrist_roll"
+        {
+        }
+
+        over "link_gripper_finger_left"
+        {
+        }
+
+        over "link_gripper_finger_right"
+        {
+        }
+
+        over "link_right_wheel"
+        {
+        }
+
+        over "joints"
+        {
+            over "joint_head_pan"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "joint_lift"
+            {
+                float state:linear:physics:position = 0
+                float state:linear:physics:velocity = 0
+            }
+
+            over "joint_head_tilt"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "joint_arm_l3"
+            {
+                float state:linear:physics:position = 0
+                float state:linear:physics:velocity = 0
+            }
+
+            over "joint_arm_l2"
+            {
+                float state:linear:physics:position = 0
+                float state:linear:physics:velocity = 0
+            }
+
+            over "joint_arm_l1"
+            {
+                float state:linear:physics:position = 0
+                float state:linear:physics:velocity = 0
+            }
+
+            over "joint_arm_l0"
+            {
+                float state:linear:physics:position = 0
+                float state:linear:physics:velocity = 0
+            }
+
+            over "joint_wrist_yaw"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "joint_wrist_pitch"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "joint_wrist_roll"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "joint_gripper_finger_left"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "joint_gripper_finger_right"
+            {
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "joint_left_wheel"
+            {
+                float drive:angular:physics:maxForce = 2
+                string isaac:nameOverride (
+                    displayName = "Name Override"
+                    doc = "Name override for prim lookup in base name search"
+                )
+            }
+
+            over "joint_right_wheel"
+            {
+                float drive:angular:physics:maxForce = 2
+                string isaac:nameOverride (
+                    displayName = "Name Override"
+                    doc = "Name override for prim lookup in base name search"
+                )
+            }
+        }
     }
 }
 
@@ -107,6 +264,7 @@ def "Render" (
                 int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
                 color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
                 bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled
                 bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
                 bool omni:rtx:scene:hydra:materialSyncLoads = 1
                 bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
