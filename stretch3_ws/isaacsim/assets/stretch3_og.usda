@@ -144,3 +144,293 @@ def "FlatGrid" (
 {
 }
 
+def "Graphs"
+{
+    def OmniGraph "differential_controller"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "DifferentialController"
+        {
+            custom double inputs:angularVelocity
+            prepend double inputs:angularVelocity.connect = </Graphs/differential_controller/SpeedAngular.outputs:product>
+            custom double inputs:dt
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graphs/differential_controller/OnPlaybackTick.outputs:tick>
+            custom double inputs:linearVelocity
+            prepend double inputs:linearVelocity.connect = </Graphs/differential_controller/SpeedLinear.outputs:product>
+            custom double inputs:maxAcceleration
+            custom double inputs:maxAngularAcceleration
+            custom double inputs:maxAngularSpeed
+            custom double inputs:maxDeceleration
+            custom double inputs:maxLinearSpeed
+            custom double inputs:maxWheelSpeed
+            custom double inputs:wheelDistance = 0.3156999945640564
+            custom double inputs:wheelRadius = 0.05000000074505806
+            token node:type = "isaacsim.robot.wheeled_robots.DifferentialController"
+            int node:typeVersion = 1
+            custom double[] outputs:velocityCommand
+        }
+
+        def OmniGraphNode "ArticulationController"
+        {
+            custom double[] inputs:effortCommand
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graphs/differential_controller/OnPlaybackTick.outputs:tick>
+            custom int[] inputs:jointIndices
+            custom token[] inputs:jointNames
+            prepend token[] inputs:jointNames.connect = </Graphs/differential_controller/ArrayNames.outputs:array>
+            custom double[] inputs:positionCommand
+            custom string inputs:robotPath
+            custom rel inputs:targetPrim = </World/stretch3/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double[] inputs:velocityCommand
+            prepend double[] inputs:velocityCommand.connect = </Graphs/differential_controller/DifferentialController.outputs:velocityCommand>
+            token node:type = "isaacsim.core.nodes.IsaacArticulationController"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "ArrayNames"
+        {
+            custom int inputs:arraySize = 2
+            custom token inputs:arrayType = "token[]" (
+                allowedTokens = ["auto", "bool[]", "double[]", "float[]", "half[]", "int[]", "int64[]", "token[]", "uchar[]", "uint[]", "uint64[]", "double[2][]", "double[3][]", "double[4][]", "matrixd[2][]", "matrixd[3][]", "matrixd[4][]", "float[2][]", "float[3][]", "float[4][]", "half[2][]", "half[3][]", "half[4][]", "int[2][]", "int[3][]", "int[4][]", "timecode[]", "frame[4][]", "colord[3][]", "colorf[3][]", "colorh[3][]", "colord[4][]", "colorf[4][]", "colorh[4][]", "normald[3][]", "normalf[3][]", "normalh[3][]", "pointd[3][]", "pointf[3][]", "pointh[3][]", "quatd[4][]", "quatf[4][]", "quath[4][]", "texcoordd[2][]", "texcoordf[2][]", "texcoordh[2][]", "texcoordd[3][]", "texcoordf[3][]", "texcoordh[3][]", "vectord[3][]", "vectorf[3][]", "vectorh[3][]"]
+            )
+            custom token inputs:input0 (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            token attrValue = "joint_right_wheel"
+                            string resolvedType = "token"
+                        }
+                    }
+                }
+            )
+            custom token inputs:input1 = "joint_left_wheel"
+            token node:type = "omni.graph.nodes.ConstructArray"
+            int node:typeVersion = 1
+            custom token outputs:array
+        }
+
+        def OmniGraphNode "W"
+        {
+            custom token inputs:key = "W" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "A"
+        {
+            custom token inputs:key = "A" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "S"
+        {
+            custom token inputs:key = "S" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "D"
+        {
+            custom token inputs:key = "D" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "ToDoubleW"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </Graphs/differential_controller/W.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleA"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </Graphs/differential_controller/A.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleS"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </Graphs/differential_controller/S.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleD"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </Graphs/differential_controller/D.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "NegateLinear"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/ToDoubleS.outputs:converted>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/NegOne.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "NegateAngular"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/ToDoubleD.outputs:converted>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/NegOne.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "AddLinear"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/ToDoubleW.outputs:converted>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/NegateLinear.outputs:product>
+            token node:type = "omni.graph.nodes.Add"
+            int node:typeVersion = 2
+            custom token outputs:sum
+        }
+
+        def OmniGraphNode "AddAngular"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/ToDoubleA.outputs:converted>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/NegateAngular.outputs:product>
+            token node:type = "omni.graph.nodes.Add"
+            int node:typeVersion = 2
+            custom token outputs:sum
+        }
+
+        def OmniGraphNode "SpeedLinear"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/AddLinear.outputs:sum>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/ScaleLinear.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "ScaleLinear"
+        {
+            custom double inputs:value = 5
+            token node:type = "omni.graph.nodes.ConstantDouble"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "SpeedAngular"
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/differential_controller/AddAngular.outputs:sum>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/differential_controller/ScaleAngular.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "ScaleAngular"
+        {
+            custom double inputs:value = 6
+            token node:type = "omni.graph.nodes.ConstantDouble"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "NegOne"
+        {
+            custom int inputs:value = -1
+            token node:type = "omni.graph.nodes.ConstantInt"
+            int node:typeVersion = 1
+        }
+    }
+}
+
