@@ -147,3 +147,7 @@ Then, click `2D Goal Pose` in the RViz window to set the goal pose.
 ![](assets/isaac-ros-nvblox-rviz.png)
 
 For further info, see more tutorials in [the official documentation](https://nvidia-isaac-ros.github.io/concepts/scene_reconstruction/nvblox/index.html#examples).
+
+## Known Issues
+
+See [official troubleshooting guide](https://nvidia-isaac-ros.github.io/troubleshooting/index.html) for Isaac ROS.

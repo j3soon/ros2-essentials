@@ -65,7 +65,6 @@ The docker image of the template workspace is share by most of the workspace, al
 |-----------|-------|-------|-------|------------|
 | [Template](https://j3soon.github.io/ros2-essentials/template-ws/) | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
 | [ORB-SLAM3](https://j3soon.github.io/ros2-essentials/orbslam3-ws) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
-| [RTAB-Map](https://j3soon.github.io/ros2-essentials/rtabmap-ws/) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [ROS1 Bridge](https://j3soon.github.io/ros2-essentials/ros1-bridge-ws/) | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
 | [Yujin Robot Kobuki](https://j3soon.github.io/ros2-essentials/kobuki-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
@@ -89,6 +88,7 @@ Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild 
 |--------|-------|-------|-------|---------|------------|
 | [ROS2](https://j3soon.github.io/ros2-essentials/docker-modules/ros2/) | ✔️ | ✔️ | ROS2 Humble | ✔️ | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Cartographer](https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/) | ✔️ | ✔️ | ROS2 Cartographer | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@yuhsiang1117](https://github.com/yuhsiang1117) |
+| [RTAB-Map](https://j3soon.github.io/ros2-essentials/docker-modules/rtabmap/) | ✔️ | ❔ | ROS2 RTAB-Map | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@JustinShih0918](https://github.com/JustinShih0918) |
 | [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/) | ✔️ | ️TODO | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | Isaac Sim 5.0.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
 | [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | Isaac Lab 2.2.1 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
