@@ -22,7 +22,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="./meshes/base_link_collision.STL"/>
+        <mesh filename="./meshes/base_link.STL"/>
       </geometry>
     </collision>
   </link>
@@ -42,9 +42,9 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.0125"/>
       <geometry>
-        <mesh filename="./meshes/link_right_wheel_collision.STL"/>
+        <cylinder radius="0.05" length="0.025"/>
       </geometry>
     </collision>
   </link>
@@ -71,9 +71,9 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.0125"/>
       <geometry>
-        <mesh filename="./meshes/link_left_wheel_collision.STL"/>
+        <cylinder radius="0.05" length="0.025"/>
       </geometry>
     </collision>
   </link>
