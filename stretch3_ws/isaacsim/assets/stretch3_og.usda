@@ -8,7 +8,7 @@
             }
             dictionary Perspective = {
                 double3 position = (5, 5, 5)
-                double3 target = (-3.978038431995401e-8, -3.978038254359717e-8, 7.956076863990802e-8)
+                double3 target = (-3.978038431995401e-8, -3.978038254359717e-8, 7.95607677517296e-8)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -21,6 +21,7 @@
             string boundCamera = "/OmniverseKit_Persp"
         }
         dictionary omni_layer = {
+            string authoring_layer = "./stretch3_og.usda"
             dictionary locked = {
             }
             dictionary muteness = {
@@ -39,6 +40,15 @@
 
 def Xform "World"
 {
+    def "stretch3" (
+        prepend payload = @./stretch_description_SE3_eoa_wrist_dw3_tool_sg3_isaac/stretch_description_SE3_eoa_wrist_dw3_tool_sg3_isaac.usda@
+    )
+    {
+        string isaac:namespace (
+            displayName = "Namespace"
+            doc = "Namespace of the prim in Isaac Sim"
+        )
+    }
 }
 
 def Xform "Environment"
@@ -126,5 +136,11 @@ def "Render" (
             uniform string sourceName = "LdrColor"
         }
     }
+}
+
+def "FlatGrid" (
+    prepend references = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/Environments/Grid/default_environment.usd@
+)
+{
 }
 
