@@ -21,7 +21,7 @@
             string boundCamera = "/OmniverseKit_Persp"
         }
         dictionary omni_layer = {
-            string authoring_layer = "./stretch_description_SE3_eoa_wrist_dw3_tool_sg3_isaac.usd"
+            string authoring_layer = "./stretch_description_SE3_eoa_wrist_dw3_tool_sg3_isaac.usda"
             dictionary locked = {
             }
             dictionary muteness = {
@@ -48,6 +48,62 @@ def Xform "stretch" (
         displayName = "Namespace"
         doc = "Namespace of the prim in Isaac Sim"
     )
+
+    over "link_left_wheel" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        string isaac:nameOverride (
+            displayName = "Name Override"
+            doc = "Name override for prim lookup in base name search"
+        )
+        rel material:binding = </stretch/PhysicsMaterialWheel> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+    }
+
+    over "joints"
+    {
+        over "joint_right_wheel"
+        {
+            float drive:angular:physics:damping = 21.75
+            float drive:angular:physics:stiffness = 0
+            string isaac:nameOverride (
+                displayName = "Name Override"
+                doc = "Name override for prim lookup in base name search"
+            )
+        }
+
+        over "joint_left_wheel"
+        {
+            float drive:angular:physics:damping = 21.75
+            float drive:angular:physics:stiffness = 0
+            string isaac:nameOverride (
+                displayName = "Name Override"
+                doc = "Name override for prim lookup in base name search"
+            )
+        }
+    }
+
+    over "link_right_wheel" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        string isaac:nameOverride (
+            displayName = "Name Override"
+            doc = "Name override for prim lookup in base name search"
+        )
+        rel material:binding = </stretch/PhysicsMaterialWheel> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+    }
+
+    def Material "PhysicsMaterialWheel" (
+        prepend apiSchemas = ["PhysicsMaterialAPI"]
+    )
+    {
+        float physics:staticFriction = 10.48
+    }
     variantSet "Physics" = {
         "None" (
             prepend references = @./configuration/stretch_description_SE3_eoa_wrist_dw3_tool_sg3_isaac_base.usd@
