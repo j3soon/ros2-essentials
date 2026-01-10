@@ -1,0 +1,11 @@
+# Visual Studio Code
+.vscode
+
+# ROS basic directories
+/build
+/install
+/devel
+/log
+
+# Hard Links
+/docker/modules
