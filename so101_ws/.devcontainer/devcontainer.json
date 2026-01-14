@@ -1,0 +1,25 @@
+/* Reference: https://aka.ms/devcontainer.json */
+{
+    "name": "TODO",
+    "dockerComposeFile": "../docker/compose.yaml",
+    "service": "so101-ws",
+    // Set the USER_UID
+    "initializeCommand": "\"${localWorkspaceFolder}\"/.devcontainer/create_env.sh",
+    // Workspace settings
+    "workspaceFolder": "/home/ros2-essentials/so101_ws",
+    // Vscode extensions
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-themes",
+                "twxs.cmake",
+                "leojhonsong.python-extension-pack",
+                "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
+                "ranch-hand-robotics.rde-pack"
+            ]
+        }
+    }
+}
