@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (5, 5, 5)
-                double3 target = (-3.978038431995401e-8, -3.978038254359717e-8, 7.956076863990802e-8)
+                double3 position = (3.542613255315853, 3.9177431445916895, 3.7954183430950943)
+                double3 target = (0.7166699519346196, -0.8913879833432894, 0.3968364909395756)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -21,7 +21,7 @@
             string boundCamera = "/OmniverseKit_Persp"
         }
         dictionary omni_layer = {
-            string authoring_layer = "./stretch3_og.usda"
+            string authoring_layer = "./stretch3_og_wasd.usda"
             dictionary locked = {
             }
             dictionary muteness = {
@@ -48,9 +48,17 @@ def Xform "World"
             displayName = "Namespace"
             doc = "Namespace of the prim in Isaac Sim"
         )
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0.03697984622915329)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         over "base_link"
         {
+            string isaac:nameOverride (
+                displayName = "Name Override"
+                doc = "Name override for prim lookup in base name search"
+            )
         }
 
         over "link_head_pan"
@@ -304,7 +312,9 @@ def "FlatGrid" (
 
 def "Graphs"
 {
-    def OmniGraph "differential_controller"
+    def OmniGraph "differential_controller" (
+        active = true
+    )
     {
         token evaluationMode = "Automatic"
         token evaluator:type = "execution"
@@ -381,26 +391,29 @@ def "Graphs"
             int node:typeVersion = 1
         }
 
-        def OmniGraphNode "ArrayNames"
+        def OmniGraphNode "ArrayNames" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
         {
             custom int inputs:arraySize = 2
             custom token inputs:arrayType = "token[]" (
                 allowedTokens = ["auto", "bool[]", "double[]", "float[]", "half[]", "int[]", "int64[]", "token[]", "uchar[]", "uint[]", "uint64[]", "double[2][]", "double[3][]", "double[4][]", "matrixd[2][]", "matrixd[3][]", "matrixd[4][]", "float[2][]", "float[3][]", "float[4][]", "half[2][]", "half[3][]", "half[4][]", "int[2][]", "int[3][]", "int[4][]", "timecode[]", "frame[4][]", "colord[3][]", "colorf[3][]", "colorh[3][]", "colord[4][]", "colorf[4][]", "colorh[4][]", "normald[3][]", "normalf[3][]", "normalh[3][]", "pointd[3][]", "pointf[3][]", "pointh[3][]", "quatd[4][]", "quatf[4][]", "quath[4][]", "texcoordd[2][]", "texcoordf[2][]", "texcoordh[2][]", "texcoordd[3][]", "texcoordf[3][]", "texcoordh[3][]", "vectord[3][]", "vectorf[3][]", "vectorh[3][]"]
             )
-            custom token inputs:input0 (
+            custom token inputs:input0 = "joint_left_wheel" (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
-                            token attrValue = "joint_right_wheel"
+                            token attrValue = "joint_left_wheel"
                             string resolvedType = "token"
                         }
                     }
                 }
             )
-            custom token inputs:input1 = "joint_left_wheel"
+            custom token inputs:input1 = "joint_right_wheel"
             token node:type = "omni.graph.nodes.ConstructArray"
             int node:typeVersion = 1
             custom token outputs:array
+            uniform float2 ui:nodegraph:node:pos = (-513.13, 188.33904)
         }
 
         def OmniGraphNode "W"
@@ -536,7 +549,9 @@ def "Graphs"
             custom token outputs:sum
         }
 
-        def OmniGraphNode "AddAngular"
+        def OmniGraphNode "AddAngular" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
         {
             custom token inputs:a
             prepend token inputs:a.connect = </Graphs/differential_controller/ToDoubleA.outputs:converted>
@@ -545,6 +560,7 @@ def "Graphs"
             token node:type = "omni.graph.nodes.Add"
             int node:typeVersion = 2
             custom token outputs:sum
+            uniform float2 ui:nodegraph:node:pos = (-1359.7896, 59.25263)
         }
 
         def OmniGraphNode "SpeedLinear"
@@ -588,6 +604,266 @@ def "Graphs"
             custom int inputs:value = -1
             token node:type = "omni.graph.nodes.ConstantInt"
             int node:typeVersion = 1
+        }
+    }
+
+    def OmniGraph "ros2_differential_controller"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "ros2_context" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-1973.153, -164.23357)
+        }
+
+        def OmniGraphNode "on_playback_tick" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-1977.9453, 44.35899)
+        }
+
+        def OmniGraphNode "ros2_subscribe_twist" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graphs/ros2_differential_controller/ros2_context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graphs/ros2_differential_controller/on_playback_tick.outputs:tick>
+            custom string inputs:nodeNamespace
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom string inputs:topicName
+            token node:type = "isaacsim.ros2.bridge.ROS2SubscribeTwist"
+            int node:typeVersion = 1
+            custom vector3d outputs:angularVelocity
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom vector3d outputs:linearVelocity
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-1612.7487, -189.74889)
+        }
+
+        def OmniGraphNode "scale_to_from_stage_units" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:conversion (
+                allowedTokens = ["Convert to stage units", "Convert to meters"]
+            )
+            custom token inputs:value
+            prepend token inputs:value.connect = </Graphs/ros2_differential_controller/ros2_subscribe_twist.outputs:linearVelocity>
+            token node:type = "isaacsim.core.nodes.OgnIsaacScaleToFromStageUnit"
+            int node:typeVersion = 1
+            custom token outputs:result
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-1307.4493, -61.973255)
+        }
+
+        def OmniGraphNode "break_3_vector" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:tuple
+            prepend token inputs:tuple.connect = </Graphs/ros2_differential_controller/ros2_subscribe_twist.outputs:angularVelocity>
+            token node:type = "omni.graph.nodes.BreakVector3"
+            int node:typeVersion = 1
+            custom token outputs:x
+            custom token outputs:y
+            custom token outputs:z
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-1283.7749, -226.63982)
+        }
+
+        def OmniGraphNode "break_3_vector_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:tuple
+            prepend token inputs:tuple.connect = </Graphs/ros2_differential_controller/scale_to_from_stage_units.outputs:result>
+            token node:type = "omni.graph.nodes.BreakVector3"
+            int node:typeVersion = 1
+            custom token outputs:x
+            custom token outputs:y
+            custom token outputs:z
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-1081.504, 9.803499)
+        }
+
+        def OmniGraphNode "make_array" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom int inputs:arraySize = 2
+            custom token inputs:arrayType = "token[]" (
+                allowedTokens = ["auto", "bool[]", "double[]", "float[]", "half[]", "int[]", "int64[]", "token[]", "uchar[]", "uint[]", "uint64[]", "double[2][]", "double[3][]", "double[4][]", "matrixd[2][]", "matrixd[3][]", "matrixd[4][]", "float[2][]", "float[3][]", "float[4][]", "half[2][]", "half[3][]", "half[4][]", "int[2][]", "int[3][]", "int[4][]", "timecode[]", "frame[4][]", "colord[3][]", "colorf[3][]", "colorh[3][]", "colord[4][]", "colorf[4][]", "colorh[4][]", "normald[3][]", "normalf[3][]", "normalh[3][]", "pointd[3][]", "pointf[3][]", "pointh[3][]", "quatd[4][]", "quatf[4][]", "quath[4][]", "texcoordd[2][]", "texcoordf[2][]", "texcoordh[2][]", "texcoordd[3][]", "texcoordf[3][]", "texcoordh[3][]", "vectord[3][]", "vectorf[3][]", "vectorh[3][]"]
+            )
+            custom token inputs:input0 = "joint_left_wheel" (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            token attrValue = "joint_left_wheel"
+                            string resolvedType = "token"
+                        }
+                    }
+                }
+            )
+            delete token inputs:input0.connect = </Graphs/ros2_differential_controller/constant_token.inputs:value>
+            prepend token inputs:input0.connect = </Graphs/ros2_differential_controller/constant_token.inputs:value>
+            custom token inputs:input1 = "joint_right_wheel" (
+                customData = {
+                    string ExtendedAttributeType = "Union-->bool,colord[3],colord[4],colorf[3],colorf[4],colorh[3],colorh[4],double,double[2],double[3],double[4],float,float[2],float[3],float[4],frame[4],half,half[2],half[3],half[4],int,int64,int[2],int[3],int[4],matrixd[2],matrixd[3],matrixd[4],normald[3],normalf[3],normalh[3],pointd[3],pointf[3],pointh[3],quatd[4],quatf[4],quath[4],texcoordd[2],texcoordd[3],texcoordf[2],texcoordf[3],texcoordh[2],texcoordh[3],timecode,token,transform[4],uchar,uint,uint64,vectord[3],vectorf[3],vectorh[3]"
+                    dictionary omni = {
+                        dictionary graph = {
+                            string attrType = "Union-->bool,colord[3],colord[4],colorf[3],colorf[4],colorh[3],colorh[4],double,double[2],double[3],double[4],float,float[2],float[3],float[4],frame[4],half,half[2],half[3],half[4],int,int64,int[2],int[3],int[4],matrixd[2],matrixd[3],matrixd[4],normald[3],normalf[3],normalh[3],pointd[3],pointf[3],pointh[3],quatd[4],quatf[4],quath[4],texcoordd[2],texcoordd[3],texcoordf[2],texcoordf[3],texcoordh[2],texcoordh[3],timecode,token,transform[4],uchar,uint,uint64,vectord[3],vectorf[3],vectorh[3]"
+                            token attrValue = "joint_right_wheel"
+                            string resolvedType = "token"
+                        }
+                    }
+                }
+            )
+            delete token inputs:input1.connect = </Graphs/ros2_differential_controller/constant_token_01.inputs:value>
+            prepend token inputs:input1.connect = </Graphs/ros2_differential_controller/constant_token_01.inputs:value>
+            token node:type = "omni.graph.nodes.ConstructArray"
+            int node:typeVersion = 1
+            custom token outputs:array
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-995.2072, 196.04956)
+        }
+
+        def OmniGraphNode "differential_controller" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom double inputs:angularVelocity
+            prepend double inputs:angularVelocity.connect = </Graphs/ros2_differential_controller/multiply.outputs:product>
+            custom double inputs:dt
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graphs/ros2_differential_controller/on_playback_tick.outputs:tick>
+            custom double inputs:linearVelocity
+            prepend double inputs:linearVelocity.connect = </Graphs/ros2_differential_controller/multiply_01.outputs:product>
+            custom double inputs:maxAcceleration
+            custom double inputs:maxAngularAcceleration
+            custom double inputs:maxAngularSpeed
+            custom double inputs:maxDeceleration
+            custom double inputs:maxLinearSpeed
+            custom double inputs:maxWheelSpeed
+            custom double inputs:wheelDistance = 0.3157
+            custom double inputs:wheelRadius = 0.05
+            token node:type = "isaacsim.robot.wheeled_robots.DifferentialController"
+            int node:typeVersion = 1
+            custom double[] outputs:velocityCommand
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-735.92896, -125.20314)
+        }
+
+        def OmniGraphNode "articulation_controller" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom double[] inputs:effortCommand
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graphs/ros2_differential_controller/on_playback_tick.outputs:tick>
+            custom int[] inputs:jointIndices
+            custom token[] inputs:jointNames
+            prepend token[] inputs:jointNames.connect = </Graphs/ros2_differential_controller/make_array.outputs:array>
+            custom double[] inputs:positionCommand
+            custom string inputs:robotPath
+            custom rel inputs:targetPrim = </World/stretch3/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double[] inputs:velocityCommand
+            prepend double[] inputs:velocityCommand.connect = </Graphs/ros2_differential_controller/differential_controller.outputs:velocityCommand>
+            token node:type = "isaacsim.core.nodes.IsaacArticulationController"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-383.22812, -23.25205)
+        }
+
+        def OmniGraphNode "multiply" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/ros2_differential_controller/constant_double.inputs:value>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/ros2_differential_controller/break_3_vector.outputs:z>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-980.267, -309.43924)
+        }
+
+        def OmniGraphNode "constant_double" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom double inputs:value = 10
+            token node:type = "omni.graph.nodes.ConstantDouble"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-1269.4031, -358.02997)
+        }
+
+        def OmniGraphNode "multiply_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:a
+            prepend token inputs:a.connect = </Graphs/ros2_differential_controller/constant_double.inputs:value>
+            custom token inputs:b
+            prepend token inputs:b.connect = </Graphs/ros2_differential_controller/break_3_vector_01.outputs:x>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-983.002, -182.62186)
         }
     }
 }
