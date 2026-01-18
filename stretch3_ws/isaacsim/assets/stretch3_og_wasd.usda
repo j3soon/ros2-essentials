@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (2.3466218983008984, 1.5762107437951571, 2.788037139995245)
-                double3 target = (-0.09157250085818935, -0.04072218960904772, 0.2002328026177378)
+                double3 position = (2.0880264489875775, 1.4047184712481537, 2.5135740268038207)
+                double3 target = (-0.09157250085820134, -0.04072218960905594, 0.20023280261772403)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -118,9 +118,10 @@ def Xform "World"
                 float focalLength = 18.147562
                 float focusDistance = 400
                 bool omni:kit:cameraLock = 0
-                quatd xformOp:orient = (-0.5684126372457641, -0.4106189978382765, 0.42060322611615325, 0.5756666036989545)
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -298.74919833298804)
+                quatd xformOp:orient = (-0.5684126372457637, -0.4106189978382764, 0.42060322611615303, 0.575666603698955)
                 double3 xformOp:scale = (1, 1, 1)
-                double3 xformOp:translate = (-1, 1.6653345369377348e-16, 0.4630201537708467)
+                double3 xformOp:translate = (95.28056847485894, -1.7670701427935533, -30.820432908212066)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
             }
 
@@ -131,6 +132,34 @@ def Xform "World"
                 quatd xformOp:orient = (1, 0, 0, 0)
                 double3 xformOp:scale = (1, 1, 1)
                 double3 xformOp:translate = (0, 0, 0.167)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def IsaacImuSensor "Imu_Sensor"
+                {
+                    int angularVelocityFilterWidth = 1
+                    bool enabled = 1
+                    int linearAccelerationFilterWidth = 1
+                    int orientationFilterWidth = 1
+                    float sensorPeriod = -1
+                    token visibility = "invisible"
+                    quatd xformOp:orient = (1, 0, 0, 0)
+                    double3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+
+            def IsaacImuSensor "Imu_Sensor"
+            {
+                int angularVelocityFilterWidth = 1
+                bool enabled = 1
+                int linearAccelerationFilterWidth = 1
+                int orientationFilterWidth = 1
+                float sensorPeriod = -1
+                token visibility = "invisible"
+                quatd xformOp:orient = (1, 0, 0, 0)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.12838, 0.00316, 0.1474)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
             }
         }
@@ -421,6 +450,39 @@ def "Render" (
                 custom bool overrideClipRange = 0
                 uniform int2 resolution = (1280, 720)
             }
+
+            def RenderProduct "Replicator_02" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/stretch3/base_link/RPLIDAR_S2E/RPLidar_S2E>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_02/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/GenericModelOutput>,
+                    </Render/Vars/RtxSensorMetadata>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
         }
     }
 
@@ -433,6 +495,7 @@ def "Render" (
             </Render/OmniverseKit/HydraTextures/omni_kit_widget_viewport_ViewportTexture_0>,
             </Render/OmniverseKit/HydraTextures/Replicator>,
             </Render/OmniverseKit/HydraTextures/Replicator_01>,
+            </Render/OmniverseKit/HydraTextures/Replicator_02>,
         ]
     }
 
@@ -453,7 +516,7 @@ def "Render" (
         {
             over "DispatchSync"
             {
-                custom int2[] inputs:simTimesToWrite = [(2221, 2), (16658, 15), (33317, 30), (5553, 5), (33319, 30), (3332, 3), (11107, 10), (16661, 15), (33323, 30), (5554, 5)]
+                custom int2[] inputs:simTimesToWrite = [(60368, 5), (362209, 30), (36221, 3), (120737, 10), (181106, 15), (362213, 30), (60369, 5), (72443, 6), (181108, 15), (120739, 10)]
             }
         }
     }
@@ -1234,87 +1297,6 @@ def "Graph"
         }
     }
 
-    def OmniGraph "ROS_TF"
-    {
-        token evaluationMode = "Automatic"
-        token evaluator:type = "execution"
-        token fabricCacheBacking = "StageWithoutHistory"
-        int2 fileFormatVersion = (1, 9)
-        token pipelineStage = "pipelineStageSimulation"
-
-        def OmniGraphNode "OnPlaybackTick"
-        {
-            token node:type = "omni.graph.action.OnPlaybackTick"
-            int node:typeVersion = 2
-            custom double outputs:deltaSeconds
-            custom double outputs:frame
-            custom uint outputs:tick (
-                customData = {
-                    bool isExecution = 1
-                }
-            )
-            custom double outputs:time
-        }
-
-        def OmniGraphNode "Context"
-        {
-            custom uchar inputs:domain_id
-            custom bool inputs:useDomainIDEnvVar
-            token node:type = "isaacsim.ros2.bridge.ROS2Context"
-            int node:typeVersion = 2
-            custom uint64 outputs:context
-        }
-
-        def OmniGraphNode "ReadSimTime"
-        {
-            custom uint64 inputs:referenceTimeDenominator
-            custom int64 inputs:referenceTimeNumerator
-            custom bool inputs:resetOnStop = 0
-            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
-            int node:typeVersion = 1
-            custom double outputs:simulationTime
-        }
-
-        def OmniGraphNode "PublisherTF"
-        {
-            custom uint64 inputs:context
-            prepend uint64 inputs:context.connect = </Graph/ROS_TF/Context.outputs:context>
-            custom uint inputs:execIn (
-                customData = {
-                    bool isExecution = 1
-                }
-            )
-            prepend uint inputs:execIn.connect = </Graph/ROS_TF/OnPlaybackTick.outputs:tick>
-            custom string inputs:nodeNamespace = ""
-            custom rel inputs:parentPrim = </World/stretch3/base_link> (
-                customData = {
-                    dictionary omni = {
-                        dictionary graph = {
-                            string relType = "target"
-                        }
-                    }
-                }
-            )
-            custom string inputs:qosProfile
-            custom uint64 inputs:queueSize
-            custom bool inputs:staticPublisher
-            custom rel inputs:targetPrims = </World/stretch3/base_link/RPLIDAR_S2E> (
-                customData = {
-                    dictionary omni = {
-                        dictionary graph = {
-                            string relType = "target"
-                        }
-                    }
-                }
-            )
-            custom double inputs:timeStamp
-            prepend double inputs:timeStamp.connect = </Graph/ROS_TF/ReadSimTime.outputs:simulationTime>
-            custom string inputs:topicName = "/tf"
-            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
-            int node:typeVersion = 1
-        }
-    }
-
     def OmniGraph "ROS_LidarRTX"
     {
         token evaluationMode = "Automatic"
@@ -1450,6 +1432,281 @@ def "Graph"
             )
             custom bool inputs:useSystemTime
             token node:type = "isaacsim.ros2.bridge.ROS2RtxLidarHelper"
+            int node:typeVersion = 1
+        }
+    }
+
+    def OmniGraph "ROS_IMU"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "ros2_context" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (109.2269, -23.131649)
+        }
+
+        def OmniGraphNode "on_playback_tick" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (99.408966, 127.909256)
+        }
+
+        def OmniGraphNode "isaac_read_imu_node" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_IMU/on_playback_tick.outputs:tick>
+            custom rel inputs:imuPrim = </World/stretch3/base_link/Imu_Sensor> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom bool inputs:readGravity
+            custom bool inputs:useLatestData
+            token node:type = "isaacsim.sensors.physics.IsaacReadIMU"
+            int node:typeVersion = 1
+            custom vector3d outputs:angVel
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom vector3d outputs:linAcc
+            custom quatd outputs:orientation
+            custom float outputs:sensorTime
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (425, 58)
+        }
+
+        def OmniGraphNode "isaac_read_simulation_time" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (429, 302)
+        }
+
+        def OmniGraphNode "ros2_publish_imu" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom vector3d inputs:angularVelocity
+            prepend vector3d inputs:angularVelocity.connect = </Graph/ROS_IMU/isaac_read_imu_node.outputs:angVel>
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_IMU/ros2_context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_IMU/isaac_read_imu_node.outputs:execOut>
+            custom string inputs:frameId
+            custom vector3d inputs:linearAcceleration
+            prepend vector3d inputs:linearAcceleration.connect = </Graph/ROS_IMU/isaac_read_imu_node.outputs:linAcc>
+            custom string inputs:nodeNamespace
+            custom quatd inputs:orientation
+            prepend quatd inputs:orientation.connect = </Graph/ROS_IMU/isaac_read_imu_node.outputs:orientation>
+            custom bool inputs:publishAngularVelocity
+            custom bool inputs:publishLinearAcceleration
+            custom bool inputs:publishOrientation
+            custom string inputs:qosProfile
+            prepend string inputs:qosProfile.connect = </Graph/ROS_IMU/ros2_qos_profile.outputs:qosProfile>
+            custom uint64 inputs:queueSize
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_IMU/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishImu"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (823.9539, -46.541733)
+        }
+
+        def OmniGraphNode "ros2_qos_profile" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:createProfile (
+                allowedTokens = ["Default for publishers/subscribers", "Services", "Sensor Data", "System Default", "Custom"]
+            )
+            custom double inputs:deadline
+            custom uint64 inputs:depth
+            custom token inputs:durability (
+                allowedTokens = ["systemDefault", "transientLocal", "volatile", "unknown"]
+            )
+            custom token inputs:history (
+                allowedTokens = ["systemDefault", "keepLast", "keepAll", "unknown"]
+            )
+            custom double inputs:leaseDuration
+            custom double inputs:lifespan
+            custom token inputs:liveliness (
+                allowedTokens = ["systemDefault", "automatic", "manualByTopic", "unknown"]
+            )
+            custom token inputs:reliability (
+                allowedTokens = ["systemDefault", "reliable", "bestEffort", "unknown"]
+            )
+            token node:type = "isaacsim.ros2.bridge.ROS2QoSProfile"
+            int node:typeVersion = 1
+            custom string outputs:qosProfile
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (425.45435, -221.40565)
+        }
+    }
+
+    def OmniGraph "ROS_TF"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "ReadSimTime"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 0
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "PublisherTF"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_TF/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_TF/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace = ""
+            custom rel inputs:parentPrim = </World/stretch3/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom bool inputs:staticPublisher
+            custom rel inputs:targetPrims = </World/stretch3/base_link/RPLIDAR_S2E> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_TF/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName = "/tf"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "PublisherTF_01"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_TF/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_TF/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace = ""
+            custom rel inputs:parentPrim = </World/stretch3/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom bool inputs:staticPublisher
+            custom rel inputs:targetPrims = </World/stretch3/base_link/Imu_Sensor> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_TF/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName = "/tf"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
             int node:typeVersion = 1
         }
     }
