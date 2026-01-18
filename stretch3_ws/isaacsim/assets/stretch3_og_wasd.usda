@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (2.0880264489875775, 1.4047184712481537, 2.5135740268038207)
-                double3 target = (-0.09157250085820134, -0.04072218960905594, 0.20023280261772403)
+                double3 position = (-2.1984279781741938, -0.7435618261400394, 1.0519894603129083)
+                double3 target = (1.470338093706553, 0.9411333174760941, 1.0095633984109564)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -19,6 +19,20 @@
                 double radius = 5
             }
             string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary navmeshSettings = {
+            double agentHeight = 1.8
+            double agentMaxFloorSlope = 45
+            double agentMaxStepHeight = 0.4
+            double agentRadius = 0.2
+            dictionary areas = {
+                dictionary "0" = {
+                    string areaName = "Walkable"
+                    float3 color = (0.2, 0.8, 1)
+                    double defaultCost = 1
+                }
+            }
+            bool excludeRigidBodies = 1
         }
         dictionary omni_layer = {
             string authoring_layer = "./stretch3_og_wasd.usda"
@@ -71,45 +85,6 @@ def Xform "World"
 
             over "laser"
             {
-                def Lidar "Lidar"
-                {
-                    bool drawLines = 0
-                    bool drawPoints = 0
-                    bool enabled = 1
-                    bool enableSemantics = 0
-                    bool highLod = 0
-                    float horizontalFov = 360
-                    float horizontalResolution = 0.4
-                    float maxRange = 100
-                    float minRange = 0.4
-                    float rotationRate = 20
-                    float verticalFov = 30
-                    float verticalResolution = 4
-                    double3 xformOp:rotateXYZ
-                    double3 xformOp:translate
-                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
-                    float yawOffset = 0
-                }
-
-                def Lidar "Lidar_01"
-                {
-                    bool drawLines = 0
-                    bool drawPoints = 0
-                    bool enabled = 1
-                    bool enableSemantics = 0
-                    bool highLod = 0
-                    float horizontalFov = 360
-                    float horizontalResolution = 0.4
-                    float maxRange = 100
-                    float minRange = 0.4
-                    float rotationRate = 20
-                    float verticalFov = 30
-                    float verticalResolution = 4
-                    double3 xformOp:rotateXYZ
-                    double3 xformOp:translate
-                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
-                    float yawOffset = 0
-                }
             }
 
             def Camera "Camera"
@@ -170,6 +145,79 @@ def Xform "World"
 
         over "link_head_tilt"
         {
+            string isaac:nameOverride (
+                displayName = "Name Override"
+                doc = "Name override for prim lookup in base name search"
+            )
+
+            over "camera_bottom_screw_frame"
+            {
+                over "camera_link"
+                {
+                    def Xform "Realsense" (
+                        prepend references = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/Sensors/Intel/RealSense/rsd455.usd@
+                    )
+                    {
+                        quatd xformOp:orient = (1, 0, 0, 0)
+                        double3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, 4.440892098500626e-16, 3.0357660829594124e-18)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        over "RSD455"
+                        {
+                            quatd xformOp:orient = (0.5000000000000001, -0.5, 0.5, -0.49999999999999994)
+                            double3 xformOp:translate = (0, 0, 0)
+
+                            over "Camera_Pseudo_Depth"
+                            {
+                                float verticalAperture = 2.054531
+                                token visibility = "invisible"
+                                quatd xformOp:orient = (6.123233995736766e-17, -1, 0, 0)
+                                double3 xformOp:translate = (0, 0, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            over "Imu_Sensor" (
+                                active = false
+                            )
+                            {
+                            }
+
+                            over "Camera_OmniVision_OV9782_Color"
+                            {
+                                token visibility = "invisible"
+                                quatd xformOp:orient = (0.5000000000000001, 0.5, -0.5, -0.49999999999999994)
+                                double3 xformOp:translate = (0, 0.015, 0)
+                            }
+
+                            over "Camera_OmniVision_OV9782_Left"
+                            {
+                                token visibility = "invisible"
+                                quatd xformOp:orient = (0.5000000000000001, 0.5, -0.5, -0.49999999999999994)
+                                double3 xformOp:translate = (0, -0.05, 0)
+                            }
+
+                            over "Camera_OmniVision_OV9782_Right"
+                            {
+                                quatd xformOp:orient = (0.5000000000000001, 0.5, -0.5, -0.49999999999999994)
+                                double3 xformOp:translate = (0, 0, 0)
+                            }
+
+                            over "Visual" (
+                                active = true
+                            )
+                            {
+                                token visibility = "invisible"
+                            }
+
+                            over "Looks"
+                            {
+                                token visibility = "invisible"
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         over "link_left_wheel"
@@ -483,6 +531,198 @@ def "Render" (
                 custom bool overrideClipRange = 0
                 uniform int2 resolution = (1280, 720)
             }
+
+            def RenderProduct "Replicator_03" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/stretch3/base_link/RPLIDAR_S2E/RPLidar_S2E>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_03/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/GenericModelOutput>,
+                    </Render/Vars/RtxSensorMetadata>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator_04" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/stretch3/link_head_tilt/camera_bottom_screw_frame/camera_link/Realsense/RSD455/Camera_Pseudo_Depth>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_04/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator_05" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/stretch3/link_head_tilt/camera_bottom_screw_frame/camera_link/Realsense/RSD455/Camera_Pseudo_Depth>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator_06" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/stretch3/base_link/RPLIDAR_S2E/RPLidar_S2E>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator_07" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/stretch3/base_link/RPLIDAR_S2E/RPLidar_S2E>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_07/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/GenericModelOutput>,
+                    </Render/Vars/RtxSensorMetadata>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator_08" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/stretch3/link_head_tilt/camera_bottom_screw_frame/camera_link/Realsense/RSD455/Camera_Pseudo_Depth>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_08/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
         }
     }
 
@@ -496,6 +736,12 @@ def "Render" (
             </Render/OmniverseKit/HydraTextures/Replicator>,
             </Render/OmniverseKit/HydraTextures/Replicator_01>,
             </Render/OmniverseKit/HydraTextures/Replicator_02>,
+            </Render/OmniverseKit/HydraTextures/Replicator_03>,
+            </Render/OmniverseKit/HydraTextures/Replicator_04>,
+            </Render/OmniverseKit/HydraTextures/Replicator_05>,
+            </Render/OmniverseKit/HydraTextures/Replicator_06>,
+            </Render/OmniverseKit/HydraTextures/Replicator_07>,
+            </Render/OmniverseKit/HydraTextures/Replicator_08>,
         ]
     }
 
@@ -516,7 +762,7 @@ def "Render" (
         {
             over "DispatchSync"
             {
-                custom int2[] inputs:simTimesToWrite = [(60368, 5), (362209, 30), (36221, 3), (120737, 10), (181106, 15), (362213, 30), (60369, 5), (72443, 6), (181108, 15), (120739, 10)]
+                custom int2[] inputs:simTimesToWrite = [(14249, 30), (475, 1), (14251, 30), (7126, 15), (4751, 10), (7127, 15), (2851, 6), (2376, 5), (14257, 30), (7129, 15)]
             }
         }
     }
@@ -1613,16 +1859,21 @@ def "Graph"
             custom double outputs:time
         }
 
-        def OmniGraphNode "Context"
+        def OmniGraphNode "Context" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
         {
             custom uchar inputs:domain_id
             custom bool inputs:useDomainIDEnvVar
             token node:type = "isaacsim.ros2.bridge.ROS2Context"
             int node:typeVersion = 2
             custom uint64 outputs:context
+            uniform float2 ui:nodegraph:node:pos = (-539.8853, -195.41867)
         }
 
-        def OmniGraphNode "ReadSimTime"
+        def OmniGraphNode "ReadSimTime" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
         {
             custom uint64 inputs:referenceTimeDenominator
             custom int64 inputs:referenceTimeNumerator
@@ -1630,6 +1881,7 @@ def "Graph"
             token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
             int node:typeVersion = 1
             custom double outputs:simulationTime
+            uniform float2 ui:nodegraph:node:pos = (-540.393, -378.7326)
         }
 
         def OmniGraphNode "PublisherTF"
@@ -1671,7 +1923,9 @@ def "Graph"
             int node:typeVersion = 1
         }
 
-        def OmniGraphNode "PublisherTF_01"
+        def OmniGraphNode "PublisherTF_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
         {
             custom uint64 inputs:context
             prepend uint64 inputs:context.connect = </Graph/ROS_TF/Context.outputs:context>
@@ -1708,6 +1962,401 @@ def "Graph"
             custom string inputs:topicName = "/tf"
             token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
             int node:typeVersion = 1
+            uniform float2 ui:nodegraph:node:pos = (-123.99931, -7.7243075)
+        }
+
+        def OmniGraphNode "ros2_publish_transform_tree" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_TF/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_TF/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace
+            custom rel inputs:parentPrim = </World/stretch3/link_head_tilt> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom bool inputs:staticPublisher
+            custom rel inputs:targetPrims = </World/stretch3/link_head_tilt/camera_bottom_screw_frame> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_TF/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-127.03861, 282.8257)
+        }
+
+        def OmniGraphNode "ros2_publish_transform_tree_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_TF/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_TF/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace
+            custom rel inputs:parentPrim = </World/stretch3/link_head_tilt/camera_bottom_screw_frame> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom bool inputs:staticPublisher
+            custom rel inputs:targetPrims = </World/stretch3/link_head_tilt/camera_bottom_screw_frame/camera_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_TF/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-169.27054, 581.9781)
+        }
+
+        def OmniGraphNode "ros2_publish_transform_tree_02" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_TF/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_TF/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace
+            custom rel inputs:parentPrim = </World/stretch3/link_head_tilt/camera_bottom_screw_frame/camera_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom bool inputs:staticPublisher
+            custom rel inputs:targetPrims = </World/stretch3/link_head_tilt/camera_bottom_screw_frame/camera_link/Realsense/RSD455> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_TF/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-203.52045, 831.5287)
+        }
+    }
+
+    def OmniGraph "ROS_Camera"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "CameraInfoPublish"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_Camera/Context.outputs:context>
+            custom bool inputs:enabled
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Camera/RenderProduct.outputs:execOut>
+            custom string inputs:frameId = "camera_link"
+            custom string inputs:frameIdRight
+            custom uint inputs:frameSkipCount
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </Graph/ROS_Camera/RenderProduct.outputs:renderProductPath>
+            custom token inputs:renderProductPathRight
+            custom bool inputs:resetSimulationTimeOnStop = 0
+            custom string inputs:topicName = "camera_info"
+            custom string inputs:topicNameRight
+            custom bool inputs:useSystemTime
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraInfoHelper"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "RenderProduct"
+        {
+            custom rel inputs:cameraPrim = </World/stretch3/link_head_tilt/camera_bottom_screw_frame/camera_link/Realsense/RSD455/Camera_Pseudo_Depth> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom bool inputs:enabled
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Camera/RunOnce.outputs:step>
+            custom uint inputs:height
+            custom uint inputs:width
+            token node:type = "isaacsim.core.nodes.IsaacCreateRenderProduct"
+            int node:typeVersion = 2
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom token outputs:renderProductPath
+        }
+
+        def OmniGraphNode "RunOnce"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Camera/OnPlaybackTick.outputs:tick>
+            token node:type = "isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"
+            int node:typeVersion = 1
+            custom uint outputs:step (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+        }
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "RGBPublish"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_Camera/Context.outputs:context>
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Camera/RenderProduct.outputs:execOut>
+            custom string inputs:frameId = "RSD455"
+            custom uint inputs:frameSkipCount
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </Graph/ROS_Camera/RenderProduct.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop = 0
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "/rgb"
+            custom token inputs:type = "rgb" (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d"]
+            )
+            custom bool inputs:useSystemTime
+            custom token inputs:viewport
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+        }
+
+        def OmniGraphNode "DepthPublish"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_Camera/Context.outputs:context>
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Camera/RenderProduct.outputs:execOut>
+            custom string inputs:frameId = "RSD455"
+            custom uint inputs:frameSkipCount
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </Graph/ROS_Camera/RenderProduct.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop = 0
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "/depth"
+            custom token inputs:type = "depth" (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d"]
+            )
+            custom bool inputs:useSystemTime
+            custom token inputs:viewport
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+        }
+
+        def OmniGraphNode "DepthPclPublish"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_Camera/Context.outputs:context>
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Camera/RenderProduct.outputs:execOut>
+            custom string inputs:frameId = "RSD455"
+            custom uint inputs:frameSkipCount
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </Graph/ROS_Camera/RenderProduct.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop = 0
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "/depth_pcl"
+            custom token inputs:type = "depth_pcl" (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d"]
+            )
+            custom bool inputs:useSystemTime
+            custom token inputs:viewport
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+        }
+    }
+
+    def OmniGraph "ROS_Clock"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "ReadSimTime"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 0
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "PublishClock"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_Clock/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Clock/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_Clock/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishClock"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
         }
     }
 }
