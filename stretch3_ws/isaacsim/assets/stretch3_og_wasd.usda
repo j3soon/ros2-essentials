@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (0.3683057921594972, 0.2642544593384137, 0.6883296671447753)
-                double3 target = (-0.09157250085818458, -0.040722189609043835, 0.20023280261774334)
+                double3 position = (2.3466218983008984, 1.5762107437951571, 2.788037139995245)
+                double3 target = (-0.09157250085818935, -0.04072218960904772, 0.2002328026177378)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -392,6 +392,35 @@ def "Render" (
                 custom bool overrideClipRange = 0
                 uniform int2 resolution = (1280, 720)
             }
+
+            def RenderProduct "Replicator_01" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/stretch3/base_link/RPLIDAR_S2E/RPLidar_S2E>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
         }
     }
 
@@ -403,6 +432,7 @@ def "Render" (
         rel products = [
             </Render/OmniverseKit/HydraTextures/omni_kit_widget_viewport_ViewportTexture_0>,
             </Render/OmniverseKit/HydraTextures/Replicator>,
+            </Render/OmniverseKit/HydraTextures/Replicator_01>,
         ]
     }
 
@@ -423,7 +453,7 @@ def "Render" (
         {
             over "DispatchSync"
             {
-                custom int2[] inputs:simTimesToWrite = [(107162, 5), (642973, 30), (321487, 15), (42865, 2), (321488, 15), (642977, 30), (107163, 5), (642979, 30), (64298, 3), (214327, 10)]
+                custom int2[] inputs:simTimesToWrite = [(2221, 2), (16658, 15), (33317, 30), (5553, 5), (33319, 30), (3332, 3), (11107, 10), (16661, 15), (33323, 30), (5554, 5)]
             }
         }
     }
@@ -1005,6 +1035,286 @@ def "Graphs"
 
 def "Graph"
 {
+    def OmniGraph "ROS_Odometry"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "ReadSimTime"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 0
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "TFWorld2Odom"
+        {
+            custom string inputs:childFrameId = "odom"
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_Odometry/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Odometry/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:parentFrameId = "world"
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom quatd inputs:rotation
+            custom bool inputs:staticPublisher
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_Odometry/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName
+            custom vector3d inputs:translation
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishRawTransformTree"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "TFOdom2Robot"
+        {
+            custom string inputs:childFrameId = "base_link"
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_Odometry/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Odometry/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:parentFrameId
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom quatd inputs:rotation
+            prepend quatd inputs:rotation.connect = </Graph/ROS_Odometry/ComputeOdometry.outputs:orientation>
+            custom bool inputs:staticPublisher
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_Odometry/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName
+            custom vector3d inputs:translation
+            prepend vector3d inputs:translation.connect = </Graph/ROS_Odometry/ComputeOdometry.outputs:position>
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishRawTransformTree"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "ComputeOdometry"
+        {
+            custom rel inputs:chassisPrim = </World/stretch3/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Odometry/OnPlaybackTick.outputs:tick>
+            token node:type = "isaacsim.core.nodes.IsaacComputeOdometry"
+            int node:typeVersion = 1
+            custom vector3d outputs:angularAcceleration
+            custom vector3d outputs:angularVelocity
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom vector3d outputs:globalLinearAcceleration
+            custom vector3d outputs:globalLinearVelocity
+            custom vector3d outputs:linearAcceleration
+            custom vector3d outputs:linearVelocity
+            custom quatd outputs:orientation
+            custom vector3d outputs:position
+        }
+
+        def OmniGraphNode "PublisherOdometry"
+        {
+            custom vector3d inputs:angularVelocity
+            prepend vector3d inputs:angularVelocity.connect = </Graph/ROS_Odometry/ComputeOdometry.outputs:angularVelocity>
+            custom string inputs:chassisFrameId = "base_link"
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_Odometry/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Odometry/ComputeOdometry.outputs:execOut>
+            custom vector3d inputs:linearVelocity
+            prepend vector3d inputs:linearVelocity.connect = </Graph/ROS_Odometry/ComputeOdometry.outputs:linearVelocity>
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:odomFrameId
+            custom quatd inputs:orientation
+            prepend quatd inputs:orientation.connect = </Graph/ROS_Odometry/ComputeOdometry.outputs:orientation>
+            custom vector3d inputs:position
+            prepend vector3d inputs:position.connect = </Graph/ROS_Odometry/ComputeOdometry.outputs:position>
+            custom bool inputs:publishRawVelocities
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom vector3d inputs:robotFront
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_Odometry/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName = "/odom"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishOdometry"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "TFRobot"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_Odometry/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_Odometry/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace = ""
+            custom rel inputs:parentPrim = </World/stretch3/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom bool inputs:staticPublisher
+            custom rel inputs:targetPrims = </World/stretch3/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_Odometry/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName = "/tf"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+        }
+    }
+
+    def OmniGraph "ROS_TF"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "ReadSimTime"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 0
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "PublisherTF"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </Graph/ROS_TF/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graph/ROS_TF/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace = ""
+            custom rel inputs:parentPrim = </World/stretch3/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom bool inputs:staticPublisher
+            custom rel inputs:targetPrims = </World/stretch3/base_link/RPLIDAR_S2E> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </Graph/ROS_TF/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName = "/tf"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+        }
+    }
+
     def OmniGraph "ROS_LidarRTX"
     {
         token evaluationMode = "Automatic"
@@ -1094,7 +1404,7 @@ def "Graph"
                 }
             )
             prepend uint inputs:execIn.connect = </Graph/ROS_LidarRTX/RenderProduct.outputs:execOut>
-            custom string inputs:frameId = "sim_lidar"
+            custom string inputs:frameId = "RPLIDAR_S2E"
             custom uint inputs:frameSkipCount
             custom bool inputs:fullScan
             custom string inputs:nodeNamespace = ""
@@ -1124,7 +1434,7 @@ def "Graph"
                 }
             )
             prepend uint inputs:execIn.connect = </Graph/ROS_LidarRTX/RenderProduct.outputs:execOut>
-            custom string inputs:frameId = "sim_lidar"
+            custom string inputs:frameId = "RPLIDAR_S2E"
             custom uint inputs:frameSkipCount
             custom bool inputs:fullScan
             custom string inputs:nodeNamespace = ""
