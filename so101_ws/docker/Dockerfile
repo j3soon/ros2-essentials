@@ -167,6 +167,18 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
 # TODO: Add more commands here
+# Ref: https://huggingface.co/docs/lerobot/installation
+# Install ffmpeg 7 from ubuntuhandbook PPA
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo add-apt-repository -y ppa:ubuntuhandbook1/ffmpeg7 \
+    && sudo apt-get update && sudo apt-get install -y ffmpeg \
+    && sudo rm -rf /var/lib/apt/lists/*
+# Install lerobot
+# Note: `colcon-core 0.20.1` requires `setuptools<80`
+RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
+    python3 -m pip install "lerobot[feetech]==0.4.3" && \
+    python3 -m pip install "setuptools<80"
+
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here

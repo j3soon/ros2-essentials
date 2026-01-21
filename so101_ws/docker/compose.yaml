@@ -107,13 +107,13 @@ services:
       - $HOME/.Xauthority:/home/user/.Xauthority
         # Xauthority is mounted to allow X11 forwarding for remote display.
       # Mount Direct Rendering Infrastructure (DRI) for hardware acceleration support such as OpenGL.
-      - /dev/dri:/dev/dri
+      # - /dev/dri:/dev/dri
       # Mount sound card to prevent Gazebo warning.
-      - /dev/snd:/dev/snd
+      # - /dev/snd:/dev/snd
       # Mount shared memory for ROS2 communication.
-      - /dev/shm:/dev/shm
+      # - /dev/shm:/dev/shm
       # TODO: Uncomment the line below and comment out the three entries above to enable USB support.
-      # - /dev:/dev
+      - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
@@ -181,6 +181,8 @@ services:
         volume:
           subpath: documents
       # TODO: Add more volume mounts here.
+      # Mount parent directory of LeRobot cache directory for calibration files.
+      - $HOME/.cache/huggingface:/home/user/.cache/huggingface
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
       # Mount credentials (for Claude Code CLI, Codex CLI, and etc.)
