@@ -1,7 +1,10 @@
 import os
 
+from ament_index_python.packages import get_package_share_directory
+
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
+from launch.actions import SetEnvironmentVariable
 from launch.substitutions import PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
@@ -28,10 +31,27 @@ def generate_launch_description():
     ])
 
     # Robot description path
-    realsense_desp_path = PathJoinSubstitution([
-        FindPackageShare("realsense_desp"),
-        "launch", "realsense_desp.launch.py"
+    realsense_description_path = PathJoinSubstitution([
+        FindPackageShare("realsense_description"),
+        "launch", "realsense_description.launch.py"
     ])
+
+    # Ensure Gazebo classic can resolve model:// URIs used inside model.sdf
+    # (e.g. model://turtlebot3_burger/meshes/d435.dae)
+    realsense_models_dir = os.path.join(
+        get_package_share_directory('realsense_description'),
+        'models'
+    )
+    gazebo_model_path = os.environ.get('GAZEBO_MODEL_PATH', '')
+    if gazebo_model_path:
+        gazebo_model_path = realsense_models_dir + os.pathsep + gazebo_model_path
+    else:
+        gazebo_model_path = realsense_models_dir
+
+    set_gazebo_model_path = SetEnvironmentVariable(
+        name='GAZEBO_MODEL_PATH',
+        value=gazebo_model_path,
+    )
 
 
     #####################################
@@ -39,8 +59,8 @@ def generate_launch_description():
 
     # Launch the robot with realsense
     # - With given robot position arguments
-    realsense_desp = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(realsense_desp_path),
+    realsense_description = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(realsense_description_path),
         launch_arguments={
             'robot_px': '-2.0',
             'robot_py': '-0.5',
@@ -71,5 +91,6 @@ def generate_launch_description():
     # Launch description
     
     return LaunchDescription([
-        gazebo, rviz, realsense_desp
+        set_gazebo_model_path,
+        gazebo, rviz, realsense_description
     ])

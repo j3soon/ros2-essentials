@@ -23,14 +23,14 @@ def generate_launch_description():
 
     # Define the path to the model
     burger_model_path = PathJoinSubstitution([
-        FindPackageShare("realsense_desp"), 
+        FindPackageShare("realsense_description"), 
         "models/turtlebot3_burger/model.sdf"
     ])
     
     # Add robot description
     # Ref: https://github.com/ROBOTIS-GIT/turtlebot3_simulations/blob/98a27b20952b11047f454d7ec751f8c742862713/turtlebot3_gazebo/launch/robot_state_publisher.launch.py
     urdf_path = os.path.join(
-        get_package_share_directory('realsense_desp'),
+        get_package_share_directory('realsense_description'),
         'urdf',
         'turtlebot3_burger.urdf'
     )
