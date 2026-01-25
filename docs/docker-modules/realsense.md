@@ -1,6 +1,6 @@
 # Realsense
 
-[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_cartographer.sh)
+[![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_realsense.sh)
 
 ROS2 Realsense. (Only installed by default for the template workspace.)
 
@@ -44,7 +44,7 @@ docker compose down
 
 ## Realsense test with gazebo
 
-- realsense_desp package: Description of a robot with realsense D435 camera.
+- realsense_description package: Description of a robot with realsense D435 camera.
 - realsense_gazebo package: Gazebo simulation of the robot with robot state publisher.
 - Launch Gazebo with turtlebot3 in `tmux`
   ```bash
@@ -56,7 +56,7 @@ docker compose down
   ros2 run rqt_robot_steering rqt_robot_steering
   ```
 
-## Realsense test in realworld
+## Realsense test in real world
 
 - Launch Realsense camera node in `tmux`
     ```bash
@@ -66,7 +66,7 @@ docker compose down
 
 - Open RViz to verify the camera topics in `tmux`
     ```bash
-    ros2 run rviz2 rviz2
+    rviz2
     ```
 
 ## References
