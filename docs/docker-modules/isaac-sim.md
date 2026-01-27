@@ -2,7 +2,7 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_sim.sh)
 
-Isaac Sim 5.0.0 Binary Install.
+Isaac Sim 5.1.0 Binary Install.
 
 Depends on:
 
@@ -11,11 +11,11 @@ Depends on:
 
 > Note that CUDA Toolkit is not required for Isaac Sim.
 
-Compatibility test:
+[Compatibility test](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_workstation.html#isaac-sim-compatibility-checker):
 
 ```sh
-cd ~/isaac-sim-comp-check
-./omni.isaac.sim.compatibility_check.sh
+cd ~/isaacsim
+./isaac-sim.compatibility_check.sh
 ```
 
 Quick test:

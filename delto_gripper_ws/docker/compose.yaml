@@ -2,22 +2,23 @@ name: ros2-delto-gripper-ws
 services:
   volume-instantiation:
     # Ref: https://github.com/moby/moby/issues/47842#issuecomment-2249050939
+    # Note: We use individual `chown` commands instead of `chown -R` for performance.
+    # This chown is only required for empty volumes. If the volume happens to be non-empty,
+    # `chown -R` would be very time-consuming as it recursively changes ownership of all
+    # existing files and subdirectories.
     image: ubuntu:22.04
     container_name: ros2-delto-gripper-ws-volume-instantiation
     command: bash -c "
         echo 'Creating directories and setting ownership for UID ${USER_UID:-1000}...' &&
-        mkdir -p /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
-        mkdir -p /isaac-sim/{logs,data,documents} &&
-        mkdir -p /isaac-sim/standalone/cache/ov &&
-        mkdir -p /isaac-sim/standalone/{logs,data} &&
+        mkdir -p /isaac-sim/.cache &&
+        mkdir -p /isaac-sim/.nv/ComputeCache &&
+        mkdir -p /isaac-sim/.nvidia-omniverse/{logs,config} &&
+        mkdir -p /isaac-sim/.local/share/ov/{data,pkg} &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/cache &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/cache/{kit,ov,pip,glcache,computecache} &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/{logs,data,documents} &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache/ov &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/{logs,data}
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.cache &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.nv{,/ComputeCache} &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.nvidia-omniverse{,/logs,/config} &&
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.local{,/share,/share/ov,/share/ov/data,/share/ov/pkg}
         "
     volumes:
       - isaac-sim-cache:/isaac-sim
@@ -37,7 +38,7 @@ services:
         # TODO: Set CUDA Toolkit version or set to "" if not using CUDA Toolkit
         # CUDA_TOOLKIT_VERSION: ""
         # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
-        # ISAAC_SIM_VERSION: "5.0.0"
+        # ISAAC_SIM_VERSION: "5.1.0"
         # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
         # ISAAC_LAB_VERSION: "2.2.1"
         # TODO: Set to "YES" if using Isaac ROS or set to "" if not using Isaac ROS
@@ -119,63 +120,38 @@ services:
       # Mount CycloneDDS configuration file.
       - ./cyclonedds.xml:/home/user/cyclonedds.xml
       # Mount Isaac Sim cache directories.
-      # Reference: https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_container.html#container-deployment
+      # Reference: https://docs.isaacsim.omniverse.nvidia.com/latest/installation/install_container.html#container-deployment
       # Note that this volume is shared among all workspaces.
       - type: volume
         source: isaac-sim-cache
-        target: /isaac-sim/kit/cache
+        target: /isaac-sim/.cache
         volume:
-          subpath: cache/kit
+          subpath: .cache
       - type: volume
         source: isaac-sim-cache
-        target: /home/user/.cache/ov
+        target: /isaac-sim/.nv/ComputeCache
         volume:
-          subpath: cache/ov
+          subpath: .nv/ComputeCache
       - type: volume
         source: isaac-sim-cache
-        target: /home/user/.local/lib/python3.11/site-packages/omni/cache  # For Isaac Sim standalone
+        target: /isaac-sim/.nvidia-omniverse/logs
         volume:
-          subpath: standalone/cache/ov
+          subpath: .nvidia-omniverse/logs
       - type: volume
         source: isaac-sim-cache
-        target: /home/user/.cache/pip
+        target: /isaac-sim/.nvidia-omniverse/config
         volume:
-          subpath: cache/pip
+          subpath: .nvidia-omniverse/config
       - type: volume
         source: isaac-sim-cache
-        target: /home/user/.cache/nvidia/GLCache
+        target: /isaac-sim/.local/share/ov/data
         volume:
-          subpath: cache/glcache
+          subpath: .local/share/ov/data
       - type: volume
         source: isaac-sim-cache
-        target: /home/user/.nv/ComputeCache
+        target: /isaac-sim/.local/share/ov/pkg
         volume:
-          subpath: cache/computecache
-      - type: volume
-        source: isaac-sim-cache
-        target: /home/user/.nvidia-omniverse/logs
-        volume:
-          subpath: logs
-      - type: volume
-        source: isaac-sim-cache
-        target: /home/user/.local/lib/python3.11/site-packages/omni/logs  # For Isaac Sim standalone
-        volume:
-          subpath: standalone/logs
-      - type: volume
-        source: isaac-sim-cache
-        target: /home/user/.local/share/ov/data
-        volume:
-          subpath: data
-      - type: volume
-        source: isaac-sim-cache
-        target: /home/user/.local/lib/python3.11/site-packages/omni/data  # For Isaac Sim standalone
-        volume:
-          subpath: standalone/data
-      - type: volume
-        source: isaac-sim-cache
-        target: /home/user/Documents
-        volume:
-          subpath: documents
+          subpath: .local/share/ov/pkg
       # TODO: Add more volume mounts here.
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials

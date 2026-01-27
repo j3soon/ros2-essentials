@@ -105,7 +105,7 @@ RUN mkdir -p /home/$USERNAME/.cache/pip
 RUN mkdir /home/$USERNAME/.gazebo
 
 # Isaac Sim version configuration
-ARG ISAAC_SIM_VERSION=5.0.0
+ARG ISAAC_SIM_VERSION=5.1.0
 # Ref: https://isaac-sim.github.io/IsaacLab/v2.2.1/source/setup/installation/binaries_installation.html
 ENV ISAACSIM_PATH="/home/$USERNAME/isaacsim"
 # Copy and run Isaac Sim installation script

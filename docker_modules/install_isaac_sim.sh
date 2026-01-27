@@ -36,28 +36,20 @@ sudo apt-get update && sudo apt-get install -y \
     && sudo rm -rf /var/lib/apt/lists/* \
     || exit 1
 
-if [ "$ISAAC_SIM_VERSION" = "5.0.0" ]; then
-    echo "Installing Isaac Sim Compatibility Checker 5.0.0..."
-    # Note: The Isaac Sim Compatibility Checker is installed since its usefulness outweighs the image size increase
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.0.0/installation/requirements.html#isaac-sim-compatibility-checker
+if [ "$ISAAC_SIM_VERSION" = "5.1.0" ]; then
+    echo "Installing Isaac Sim 5.1.0 (packaged with Python 3.11)..."
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_workstation.html
     cd /tmp \
-        && wget -q https://download.isaacsim.omniverse.nvidia.com/isaac-sim-comp-check-5.0.0-linux-x86_64.zip \
-        && 7z x "isaac-sim-comp-check-5.0.0-linux-x86_64.zip" -o/home/$USERNAME/isaac-sim-comp-check \
-        && rm "isaac-sim-comp-check-5.0.0-linux-x86_64.zip" \
-        || exit 1
-    echo "Installing Isaac Sim 5.0.0 (packaged with Python 3.11)..."
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.0.0/installation/install_workstation.html
-    cd /tmp \
-        && wget -q https://download.isaacsim.omniverse.nvidia.com/isaac-sim-standalone-5.0.0-linux-x86_64.zip \
-        && 7z x "isaac-sim-standalone-5.0.0-linux-x86_64.zip" -o"$ISAACSIM_PATH" \
-        && rm "isaac-sim-standalone-5.0.0-linux-x86_64.zip" \
+        && wget -q https://download.isaacsim.omniverse.nvidia.com/isaac-sim-standalone-5.1.0-linux-x86_64.zip \
+        && 7z x "isaac-sim-standalone-5.1.0-linux-x86_64.zip" -o"$ISAACSIM_PATH" \
+        && rm "isaac-sim-standalone-5.1.0-linux-x86_64.zip" \
         && cd "$ISAACSIM_PATH" \
         && ./post_install.sh \
         || exit 1
 
     # Note: Optional dependencies and the Isaac Sim ROS workspace are not installed to minimize image size
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.0.0/installation/install_ros.html#install-ros-2
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.0.0/installation/install_ros.html#setting-up-workspaces
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_ros.html#install-ros-2
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_ros.html#setting-up-workspaces
 else
     echo "Error: Unsupported Isaac Sim version: $ISAAC_SIM_VERSION"
     exit 1
@@ -66,8 +58,8 @@ fi
 echo "Creating Isaac Sim directories with correct ownership to avoid permission issues after volume mount..."
 sudo mkdir -p /isaac-sim && sudo chown $USERNAME:$USERNAME /isaac-sim || exit 1
 
-if [ "$ISAAC_SIM_VERSION" = "5.0.0" ]; then
-    echo "Creating Isaac Sim 5.0.0 specific directories with correct ownership to avoid permission issues after volume mount..."
+if [ "$ISAAC_SIM_VERSION" = "5.1.0" ]; then
+    echo "Creating Isaac Sim 5.1.0 specific directories with correct ownership to avoid permission issues after volume mount..."
     mkdir -p /isaac-sim/kit/cache \
         && mkdir -p /home/$USERNAME/.cache/ov \
         && mkdir -p /home/$USERNAME/.local/lib/python3.11/site-packages/omni/cache \
