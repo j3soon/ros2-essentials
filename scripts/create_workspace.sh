@@ -45,4 +45,8 @@ sed -i "s/template-ws/${NEW_WS_NAME_HYPHEN}/g"     "${NEW_WS_DIR}/.devcontainer/
 sed -i "s/template_ws/${NEW_WS_NAME_UNDERSCORE}/g" "${NEW_WS_DIR}/docker/compose.yaml"
 sed -i "s/template-ws/${NEW_WS_NAME_HYPHEN}/g"     "${NEW_WS_DIR}/docker/compose.yaml"
 
+# Disable CARTOGRAPHER and RTABMAP by default in new workspaces.
+sed -i 's/CARTOGRAPHER: "YES"/# CARTOGRAPHER: ""/g'   "${NEW_WS_DIR}/docker/compose.yaml"
+sed -i 's/RTABMAP: "YES"/# RTABMAP: ""/g'             "${NEW_WS_DIR}/docker/compose.yaml"
+
 echo "Done."

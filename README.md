@@ -24,13 +24,27 @@ Make sure to install the required software prerequisites before using this repo.
 
 ## Setup
 
+For a standard clone:
+
 ```sh
 git clone https://github.com/j3soon/ros2-essentials.git
 cd ros2-essentials
 ./scripts/post_install.sh
 ```
 
+> For a faster depth-1 clone:
+> 
+> ```sh
+> git clone --depth 1 https://github.com/j3soon/ros2-essentials.git
+> cd ros2-essentials
+> ./scripts/post_install.sh
+> # and optionally restore the full git history some time later:
+> git fetch --unshallow
+> ```
+
 > Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes). In addition, the script can be run with the `-f` or `--force` flag to force removal of hard links if needed.
+>
+> **Troubleshooting**: If you encounter an error like `"failed to solve: failed to compute cache key: failed to calculate checksum of ref ...: "/modules/install_ros.sh": not found` when building Docker images, it means `post_install.sh` hasn't been run. This script creates necessary hard links for the Docker build process.
 
 Then, configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
 
