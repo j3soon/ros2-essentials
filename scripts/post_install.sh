@@ -11,7 +11,7 @@ while [[ $# -gt 0 ]]; do
         *)
             echo "Unknown option: $1"
             echo "Usage: $0 [-f|--force]"
-            echo "  -f, --force    Force removal of files even if they're regular files"
+            echo "  -f, --force    Force removal of files and volumes"
             exit 1
             ;;
     esac

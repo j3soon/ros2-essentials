@@ -18,7 +18,7 @@ services:
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache/ov &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/{logs,data}
-        "
+      "
     volumes:
       - isaac-sim-cache:/isaac-sim
   orbslam3-ws:
@@ -46,6 +46,8 @@ services:
         # CARTOGRAPHER: ""
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
         # RTABMAP: ""
+        # TODO: Set to "YES" if using Claude Code CLI or set to "" if not using Claude Code CLI
+        # CLAUDE_CODE: ""
       cache_from:
         - j3soon/ros2-orbslam3-ws:buildcache-amd64
         - j3soon/ros2-orbslam3-ws:buildcache-arm64
@@ -179,6 +181,9 @@ services:
       # TODO: Add more volume mounts here.
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
+      # Mount credentials (for Claude Code CLI and etc.)
+      - ../../.env/.claude:/home/user/.claude
+      - ../../.env/.claude.json:/home/user/.claude.json
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache

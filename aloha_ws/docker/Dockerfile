@@ -215,5 +215,13 @@ COPY udev_rules/99-interbotix-udev.rules /etc/udev/rules.d/
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
+
+# Claude Code CLI configuration (installed last since the installation is fast)
+ARG CLAUDE_CODE=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_claude_code.sh /tmp/install_claude_code.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_claude_code.sh && rm /tmp/install_claude_code.sh
+# TODO: Install more optional development tools here
 ENTRYPOINT []
 CMD ["/bin/bash"]

@@ -167,6 +167,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
 # TODO: Add more commands here
+
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
     # ORB-SLAM dependencies
@@ -234,6 +235,14 @@ RUN rosdep update && \
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
+
+# Claude Code CLI configuration (installed last since the installation is fast)
+ARG CLAUDE_CODE=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_claude_code.sh /tmp/install_claude_code.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_claude_code.sh && rm /tmp/install_claude_code.sh
+# TODO: Install more optional development tools here
 
 LABEL org.opencontainers.image.authors="assume0701@gmail.com"
 ENTRYPOINT []

@@ -167,6 +167,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
 # TODO: Add more commands here
+
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
     # The packages below are used by the Husky repository.
@@ -194,6 +195,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-imu-tools \
     ros-$ROS_DISTRO-teleop-twist-keyboard \
     && sudo rm -rf /var/lib/apt/lists/*
+
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
@@ -220,6 +222,14 @@ COPY --chown=$USERNAME:$USERNAME \
 RUN /home/$USERNAME/udev_rules/install_udev_rules.sh
 # Generate robot configuration files.
 RUN bash -ie /home/$USERNAME/script/husky-generate.sh
+
+# Claude Code CLI configuration (installed last since the installation is fast)
+ARG CLAUDE_CODE=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_claude_code.sh /tmp/install_claude_code.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_claude_code.sh && rm /tmp/install_claude_code.sh
+# TODO: Install more optional development tools here
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 ENTRYPOINT []

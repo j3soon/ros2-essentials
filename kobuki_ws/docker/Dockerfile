@@ -167,6 +167,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
 # TODO: Add more commands here
+
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
         # Fix the issue of Eigen
         # Reference: https://gitlab.com/libeigen/eigen/-/issues/2326
@@ -203,6 +204,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     ros-$ROS_DISTRO-slam-toolbox \
     ros-$ROS_DISTRO-robot-localization \
     && sudo rm -rf /var/lib/apt/lists/*
+
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
@@ -218,6 +220,14 @@ COPY --chown=$USERNAME:$USERNAME \
 RUN cd /home/$USERNAME/kobuki_driver_ws \
     && rm -rf COLCON_IGNORE \
     && /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build --symlink-install --executor sequential"
+
+# Claude Code CLI configuration (installed last since the installation is fast)
+ARG CLAUDE_CODE=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_claude_code.sh /tmp/install_claude_code.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_claude_code.sh && rm /tmp/install_claude_code.sh
+# TODO: Install more optional development tools here
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
 ENTRYPOINT []

@@ -20,6 +20,16 @@ done
 # Get the directory of this script.
 # Reference: https://stackoverflow.com/q/59895
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
+# Create .env directory if it doesn't exist.
+mkdir -p "${SCRIPT_DIR}/../.env"
+# Create .env/.claude directory if it doesn't exist.
+mkdir -p "${SCRIPT_DIR}/../.env/.claude"
+# Create .env/.claude.json file if it doesn't exist.
+touch "${SCRIPT_DIR}/../.env/.claude.json"
+
+# Run docker compose down to remove containers referring to the volumes.
+cd "${SCRIPT_DIR}/../template_ws/docker"
+docker compose down --volumes --remove-orphans
 
 volumes=(ros2-gazebo-cache ros2-isaac-sim-cache ros2-isaac-ros-assets)
 

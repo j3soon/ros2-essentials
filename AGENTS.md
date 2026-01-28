@@ -34,7 +34,7 @@ docker compose exec ros2 bash
 
 - Run `./scripts/post_install.sh` after any repo change that affects docker_modules, such as switching git branches or adding new docker modules (creates hard links for docker_modules)
 - `template_ws` is the base workspace; other workspaces share its Docker cache
-- Modules are enabled/disabled via `build.args` in `compose.yaml` (e.g., `CARTOGRAPHER=ON`)
+- Modules are enabled/disabled via `build.args` in `compose.yaml` (e.g., `CARTOGRAPHER: "YES"`)
 - Set `export USER_UID=$(id -u)` in host shell to match container user permissions
 
 ## Creating New Workspaces
