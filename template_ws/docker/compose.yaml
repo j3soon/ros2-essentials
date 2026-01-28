@@ -46,6 +46,8 @@ services:
         CARTOGRAPHER: "YES"
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
         RTABMAP: "YES"
+        # TODO: Set to "YES" if using RealSense or set to "" if not using RealSense
+        REALSENSE: "YES"
       cache_from:
         - j3soon/ros2-template-ws:buildcache-amd64
         - j3soon/ros2-template-ws:buildcache-arm64
@@ -109,7 +111,7 @@ services:
       # Mount shared memory for ROS2 communication.
       - /dev/shm:/dev/shm
       # TODO: Uncomment the line below and comment out the three entries above to enable USB support.
-      # - /dev:/dev
+      - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
@@ -179,6 +181,10 @@ services:
       # TODO: Add more volume mounts here.
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
+    # Add device cgroup rules to allow access to specific devices (like realsense).
+    device_cgroup_rules:
+      - 'c 81:* rmw'
+      - 'c 189:* rmw'
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache
