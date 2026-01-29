@@ -29,6 +29,7 @@
 - Open and self-assign a GitHub issue before starting.
 - Branch naming: `feat/<name>` or `fix/<name>`.
 - Commit messages must follow Conventional Commits and include rationale and sources when relevant.
+- When `template_ws` changes require syncing other workspaces, make a separate minimal "unify" commit (preferred message: `feat: Unify workspaces style`).
 - If code/content is copied, include source and commit permalink in the commit message.
 - Add `Co-authored-by` lines for contributors who helped; avoid force-pushes once review starts.
 
