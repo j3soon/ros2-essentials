@@ -27,6 +27,8 @@ claude --version
 claude
 ```
 
+The first time you run Claude Code, you'll be prompted to authenticate with your Anthropic account.
+
 If you want to run Claude Code CLI to run continuously without asking for permissions, make sure to comment out `privileged: true` in the `compose.yaml` file and restart the container. Then run:
 
 ```sh
@@ -37,7 +39,7 @@ claude --dangerously-skip-permissions
 
 ## Authentication
 
-On first use, Claude Code will prompt you to authenticate with your Anthropic account. Follow the on-screen instructions to complete the authentication process.
+Claude Code caches login details locally at `~/.claude.json` and `~/.claude/`. The default `compose.yaml` mounts `<git_root_dir>/.env/.claude` to `/home/user/.claude` and `<git_root_dir>/.env/.claude.json` to `/home/user/.claude.json` so credentials can persist across containers.
 
 ## References
 
