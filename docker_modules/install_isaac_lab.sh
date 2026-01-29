@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ -z "$ISAAC_LAB_VERSION" ]; then
+    echo "Skipping Isaac Lab installation as ISAAC_LAB_VERSION is not set"
+    exit 0
+fi
+
 # Install Isaac Lab
 
 # Check required environment variables
@@ -19,10 +24,6 @@ fi
 if [ -z "$ISAACSIM_PATH" ]; then
     echo "Error: ISAACSIM_PATH environment variable is required but not set"
     exit 1
-fi
-if [ -z "$ISAAC_LAB_VERSION" ]; then
-    echo "Skipping Isaac Lab installation as ISAAC_LAB_VERSION is not set"
-    exit 0
 fi
 if [ -z "$ISAACLAB_PATH" ]; then
     echo "Error: ISAACLAB_PATH environment variable is required but not set"

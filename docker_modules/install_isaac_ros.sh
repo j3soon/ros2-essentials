@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ -z "$ISAAC_ROS" ] || [ "$ISAAC_ROS" != "YES" ]; then
+    echo "Skipping Isaac ROS installation (ISAAC_ROS is not set or not 'YES')"
+    exit 0
+fi
+
 # Install Isaac ROS related components
 
 # Check required environment variables
@@ -15,10 +20,6 @@ fi
 if [ -z "$ROS_DISTRO" ]; then
     echo "Error: ROS_DISTRO environment variable is required but not set"
     exit 1
-fi
-if [ -z "$ISAAC_ROS" ]; then
-    echo "Skipping Isaac ROS installation as ISAAC_ROS is not set"
-    exit 0
 fi
 if [ -z "$ISAAC_ROS_WS" ]; then
     echo "Error: ISAAC_ROS_WS environment variable is required but not set"
