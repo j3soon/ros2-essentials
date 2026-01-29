@@ -48,6 +48,8 @@ services:
         {PLACEHOLDER_#}RTABMAP: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Claude Code CLI or set to "" if not using Claude Code CLI
         {PLACEHOLDER_#}CLAUDE_CODE: "{PLACEHOLDER}"
+        # TODO: Set to "YES" if using Codex CLI or set to "" if not using Codex CLI
+        {PLACEHOLDER_#}CODEX: "{PLACEHOLDER}"
       cache_from:
         - j3soon/ros2-{PLACEHOLDER}-ws:buildcache-amd64
         - j3soon/ros2-{PLACEHOLDER}-ws:buildcache-arm64
@@ -183,9 +185,10 @@ services:
 {PLACEHOLDER_MULTILINE}
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
-      # Mount credentials (for Claude Code CLI and etc.)
+      # Mount credentials (for Claude Code CLI, Codex CLI, and etc.)
       - ../../.env/.claude:/home/user/.claude
       - ../../.env/.claude.json:/home/user/.claude.json
+      - ../../.env/.codex:/home/user/.codex
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache

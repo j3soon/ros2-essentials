@@ -227,6 +227,12 @@ COPY --chown=$USERNAME:$USERNAME \
      modules/install_claude_code.sh /tmp/install_claude_code.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_claude_code.sh && rm /tmp/install_claude_code.sh
+# Codex CLI configuration
+ARG CODEX=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_codex.sh /tmp/install_codex.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_codex.sh && rm /tmp/install_codex.sh
 # TODO: Install more optional development tools here
 
 LABEL org.opencontainers.image.authors="yuzhong1214@gmail.com"
