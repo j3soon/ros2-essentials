@@ -12,10 +12,17 @@ fi
 if [ "$CODEX" = "YES" ]; then
     echo "Installing Codex CLI"
 
-    # Install Node.js and npm via minimal apt install
+    # Install Node.js (LTS) via NodeSource to ensure modern JS features.
+    # Ubuntu's default nodejs can be too old for the Codex CLI wrapper.
+    sudo apt-get update && sudo apt-get install -y \
+        ca-certificates \
+        curl \
+        gnupg \
+        && sudo rm -rf /var/lib/apt/lists/*
+
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
     sudo apt-get update && sudo apt-get install -y \
         nodejs \
-        npm \
         && sudo rm -rf /var/lib/apt/lists/*
 
     # Install Codex CLI globally
@@ -23,6 +30,8 @@ if [ "$CODEX" = "YES" ]; then
 
     echo "Codex CLI installed successfully!"
     echo "Version information:"
+    node --version || true
+    npm --version || true
     codex --version || true
 fi
 
