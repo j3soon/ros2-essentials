@@ -3,6 +3,8 @@
     "name": "Template",
     "dockerComposeFile": "../docker/compose.yaml",
     "service": "template-ws",
+    // Set the USER_UID
+    "initializeCommand": "\"${localWorkspaceFolder}\"/.devcontainer/create_env.sh",
     // Workspace settings
     "workspaceFolder": "/home/ros2-essentials/template_ws",
     // Vscode extensions
