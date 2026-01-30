@@ -16,6 +16,7 @@ DEFAULT_FILES = [
     "docker/Dockerfile",
     "docker/cyclonedds.xml",
     ".devcontainer/devcontainer.json",
+    ".devcontainer/create_env.sh",
 ]
 for filename in DEFAULT_FILES:
     logging.debug(f"Checking existence of: '{filename}'...")
