@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ -z "$ROS_DISTRO" ]; then
+    echo "Skipping ROS installation as ROS_DISTRO is not set"
+    exit 0
+fi
+
 # Install ROS related components
 # Ref: https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html
 
@@ -12,10 +17,6 @@ set -e
 if [ -z "$TARGETARCH" ]; then
     echo "Error: TARGETARCH environment variable is required but not set"
     exit 1
-fi
-if [ -z "$ROS_DISTRO" ]; then
-    echo "Skipping ROS installation as ROS_DISTRO is not set"
-    exit 0
 fi
 
 echo "Installing ROS components for architecture: $TARGETARCH"

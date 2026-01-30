@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ -z "$ISAAC_SIM_VERSION" ]; then
+    echo "Skipping Isaac Sim installation as ISAAC_SIM_VERSION is not set"
+    exit 0
+fi
+
 # Install Isaac Sim related components
 
 # Check required environment variables
@@ -11,10 +16,6 @@ fi
 if [ -z "$TARGETARCH" ]; then
     echo "Error: TARGETARCH environment variable is required but not set"
     exit 1
-fi
-if [ -z "$ISAAC_SIM_VERSION" ]; then
-    echo "Skipping Isaac Sim installation as ISAAC_SIM_VERSION is not set"
-    exit 0
 fi
 if [ -z "$ISAACSIM_PATH" ]; then
     echo "Error: ISAACSIM_PATH environment variable is required but not set"
