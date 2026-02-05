@@ -11,6 +11,8 @@
 
 This repository will help you configure the environment for Delto Gripper quickly.
 
+> Last tested on TODO.
+
 ## 🐳 Start Container
 
 > Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.

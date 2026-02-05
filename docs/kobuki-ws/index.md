@@ -11,6 +11,8 @@
 
 This repository facilitates the quick configuration of the simulation environment and real robot driver for Kobuki.
 
+> Last tested on TODO.
+
 ## 🐳 Start Container
 
 > Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.

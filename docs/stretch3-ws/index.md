@@ -11,6 +11,8 @@
 
 > Please note that this workspace is only tested in simulation.
 
+> Last tested on commit [a9e1166](https://github.com/j3soon/ros2-essentials/commit/a9e116664353b8d874d7e559d023c625b08c9dd1) by [@j3soon](https://github.com/j3soon).
+
 ## 🐳 Start Container
 
 > Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.

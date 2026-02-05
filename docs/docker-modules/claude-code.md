@@ -4,6 +4,8 @@
 
 Claude Code CLI for AI-assisted development directly inside workspace containers.
 
+> Last tested on commit [d43ad1c](https://github.com/j3soon/ros2-essentials/commit/d43ad1c11075808d5fbf194c5979ffedec213b5e) by [@j3soon](https://github.com/j3soon).
+
 To enable Claude Code CLI, set the `CLAUDE_CODE` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `template_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 
 > **Notice - Subscription required:** Claude Code is a third-party service that requires an active Anthropic account or subscription to use. This module only installs the CLI; you need an active subscription to use it.
