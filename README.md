@@ -46,8 +46,13 @@ cd ros2-essentials
 > - Use `--recreate-links` to force replacement of non-hard-link files under workspace `docker/modules/`.
 > - Use `--recreate-volumes` to invalidate Gazebo/Isaac Sim/Isaac ROS cache volumes after related updates or testing.
 > - Use `--remove-containers` to auto-remove containers that block volume recreation.
+
+> **Troubleshooting**:
 >
-> **Troubleshooting**: If you encounter an error like `"failed to solve: failed to compute cache key: failed to calculate checksum of ref ...: "/modules/install_ros.sh": not found` when building Docker images, it means `post_install.sh` hasn't been run. This script creates necessary hard links for the Docker build process.
+> If you encounter an error like `"failed to solve: failed to compute cache key: failed to calculate checksum of ref ...: "/modules/install_ros.sh": not found` when building Docker images, it means `post_install.sh` hasn't been run. This script creates necessary hard links for the Docker build process.
+>
+> If you encountered error like `Error response from daemon: remove ros2-isaac-sim-cache: volume is in use` when running `./scripts/post_install.sh`, it means that previous containers are not removed successfully. Run `docker ps -a | grep ros2` and use `docker rm <container_id>` to remove the containers and then run the script again.
+> 
 
 Then, configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
 
