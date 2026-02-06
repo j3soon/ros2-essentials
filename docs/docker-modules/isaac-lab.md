@@ -18,6 +18,7 @@ Depends on:
 cd ~/IsaacLab
 ./isaaclab.sh -p scripts/tutorials/00_sim/log_time.py --headless
 # View the logs and press Ctrl+C to stop
+# tail -f ~/IsaacLab/logs/docker_tutorial/log.txt
 ```
 
 [Train Cartpole](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html):
