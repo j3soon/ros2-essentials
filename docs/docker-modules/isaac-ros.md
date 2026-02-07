@@ -36,11 +36,11 @@ sudo apt-get install -y ros-humble-isaac-ros-examples
 
 ## Start Simulation Environment (Isaac Sim)
 
-Apply [the CUDA workaround](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/overview/known_issues.html) and launch Isaac Sim:
+[Remove CUDA 12.6 from `LD_LIBRARY_PATH`](https://github.com/isaac-sim/IsaacSim/issues/81#issuecomment-3098732838) and launch Isaac Sim:
 
 ```sh
-# Workaround for CUDA error
-export LD_LIBRARY_PATH=/home/user/isaacsim/extscache/omni.sensors.nv.common-2.5.0-coreapi+lx64.r.cp310/bin:$LD_LIBRARY_PATH
+# Workaround for CUDA version
+export LD_LIBRARY_PATH=$(echo "$LD_LIBRARY_PATH" | sed -e 's|:/usr/local/cuda-12.6/lib64||')
 ~/isaacsim/isaac-sim.sh
 ```
 
@@ -52,7 +52,13 @@ export LD_LIBRARY_PATH=/home/user/isaacsim/extscache/omni.sensors.nv.common-2.5.
 
 - For Nvblox:
 
-  Click `Isaac Sim Assets [Beta] > SAMPLES`, search for `nvblox_sample_scene.usd`, select it and click `Open File`. After the scene loaded, click the `Play` button to start the simulation. If a warning message appears, click `OK` to allow script execution.
+  Open the `nvblox_sample_scene.usd` scene by pasting the following to the `Content` window:
+
+  ```
+  https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/Samples/NvBlox/nvblox_sample_scene.usd
+  ```
+
+  After the scene loaded, click the `Play` button to start the simulation. If a warning message appears, click `OK` to allow script execution.
 
   ![](assets/isaac-ros-isaac-sim-nvblox.png)
 
@@ -79,7 +85,7 @@ In another terminal, launch RViz:
 ```sh
 rviz2 -d $(ros2 pkg prefix isaac_ros_apriltag --share)/rviz/default.rviz
 # or
-ros2 topic echo /tag_detections
+# ros2 topic echo /tag_detections
 ```
 
 ![](assets/isaac-ros-apriltag-rviz.png)
@@ -115,7 +121,7 @@ Then, launch RViz:
 ```sh
 rviz2 -d $(ros2 pkg prefix isaac_ros_visual_slam --share)/rviz/isaac_sim.cfg.rviz
 # or
-ros2 topic echo /visual_slam/tracking/odometry
+# ros2 topic echo /visual_slam/tracking/odometry
 ```
 
 ![](assets/isaac-ros-vslam-rviz.png)
