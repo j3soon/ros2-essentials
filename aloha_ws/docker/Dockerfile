@@ -216,6 +216,13 @@ COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
 
+# NVIDIA OpenUSD Tools configuration
+ARG NV_OPENUSD=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_nv_openusd.sh /tmp/install_nv_openusd.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_nv_openusd.sh && rm /tmp/install_nv_openusd.sh
+
 # Newton Tools configuration
 ARG NEWTON_TOOLS=""
 COPY --chown=$USERNAME:$USERNAME \

@@ -46,6 +46,8 @@ services:
         CARTOGRAPHER: "YES"
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
         RTABMAP: "YES"
+        # TODO: Set to "YES" if using NVIDIA OpenUSD tools or set to "" if not using NVIDIA OpenUSD tools
+        # NV_OPENUSD: ""
         # TODO: Set to "YES" if using Newton Tools or set to "" if not using Newton Tools
         # NEWTON_TOOLS: ""
         # TODO: Set to "YES" if using Claude Code CLI or set to "" if not using Claude Code CLI
