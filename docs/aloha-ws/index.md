@@ -9,6 +9,10 @@
 ![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-aloha-ws)
 ![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-aloha-ws)
 
+> This workspace may only work with Isaac Sim 4.5.0, and require code update to support the latest version.
+
+> (TODO: Update the code to support the latest Isaac Sim. Refer to the commit history of [turtlebot3-ws](../turtlebot3-ws/) for more details.)
+
 ## 🐳 Start Container
 
 > Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
