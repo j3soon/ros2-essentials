@@ -88,14 +88,14 @@ def create_turtlebot3_burger_with_omnigraph():
         {"graph_path": "/Graph/ROS_DifferentialController", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
-                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("Context", "isaacsim.ros2.bridge.ROS2Context"),
                 ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
-                ("SubscribeTwist", "omni.isaac.ros2_bridge.ROS2SubscribeTwist"),
-                ("ScaleToFromStageUnit", "omni.isaac.core_nodes.OgnIsaacScaleToFromStageUnit"),
+                ("SubscribeTwist", "isaacsim.ros2.bridge.ROS2SubscribeTwist"),
+                ("ScaleToFromStageUnit", "isaacsim.core.nodes.OgnIsaacScaleToFromStageUnit"),
                 ("Break3VectorAngularVel", "omni.graph.nodes.BreakVector3"),
                 ("Break3VectorLinearVel", "omni.graph.nodes.BreakVector3"),
-                ("DifferentialController", "omni.isaac.wheeled_robots.DifferentialController"),
-                ("ArticulationController", "omni.isaac.core_nodes.IsaacArticulationController"),
+                ("DifferentialController", "isaacsim.robot.wheeled_robots.DifferentialController"),
+                ("ArticulationController", "isaacsim.core.nodes.IsaacArticulationController"),
             ],
             og.Controller.Keys.CONNECT: [
                 # Ref: https://docs.omniverse.nvidia.com/kit/docs/omni.graph.action_nodes/latest/GeneratedNodeDocumentation/OgnOnPlaybackTick.html
@@ -144,10 +144,10 @@ def create_turtlebot3_burger_with_omnigraph():
         {"graph_path": "/Graph/ROS_Clock", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
-                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("Context", "isaacsim.ros2.bridge.ROS2Context"),
                 ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
-                ("ReadSimTime", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
-                ("PublishClock", "omni.isaac.ros2_bridge.ROS2PublishClock"),
+                ("ReadSimTime", "isaacsim.core.nodes.IsaacReadSimulationTime"),
+                ("PublishClock", "isaacsim.ros2.bridge.ROS2PublishClock"),
             ],
             og.Controller.Keys.CONNECT: [
                 ("OnPlaybackTick.outputs:tick", "PublishClock.inputs:execIn"),
@@ -162,10 +162,10 @@ def create_turtlebot3_burger_with_omnigraph():
         {"graph_path": "/Graph/ROS_TF", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
-                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("Context", "isaacsim.ros2.bridge.ROS2Context"),
                 ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
-                ("ReadSimTime", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
-                ("PublishTF", "omni.isaac.ros2_bridge.ROS2PublishTransformTree"),
+                ("ReadSimTime", "isaacsim.core.nodes.IsaacReadSimulationTime"),
+                ("PublishTF", "isaacsim.ros2.bridge.ROS2PublishTransformTree"),
             ],
             og.Controller.Keys.CONNECT: [
                 ("OnPlaybackTick.outputs:tick", "PublishTF.inputs:execIn"),
@@ -188,10 +188,10 @@ def create_turtlebot3_burger_with_omnigraph():
         {"graph_path": "/Graph/ROS_JointState", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
-                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("Context", "isaacsim.ros2.bridge.ROS2Context"),
                 ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
-                ("ReadSimTime", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
-                ("PublishJointState", "omni.isaac.ros2_bridge.ROS2PublishJointState"),
+                ("ReadSimTime", "isaacsim.core.nodes.IsaacReadSimulationTime"),
+                ("PublishJointState", "isaacsim.ros2.bridge.ROS2PublishJointState"),
             ],
             og.Controller.Keys.CONNECT: [
                 ("OnPlaybackTick.outputs:tick", "PublishJointState.inputs:execIn"),
@@ -209,14 +209,14 @@ def create_turtlebot3_burger_with_omnigraph():
         {"graph_path": "/Graph/ROS_Camera", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
-                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("Context", "isaacsim.ros2.bridge.ROS2Context"),
                 ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
-                ("RunOnce", "omni.isaac.core_nodes.OgnIsaacRunOneSimulationFrame"),
-                ("RenderProduct", "omni.isaac.core_nodes.IsaacCreateRenderProduct"),
-                ("PublishCameraRGB", "omni.isaac.ros2_bridge.ROS2CameraHelper"),
-                ("PublishCameraDepth", "omni.isaac.ros2_bridge.ROS2CameraHelper"),
-                ("PublishCameraDepthPCL", "omni.isaac.ros2_bridge.ROS2CameraHelper"),
-                ("PublishCameraInfo", "omni.isaac.ros2_bridge.ROS2CameraInfoHelper"),
+                ("RunOnce", "isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"),
+                ("RenderProduct", "isaacsim.core.nodes.IsaacCreateRenderProduct"),
+                ("PublishCameraRGB", "isaacsim.ros2.bridge.ROS2CameraHelper"),
+                ("PublishCameraDepth", "isaacsim.ros2.bridge.ROS2CameraHelper"),
+                ("PublishCameraDepthPCL", "isaacsim.ros2.bridge.ROS2CameraHelper"),
+                ("PublishCameraInfo", "isaacsim.ros2.bridge.ROS2CameraInfoHelper"),
             ],
             og.Controller.Keys.CONNECT: [
                 ("OnPlaybackTick.outputs:tick", "RunOnce.inputs:execIn"),
@@ -266,12 +266,12 @@ def create_turtlebot3_burger_with_omnigraph():
         {"graph_path": "/Graph/ROS_LidarRTX", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
-                ("Context", "omni.isaac.ros2_bridge.ROS2Context"),
+                ("Context", "isaacsim.ros2.bridge.ROS2Context"),
                 ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
-                ("RunOnce", "omni.isaac.core_nodes.OgnIsaacRunOneSimulationFrame"),
-                ("RenderProduct", "omni.isaac.core_nodes.IsaacCreateRenderProduct"),
-                ("PublishLidarLaserScan", "omni.isaac.ros2_bridge.ROS2RtxLidarHelper"),
-                ("PublishLidarPointCloud", "omni.isaac.ros2_bridge.ROS2RtxLidarHelper"),
+                ("RunOnce", "isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"),
+                ("RenderProduct", "isaacsim.core.nodes.IsaacCreateRenderProduct"),
+                ("PublishLidarLaserScan", "isaacsim.ros2.bridge.ROS2RtxLidarHelper"),
+                ("PublishLidarPointCloud", "isaacsim.ros2.bridge.ROS2RtxLidarHelper"),
             ],
             og.Controller.Keys.CONNECT: [
                 ("OnPlaybackTick.outputs:tick", "RunOnce.inputs:execIn"),
@@ -303,9 +303,9 @@ def create_turtlebot3_burger_with_omnigraph():
 if __name__ == '__main__':
     # Ref: https://docs.omniverse.nvidia.com/dev-guide/latest/programmer_ref/extensions/enable-kit-extension.html
     manager = omni.kit.app.get_app().get_extension_manager()
-    manager.set_extension_enabled_immediate("omni.isaac.ros2_bridge", True)
-    print("ros2_bridge enabled: " + str(manager.is_extension_enabled("omni.isaac.ros2_bridge")))
-    logger.info("ros2_bridge enabled: " + str(manager.is_extension_enabled("omni.isaac.ros2_bridge")))
+    manager.set_extension_enabled_immediate("isaacsim.ros2.bridge", True)
+    print("ros2_bridge enabled: " + str(manager.is_extension_enabled("isaacsim.ros2.bridge")))
+    logger.info("ros2_bridge enabled: " + str(manager.is_extension_enabled("isaacsim.ros2.bridge")))
     create_turtlebot3_burger_with_omnigraph()
     turtlebot3_burger_og_usd_path = '/home/ros2-essentials/turtlebot3_ws/isaacsim/assets/turtlebot3_burger_og.usd'
     omni.usd.get_context().save_as_stage(turtlebot3_burger_og_usd_path)

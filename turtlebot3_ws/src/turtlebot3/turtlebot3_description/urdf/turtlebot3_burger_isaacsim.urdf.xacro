@@ -193,6 +193,7 @@
     </inertial>
   </link>
 
+  <!-- Ref: https://github.com/isaac-sim/IsaacSim/blob/aa503a9bbf92405bbbcfe5361e1c4a74fe10d689/source/extensions/isaacsim.asset.importer.urdf/data/urdf/tests/test_sensor.urdf -->
   <sensor name="camera" type="camera" update_rate="30">
     <parent link="base_scan"/>
     <origin xyz="0 0 0.03" rpy="${pi/2} 0 ${-pi/2}"/>
@@ -201,6 +202,8 @@
     </camera>
   </sensor>
 
+  <!-- TODO: Should remove the `isaac_sim_config` attribute after the URDF importer bug is fixed. -->
+  <!-- Upstream bug: https://github.com/isaac-sim/IsaacSim/issues/438 -->
   <sensor name="lidar" type="ray" update_rate="30" isaac_sim_config="Example_Solid_State">
     <parent link="base_scan"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
