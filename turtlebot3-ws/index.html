@@ -1755,9 +1755,14 @@
 <p>Convert URDF file to USD file and generate OmniGraph:</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/turtlebot3_ws/isaacsim/scripts
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>./create_urdf_from_xacro.sh
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>python3<span class="w"> </span>create_turtlebot3_burger_from_urdf.py
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>python3<span class="w"> </span>create_turtlebot3_burger_with_omnigraph.py
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>~/isaacsim/python.sh<span class="w"> </span>create_turtlebot3_burger_from_urdf.py
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>~/isaacsim/python.sh<span class="w"> </span>create_turtlebot3_burger_with_omnigraph.py
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># and close the window when you see the `Done` message (or seeing segmentation fault)</span>
 </span></code></pre></div>
+<blockquote>
+<p>Note that it is entirely unnecessary to convert URDF to USD with scripts, this is just for demonstration purposes. You can directly use the GUI to import the URDF file, and track it in Git easily with USDA. See <a href="../stretch3-ws/">stretch3-ws</a> for more details.</p>
+<p>It is also unnecessary to generate OmniGraph with scripts, you can directly use the GUI to create it, and track it in Git easily with USDA. See <a href="../stretch3-ws/">stretch3-ws</a> commit history for more details.</p>
+</blockquote>
 <p>Start Isaac Sim in GUI mode:</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>~/isaacsim/isaac-sim.sh
 </span></code></pre></div>
@@ -1771,6 +1776,12 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>/home/ros2-essentials/turtlebot3_ws/isaacsim/assets/turtlebot3_burger_og.usd
 </span></code></pre></div>
 <p>or use <code>File &gt; Open Recent</code> to re-open it, and click <code>Play (SPACE)</code> to start simulation.</p>
+<blockquote>
+<p>There is currently a known issue on the 2D Lidar sensor and are waiting for an <a href="https://github.com/isaac-sim/IsaacSim/issues/438">upstream fix</a>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>[Error] [isaacsim.sensors.rtx.plugin] IsaacComputeRTXLidarFlatScan: Lidar prim is not a 2D Lidar, and node will not execute. Stop the simulation, correct the issue, and restart.
+</span></code></pre></div>
+<p>(TODO: Fix <code>turtlebot3_burger_isaacsim.urdf.xacro</code> and remove this block after the upstream fix is released.)</p>
+</blockquote>
 <p>To view the OmniGraph, right click the ActionGraph on the right panel and select <code>Open Graph</code>.</p>
 <h2 id="features">🧩 Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <blockquote>
@@ -1779,38 +1790,44 @@
 </blockquote>
 <h3 id="cartographer">Cartographer<a class="headerlink" href="#cartographer" title="Permanent link">&para;</a></h3>
 <p>Basic LiDAR SLAM.</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_cartographer<span class="w"> </span>cartographer.launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span>True
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_cartographer<span class="w"> </span>cartographer.launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span>True
 </span></code></pre></div>
 <h3 id="nav2">Nav2<a class="headerlink" href="#nav2" title="Permanent link">&para;</a></h3>
 <p>Requires a running SLAM or a pre-generated map.</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_navigation2<span class="w"> </span>navigation2.launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span><span class="nb">true</span><span class="w"> </span>map:<span class="o">=</span><span class="nv">$ROS2_WS</span>/map.yaml
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_navigation2<span class="w"> </span>navigation2.launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span><span class="nb">true</span><span class="w"> </span>map:<span class="o">=</span><span class="nv">$ROS2_WS</span>/map.yaml
 </span></code></pre></div>
 <h2 id="control-robot">🕹️ Control Robot<a class="headerlink" href="#control-robot" title="Permanent link">&para;</a></h2>
 <h3 id="raw-message">Raw Message<a class="headerlink" href="#raw-message" title="Permanent link">&para;</a></h3>
 <p>Move forward:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/Twist<span class="w"> </span><span class="s2">&quot;{&#39;linear&#39;: {&#39;x&#39;: 0.2, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}, &#39;angular&#39;: {&#39;x&#39;: 0.0, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}}&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/Twist<span class="w"> </span><span class="s2">&quot;{&#39;linear&#39;: {&#39;x&#39;: 0.2, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}, &#39;angular&#39;: {&#39;x&#39;: 0.0, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}}&quot;</span>
 </span></code></pre></div>
 <p>Stop:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/Twist<span class="w"> </span><span class="s2">&quot;{&#39;linear&#39;: {&#39;x&#39;: 0.0, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}, &#39;angular&#39;: {&#39;x&#39;: 0.0, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}}&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/Twist<span class="w"> </span><span class="s2">&quot;{&#39;linear&#39;: {&#39;x&#39;: 0.0, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}, &#39;angular&#39;: {&#39;x&#39;: 0.0, &#39;y&#39;: 0.0, &#39;z&#39;: 0.0}}&quot;</span>
 </span></code></pre></div>
 <h3 id="teleoperate">Teleoperate<a class="headerlink" href="#teleoperate" title="Permanent link">&para;</a></h3>
 <p>Teleoperate through keyboard:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlebot3_teleop<span class="w"> </span>teleop_keyboard
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlebot3_teleop<span class="w"> </span>teleop_keyboard
 </span></code></pre></div>
 <h3 id="simple-auto-drive">Simple Auto Drive<a class="headerlink" href="#simple-auto-drive" title="Permanent link">&para;</a></h3>
 <p>Simple collision avoidance:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_drive
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_drive
 </span></code></pre></div>
 <h3 id="visualize-with-rviz">Visualize with RViz<a class="headerlink" href="#visualize-with-rviz" title="Permanent link">&para;</a></h3>
 <p>Open a new terminal and visualize published topics in RViz:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_bringup<span class="w"> </span>rviz2.launch.py
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_bringup<span class="w"> </span>rviz2.launch.py
 </span></code></pre></div>
+<p>Set RViz GUI:</p>
+<ul>
+<li><code>Fixed Frame</code>: <code>world</code>.</li>
+<li>Add <code>Camera</code> with topic <code>/rgb</code>.</li>
+<li>(TODO: Add LaserScan, PointCloud, and Depth after the upstream fix is released.)</li>
+</ul>
 <h2 id="save-output">💾 Save Output<a class="headerlink" href="#save-output" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>Skip this section if you are not interested in saving maps.</p>
 </blockquote>
 <h3 id="occupancy-grid-map">Occupancy Grid Map<a class="headerlink" href="#occupancy-grid-map" title="Permanent link">&para;</a></h3>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>nav2_map_server<span class="w"> </span>map_saver_cli<span class="w"> </span>-f<span class="w"> </span><span class="nv">$ROS2_WS</span>/map
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>nav2_map_server<span class="w"> </span>map_saver_cli<span class="w"> </span>-f<span class="w"> </span><span class="nv">$ROS2_WS</span>/map
 </span></code></pre></div>
 <h2 id="references">📌 References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1838,7 +1855,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 18, 2025 14:28:39 UTC">July 18, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 7, 2026 15:42:57 UTC">February 7, 2026</span>
   </span>
 
     
