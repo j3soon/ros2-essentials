@@ -211,6 +211,7 @@ nav:
     - docker-modules/isaac-sim.md
     - docker-modules/isaac-lab.md
     - docker-modules/isaac-ros.md
+    - docker-modules/newton-tools.md
     - docker-modules/claude-code.md
     - docker-modules/codex.md
   - Workspaces:
