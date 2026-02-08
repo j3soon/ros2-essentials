@@ -2,7 +2,7 @@
 set -e
 
 if [ "$CLAUDE_CODE" != "YES" ] && [ "$CLAUDE_CODE" != "yes" ] && [ "$CLAUDE_CODE" != "y" ] && [ "$CLAUDE_CODE" != "Y" ]; then
-    echo "Skipping Claude Code installation (set CLAUDE_CODE to YES/yes/y to enable)"
+    echo "Skipping Claude Code installation (set CLAUDE_CODE to YES/yes/y/Y to enable)"
     exit 0
 fi
 

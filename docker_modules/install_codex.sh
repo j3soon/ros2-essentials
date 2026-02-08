@@ -2,7 +2,7 @@
 set -e
 
 if [ "$CODEX" != "YES" ] && [ "$CODEX" != "yes" ] && [ "$CODEX" != "y" ] && [ "$CODEX" != "Y" ]; then
-    echo "Skipping Codex installation (set CODEX to YES/yes/y to enable)"
+    echo "Skipping Codex installation (set CODEX to YES/yes/y/Y to enable)"
     exit 0
 fi
 
@@ -19,7 +19,7 @@ sudo apt-get update && sudo apt-get install -y \
     gnupg \
     && sudo rm -rf /var/lib/apt/lists/*
 
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
 sudo apt-get update && sudo apt-get install -y \
     nodejs \
     && sudo rm -rf /var/lib/apt/lists/*

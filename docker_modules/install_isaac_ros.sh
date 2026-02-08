@@ -2,7 +2,7 @@
 set -e
 
 if [ "$ISAAC_ROS" != "YES" ] && [ "$ISAAC_ROS" != "yes" ] && [ "$ISAAC_ROS" != "y" ] && [ "$ISAAC_ROS" != "Y" ]; then
-    echo "Skipping Isaac ROS installation (set ISAAC_ROS to YES/yes/y to enable)"
+    echo "Skipping Isaac ROS installation (set ISAAC_ROS to YES/yes/y/Y to enable)"
     exit 0
 fi
 
@@ -85,13 +85,13 @@ sudo apt-get update && sudo apt-get install -y \
 
 echo "Cloning Isaac ROS common..."
 # Ref: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_nvblox/isaac_ros_nvblox/index.html
-mkdir -p ${ISAAC_ROS_WS}/src
-cd ${ISAAC_ROS_WS}/src
+mkdir -p "${ISAAC_ROS_WS}/src"
+cd "${ISAAC_ROS_WS}/src"
 git clone -b release-3.2 https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git isaac_ros_common
 
 echo "Creating Isaac ROS directories with correct ownership to avoid permission issues after volume mount..."
-sudo mkdir -p ${ISAAC_ROS_WS}/isaac_ros_assets \
-    && sudo chown $USERNAME:$USERNAME ${ISAAC_ROS_WS}/isaac_ros_assets \
+sudo mkdir -p "${ISAAC_ROS_WS}/isaac_ros_assets" \
+    && sudo chown "$USERNAME:$USERNAME" "${ISAAC_ROS_WS}/isaac_ros_assets" \
     || exit 1
 
 echo "Isaac ROS installation completed successfully!"

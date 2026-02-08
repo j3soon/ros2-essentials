@@ -2,7 +2,7 @@
 set -e
 
 if [ "$CARTOGRAPHER" != "YES" ] && [ "$CARTOGRAPHER" != "yes" ] && [ "$CARTOGRAPHER" != "y" ] && [ "$CARTOGRAPHER" != "Y" ]; then
-    echo "Skipping Cartographer installation (set CARTOGRAPHER to YES/yes/y to enable)"
+    echo "Skipping Cartographer installation (set CARTOGRAPHER to YES/yes/y/Y to enable)"
     exit 0
 fi
 

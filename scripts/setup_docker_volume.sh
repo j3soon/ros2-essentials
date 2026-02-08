@@ -23,11 +23,20 @@ while [[ $# -gt 0 ]]; do
 	esac
 done
 
-# Get the directory of this script.
-# Reference: https://stackoverflow.com/q/59895
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
-
 volumes=(ros2-gazebo-cache ros2-isaac-sim-cache ros2-isaac-ros-assets)
+
+remove_volume_or_exit() {
+	local volume_name="$1"
+	local remove_output
+	if ! remove_output=$(docker volume rm "$volume_name" 2>&1); then
+		echo "Error: Failed to remove volume '$volume_name'."
+		if [ -n "$remove_output" ]; then
+			echo "$remove_output"
+		fi
+		exit 1
+	fi
+	echo "Removed volume: $volume_name"
+}
 
 # Detect existing volumes.
 existing_volumes=()
@@ -58,7 +67,7 @@ fi
 
 if [ "$RECREATE_VOLUMES" = true ]; then
 	for v in "${existing_volumes[@]}"; do
-		if docker volume rm "$v" >/dev/null 2>&1; then
+		if remove_output=$(docker volume rm "$v" 2>&1); then
 			echo "Removed volume: $v"
 			continue
 		fi
@@ -68,6 +77,9 @@ if [ "$RECREATE_VOLUMES" = true ]; then
 
 		if [ "${#attached_containers[@]}" -eq 0 ]; then
 			echo "Error: Failed to remove volume '$v'."
+			if [ -n "$remove_output" ]; then
+				echo "$remove_output"
+			fi
 			exit 1
 		fi
 
@@ -78,8 +90,7 @@ if [ "$RECREATE_VOLUMES" = true ]; then
 			for cid in "${attached_containers[@]}"; do
 				docker rm -f "$cid" >/dev/null
 			done
-			docker volume rm "$v" >/dev/null
-			echo "Removed volume: $v"
+			remove_volume_or_exit "$v"
 		elif [ -t 0 ]; then
 			echo "Remove these containers and retry deleting '$v'? [y/N]"
 			read -r answer
@@ -88,8 +99,7 @@ if [ "$RECREATE_VOLUMES" = true ]; then
 					for cid in "${attached_containers[@]}"; do
 						docker rm -f "$cid" >/dev/null
 					done
-					docker volume rm "$v" >/dev/null
-					echo "Removed volume: $v"
+					remove_volume_or_exit "$v"
 					;;
 				*)
 					echo "Skipped removing containers. Keeping volume: $v"

@@ -24,7 +24,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 cd "$SCRIPT_DIR/.."
 
 workspaces=( *_ws* )
-prompted_once=false
 
 # Loop through each workspace and link docker modules
 for ws in "${workspaces[@]}"
@@ -40,32 +39,25 @@ do
         elif [ "$RECREATE_LINKS" = true ]; then
             rm "$file" 2>/dev/null
         else
-            if [ "$prompted_once" = false ]; then
-                if [ -t 0 ]; then
-                    echo "Found regular files in docker modules (example: $file)."
-                    echo "Force-remove and recreate module links? [Y/n]"
-                    echo "Tip: choose 'y' directly if you are not adding/updating docker modules."
-                    read -r answer
-                    case "$answer" in
-                        [nN]|[nN][oO])
-                            echo "Skipped replacement. Remove files manually or rerun with --recreate-links."
-                            exit 1
-                            ;;
-                        *)
-                            RECREATE_LINKS=true
-                            ;;
-                    esac
-                    prompted_once=true
-                    if [ "$RECREATE_LINKS" = true ]; then
+            if [ -t 0 ]; then
+                echo "Found regular files in docker modules (example: $file)."
+                echo "Force-remove and recreate module links? [Y/n]"
+                echo "Tip: choose 'y' directly if you are not adding/updating docker modules."
+                read -r answer
+                case "$answer" in
+                    [nN]|[nN][oO])
+                        echo "Skipped replacement. Remove files manually or rerun with --recreate-links."
+                        exit 1
+                        ;;
+                    *)
+                        RECREATE_LINKS=true
                         rm "$file" 2>/dev/null
-                    fi
-                else
-                    echo "Error: Found regular file instead of hard link: $file."
-                    echo "Run with --recreate-links to replace these files non-interactively."
-                    exit 1
-                fi
+                        ;;
+                esac
             else
-                rm "$file" 2>/dev/null
+                echo "Error: Found regular file instead of hard link: $file."
+                echo "Run with --recreate-links to replace these files non-interactively."
+                exit 1
             fi
         fi
     done

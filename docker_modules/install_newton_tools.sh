@@ -2,7 +2,7 @@
 set -e
 
 if [ "$NEWTON_TOOLS" != "YES" ] && [ "$NEWTON_TOOLS" != "yes" ] && [ "$NEWTON_TOOLS" != "y" ] && [ "$NEWTON_TOOLS" != "Y" ]; then
-    echo "Skipping Newton Tools installation (set NEWTON_TOOLS to YES/yes/y to enable)"
+    echo "Skipping Newton Tools installation (set NEWTON_TOOLS to YES/yes/y/Y to enable)"
     exit 0
 fi
 

@@ -2,7 +2,7 @@
 set -e
 
 if [ "$NV_OPENUSD" != "YES" ] && [ "$NV_OPENUSD" != "yes" ] && [ "$NV_OPENUSD" != "y" ] && [ "$NV_OPENUSD" != "Y" ]; then
-    echo "Skipping NVIDIA OpenUSD tools installation (set NV_OPENUSD to YES/yes/y to enable)"
+    echo "Skipping NVIDIA OpenUSD tools installation (set NV_OPENUSD to YES/yes/y/Y to enable)"
     exit 0
 fi
 
@@ -78,7 +78,5 @@ fi
 EOF
 
 rm -rf "$TMP_DIR"
-
-echo "NVIDIA OpenUSD tools installed successfully."
 
 echo "NVIDIA OpenUSD tools installation completed!"

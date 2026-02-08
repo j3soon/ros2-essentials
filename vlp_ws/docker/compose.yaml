@@ -188,9 +188,9 @@ services:
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
       # Mount credentials (for Claude Code CLI, Codex CLI, and etc.)
-      - ../../.env/.claude:/home/user/.claude
-      - ../../.env/.claude.json:/home/user/.claude.json
-      - ../../.env/.codex:/home/user/.codex
+      - ../../.env.d/.claude:/home/user/.claude
+      - ../../.env.d/.claude.json:/home/user/.claude.json
+      - ../../.env.d/.codex:/home/user/.codex
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache

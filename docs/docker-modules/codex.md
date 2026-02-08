@@ -46,7 +46,7 @@ codex --yolo
 
 ## Authentication
 
-Codex caches login details locally at `~/.codex/auth.json`. The default `compose.yaml` mounts `<git_root_dir>/.env/.codex` to `/home/user/.codex` so credentials can persist across containers.
+Codex caches login details locally at `~/.codex/auth.json`. The default `compose.yaml` mounts `<git_root_dir>/.env.d/.codex` to `/home/user/.codex` so credentials can persist across containers.
 
 ## References
 

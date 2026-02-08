@@ -2,7 +2,7 @@
 set -e
 
 if [ "$RTABMAP" != "YES" ] && [ "$RTABMAP" != "yes" ] && [ "$RTABMAP" != "y" ] && [ "$RTABMAP" != "Y" ]; then
-    echo "Skipping RTAB-Map installation (set RTABMAP to YES/yes/y to enable)"
+    echo "Skipping RTAB-Map installation (set RTABMAP to YES/yes/y/Y to enable)"
     exit 0
 fi
 

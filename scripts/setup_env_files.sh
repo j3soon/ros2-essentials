@@ -5,9 +5,9 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 
 # Create local environment folders/files used by tooling.
-mkdir -p "${SCRIPT_DIR}/../.env"
-mkdir -p "${SCRIPT_DIR}/../.env/.claude"
-touch "${SCRIPT_DIR}/../.env/.claude.json"
-mkdir -p "${SCRIPT_DIR}/../.env/.codex"
+mkdir -p "${SCRIPT_DIR}/../.env.d"
+mkdir -p "${SCRIPT_DIR}/../.env.d/.claude"
+touch "${SCRIPT_DIR}/../.env.d/.claude.json"
+mkdir -p "${SCRIPT_DIR}/../.env.d/.codex"
 
 echo "Set up local environment files done."
