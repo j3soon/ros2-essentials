@@ -60,9 +60,51 @@ Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/stretch3_ws/isaacs
   Your browser does not support the video tag.
 </video>
 
+### RTAB-Map SLAM Demo
+
+Use tmux to open multiple terminals:
+
+1. Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/stretch3_ws/isaacsim/assets/stretch3_og_wasd.usda` in Isaac Sim, and then press Play.
+
+2. Launch rtabmap SLAM:
+```sh
+ros2 launch stretch3_navigation rtabmap.launch.py
+```
+
+3. Launch rviz2:
+```sh
+ros2 launch stretch3_navigation rviz2.launch.py
+```
+
+In rviz2, use `2D Goal Pose` to set a goal pose for the robot. Nav2 system will guide the robot to the goal pose.
+
+<img src="assets/stretch3_rtabmap.png" alt="RTAB-Map SLAM Demo" width="800"/>
+
+### Cartographer SLAM Demo
+
+Use tmux to open multiple terminals:
+
+1. Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/stretch3_ws/isaacsim/assets/stretch3_og_wasd.usda` in Isaac Sim, and then press Play.
+
+2. Launch cartographer SLAM:
+```sh
+ros2 launch stretch3_navigation cartographer.launch.py
+```
+
+3. Launch rviz2:
+```sh
+ros2 launch stretch3_navigation rviz2.launch.py
+```
+
+In rviz2, use `2D Goal Pose` to set a goal pose for the robot. Nav2 system will guide the robot to the goal pose.
+
+<img src="assets/stratch3_cartographer.png" alt="Cartographer SLAM Demo" width="800"/>  
+
 ### Known Issues
 
-If the robot moves too fast, it will become a bit unstable and starts rotating. This may be due to the tool causing mass inbalance.
+If the robot moves too fast, it will cause skidding and the robot will need sometime to correct itself.
+
+Also, the robot turning very slowly, sometimes it stuck when turning around.
 
 ### References
 
