@@ -23,6 +23,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 
 cd "$SCRIPT_DIR"
 
+./setup_env_files.sh
 ./setup_docker_modules_link.sh $FORCE_FLAG
 ./setup_docker_volume.sh $FORCE_FLAG
 ./setup_isaac_link.sh
