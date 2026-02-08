@@ -1,17 +1,23 @@
 #!/bin/bash -e
 
 # Parse command line arguments
-FORCE_FLAG=""
+RECREATE_LINKS=false
+RECREATE_VOLUMES=false
 while [[ $# -gt 0 ]]; do
     case $1 in
-        -f|--force)
-            FORCE_FLAG="-f"
+        --recreate-links)
+            RECREATE_LINKS=true
+            shift
+            ;;
+        --recreate-volumes)
+            RECREATE_VOLUMES=true
             shift
             ;;
         *)
             echo "Unknown option: $1"
-            echo "Usage: $0 [-f|--force]"
-            echo "  -f, --force    Force removal of files and volumes"
+            echo "Usage: $0 [--recreate-links] [--recreate-volumes]"
+            echo "  --recreate-links    Replace non-hard-link docker module files"
+            echo "  --recreate-volumes  Recreate Gazebo/Isaac cache volumes"
             exit 1
             ;;
     esac
@@ -24,8 +30,19 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 cd "$SCRIPT_DIR"
 
 ./setup_env_files.sh
-./setup_docker_modules_link.sh $FORCE_FLAG
-./setup_docker_volume.sh $FORCE_FLAG
+
+if [ "$RECREATE_LINKS" = true ]; then
+    ./setup_docker_modules_link.sh --recreate-links
+else
+    ./setup_docker_modules_link.sh
+fi
+
+if [ "$RECREATE_VOLUMES" = true ]; then
+    ./setup_docker_volume.sh --recreate-volumes
+else
+    ./setup_docker_volume.sh
+fi
+
 ./setup_isaac_link.sh
 
 echo "Post Install Done."

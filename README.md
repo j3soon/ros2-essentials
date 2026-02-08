@@ -42,7 +42,9 @@ cd ros2-essentials
 > git fetch --unshallow
 > ```
 
-> Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes). In addition, the script can be run with the `-f` or `--force` flag to force removal of hard links if needed.
+> Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes).
+> - Use `--recreate-links` to force replacement of non-hard-link files under workspace `docker/modules/`.
+> - Use `--recreate-volumes` to invalidate Gazebo/Isaac Sim/Isaac ROS cache volumes after related updates or testing.
 >
 > **Troubleshooting**: If you encounter an error like `"failed to solve: failed to compute cache key: failed to calculate checksum of ref ...: "/modules/install_ros.sh": not found` when building Docker images, it means `post_install.sh` hasn't been run. This script creates necessary hard links for the Docker build process.
 
@@ -62,7 +64,7 @@ To update to the latest commit of the repository, run the following commands:
 
 ```sh
 git pull
-./scripts/post_install.sh -f
+./scripts/post_install.sh --recreate-links --recreate-volumes
 ```
 
 Make sure to run the `post_install.sh` script after pulling the latest changes to ensure that the hard links are properly set up. In addition, you should be prepared to rebuild the Docker images of the workspaces you are using, as some updates may require rebuilding the images to take effect.
