@@ -43,7 +43,7 @@ claude --dangerously-skip-permissions
 
 ## Authentication
 
-Claude Code caches login details locally at `~/.claude.json` and `~/.claude/`. The default `compose.yaml` mounts `<git_root_dir>/.env/.claude` to `/home/user/.claude` and `<git_root_dir>/.env/.claude.json` to `/home/user/.claude.json` so credentials can persist across containers.
+Claude Code caches login details locally at `~/.claude.json` and `~/.claude/`. The default `compose.yaml` mounts `<git_root_dir>/.env.d/.claude` to `/home/user/.claude` and `<git_root_dir>/.env.d/.claude.json` to `/home/user/.claude.json` so credentials can persist across containers.
 
 ## References
 

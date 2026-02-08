@@ -1,17 +1,17 @@
 #!/bin/bash -e
 
 # Parse command line arguments
-FORCE_REMOVE=false
+RECREATE_LINKS=false
 while [[ $# -gt 0 ]]; do
     case $1 in
-        -f|--force)
-            FORCE_REMOVE=true
+        --recreate-links)
+            RECREATE_LINKS=true
             shift
             ;;
         *)
             echo "Unknown option: $1"
-            echo "Usage: $0 [-f|--force]"
-            echo "  -f, --force    Force removal of files even if they're regular files"
+            echo "Usage: $0 [--recreate-links]"
+            echo "  --recreate-links  Replace regular files with docker module hard links"
             exit 1
             ;;
     esac
@@ -36,12 +36,29 @@ do
             continue
         elif [ "$(stat -c %h -- "$file")" -gt 1 ]; then
             rm "$file" 2>/dev/null
-        elif [ "$FORCE_REMOVE" = true ]; then
+        elif [ "$RECREATE_LINKS" = true ]; then
             rm "$file" 2>/dev/null
         else
-            echo "Error: Found regular file instead of symlink: $file."
-            echo "If the file is unmodified, consider removing it manually or add -f for force removal."
-            exit 1
+            if [ -t 0 ]; then
+                echo "Found regular files in docker modules (example: $file)."
+                echo "Force-remove and recreate module links? [Y/n]"
+                echo "Tip: choose 'y' directly if you are not adding/updating docker modules."
+                read -r answer
+                case "$answer" in
+                    [nN]|[nN][oO])
+                        echo "Skipped replacement. Remove files manually or rerun with --recreate-links."
+                        exit 1
+                        ;;
+                    *)
+                        RECREATE_LINKS=true
+                        rm "$file" 2>/dev/null
+                        ;;
+                esac
+            else
+                echo "Error: Found regular file instead of hard link: $file."
+                echo "Run with --recreate-links to replace these files non-interactively."
+                exit 1
+            fi
         fi
     done
     for file in docker_modules/*; do
