@@ -6,9 +6,13 @@ Codex CLI for AI-assisted development directly inside workspace containers.
 
 To enable Codex CLI, set the `CODEX` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `template_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 
+> **Notice - Subscription required:** Codex is a third-party service that requires an active OpenAI account or subscription to use. This module only installs the CLI; you need an active subscription to use it.
+
 ## Installation
 
 The module installs the Codex CLI (latest version) via npm during the Docker image build.
+
+> Alternatively, if you want to install the Codex extension for your favorite IDE (e.g., [Codex for VSCode](https://marketplace.visualstudio.com/items?itemName=openai.chatgpt)), refer to the [Codex IDE extension](https://developers.openai.com/codex/ide/) for more details instead. This module doesn't need to be enabled if you just want to use the IDE extension.
 
 ## Usage
 
@@ -51,3 +55,4 @@ Codex caches login details locally at `~/.codex/auth.json`. The default `compose
 - [Codex overview](https://openai.com/codex)
 - [Config basics](https://developers.openai.com/codex/config-basic/)
 - [Security](https://developers.openai.com/codex/security/)
+- [Codex Source Code on GitHub](https://github.com/openai/codex)

@@ -223,6 +223,21 @@ RUN /home/$USERNAME/udev_rules/install_udev_rules.sh
 # Generate robot configuration files.
 RUN bash -ie /home/$USERNAME/script/husky-generate.sh
 
+# NVIDIA OpenUSD Tools configuration
+ARG NV_OPENUSD=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_nv_openusd.sh /tmp/install_nv_openusd.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_nv_openusd.sh && rm /tmp/install_nv_openusd.sh
+
+# Newton Tools configuration
+ARG NEWTON_TOOLS=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_newton_tools.sh /tmp/install_newton_tools.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
+    /tmp/install_newton_tools.sh && rm /tmp/install_newton_tools.sh
+
 # Claude Code CLI configuration (installed last since the installation is fast)
 ARG CLAUDE_CODE=""
 COPY --chown=$USERNAME:$USERNAME \
