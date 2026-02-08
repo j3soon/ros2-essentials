@@ -12,7 +12,7 @@ To enable Claude Code CLI, set the `CLAUDE_CODE` argument to `YES` in the `compo
 
 The module automatically installs Claude Code CLI (latest version) using the official installer from [https://claude.ai/install.sh](https://claude.ai/install.sh).
 
-> Alternatively, if you want to install the Claude Code extension for your favorite IDE (e.g., [Claude Code for VSCode](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code)), refer to the [Claude Code IDE extension](https://code.claude.com/docs/en/vs-code) for more details instead. This module don't need to be enabled if you just want to use the IDE extension.
+> Alternatively, if you want to install the Claude Code extension for your favorite IDE (e.g., [Claude Code for VSCode](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code)), refer to the [Claude Code IDE extension](https://code.claude.com/docs/en/vs-code) for more details instead. This module doesn't need to be enabled if you just want to use the IDE extension.
 
 ## Usage
 

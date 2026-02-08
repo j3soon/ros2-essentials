@@ -31,7 +31,7 @@ if [ "$NV_OPENUSD" = "YES" ]; then
     echo "Downloading NVIDIA OpenUSD tools from: $NV_OPENUSD_URL"
     echo "Install path: $NV_OPENUSD_PATH"
 
-    # Install required dpendencies and missing dependencies through trial-and-error.
+    # Install required dependencies and missing dependencies through trial-and-error.
     # Ref: https://docs.omniverse.nvidia.com/usd/latest/usdview/quickstart.html
     sudo apt-get update && sudo apt-get install -y \
         wget \

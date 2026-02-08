@@ -31,7 +31,7 @@ Check `~/nvidia/openusd/scripts` and [USD Toolset documentation](https://openusd
 
 > **Limitations**: Certain USD tools (e.g., `usdrecord` and `usdchecker`) may still have runtime issues when executing directly due to upstream missing dependencies or compatibility problems. See the following for workarounds:
 >
-> ```
+> ```sh
 > FILE=~/nvidia/openusd/share/usd/tutorials/traversingStage/HelloWorld.usda
 > PYTHONHOME=${HOME}/nvidia/openusd/python \
 > PYTHONPATH= \
@@ -40,7 +40,7 @@ Check `~/nvidia/openusd/scripts` and [USD Toolset documentation](https://openusd
 > usdrecord.sh "$FILE" output.png
 > ```
 >
-> ```
+> ```sh
 > FILE=~/nvidia/openusd/share/usd/tutorials/traversingStage/HelloWorld.usda
 > PYTHONHOME=${HOME}/nvidia/openusd/python \
 > PYTHONPATH= \
@@ -50,11 +50,10 @@ Check `~/nvidia/openusd/scripts` and [USD Toolset documentation](https://openusd
 
 ## Comparison with Official Pixar OpenUSD
 
-The NVIDIA pre-built OpenUSD tools are used here since they provide pre-built binaries. The official Pixar OpenUSD doens't provide pre-built binaries, you'll need to build from source if you want to use it by referring to the [Pixar USD documentation](https://github.com/PixarAnimationStudios/OpenUSD) for instructions.
+The NVIDIA pre-built OpenUSD tools are used here since they provide pre-built binaries. The official Pixar OpenUSD doesn't provide pre-built binaries, you'll need to build from source if you want to use it by referring to the [Pixar USD documentation](https://github.com/PixarAnimationStudios/OpenUSD) for instructions.
 
 ## References
 
 - [NVIDIA OpenUSD binary tools](https://developer.nvidia.com/openusd#section-getting-started)
-- [usdview](https://docs.omniverse.nvidia.com/usd/latest/usdview/quickstart.html):
-- [usdview - Omniverse USD](https://docs.omniverse.nvidia.com/usd/latest/usdview/quickstart.html):
+- [usdview - Omniverse USD](https://docs.omniverse.nvidia.com/usd/latest/usdview/quickstart.html)
 - [USD Toolset - OpenUSD](https://openusd.org/release/toolset.html)
