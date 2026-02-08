@@ -384,6 +384,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -616,6 +620,62 @@
     
   
     Isaac ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nv-openusd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NVIDIA OpenUSD Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../newton-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Newton Tools
   
 
     
@@ -1365,8 +1425,14 @@
 <p><a href="https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_codex.sh"><img alt="GitHub code" src="https://img.shields.io/badge/code-blue?logo=github&amp;label=github" /></a></p>
 <p>Codex CLI for AI-assisted development directly inside workspace containers.</p>
 <p>To enable Codex CLI, set the <code>CODEX</code> argument to <code>YES</code> in the <code>compose.yaml</code> file of your desired workspace (e.g., <code>template_ws/docker/compose.yaml</code>). After making these changes, rebuild the Docker image.</p>
+<blockquote>
+<p><strong>Notice - Subscription required:</strong> Codex is a third-party service that requires an active OpenAI account or subscription to use. This module only installs the CLI; you need an active subscription to use it.</p>
+</blockquote>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>The module installs the Codex CLI (latest version) via npm during the Docker image build.</p>
+<blockquote>
+<p>Alternatively, if you want to install the Codex extension for your favorite IDE (e.g., <a href="https://marketplace.visualstudio.com/items?itemName=openai.chatgpt">Codex for VSCode</a>), refer to the <a href="https://developers.openai.com/codex/ide/">Codex IDE extension</a> for more details instead. This module doesn't need to be enabled if you just want to use the IDE extension.</p>
+</blockquote>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p>After building a workspace with Codex enabled, you can use the CLI inside the container:</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Start your workspace container</span>
@@ -1399,6 +1465,7 @@
 <li><a href="https://openai.com/codex">Codex overview</a></li>
 <li><a href="https://developers.openai.com/codex/config-basic/">Config basics</a></li>
 <li><a href="https://developers.openai.com/codex/security/">Security</a></li>
+<li><a href="https://github.com/openai/codex">Codex Source Code on GitHub</a></li>
 </ul>
 
 
@@ -1422,7 +1489,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 29, 2026 16:51:34 UTC">January 29, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 8, 2026 12:03:23 UTC">February 8, 2026</span>
   </span>
 
     
