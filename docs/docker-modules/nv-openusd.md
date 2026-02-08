@@ -6,6 +6,8 @@
 
 To enable NVIDIA OpenUSD tools, set the `NV_OPENUSD` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `template_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 
+> Last tested on commit [1e1cd11](https://github.com/j3soon/ros2-essentials/commit/1e1cd1164077924c226c39557d4a384042522a00) by [@j3soon](https://github.com/j3soon).
+
 ## Usage
 
 These OpenUSD tools are often very useful for working with USD files directly without needing to launch Isaac Sim.

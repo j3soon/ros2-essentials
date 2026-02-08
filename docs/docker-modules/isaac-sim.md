@@ -4,6 +4,8 @@
 
 Isaac Sim 5.0.0 Binary Install.
 
+> Last tested on commit [d43ad1c](https://github.com/j3soon/ros2-essentials/commit/d43ad1c11075808d5fbf194c5979ffedec213b5e) by [@j3soon](https://github.com/j3soon).
+
 Depends on:
 
 - Vulkan Configuration
