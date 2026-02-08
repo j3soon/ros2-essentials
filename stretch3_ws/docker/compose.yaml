@@ -43,9 +43,9 @@ services:
         # TODO: Set to "YES" if using Isaac ROS or set to "" if not using Isaac ROS
         # ISAAC_ROS: ""
         # TODO: Set to "YES" if using Cartographer or set to "" if not using Cartographer
-        # CARTOGRAPHER: ""
+        CARTOGRAPHER: "YES"
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
-        # RTABMAP: ""
+        RTABMAP: "YES"
         # TODO: Set to "YES" if using NVIDIA OpenUSD tools or set to "" if not using NVIDIA OpenUSD tools
         # NV_OPENUSD: ""
         # TODO: Set to "YES" if using Newton Tools or set to "" if not using Newton Tools
