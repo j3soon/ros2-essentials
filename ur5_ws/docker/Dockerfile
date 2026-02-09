@@ -172,6 +172,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
     ros-$ROS_DISTRO-ur \
+    ros-$ROS_DISTRO-tf-transformations \
     ros-$ROS_DISTRO-hardware-interface-testing \
     ros-$ROS_DISTRO-ros2-control-test-assets \
     liburdfdom-tools \
