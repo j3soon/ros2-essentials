@@ -1,4 +1,4 @@
-# Base Image: https://hub.docker.com/_/ubuntu/tags?name=22.04
+    # Base Image: https://hub.docker.com/_/ubuntu/tags?name=22.04
 FROM ubuntu:22.04 AS amd64
 # Base Image: https://hub.docker.com/_/ubuntu/tags?name=22.04
 FROM ubuntu:22.04 AS arm64
@@ -167,6 +167,16 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
 # TODO: Add more commands here
+
+# Install UR5 dependencies
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    ros-$ROS_DISTRO-ur \
+    ros-$ROS_DISTRO-hardware-interface-testing \
+    ros-$ROS_DISTRO-ros2-control-test-assets \
+    liburdfdom-tools \
+    && sudo rm -rf /var/lib/apt/lists/*
+
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
