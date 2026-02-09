@@ -151,6 +151,9 @@ def launch_setup(context, *args, **kwargs):
             "prefix:=",
             prefix,
             " ",
+            "use_rg2_gripper:=",
+            use_rg2_gripper,
+            " ",
         ]
     )
     robot_description_semantic = {"robot_description_semantic": robot_description_semantic_content}
