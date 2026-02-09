@@ -66,6 +66,7 @@ def launch_setup(context, *args, **kwargs):
     use_sim_time = LaunchConfiguration("use_sim_time")
     launch_rviz = LaunchConfiguration("launch_rviz")
     launch_servo = LaunchConfiguration("launch_servo")
+    use_rg2_gripper = LaunchConfiguration("use_rg2_gripper")
 
     joint_limit_params = PathJoinSubstitution(
         [FindPackageShare(description_package), "config", ur_type, "joint_limits.yaml"]
@@ -120,6 +121,9 @@ def launch_setup(context, *args, **kwargs):
             "input_recipe_filename:=rtde_input_recipe.txt",
             " ",
             "output_recipe_filename:=rtde_output_recipe.txt",
+            " ",
+            "use_rg2_gripper:=",
+            use_rg2_gripper,
             " ",
             "prefix:=",
             prefix,
@@ -299,6 +303,7 @@ def generate_launch_description():
                 "ur20",
                 "ur30",
             ],
+            default_value="ur5",
         )
     )
     declared_arguments.append(
@@ -395,6 +400,13 @@ def generate_launch_description():
     )
     declared_arguments.append(
         DeclareLaunchArgument("launch_servo", default_value="true", description="Launch Servo?")
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "use_rg2_gripper",
+            default_value="true",
+            description="Whether to include the RG2 gripper in the robot description (must match SRDF/servo config).",
+        )
     )
 
     return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
