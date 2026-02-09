@@ -78,6 +78,7 @@ def launch_setup(context, *args, **kwargs):
     tool_device_name = LaunchConfiguration("tool_device_name")
     tool_tcp_port = LaunchConfiguration("tool_tcp_port")
     tool_voltage = LaunchConfiguration("tool_voltage")
+    use_rg2_gripper = LaunchConfiguration("use_rg2_gripper")
     reverse_ip = LaunchConfiguration("reverse_ip")
     script_command_port = LaunchConfiguration("script_command_port")
     reverse_port = LaunchConfiguration("reverse_port")
@@ -184,6 +185,9 @@ def launch_setup(context, *args, **kwargs):
             "tool_voltage:=",
             tool_voltage,
             " ",
+            "use_rg2_gripper:=",
+            use_rg2_gripper,
+            " ",
             "reverse_ip:=",
             reverse_ip,
             " ",
@@ -232,6 +236,7 @@ def launch_setup(context, *args, **kwargs):
         ],
         output="screen",
         condition=IfCondition(use_fake_hardware),
+        remappings=[("/joint_states", f"/{ur_type}/joint_states")],
     )
 
     ur_control_node = Node(
@@ -244,6 +249,20 @@ def launch_setup(context, *args, **kwargs):
         ],
         output="screen",
         condition=UnlessCondition(use_fake_hardware),
+        remappings=[("/joint_states", f"/ur/joint_state")],
+    )
+
+    # Merge joint states from UR and RG2 gripper
+    joint_state_publisher_node = Node(
+        package="joint_state_publisher",
+        executable="joint_state_publisher",
+        name="joint_state_publisher",
+        parameters=[
+            {
+                "source_list": ["/ur/joint_state", "/rg2/joint_state"],
+                "rate": 125.0,
+            }
+        ],
     )
 
     dashboard_client_node = IncludeLaunchDescription(
@@ -393,9 +412,26 @@ def launch_setup(context, *args, **kwargs):
         controller_spawner(controllers_inactive, active=False),
     ]
 
+    gripper_io_control_launch = IncludeLaunchDescription(
+        condition=IfCondition(use_rg2_gripper),
+        launch_description_source=AnyLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [
+                    FindPackageShare("onrobot_rg2_io_control"),
+                    "launch",
+                    "onrobot_rg2_io_control.launch.py",
+                ]
+            )
+        ),
+        launch_arguments={
+            "config_file": "default.yaml",
+        }.items(),
+    )
+
     nodes_to_start = [
         control_node,
         ur_control_node,
+        joint_state_publisher_node,
         dashboard_client_node,
         robot_state_helper_node,
         tool_communication_node,
@@ -404,6 +440,7 @@ def launch_setup(context, *args, **kwargs):
         robot_state_publisher_node,
         rviz_node,
         trajectory_until_node,
+        gripper_io_control_launch,
     ] + controller_spawners
 
     return nodes_to_start
@@ -677,6 +714,13 @@ def generate_launch_description():
             "trajectory_port",
             default_value="50003",
             description="Port that will be opened for trajectory control.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "use_rg2_gripper",
+            default_value="false",
+            description="Include OnRobot RG2 gripper in the robot URDF and launch gripper IO control.",
         )
     )
     return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
