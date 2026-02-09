@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="ur_robot_ip" default="10.15.20.4" />
+  <arg name="base_link_frame" default="rg2_base_link" />
+  <arg name="gripper_joint_name" default="rg2_gripper_joint" />
+  <arg name="service_call_timeout_sec" default="10.0" />
+
+  <node name="rg2_driver_node" pkg="onrobot_rg2_driver" type="rg2_driver_node.py" output="screen">
+    <param name="ur_robot_ip" type="string" value="$(arg ur_robot_ip)" />
+    <param name="base_link_frame" type="string" value="$(arg base_link_frame)" />
+    <param name="gripper_joint_name" type="string" value="$(arg gripper_joint_name)" />
+    <param name="service_call_timeout_sec" type="string" value="$(arg service_call_timeout_sec)" />
+  </node>
+
+</launch>

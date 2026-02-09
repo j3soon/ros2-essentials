@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="onrobot_quick_changer"
+    params="parent_link 
+            xyz rpy">
+
+    <joint name="parent_to_quick_changer_joint" type="fixed">
+      <parent link="${parent_link}" />
+      <child link="quick_changer_link" />
+      <origin xyz="${xyz}" rpy="${rpy}" />
+    </joint>
+
+    <link name="quick_changer_link">
+      <collision>
+        <origin xyz="0.0 0.0 0.015" rpy="${pi/2} ${pi} 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/quick_changer.stl" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0.0 0.0 0.015" rpy="${pi/2} ${pi} 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/quick_changer.dae" />
+        </geometry>
+      </visual>
+    </link>
+
+  </xacro:macro>
+</robot>
