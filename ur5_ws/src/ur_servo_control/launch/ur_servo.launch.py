@@ -37,7 +37,7 @@ from ur_moveit_config.launch_common import load_yaml
 from launch_ros.parameter_descriptions import ParameterValue
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, OpaqueFunction
+from launch.actions import DeclareLaunchArgument, OpaqueFunction, ExecuteProcess
 from launch.conditions import IfCondition
 from launch.substitutions import (
     Command,
@@ -66,6 +66,7 @@ def launch_setup(context, *args, **kwargs):
     use_sim_time = LaunchConfiguration("use_sim_time")
     launch_rviz = LaunchConfiguration("launch_rviz")
     launch_servo = LaunchConfiguration("launch_servo")
+    use_rg2_gripper = LaunchConfiguration("use_rg2_gripper")
 
     joint_limit_params = PathJoinSubstitution(
         [FindPackageShare(description_package), "config", ur_type, "joint_limits.yaml"]
@@ -121,6 +122,9 @@ def launch_setup(context, *args, **kwargs):
             " ",
             "output_recipe_filename:=rtde_output_recipe.txt",
             " ",
+            "use_rg2_gripper:=",
+            use_rg2_gripper,
+            " ",
             "prefix:=",
             prefix,
             " ",
@@ -159,102 +163,6 @@ def launch_setup(context, *args, **kwargs):
         [FindPackageShare(moveit_config_package), "config", "kinematics.yaml"]
     )
 
-    robot_description_planning = {
-        "robot_description_planning": load_yaml(
-            str(moveit_config_package.perform(context)),
-            os.path.join("config", str(moveit_joint_limits_file.perform(context))),
-        )
-    }
-
-    # Planning Configuration
-    ompl_planning_pipeline_config = {
-        "move_group": {
-            "planning_plugin": "ompl_interface/OMPLPlanner",
-            "request_adapters": """default_planner_request_adapters/AddTimeOptimalParameterization default_planner_request_adapters/FixWorkspaceBounds default_planner_request_adapters/FixStartStateBounds default_planner_request_adapters/FixStartStateCollision default_planner_request_adapters/FixStartStatePathConstraints""",
-            "start_state_max_bounds_error": 0.1,
-        }
-    }
-    ompl_planning_yaml = load_yaml("ur_moveit_config", "config/ompl_planning.yaml")
-    ompl_planning_pipeline_config["move_group"].update(ompl_planning_yaml)
-
-    # Trajectory Execution Configuration
-    controllers_yaml = load_yaml("ur_moveit_config", "config/controllers.yaml")
-    # the scaled_joint_trajectory_controller does not work on fake hardware
-    change_controllers = context.perform_substitution(use_sim_time)
-    if change_controllers == "true":
-        controllers_yaml["scaled_joint_trajectory_controller"]["default"] = False
-        controllers_yaml["joint_trajectory_controller"]["default"] = True
-
-    moveit_controllers = {
-        "moveit_simple_controller_manager": controllers_yaml,
-        "moveit_controller_manager": "moveit_simple_controller_manager/MoveItSimpleControllerManager",
-    }
-
-    trajectory_execution = {
-        "moveit_manage_controllers": False,
-        "trajectory_execution.allowed_execution_duration_scaling": 1.2,
-        "trajectory_execution.allowed_goal_duration_margin": 0.5,
-        "trajectory_execution.allowed_start_tolerance": 0.01,
-        # Execution time monitoring can be incompatible with the scaled JTC
-        "trajectory_execution.execution_duration_monitoring": False,
-    }
-
-    planning_scene_monitor_parameters = {
-        "publish_planning_scene": True,
-        "publish_geometry_updates": True,
-        "publish_state_updates": True,
-        "publish_transforms_updates": True,
-    }
-
-    warehouse_ros_config = {
-        "warehouse_plugin": "warehouse_ros_sqlite::DatabaseConnection",
-        "warehouse_host": warehouse_sqlite_path,
-    }
-
-    # Start the actual move_group node/action server
-    move_group_node = Node(
-        package="moveit_ros_move_group",
-        executable="move_group",
-        output="screen",
-        parameters=[
-            robot_description,
-            robot_description_semantic,
-            publish_robot_description_semantic,
-            robot_description_kinematics,
-            robot_description_planning,
-            ompl_planning_pipeline_config,
-            trajectory_execution,
-            moveit_controllers,
-            planning_scene_monitor_parameters,
-            {"use_sim_time": use_sim_time},
-            warehouse_ros_config,
-        ],
-    )
-
-    # rviz with moveit configuration
-    rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare(moveit_config_package), "rviz", "view_robot.rviz"]
-    )
-    rviz_node = Node(
-        package="rviz2",
-        condition=IfCondition(launch_rviz),
-        executable="rviz2",
-        name="rviz2_moveit",
-        output="log",
-        arguments=["-d", rviz_config_file],
-        parameters=[
-            robot_description,
-            robot_description_semantic,
-            ompl_planning_pipeline_config,
-            robot_description_kinematics,
-            robot_description_planning,
-            warehouse_ros_config,
-            {
-                "use_sim_time": use_sim_time,
-            },
-        ],
-    )
-
     # Servo node for realtime control
     servo_yaml = load_yaml("ur_moveit_config", "config/ur_servo.yaml")
     servo_params = {"moveit_servo": servo_yaml}
@@ -266,11 +174,12 @@ def launch_setup(context, *args, **kwargs):
             servo_params,
             robot_description,
             robot_description_semantic,
+            robot_description_kinematics,
         ],
         output="screen",
     )
 
-    nodes_to_start = [move_group_node, rviz_node, servo_node]
+    nodes_to_start = [servo_node]
 
     return nodes_to_start
 
@@ -299,6 +208,7 @@ def generate_launch_description():
                 "ur20",
                 "ur30",
             ],
+            default_value="ur5",
         )
     )
     declared_arguments.append(
@@ -396,5 +306,23 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument("launch_servo", default_value="true", description="Launch Servo?")
     )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "use_rg2_gripper",
+            default_value="true",
+            description="Whether to include the RG2 gripper in the robot description.",
+        )
+    )
 
-    return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
+    # Trigger servo node
+    trigger_servo_start = ExecuteProcess(
+        cmd=[
+            "ros2", "service", "call", 
+            "/servo_node/start_servo", 
+            "std_srvs/srv/Trigger", 
+            "{}"
+        ],
+        output="screen"
+    )
+
+    return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup), trigger_servo_start])
