@@ -1,12 +1,10 @@
 # Visual Studio Code
 .vscode
 
-# ROS basic directories
+# ROS2 basic directories
 /build
 /install
-/devel
 /log
-/install
 
 # Hard Links
 /docker/modules
