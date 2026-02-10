@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (-2.1984279781741938, -0.7435618261400394, 1.0519894603129083)
-                double3 target = (1.4703380885725594, 0.9411333151185675, 1.0095628608407874)
+                double3 position = (-2.0004901879274133, -1.2162641966228682, 1.1103723146692757)
+                double3 target = (1.3054240572307836, 0.40915300055587056, -0.1687428088011802)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -391,30 +391,11 @@ def Xform "World"
             float physics:staticFriction = 25
         }
     }
-}
 
-def Xform "Environment"
-{
-    quatd xformOp:orient = (1, 0, 0, 0)
-    double3 xformOp:scale = (1, 1, 1)
-    double3 xformOp:translate = (0, 0, 0)
-    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-    def DistantLight "defaultLight" (
-        prepend apiSchemas = ["ShapingAPI"]
+    def "warehouse" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/Environments/Simple_Warehouse/warehouse.usd@
     )
     {
-        float inputs:angle = 1
-        float inputs:intensity = 3000
-        float inputs:shaping:cone:angle = 180
-        float inputs:shaping:cone:softness
-        float inputs:shaping:focus
-        color3f inputs:shaping:focusTint
-        asset inputs:shaping:ies:file
-        quatd xformOp:orient = (0.6532814824381883, 0.2705980500730985, 0.27059805007309845, 0.6532814824381882)
-        double3 xformOp:scale = (1, 1, 1)
-        double3 xformOp:translate = (0, 0, 0)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }
 
@@ -984,22 +965,6 @@ def "Render" (
             {
                 custom int2[] inputs:simTimesToWrite = [(14017, 2), (105128, 15), (210257, 30), (35043, 5), (210259, 30), (21026, 3), (70087, 10), (105131, 15), (210263, 30), (35044, 5)]
             }
-        }
-    }
-}
-
-def "FlatGrid" (
-    prepend references = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/Environments/Grid/default_environment.usd@
-)
-{
-    over "Environment"
-    {
-        over "Geometry"
-        {
-            quatd xformOp:orient = (1, 0, 0, 0)
-            double3 xformOp:scale = (100, 100, 1)
-            double3 xformOp:translate = (-0.425, 0.425, -0.006342573288611653)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
         }
     }
 }
