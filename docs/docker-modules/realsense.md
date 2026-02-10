@@ -42,7 +42,9 @@ Once you have finished testing, you can stop and remove the container with:
 docker compose down
 ```
 
-## Realsense test with gazebo
+## Simulation
+
+### Realsense test with gazebo
 
 - realsense_description package: Description of a robot with realsense D435 camera.
 - realsense_gazebo package: Gazebo simulation of the robot with robot state publisher.
@@ -56,7 +58,9 @@ docker compose down
   ros2 run rqt_robot_steering rqt_robot_steering
   ```
 
-## Realsense test in real world
+## Real Hardware
+
+### Realsense test in real world
 
 - Launch Realsense camera node in `tmux`
     ```bash
@@ -69,7 +73,50 @@ docker compose down
     rviz2
     ```
 
+### Tools
+
+Realsense viewer:
+
+```sh
+realsense-viewer
+```
+
+### Troubleshooting
+
+Check USB devices (on host):
+
+```sh
+lsusb
+```
+
+Check udev rules:
+
+```sh
+ls -l /lib/udev/rules.d/ | grep realsense
+```
+
+Show extrinsic and intrinsics:
+
+```sh
+rs-enumerate-devices -c
+```
+
+Show serial number:
+
+```sh
+rs-enumerate-devices -s
+```
+
+List firmware version:
+
+```sh
+rs-fw-update -l
+```
+
 ## References
 
 - [Realsense ROS Wrapper](https://github.com/IntelRealSense/realsense-ros)
 - [RealSense Gazebo ROS Plugin](https://github.com/pal-robotics/realsense_gazebo_plugin)
+- [Troubleshooting Q&A](https://github.com/realsenseai/librealsense/wiki/Troubleshooting-Q%26A)
+- [Troubleshooting Tips and Tricks](https://dev.realsenseai.com/docs/troubleshooting)
+- [Librealsense Docker](https://github.com/realsenseai/librealsense/tree/master/scripts/Docker)
