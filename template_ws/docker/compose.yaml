@@ -105,11 +105,11 @@ services:
       - $HOME/.Xauthority:/home/user/.Xauthority
         # Xauthority is mounted to allow X11 forwarding for remote display.
       # Mount Direct Rendering Infrastructure (DRI) for hardware acceleration support such as OpenGL.
-      - /dev/dri:/dev/dri
+      # - /dev/dri:/dev/dri
       # Mount sound card to prevent Gazebo warning.
-      - /dev/snd:/dev/snd
+      # - /dev/snd:/dev/snd
       # Mount shared memory for ROS2 communication.
-      - /dev/shm:/dev/shm
+      # - /dev/shm:/dev/shm
       # TODO: Uncomment the line below and comment out the three entries above to enable USB support.
       - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
