@@ -81,6 +81,41 @@ Realsense viewer:
 realsense-viewer
 ```
 
+### Updating Firmware
+
+Updating firmware via `realsense-viewer` [will fail at 30%](https://github.com/realsenseai/librealsense/issues/14345) if `systemd-udevd` is not running, which could result in the following error:
+
+```
+Recovery device did not connect in time!
+```
+
+Make sure to start `systemd-udevd` in the container before updating firmware:
+
+```sh
+sudo /lib/systemd/systemd-udevd --daemon
+realsense-viewer
+# and then update firmware via realsense-viewer
+```
+
+`systemd-udevd` is required to detect when the (recovery) device reconnects after requesting the camera to switch to recovery mode.
+
+> Example output of a successful firmware update:
+>
+> ```
+> Started Firmware Update process
+> Trying to back-up camera flash memory
+> Backup completed and saved as '/home/user/.xxxxxxxxxxxx.xxxxxxxx_xxxxxx.bin'
+> Requesting to switch to recovery mode
+> DFU device 'xxxxxxxxxxxx' found
+> Recovery device connected, starting update..
+> Internal write is in progress
+> Please DO NOT DISCONNECT the camera
+> Firmware Download completed, await DFU transition event
+> Discovered connection of the original device
+> Device reconnected successfully!
+> FW update process completed successfully
+> ```
+
 ### Troubleshooting
 
 Check USB devices (on host):
