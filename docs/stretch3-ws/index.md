@@ -60,6 +60,12 @@ Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/stretch3_ws/isaacs
   Your browser does not support the video tag.
 </video>
 
+### ROS2 Keyboard Control
+
+```sh
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
 ### RTAB-Map SLAM Demo
 
 Use tmux to open multiple terminals:
@@ -73,7 +79,7 @@ ros2 launch stretch3_navigation rtabmap.launch.py
 
 3. Launch rviz2:
 ```sh
-ros2 launch stretch3_navigation rviz2.launch.py
+ros2 launch stretch3_navigation rviz.launch.py
 ```
 
 In rviz2, use `2D Goal Pose` to set a goal pose for the robot. Nav2 system will guide the robot to the goal pose.
@@ -93,12 +99,12 @@ ros2 launch stretch3_navigation cartographer.launch.py
 
 3. Launch rviz2:
 ```sh
-ros2 launch stretch3_navigation rviz2.launch.py
+ros2 launch stretch3_navigation rviz.launch.py
 ```
 
 In rviz2, use `2D Goal Pose` to set a goal pose for the robot. Nav2 system will guide the robot to the goal pose.
 
-<img src="assets/stratch3_cartographer.png" alt="Cartographer SLAM Demo" width="800"/>  
+<img src="assets/stretch3_cartographer.png" alt="Cartographer SLAM Demo" width="800"/>  
 
 ### Known Issues
 
