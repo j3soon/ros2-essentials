@@ -16,7 +16,7 @@
   <exec_depend>nav2_bt_navigator</exec_depend>
   <exec_depend>nav2_controller</exec_depend>
   <exec_depend>nav2_planner</exec_depend>
-  <exec_depend>nav2_recoveries</exec_depend>
+  <exec_depend>nav2_behaviors</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>cartographer_ros</exec_depend>
   <exec_depend>rclpy</exec_depend>
