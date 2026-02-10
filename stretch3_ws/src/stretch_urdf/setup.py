@@ -1,11 +1,14 @@
+from pathlib import Path
 import setuptools
 from os.path import isfile
 import glob
 
-with open("README.md", "r") as fh:
+THIS_DIR = Path(__file__).resolve().parent
+
+with open(THIS_DIR / "README.md", "r") as fh:
     long_description = fh.read()
 
-script_path='./tools'
+script_path = str(THIS_DIR / "tools")
 ex_scripts = glob.glob(script_path+'/*.py') + glob.glob(script_path+'/*.sh')
 stretch_scripts=[f for f in ex_scripts if isfile(f)]
 
