@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="publish_robot_state" default="true" />
+
+    <param command="$(find xacro)/xacro $(find onrobot_rg2_description)/urdf/onrobot.urdf.xacro"
+        name="robot_description" />
+
+    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"  name="joint_state_publisher_gui" if="$(arg publish_robot_state)" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find onrobot_rg2_description)/config/view_rg2.rviz" required="true" />
+
+</launch>

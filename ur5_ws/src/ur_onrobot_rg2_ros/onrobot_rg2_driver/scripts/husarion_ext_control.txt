@@ -1,0 +1,8 @@
+ Program
+   Variables Setup
+   Robot Program
+     Control by User Computer (Panther)
+   Thread_1
+     Script: husarion_rg2_driver.script
+   Thread_2
+     Script: husarion_rg2_watchdog.script

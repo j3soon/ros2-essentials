@@ -1,0 +1,6 @@
+float32 width
+float32 force
+---
+bool success
+bool grip_detected
+string message

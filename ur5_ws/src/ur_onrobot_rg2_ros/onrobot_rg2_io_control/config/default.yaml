@@ -1,0 +1,11 @@
+onrobot_rg2_io_control_node:
+  ros__parameters:
+    # Subscriptions
+    input_command_topic: /rg2/command
+    input_tool_data_topic: /io_and_status_controller/tool_data
+
+    # Publishers
+    output_joint_state_topic: /rg2/joint_state
+
+    # Parameters
+    force_mode: high  # "high" or "low" force mode

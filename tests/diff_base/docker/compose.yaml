@@ -35,13 +35,13 @@ services:
         # TODO: Set the USER_UID
         USER_UID: "${USER_UID:-1000}"
         # TODO: Set CUDA Toolkit version or set to "" if not using CUDA Toolkit
-        # CUDA_TOOLKIT_VERSION: ""
+        {PLACEHOLDER_#}CUDA_TOOLKIT_VERSION: "{PLACEHOLDER}"
         # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
-        # ISAAC_SIM_VERSION: "5.0.0"
+        {PLACEHOLDER_#}ISAAC_SIM_VERSION: "{PLACEHOLDER}"
         # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
-        # ISAAC_LAB_VERSION: "2.3.2"
+        {PLACEHOLDER_#}ISAAC_LAB_VERSION: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Isaac ROS or set to "" if not using Isaac ROS
-        # ISAAC_ROS: ""
+        {PLACEHOLDER_#}ISAAC_ROS: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Cartographer or set to "" if not using Cartographer
         {PLACEHOLDER_#}CARTOGRAPHER: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map

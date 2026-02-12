@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+
+<robot name="onrobot_rg2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find onrobot_rg2_description)/urdf/onrobot_quick_changer.urdf.xacro" ns="changer" />
+  <xacro:include filename="$(find onrobot_rg2_description)/urdf/onrobot_rg2.urdf.xacro" ns="gripper" />
+
+  <link name="world" />
+
+  <xacro:changer.onrobot_quick_changer parent_link="world" xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  <xacro:gripper.onrobot_rg2 
+    parent_link="quick_changer_link" 
+    xyz="0.0 0.0 0.015" 
+    rpy="0.0 ${-pi/2} 0.0" />
+
+</robot>
