@@ -11,31 +11,31 @@
       
       
       
-        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/docker-modules/codex/">
+        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/ur5-ws/">
       
       
-        <link rel="prev" href="../claude-code/">
+        <link rel="prev" href="../stretch3-ws/">
       
       
-        <link rel="next" href="../../workspaces/">
+        <link rel="next" href="../dependencies/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Codex - ROS2 Essentials</title>
+        <title>Universal Robots UR5 - ROS2 Essentials</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -54,7 +54,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -72,17 +72,17 @@
     
   
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Codex - ROS2 Essentials" />
+<meta property="og:title" content="Universal Robots UR5 - ROS2 Essentials" />
 <meta property="og:description" content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." />
-<meta property="og:image" content="https://j3soon.github.io/ros2-essentials/assets/images/social/docker-modules/codex.png" />
+<meta property="og:image" content="https://j3soon.github.io/ros2-essentials/assets/images/social/ur5-ws/index.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:url" content="https://j3soon.github.io/ros2-essentials/docker-modules/codex/" />
+<meta property="og:url" content="https://j3soon.github.io/ros2-essentials/ur5-ws/" />
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:title" content="Codex - ROS2 Essentials" />
+<meta property="twitter:title" content="Universal Robots UR5 - ROS2 Essentials" />
 <meta property="twitter:description" content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." />
-<meta property="twitter:image" content="https://j3soon.github.io/ros2-essentials/assets/images/social/docker-modules/codex.png" />
+<meta property="twitter:image" content="https://j3soon.github.io/ros2-essentials/assets/images/social/ur5-ws/index.png" />
 </head>
   
   
@@ -102,7 +102,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#codex" class="md-skip">
+        <a href="#universal-robots-ur5" class="md-skip">
           Skip to content
         </a>
       
@@ -119,7 +119,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="ROS2 Essentials" class="md-header__button md-logo" aria-label="ROS2 Essentials" data-md-component="logo">
+    <a href=".." title="ROS2 Essentials" class="md-header__button md-logo" aria-label="ROS2 Essentials" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"/></svg>
@@ -139,7 +139,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Codex
+              Universal Robots UR5
             
           </span>
         </div>
@@ -274,7 +274,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="ROS2 Essentials" class="md-nav__button md-logo" aria-label="ROS2 Essentials" data-md-component="logo">
+    <a href=".." title="ROS2 Essentials" class="md-nav__button md-logo" aria-label="ROS2 Essentials" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"/></svg>
@@ -304,7 +304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -331,7 +331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/" class="md-nav__link">
+      <a href="../contributing/" class="md-nav__link">
         
   
   
@@ -355,6 +355,407 @@
       
   
   
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../docker-modules/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Modules
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Docker Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/ros2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/cartographer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cartographer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/rtabmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RTAB-Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/cuda-toolkit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CUDA Toolkit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/isaac-sim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Isaac Sim
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/isaac-lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Isaac Lab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/isaac-ros/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Isaac ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/nv-openusd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NVIDIA OpenUSD Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/newton-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Newton Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/claude-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/codex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Codex
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -364,6 +765,12 @@
       
         
           
+        
+      
+        
+      
+        
+      
         
       
         
@@ -396,18 +803,18 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../workspaces/" class="md-nav__link ">
               
   
   
   <span class="md-ellipsis">
     
   
-    Docker Modules
+    Workspaces
   
 
     
@@ -418,18 +825,18 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Docker Modules
+    Workspaces
   
 
           </label>
@@ -444,14 +851,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../ros2/" class="md-nav__link">
+      <a href="../template-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    ROS 2
+    Template
   
 
     
@@ -472,14 +879,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../cartographer/" class="md-nav__link">
+      <a href="../orbslam3-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Cartographer
+    ORB-SLAM3
   
 
     
@@ -500,14 +907,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../rtabmap/" class="md-nav__link">
+      <a href="../ros1-bridge-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    RTAB-Map
+    ROS1 Bridge
   
 
     
@@ -528,14 +935,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../cuda-toolkit/" class="md-nav__link">
+      <a href="../husky-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    CUDA Toolkit
+    Clearpath Husky
   
 
     
@@ -556,14 +963,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../isaac-sim/" class="md-nav__link">
+      <a href="../kobuki-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Isaac Sim
+    Yujin Robot Kobuki
   
 
     
@@ -584,14 +991,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../isaac-lab/" class="md-nav__link">
+      <a href="../vlp-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Isaac Lab
+    Velodyne VLP-16
   
 
     
@@ -612,14 +1019,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../isaac-ros/" class="md-nav__link">
+      <a href="../gazebo-world-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Isaac ROS
+    Gazebo World
   
 
     
@@ -640,14 +1047,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../nv-openusd/" class="md-nav__link">
+      <a href="../aloha-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    NVIDIA OpenUSD Tools
+    ALOHA
   
 
     
@@ -668,14 +1075,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../newton-tools/" class="md-nav__link">
+      <a href="../turtlebot3-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Newton Tools
+    TurtleBot3
   
 
     
@@ -696,14 +1103,98 @@
   
   
     <li class="md-nav__item">
-      <a href="../claude-code/" class="md-nav__link">
+      <a href="../delto-gripper-ws/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Claude Code
+    Tesollo Delto Gripper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../go2-ws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unitree Go2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../h1-ws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unitree H1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stretch3-ws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello Robot Stretch 3
   
 
     
@@ -740,7 +1231,7 @@
   <span class="md-ellipsis">
     
   
-    Codex
+    Universal Robots UR5
   
 
     
@@ -758,7 +1249,7 @@
   <span class="md-ellipsis">
     
   
-    Codex
+    Universal Robots UR5
   
 
     
@@ -784,10 +1275,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installation
+        Start Container
       
     </span>
   </a>
@@ -795,10 +1286,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
+  <a href="#simulation-with-ursim-cb3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Usage
+        Simulation with URSim (CB3)
       
     </span>
   </a>
@@ -806,10 +1297,76 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
+  <a href="#setup-robot" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Authentication
+        Setup Robot
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#robot-calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Robot Calibration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bring-up-robot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bring Up Robot
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-moveit-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch MoveIt 2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servo-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Servo Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pose-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pose Tracking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
       
     </span>
   </a>
@@ -849,499 +1406,8 @@
   
   
   
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../../workspaces/" class="md-nav__link ">
-              
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Workspaces
-  
-
-    
-  </span>
-  
-  
-
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Workspaces
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../template-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Template
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../orbslam3-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ORB-SLAM3
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../ros1-bridge-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ROS1 Bridge
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../husky-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Clearpath Husky
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../kobuki-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Yujin Robot Kobuki
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../vlp-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Velodyne VLP-16
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../gazebo-world-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gazebo World
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../aloha-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ALOHA
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../turtlebot3-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TurtleBot3
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../delto-gripper-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Tesollo Delto Gripper
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../go2-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Unitree Go2
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../h1-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Unitree H1
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../stretch3-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello Robot Stretch 3
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../ur5-ws/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Universal Robots UR5
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../dependencies/" class="md-nav__link">
+      <a href="../dependencies/" class="md-nav__link">
         
   
   
@@ -1388,10 +1454,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installation
+        Start Container
       
     </span>
   </a>
@@ -1399,10 +1465,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
+  <a href="#simulation-with-ursim-cb3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Usage
+        Simulation with URSim (CB3)
       
     </span>
   </a>
@@ -1410,10 +1476,76 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
+  <a href="#setup-robot" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Authentication
+        Setup Robot
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#robot-calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Robot Calibration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bring-up-robot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bring Up Robot
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-moveit-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch MoveIt 2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servo-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Servo Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pose-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pose Tracking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
       
     </span>
   </a>
@@ -1451,54 +1583,132 @@
   
 
 
-<h1 id="codex">Codex<a class="headerlink" href="#codex" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_codex.sh"><img alt="GitHub code" src="https://img.shields.io/badge/code-blue?logo=github&amp;label=github" /></a></p>
-<p>Codex CLI for AI-assisted development directly inside workspace containers.</p>
+<h1 id="universal-robots-ur5">Universal Robots UR5<a class="headerlink" href="#universal-robots-ur5" title="Permanent link">&para;</a></h1>
+<p><a href="https://github.com/j3soon/ros2-essentials/tree/main/ur5_ws"><img alt="GitHub code" src="https://img.shields.io/badge/code-blue?logo=github&amp;label=github" /></a>
+<a href="https://github.com/j3soon/ros2-essentials/commits/main/ur5_ws"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=ur5_ws" /></a></p>
+<p><a href="https://hub.docker.com/r/j3soon/ros2-ur5-ws/tags"><img alt="DockerHub image" src="https://img.shields.io/badge/dockerhub-j3soon/ros2--ur5--ws-important.svg?logo=docker" /></a>
+<img alt="Docker image arch" src="https://img.shields.io/badge/arch-amd64-blueviolet" />
+<img alt="Docker image version" src="https://img.shields.io/docker/v/j3soon/ros2-ur5-ws" />
+<img alt="Docker image size" src="https://img.shields.io/docker/image-size/j3soon/ros2-ur5-ws" /></p>
+<p>This workspace provides a ROS 2 Humble environment for controlling <strong>Universal Robots UR5</strong> manipulators. It includes the official <a href="https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver">Universal_Robots_ROS2_Driver</a>, description packages, <strong>OnRobot RG2</strong> gripper support, <strong>servo control</strong>, and <strong>pose tracking</strong>.</p>
 <blockquote>
-<p>Last tested on commit <a href="https://github.com/j3soon/ros2-essentials/commit/d43ad1c11075808d5fbf194c5979ffedec213b5e">d43ad1c</a> by <a href="https://github.com/j3soon">@j3soon</a>.</p>
+<p>Please note that this workspace has only been tested on the UR5 (CB3 version). In theory, it can support other models with minor configuration adjustments; please feel free to modify the settings as needed for your specific use case.</p>
 </blockquote>
-<p>To enable Codex CLI, set the <code>CODEX</code> argument to <code>YES</code> in the <code>compose.yaml</code> file of your desired workspace (e.g., <code>template_ws/docker/compose.yaml</code>). After making these changes, rebuild the Docker image.</p>
+<h2 id="start-container">Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><strong>Notice - Subscription required:</strong> Codex is a third-party service that requires an active OpenAI account or subscription to use. This module only installs the CLI; you need an active subscription to use it.</p>
+<p>Make sure your system meets the <a href="https://j3soon.github.io/ros2-essentials/#system-requirements">system requirements</a> and have followed the <a href="https://j3soon.github.io/ros2-essentials/#setup">setup instructions</a> before using this workspace.</p>
 </blockquote>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>The module installs the Codex CLI (latest version) via npm during the Docker image build.</p>
-<blockquote>
-<p>Alternatively, if you want to install the Codex extension for your favorite IDE (e.g., <a href="https://marketplace.visualstudio.com/items?itemName=openai.chatgpt">Codex for VSCode</a>), refer to the <a href="https://developers.openai.com/codex/ide/">Codex IDE extension</a> for more details instead. This module doesn't need to be enabled if you just want to use the IDE extension.</p>
-</blockquote>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
-<p>After building a workspace with Codex enabled, you can use the CLI inside the container:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Start your workspace container</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/template_ws/docker
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-template-ws<span class="w"> </span>bash
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Inside the container, verify Codex is installed</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>codex<span class="w"> </span>--version
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># Login with device code authentication</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>codex<span class="w"> </span>login<span class="w"> </span>--device-auth
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># Run Codex CLI</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>codex
-</span></code></pre></div>
-<p>The first time you run Codex, you'll be prompted to sign in with your ChatGPT account or an API key.</p>
-<p>If you want to run Codex CLI to run continuously without asking for permissions, make sure to comment out <code>privileged: true</code> in the <code>compose.yaml</code> file and restart the container. Then run:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>codex<span class="w"> </span>--yolo
+<p>Run the following commands in a Ubuntu desktop environment. If you are using a remote server, make sure you're using a terminal within a remote desktop session (e.g., VNC) instead of SSH (i.e., don't use <code>ssh -X</code> or <code>ssh -Y</code>).</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/ur5_ws/docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>build
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># The initial build will take a while, please wait patiently.</span>
 </span></code></pre></div>
 <blockquote>
-<p>This is not the most secure way to run Codex CLI, but it's often good enough as it's inside a container.</p>
+<p>If your user's UID is <code>1000</code>, you may use <code>docker compose pull</code> instead of <code>docker compose build</code>.</p>
 </blockquote>
-<h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
-<p>Codex caches login details locally at <code>~/.codex/auth.json</code>. The default <code>compose.yaml</code> mounts <code>&lt;git_root_dir&gt;/.env.d/.codex</code> to <code>/home/user/.codex</code> so credentials can persist across containers.</p>
+<p>The commands in the following sections assume that you are inside the Docker container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-ur5-ws<span class="w"> </span>bash
+</span></code></pre></div>
+<p>If the initial build failed, rebuild the workspace inside the container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/ur5_ws
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>rm<span class="w"> </span>-rf<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span></code></pre></div>
+<p>To stop and remove the container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
+</span></code></pre></div>
+<h2 id="simulation-with-ursim-cb3">Simulation with URSim (CB3)<a class="headerlink" href="#simulation-with-ursim-cb3" title="Permanent link">&para;</a></h2>
+<p>To test without hardware, run <strong>URSim CB3</strong> with the External Control URCap in Docker:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/ur5_ws/docker/ursim
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>up
+</span></code></pre></div>
+<p>This starts a UR5 simulator at <code>192.168.56.101</code> (VNC on port 5900, Web on 6080). The ports 5900 and 6080 are forwarded to localhost, please change them in <code>docker/ursim/compose.yaml</code> if those ports conflict with existing services. Open <a href="http://localhost:6080/vnc.html?host=localhost&amp;port=6080">http://localhost:6080/vnc.html?host=localhost&amp;port=6080</a> in your browser to access the URSim interface.</p>
+<blockquote>
+<p>⚠️ Important: If you plan to switch to the physical robot, you must run <code>docker compose down</code> to remove the virtual network first. Failing to do so will cause IP address conflicts.</p>
+</blockquote>
+<p>URSim provides an interface identical to the physical robot, making it ideal for rapid testing. However, please note that unlike <code>Gazebo</code> or <code>IsaacSim</code>, URSim does not possess a realistic physics engine. Therefore, it is not suitable for simulations requiring high physical fidelity.</p>
+<p>Regarding the RG2 gripper: although it is not explicitly modeled in URSim, our control script operates via Digital I/O. Consequently, there is no need to disable the gripper configuration when running URSim; the code will execute without errors.</p>
+<p>Since URSim aims to faithfully replicate the real robot's behavior, you should follow all the steps outlined in the subsequent sections, including calibration and bring-up.</p>
+<h2 id="setup-robot">Setup Robot<a class="headerlink" href="#setup-robot" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>For URSim users, the settings are already pre-configured in the docker compose file, so you can skip this step.</p>
+</blockquote>
+<p>Please refer to the <a href="https://docs.universal-robots.com/Universal_Robots_ROS2_Documentation/doc/ur_client_library/doc/setup/robot_setup.html">official installation</a> guide. If the robot has been configured previously, you can typically skip this step.</p>
+<p>For network setup, please refer to <a href="https://docs.universal-robots.com/Universal_Robots_ROS2_Documentation/doc/ur_client_library/doc/setup/network_setup.html">this section</a> for network configuration.</p>
+<h2 id="robot-calibration">Robot Calibration<a class="headerlink" href="#robot-calibration" title="Permanent link">&para;</a></h2>
+<p>To improve accuracy, run the calibration correction and save the result to the workspace description config:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/ur5_ws
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>./scripts/ur5_calibration.sh
+</span></code></pre></div>
+<p>You only need to run this once for each robot. This creates <code>default_kinematics.yaml</code> which is required for the subsequent steps.</p>
+<h2 id="bring-up-robot">Bring Up Robot<a class="headerlink" href="#bring-up-robot" title="Permanent link">&para;</a></h2>
+<p>Use the script:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>/home/ros2-essentials/ur5_ws
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>./scripts/ur5_bringup.sh
+</span></code></pre></div>
+<p>Or run the launch file directly:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>ur_robot_driver<span class="w"> </span>ur_control.launch.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>ur_type:<span class="o">=</span>ur5<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>use_rg2_gripper:<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span>robot_ip:<span class="o">=</span><span class="m">192</span>.168.56.101<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span>launch_rviz:<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div>
+<blockquote>
+<p>Set <code>use_rg2_gripper</code> parameter to <strong>false</strong> to disable the RG2 gripper.</p>
+</blockquote>
+<p>Quick test for gripper actuation:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># true = open, false = close</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/rg2/command<span class="w"> </span>std_msgs/msg/Bool<span class="w"> </span><span class="s2">&quot;{data: true}&quot;</span>
+</span></code></pre></div>
+<p>After bringing up the robot, make sure to click <code>Play</code> in the UR interface to start the control loop.</p>
+<p>In the UR interface, go to <code>Home &gt; Program Robot &gt; Empty Program &gt; Program &gt; Structure &gt; URCaps &gt; External Control</code> and then click the Play button.</p>
+<p><img alt="" src="assets/ursim-external-control-running.png" /></p>
+<p>The UR interface control program will automatically stop if the ROS2 bring up node is stopped or crashes for safety reasons. If that happens, simply restart the bring up node and click <code>Play</code> again.</p>
+<h2 id="launch-moveit-2">Launch MoveIt 2<a class="headerlink" href="#launch-moveit-2" title="Permanent link">&para;</a></h2>
+<p>Launch MoveIt 2 for a quick test. You can move the arm by dragging the end-effector (EE) to a target position in RViz2, then clicking <code>Plan &amp; Execute</code>.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>ur_moveit_config<span class="w"> </span>ur_moveit.launch.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span>launch_rviz:<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span>use_rg2_gripper:<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div>
+<blockquote>
+<p>Ensure the robot driver is already running before testing.</p>
+</blockquote>
+<h2 id="servo-control">Servo Control<a class="headerlink" href="#servo-control" title="Permanent link">&para;</a></h2>
+<p>The <strong>ur_servo_control</strong> package provides a simple example for controlling end-effector (EE) velocity. Please ensure the robot driver is launched before testing.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>ur_servo_control<span class="w"> </span>ur_servo.launch.py
+</span></code></pre></div>
+<p>You can control the robot arm by publishing target velocities to the <code>/servo_node/delta_twist_cmds</code> topic.</p>
+<p>For an implementation example within a ros node, refer to <code>ur5_ws/src/ur_servo_control/ur_servo_control/ur_servo_control.py</code>. Please be careful when selecting the reference frame. Use the following command to launch it:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>ur_servo_control<span class="w"> </span>ur_servo_control.launch.py
+</span></code></pre></div>
+<p>The default velocities above are set to 0, you can modify the linear/angular velocities (<code>twist_msg.twist.{linear|angular}.{x|y|z}</code>) in <code>publish_servo_command_callback</code> in <code>ur5_ws/src/ur_servo_control/ur_servo_control/ur_servo_control.py</code>. But note that a constant velocity command will cause the robot to keep moving, which may be dangerous for real robot control (but fine for URSim testing).</p>
+<h2 id="pose-tracking">Pose Tracking<a class="headerlink" href="#pose-tracking" title="Permanent link">&para;</a></h2>
+<p>The <strong>ur_pose_tracking</strong> package provides an interface for controlling the end-effector (EE) position.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># In terminal 1 (Launch the servo node):</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>ur_servo_control<span class="w"> </span>ur_servo.launch.py
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># In terminal 2:</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>ros2<span class="w"> </span>launch<span class="w"> </span>ur_pose_tracking<span class="w"> </span>ur_pose_tracking.launch.py
+</span></code></pre></div>
+<p>You can control the robot arm by publishing target pose to the <code>/target_pose</code> topic.</p>
+<p>For application integration, it is recommended to refer to the <strong>servo control implementation within the ros node</strong>. To perform a quick test, please use the following command:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/target_pose<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="s2">&quot;{header: {frame_id: &#39;world&#39;, stamp: {sec: 0, nanosec: 0}}, pose: {position: {x: -0.3, y: 0.0, z: 0.5}, orientation: {x: -0.35, y: 0.01, z: 0.93, w: -0.05}}}&quot;</span>
+</span></code></pre></div>
+<blockquote>
+<p>Note: This implementation does not account for singularities or collision avoidance and only supports linear paths between points. Consequently, it is ideal for high-density trajectory points. If your input points are sparse or require complex path planning and obstacle avoidance, please use the MoveIt planner instead.</p>
+</blockquote>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<p>If you encounter issues on reproducing the examples above, consider remove all containers (<code>docker compose down</code> for URSim and workspace) and try again.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://developers.openai.com/codex/cli">Codex CLI</a></li>
-<li><a href="https://developers.openai.com/codex/auth">Authentication</a></li>
-<li><a href="https://openai.com/codex">Codex overview</a></li>
-<li><a href="https://developers.openai.com/codex/config-basic/">Config basics</a></li>
-<li><a href="https://developers.openai.com/codex/security/">Security</a></li>
-<li><a href="https://github.com/openai/codex">Codex Source Code on GitHub</a></li>
+<li><a href="https://docs.universal-robots.com/Universal_Robots_ROS2_Documentation/">Universal Robots ROS 2 Documentation</a><ul>
+<li><a href="https://docs.universal-robots.com/Universal_Robots_ROS2_Documentation/doc/ur_client_library/doc/setup/robot_setup.html">Robot Setup</a></li>
+<li><a href="https://docs.universal-robots.com/Universal_Robots_ROS2_Documentation/doc/ur_client_library/doc/setup/ursim_docker.html">Setup URSim with Docker</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver">Universal_Robots_ROS2_Driver</a></li>
 </ul>
 
 
@@ -1522,7 +1732,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 5, 2026 23:05:00 UTC">February 5, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 12, 2026 10:53:33 UTC">February 12, 2026</span>
   </span>
 
     
@@ -1532,7 +1742,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="January 29, 2026 16:51:34 UTC">January 29, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 9, 2026 09:03:49 UTC">February 9, 2026</span>
   </span>
 
     
@@ -1553,6 +1763,11 @@
         <a href="https://github.com/j3soon" class="md-author" title="@j3soon">
           
           <img src="https://avatars.githubusercontent.com/u/20457146?v=4&size=72" alt="j3soon">
+        </a>
+      
+        <a href="https://github.com/YuZhong-Chen" class="md-author" title="@YuZhong-Chen">
+          
+          <img src="https://avatars.githubusercontent.com/u/22091462?v=4&size=72" alt="YuZhong-Chen">
         </a>
       
       
@@ -1660,12 +1875,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.indexes", "toc.follow", "navigation.top", "search.suggest", "search.share", "header.autohide", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "navigation.expand", "navigation.indexes", "toc.follow", "navigation.top", "search.suggest", "search.share", "header.autohide", "announce.dismiss"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../javascripts/mathjax.js"></script>
+        <script src="../javascripts/mathjax.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
