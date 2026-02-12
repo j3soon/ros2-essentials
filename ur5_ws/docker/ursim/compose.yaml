@@ -1,6 +1,6 @@
 # URSim CB3 with External Control URCap
 # If switching to a real robot, ensure the container and network are removed to prevent network interference.
-# Reference: 
+# Reference:
 # - https://hub.docker.com/r/universalrobots/ursim_cb3
 name: "ursim_cb3"
 services:
@@ -22,7 +22,7 @@ services:
     networks:
       ursim_net:
         ipv4_address: 192.168.56.101
-    ports:      
+    ports:
       - "5900:5900"
       - "6080:6080"
 networks:

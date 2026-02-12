@@ -93,6 +93,7 @@ The docker image of the template workspace is share by most of the workspace, al
 | [Unitree Go2](https://j3soon.github.io/ros2-essentials/go2-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), [Johnson Sun](https://github.com/j3soon) |
 | [Unitree H1](https://j3soon.github.io/ros2-essentials/h1-ws/) | ✔️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
 | [Hello Robot Stretch 3](https://j3soon.github.io/ros2-essentials/stretch3-ws/) | ✔️ | ❌️ | Simulation only | [@JustinShih0918](https://github.com/JustinShih0918), [Johnson Sun](https://github.com/j3soon) |
+| [Universal Robots UR5](https://j3soon.github.io/ros2-essentials/ur5-ws/) | ✔️ | ❌️ | Real-world support (CB3 only) | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 
 If you have trouble using a workspace, please [open an issue](https://github.com/j3soon/ros2-essentials/issues) and tag the current maintainers mentioned above.
 

@@ -1,4 +1,4 @@
-    # Base Image: https://hub.docker.com/_/ubuntu/tags?name=22.04
+# Base Image: https://hub.docker.com/_/ubuntu/tags?name=22.04
 FROM ubuntu:22.04 AS amd64
 # Base Image: https://hub.docker.com/_/ubuntu/tags?name=22.04
 FROM ubuntu:22.04 AS arm64

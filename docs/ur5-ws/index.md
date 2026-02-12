@@ -4,7 +4,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/j3soon/ros2-essentials?path=ur5_ws)](https://github.com/j3soon/ros2-essentials/commits/main/ur5_ws)
 
 [![DockerHub image](https://img.shields.io/badge/dockerhub-j3soon/ros2--ur5--ws-important.svg?logo=docker)](https://hub.docker.com/r/j3soon/ros2-ur5-ws/tags)
-![Docker image arch](https://img.shields.io/badge/arch-amd64_|_arm64-blueviolet)
+![Docker image arch](https://img.shields.io/badge/arch-amd64-blueviolet)
 ![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-ur5-ws)
 ![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-ur5-ws)
 
@@ -59,13 +59,15 @@ cd ~/ros2-essentials/ur5_ws/docker/ursim
 docker compose up
 ```
 
-This starts a UR5 simulator at `192.168.56.101` (VNC on port 5900, Web on 6080). 
+This starts a UR5 simulator at `192.168.56.101` (VNC on port 5900, Web on 6080). The ports 5900 and 6080 are forwarded to localhost, please change them in `docker/ursim/compose.yaml` if those ports conflict with existing services. Open <http://localhost:6080/vnc.html?host=localhost&port=6080> in your browser to access the URSim interface.
 
 > ⚠️ Important: If you plan to switch to the physical robot, you must run `docker compose down` to remove the virtual network first. Failing to do so will cause IP address conflicts.
 
 URSim provides an interface identical to the physical robot, making it ideal for rapid testing. However, please note that unlike `Gazebo` or `IsaacSim`, URSim does not possess a realistic physics engine. Therefore, it is not suitable for simulations requiring high physical fidelity.
 
 Regarding the RG2 gripper: although it is not explicitly modeled in URSim, our control script operates via Digital I/O. Consequently, there is no need to disable the gripper configuration when running URSim; the code will execute without errors.
+
+Since URSim aims to faithfully replicate the real robot's behavior, you should follow all the steps outlined in the subsequent sections, including calibration and bring-up.
 
 ## Setup Robot
 
@@ -84,7 +86,7 @@ cd /home/ros2-essentials/ur5_ws
 ./scripts/ur5_calibration.sh
 ```
 
-You only need to run this once for each robot.
+You only need to run this once for each robot. This creates `default_kinematics.yaml` which is required for the subsequent steps.
 
 ## Bring Up Robot
 
@@ -114,6 +116,14 @@ Quick test for gripper actuation:
 ros2 topic pub --once /rg2/command std_msgs/msg/Bool "{data: true}"
 ```
 
+After bringing up the robot, make sure to click `Play` in the UR interface to start the control loop.
+
+In the UR interface, go to `Home > Program Robot > Empty Program > Program > Structure > URCaps > External Control` and then click the Play button.
+
+![](assets/ursim-external-control-running.png)
+
+The UR interface control program will automatically stop if the ROS2 bring up node is stopped or crashes for safety reasons. If that happens, simply restart the bring up node and click `Play` again.
+
 ## Launch MoveIt 2
 
 Launch MoveIt 2 for a quick test. You can move the arm by dragging the end-effector (EE) to a target position in RViz2, then clicking `Plan & Execute`.
@@ -142,6 +152,8 @@ For an implementation example within a ros node, refer to `ur5_ws/src/ur_servo_c
 ros2 launch ur_servo_control ur_servo_control.launch.py
 ```
 
+The default velocities above are set to 0, you can modify the linear/angular velocities (`twist_msg.twist.{linear|angular}.{x|y|z}`) in `publish_servo_command_callback` in `ur5_ws/src/ur_servo_control/ur_servo_control/ur_servo_control.py`. But note that a constant velocity command will cause the robot to keep moving, which may be dangerous for real robot control (but fine for URSim testing).
+
 ## Pose Tracking
 
 The **ur_pose_tracking** package provides an interface for controlling the end-effector (EE) position.
@@ -162,6 +174,10 @@ ros2 topic pub --once /target_pose geometry_msgs/msg/PoseStamped "{header: {fram
 ```
 
 > Note: This implementation does not account for singularities or collision avoidance and only supports linear paths between points. Consequently, it is ideal for high-density trajectory points. If your input points are sparse or require complex path planning and obstacle avoidance, please use the MoveIt planner instead.
+
+## Troubleshooting
+
+If you encounter issues on reproducing the examples above, consider remove all containers (`docker compose down` for URSim and workspace) and try again.
 
 ## References
 

@@ -18,7 +18,7 @@
 
   <depend>joint_state_publisher_gui</depend>
   <depend>robot_state_publisher</depend>
-  <depend>rviz</depend>
+  <depend>rviz2</depend>
   <depend>urdf</depend>
   <depend>xacro</depend>
 
