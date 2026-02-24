@@ -19,8 +19,8 @@ if [ "$REALSENSE" = "YES" ]; then
     echo "deb [signed-by=/etc/apt/keyrings/librealsenseai.gpg] https://librealsense.realsenseai.com/Debian/apt-repo `lsb_release -cs` main" | \
         sudo tee /etc/apt/sources.list.d/librealsense.list
 
+    # Not sure why `librealsense2-dkms` could cause errors in later `apt install`, removing it for now.
     sudo apt-get update && sudo apt-get install -y \
-        librealsense2-dkms \
         librealsense2-utils \
         librealsense2-dev \
         librealsense2-dbg \
