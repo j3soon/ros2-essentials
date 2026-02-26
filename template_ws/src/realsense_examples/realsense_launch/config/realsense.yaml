@@ -1,0 +1,31 @@
+/**:
+  ros__parameters:
+
+    initial_reset: true
+    accelerate_gpu_with_glsl: false
+
+    # Color
+    enable_color: true
+    rgb_camera:
+      # Use 'ros2 param describe /camera/camera rgb_camera.color_profile' to see available options.
+      color_profile: '848,480,30'
+      color_format: 'BGR8'
+      enable_auto_exposure: true
+    
+    # Depth
+    enable_depth: true
+    depth_module:
+      # Use 'ros2 param describe /camera/camera depth_module.depth_profile' to see available options.
+      depth_profile: '848,480,30'
+      depth_format: 'Z16'
+      enable_auto_exposure: true
+    align_depth:
+      enable: true
+
+    # Pointcloud
+    pointcloud:
+      enable: true
+
+    # Timeouts
+    wait_for_device_timeout: -1.0
+    reconnect_timeout: 6.0
