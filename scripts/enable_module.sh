@@ -3,6 +3,10 @@
 # Usage: ./scripts/enable_module.sh <MODULE_NAME>
 #        ./scripts/enable_module.sh --list-modules
 
+# Dev Note:
+#   Please note that this script is mostly vibe coded.
+#   Briefly checked by eye but not line-by-line.
+
 # Get the directory of this script.
 # Reference: https://stackoverflow.com/q/59895
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
