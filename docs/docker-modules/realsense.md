@@ -6,6 +6,8 @@ ROS2 Realsense. (Only installed by default for the template workspace.)
 
 To enable Realsense, set the `REALSENSE` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `husky_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 
+> **Note:** These scripts have only been tested on the **RealSense D435i**.
+
 ## 🐳 Start Container
 
 > Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
@@ -46,16 +48,15 @@ docker compose down
 
 ### Realsense test with gazebo
 
-- realsense_description package: Description of a robot with realsense D435 camera.
-- realsense_gazebo package: Gazebo simulation of the robot with robot state publisher.
+- realsense_gazebo package: Gazebo simulation of the robot with RealSense D435 camera.
 - Launch Gazebo with turtlebot3 in `tmux`
   ```bash
-  ros2 launch realsense_gazebo realsense_gazebo.launch.py
+  ros2 launch realsense_gazebo realsense_bringup.launch.py
   ```
 
 - Run the control tool in new window of `tmux`
   ```bash
-  ros2 run rqt_robot_steering rqt_robot_steering
+  ros2 run teleop_twist_keyboard teleop_twist_keyboard
   ```
 
 ## Real Hardware
