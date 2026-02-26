@@ -6,6 +6,7 @@
 # Reference: https://stackoverflow.com/q/59895
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 REPO_ROOT="${SCRIPT_DIR}/.."
+TEMPLATE_COMPOSE_FILE="${REPO_ROOT}/template_ws/docker/compose.yaml"
 
 find_current_workspace() {
     # Walk up from the current directory and return the first matching workspace.
@@ -39,6 +40,19 @@ resolve_workspace_dir() {
     return 1
 }
 
+get_module_default_value() {
+    # Read the module's quoted default from template_ws; fallback is handled by caller.
+    local module_name="$1"
+    local line
+
+    line="$(grep -E "^[[:space:]]*#?[[:space:]]*${module_name}:[[:space:]]*\"" "$TEMPLATE_COMPOSE_FILE" | head -n 1 || true)"
+    if [ -z "$line" ]; then
+        return 1
+    fi
+
+    echo "$line" | sed -E 's/^[^"]*"([^"]*)".*$/\1/'
+}
+
 if [ $# -ge 1 ]; then
     MODULE_NAME="$1"
 else
@@ -70,8 +84,13 @@ if ! grep -Eq "^[[:space:]]*#?[[:space:]]*${MODULE_NAME}:[[:space:]]*\"" "$COMPO
     exit 1
 fi
 
+MODULE_VALUE="$(get_module_default_value "$MODULE_NAME" || true)"
+if [ -z "$MODULE_VALUE" ]; then
+    MODULE_VALUE="YES"
+fi
+
 sed -Ei \
-    "s|^([[:space:]]*)#?[[:space:]]*(${MODULE_NAME}):[[:space:]]*\"[^\"]*\"[[:space:]]*$|\1\2: \"YES\"|" \
+    "s|^([[:space:]]*)#?[[:space:]]*(${MODULE_NAME}):[[:space:]]*\"[^\"]*\"[[:space:]]*$|\1\2: \"${MODULE_VALUE}\"|" \
     "$COMPOSE_FILE"
 
-echo "Enabled ${MODULE_NAME} in ${COMPOSE_FILE}"
+echo "Enabled ${MODULE_NAME}=${MODULE_VALUE} in ${COMPOSE_FILE}"
