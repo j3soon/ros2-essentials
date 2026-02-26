@@ -252,7 +252,7 @@ else
     fi
 fi
 
-if MODULE_NAME_RESOLVED="$(resolve_module_name "$MODULE_NAME" || true)"; then
+if MODULE_NAME_RESOLVED="$(resolve_module_name "$MODULE_NAME")"; then
     MODULE_NAME="$MODULE_NAME_RESOLVED"
 else
     MODULE_NAME="${MODULE_NAME^^}"
