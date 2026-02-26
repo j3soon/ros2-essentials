@@ -63,15 +63,16 @@ docker compose down
 
 ### Realsense test in real world
 
-- Launch Realsense camera node in `tmux`
+You can modify the camera setting in `realsense.yaml` under `realsense_launch/config`
+
+- Launch Realsense camera node
     ```bash
-    # add pointcloud.enable:=true to enable pointcloud
-    ros2 launch realsense2_camera rs_launch.py
+    ros2 launch realsense_launch realsense.launch.py
     ```
 
-- Open RViz to verify the camera topics in `tmux`
+- Along with RViz
     ```bash
-    rviz2
+    ros2 launch realsense_launch realsense.launch.py launch_rviz:=true
     ```
 
 ### Tools
