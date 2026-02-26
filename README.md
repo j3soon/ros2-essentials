@@ -102,6 +102,7 @@ If you have trouble using a workspace, please [open an issue](https://github.com
 Modules with `Default: ✔️` are installed by default in all workspaces.
 
 Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild the workspace to add or remove modules.
+For a quick enable helper, use `../scripts/enable_module.sh <MODULE>` from a workspace (or let it prompt for workspace/module selection) when executed outside of a workspace.
 
 | Module | amd64 | arm64 | Notes | Default | Maintainer |
 |--------|-------|-------|-------|---------|------------|
