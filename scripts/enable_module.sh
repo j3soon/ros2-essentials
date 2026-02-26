@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 # Usage: ./scripts/enable_module.sh <MODULE_NAME>
+#        ./scripts/enable_module.sh --list-modules
 
 # Get the directory of this script.
 # Reference: https://stackoverflow.com/q/59895
@@ -45,7 +46,15 @@ get_module_default_value() {
     local module_name="$1"
     local line
 
-    line="$(grep -E "^[[:space:]]*#?[[:space:]]*${module_name}:[[:space:]]*\"" "$TEMPLATE_COMPOSE_FILE" | head -n 1 || true)"
+    line="$(
+        awk '
+            /^[[:space:]]*args:[[:space:]]*$/ { in_args=1; next }
+            in_args && /^[[:space:]]*cache_from:[[:space:]]*$/ { exit }
+            in_args { print }
+        ' "$TEMPLATE_COMPOSE_FILE" \
+        | grep -E "^[[:space:]]*#?[[:space:]]*${module_name}:[[:space:]]*\"" \
+        | head -n 1 || true
+    )"
     if [ -z "$line" ]; then
         return 1
     fi
@@ -53,14 +62,109 @@ get_module_default_value() {
     echo "$line" | sed -E 's/^[^"]*"([^"]*)".*$/\1/'
 }
 
+list_available_modules() {
+    # Print module keys from template_ws build.args for selection and matching.
+    awk '
+        /^[[:space:]]*args:[[:space:]]*$/ { in_args=1; next }
+        in_args && /^[[:space:]]*cache_from:[[:space:]]*$/ { exit }
+        in_args { print }
+    ' "$TEMPLATE_COMPOSE_FILE" \
+    | sed -nE 's/^[[:space:]]*#?[[:space:]]*([A-Z0-9_]+):[[:space:]]*".*"/\1/p' \
+    | grep -Ev '^USER_UID$' \
+    | sort -u
+}
+
+resolve_module_name() {
+    # Resolve a module from exact name or a unique prefix (case-insensitive).
+    local input="$1"
+    local normalized
+    local modules=()
+    local matches=()
+    local module
+
+    normalized="${input^^}"
+    normalized="${normalized//-/_}"
+
+    mapfile -t modules < <(list_available_modules)
+    if [ "${#modules[@]}" -eq 0 ]; then
+        return 1
+    fi
+
+    for module in "${modules[@]}"; do
+        if [ "$module" = "$normalized" ]; then
+            echo "$module"
+            return 0
+        fi
+    done
+
+    for module in "${modules[@]}"; do
+        if [[ "$module" == "$normalized"* ]]; then
+            matches+=("$module")
+        fi
+    done
+
+    if [ "${#matches[@]}" -eq 1 ]; then
+        echo "${matches[0]}"
+        return 0
+    fi
+
+    return 1
+}
+
+choose_module_name() {
+    # Show a select menu and accept number, full name, or unique prefix.
+    local modules=()
+    local input
+    local resolved
+    local old_ps3="${PS3-#? }"
+    mapfile -t modules < <(list_available_modules)
+
+    if [ "${#modules[@]}" -eq 0 ]; then
+        return 1
+    fi
+
+    echo "Select a module to enable." >&2
+    echo "Input can be a number, module name, or unique prefix (case-insensitive)." >&2
+    PS3="Module: "
+    select module in "${modules[@]}"; do
+        if [ -n "$module" ]; then
+            PS3="$old_ps3"
+            echo "$module"
+            return 0
+        fi
+        input="$REPLY"
+        if [ -z "$input" ]; then
+            PS3="$old_ps3"
+            return 1
+        fi
+        if resolved="$(resolve_module_name "$input")"; then
+            PS3="$old_ps3"
+            echo "$resolved"
+            return 0
+        fi
+        echo "Invalid or ambiguous module. Type more characters and try again." >&2
+    done
+}
+
+if [ "${1:-}" = "--list-modules" ]; then
+    list_available_modules
+    exit 0
+fi
+
 if [ $# -ge 1 ]; then
     MODULE_NAME="$1"
 else
-    read -rp "Module name to enable (e.g. CARTOGRAPHER): " MODULE_NAME
+    if ! MODULE_NAME="$(choose_module_name)"; then
+        read -rp "Module name to enable (e.g. CARTOGRAPHER): " MODULE_NAME
+    fi
 fi
 
-MODULE_NAME="${MODULE_NAME^^}"
-MODULE_NAME="${MODULE_NAME//-/_}"
+if MODULE_NAME_RESOLVED="$(resolve_module_name "$MODULE_NAME" || true)"; then
+    MODULE_NAME="$MODULE_NAME_RESOLVED"
+else
+    MODULE_NAME="${MODULE_NAME^^}"
+    MODULE_NAME="${MODULE_NAME//-/_}"
+fi
 
 if [ -z "$MODULE_NAME" ]; then
     echo "Error: Module name is required."
