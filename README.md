@@ -115,7 +115,7 @@ Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild 
 | [NVIDIA OpenUSD Tools](https://j3soon.github.io/ros2-essentials/docker-modules/nv-openusd/) | ✔️ | ❌ | NVIDIA OpenUSD Linux Binary Tools (v25.08) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Newton Tools](https://j3soon.github.io/ros2-essentials/docker-modules/newton-tools/) | ✔️ | ❔ | URDF/MJCF to USD Converters | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Claude Code](https://j3soon.github.io/ros2-essentials/docker-modules/claude-code/) | ✔️ | ❔ | Claude Code CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
-| [Codex](https://j3soon.github.io/ros2-essentials/docker-modules/codex/) | ✔️ | ✔️ | Codex CLI | ❔ | [Johnson Sun](https://github.com/j3soon) |
+| [Codex](https://j3soon.github.io/ros2-essentials/docker-modules/codex/) | ✔️ | ❔ | Codex CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
 
 ## Docker Compose Cleanup
 
