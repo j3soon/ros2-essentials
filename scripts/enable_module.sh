@@ -41,6 +41,60 @@ resolve_workspace_dir() {
     return 1
 }
 
+list_available_workspaces() {
+    # Print repo workspaces that contain docker/compose.yaml.
+    find "$REPO_ROOT" -mindepth 1 -maxdepth 1 -type d -name '*_ws' \
+        | while read -r dir; do
+            if [ -f "$dir/docker/compose.yaml" ]; then
+                basename "$dir"
+            fi
+        done \
+        | sort -u
+}
+
+resolve_workspace_input() {
+    # Resolve workspace from path, exact name, or unique prefix.
+    local input="$1"
+    local dir
+    local normalized
+    local names=()
+    local matches=()
+    local name
+
+    if dir="$(resolve_workspace_dir "$input" 2>/dev/null)"; then
+        echo "$dir"
+        return 0
+    fi
+
+    normalized="${input,,}"
+    normalized="${normalized//-/_}"
+
+    mapfile -t names < <(list_available_workspaces)
+    if [ "${#names[@]}" -eq 0 ]; then
+        return 1
+    fi
+
+    for name in "${names[@]}"; do
+        if [ "${name,,}" = "$normalized" ]; then
+            resolve_workspace_dir "$name"
+            return 0
+        fi
+    done
+
+    for name in "${names[@]}"; do
+        if [[ "${name,,}" == "$normalized"* ]]; then
+            matches+=("$name")
+        fi
+    done
+
+    if [ "${#matches[@]}" -eq 1 ]; then
+        resolve_workspace_dir "${matches[0]}"
+        return 0
+    fi
+
+    return 1
+}
+
 get_module_default_value() {
     # Read the module's quoted default from template_ws; fallback is handled by caller.
     local module_name="$1"
@@ -146,6 +200,41 @@ choose_module_name() {
     done
 }
 
+choose_workspace_dir() {
+    # Show a select menu and accept number, name/path, or unique prefix.
+    local workspaces=()
+    local input
+    local resolved
+    local old_ps3="${PS3-#? }"
+    mapfile -t workspaces < <(list_available_workspaces)
+
+    if [ "${#workspaces[@]}" -eq 0 ]; then
+        return 1
+    fi
+
+    echo "Select a workspace." >&2
+    echo "Input can be a number, workspace name/path, or unique prefix (case-insensitive)." >&2
+    PS3="Workspace: "
+    select ws in "${workspaces[@]}"; do
+        if [ -n "$ws" ]; then
+            PS3="$old_ps3"
+            resolve_workspace_dir "$ws"
+            return 0
+        fi
+        input="$REPLY"
+        if [ -z "$input" ]; then
+            PS3="$old_ps3"
+            return 1
+        fi
+        if resolved="$(resolve_workspace_input "$input")"; then
+            PS3="$old_ps3"
+            echo "$resolved"
+            return 0
+        fi
+        echo "Invalid or ambiguous workspace. Type more characters and try again." >&2
+    done
+}
+
 if [ "${1:-}" = "--list-modules" ]; then
     list_available_modules
     exit 0
@@ -174,8 +263,17 @@ fi
 if WORKSPACE_DIR="$(find_current_workspace)"; then
     :
 else
-    read -rp "Workspace path or name (e.g. template_ws): " WORKSPACE_INPUT
-    if ! WORKSPACE_DIR="$(resolve_workspace_dir "$WORKSPACE_INPUT")"; then
+    if ! WORKSPACE_DIR="$(choose_workspace_dir)"; then
+        read -rp "Workspace path, name, or unique prefix (e.g. template_ws): " WORKSPACE_INPUT
+        if [ -z "$WORKSPACE_INPUT" ]; then
+            echo "Error: Workspace input is required."
+            exit 1
+        fi
+    fi
+    if [ -n "${WORKSPACE_INPUT:-}" ]; then
+        WORKSPACE_DIR="$(resolve_workspace_input "$WORKSPACE_INPUT" || true)"
+    fi
+    if [ -z "${WORKSPACE_DIR:-}" ]; then
         echo "Error: Cannot find a workspace with docker/compose.yaml from: $WORKSPACE_INPUT"
         exit 1
     fi
