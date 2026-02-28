@@ -1,6 +1,6 @@
 rtabmap: 
   ros__parameters: 
-    frame_id: 'base_footprint'
+    frame_id: 'base_link'
     use_sim_time: True
     use_action_for_goal: True
     qos_image: 2
