@@ -1,0 +1,33 @@
+# URSim CB3 with External Control URCap
+# If switching to a real robot, ensure the container and network are removed to prevent network interference.
+# Reference:
+# - https://hub.docker.com/r/universalrobots/ursim_cb3
+name: "ursim_cb3"
+services:
+  ursim_cb3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        URCAP_VERSION: "1.0.5"
+    image: j3soon/ursim_cb3:latest
+    container_name: ursim_cb3
+    stdin_open: true
+    tty: true
+    environment:
+      ROBOT_MODEL: UR5
+    # Assign a static IP address to the container, and expose the VNC server ports.
+    # References:
+    # - https://docs.universal-robots.com/Universal_Robots_ROS2_Documentation/doc/ur_client_library/doc/setup/ursim_docker.html#network-setup
+    networks:
+      ursim_net:
+        ipv4_address: 192.168.56.101
+    ports:
+      - "5900:5900"
+      - "6080:6080"
+networks:
+  ursim_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.56.0/24

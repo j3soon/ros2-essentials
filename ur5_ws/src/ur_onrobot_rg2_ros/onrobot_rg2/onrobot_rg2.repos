@@ -1,0 +1,5 @@
+repositories:
+  roboticsgroup-gazebo-plugins:
+    type: git
+    url: https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins.git
+    version: 509a32ea6accc58d03cebd9d670ae44635adc924

@@ -93,6 +93,7 @@ The docker image of the template workspace is share by most of the workspace, al
 | [Unitree Go2](https://j3soon.github.io/ros2-essentials/go2-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), [Johnson Sun](https://github.com/j3soon) |
 | [Unitree H1](https://j3soon.github.io/ros2-essentials/h1-ws/) | ✔️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
 | [Hello Robot Stretch 3](https://j3soon.github.io/ros2-essentials/stretch3-ws/) | ✔️ | ❌️ | Simulation only | [@JustinShih0918](https://github.com/JustinShih0918), [Johnson Sun](https://github.com/j3soon) |
+| [Universal Robots UR5](https://j3soon.github.io/ros2-essentials/ur5-ws/) | ✔️ | ❌️ | Real-world support (CB3 only) | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 
 If you have trouble using a workspace, please [open an issue](https://github.com/j3soon/ros2-essentials/issues) and tag the current maintainers mentioned above.
 
@@ -101,6 +102,7 @@ If you have trouble using a workspace, please [open an issue](https://github.com
 Modules with `Default: ✔️` are installed by default in all workspaces.
 
 Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild the workspace to add or remove modules.
+For a quick enable helper, use `../scripts/enable_module.sh <MODULE>` from a workspace (or let it prompt for workspace/module selection) when executed outside of a workspace.
 
 | Module | amd64 | arm64 | Notes | Default | Maintainer |
 |--------|-------|-------|-------|---------|------------|
@@ -114,7 +116,7 @@ Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild 
 | [NVIDIA OpenUSD Tools](https://j3soon.github.io/ros2-essentials/docker-modules/nv-openusd/) | ✔️ | ❌ | NVIDIA OpenUSD Linux Binary Tools (v25.08) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Newton Tools](https://j3soon.github.io/ros2-essentials/docker-modules/newton-tools/) | ✔️ | ❔ | URDF/MJCF to USD Converters | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Claude Code](https://j3soon.github.io/ros2-essentials/docker-modules/claude-code/) | ✔️ | ❔ | Claude Code CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
-| [Codex](https://j3soon.github.io/ros2-essentials/docker-modules/codex/) | ✔️ | ✔️ | Codex CLI | ❔ | [Johnson Sun](https://github.com/j3soon) |
+| [Codex](https://j3soon.github.io/ros2-essentials/docker-modules/codex/) | ✔️ | ❔ | Codex CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
 
 ## Docker Compose Cleanup
 

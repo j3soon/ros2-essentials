@@ -9,6 +9,7 @@
 
 ## Build, Test, and Development Commands
 - `./scripts/post_install.sh` (or `-f` to force): refreshes docker module hard links; run after any repo change or branch switch.
+- `./scripts/enable_module.sh <MODULE>`: enable a module in the current workspace `docker/compose.yaml` (prompts for workspace/module selection if needed).
 - `cd <workspace>/docker && docker compose build`: builds the workspace image.
 - `cd <workspace>/docker && docker compose up -d`: starts containers in the background.
 - `cd <workspace>/docker && docker compose exec <service> bash`: opens a shell in the container.
