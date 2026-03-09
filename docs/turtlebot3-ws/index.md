@@ -11,6 +11,9 @@
 
 > Please note that this workspace is only tested in simulation.
 
+> Last tested (Isaac Sim only) on commit [bdbb82d](https://github.com/j3soon/ros2-essentials/commit/bdbb82d1a67c7c34b21fbc5c9ed4b795acd20c4d) by [@j3soon](https://github.com/j3soon).  
+> Last tested on commit [e8f1c8d](https://github.com/j3soon/ros2-essentials/commit/e8f1c8dd1880e1e2126ffcde93a2256acc11e6f7) by [@j3soon](https://github.com/j3soon).
+
 ## 🐳 Start Container
 
 > Make sure your system meets the [system requirements](https://j3soon.github.io/ros2-essentials/#system-requirements) and have followed the [setup instructions](https://j3soon.github.io/ros2-essentials/#setup) before using this workspace.
@@ -88,9 +91,14 @@ Convert URDF file to USD file and generate OmniGraph:
 ```sh
 cd /home/ros2-essentials/turtlebot3_ws/isaacsim/scripts
 ./create_urdf_from_xacro.sh
-python3 create_turtlebot3_burger_from_urdf.py
-python3 create_turtlebot3_burger_with_omnigraph.py
+~/isaacsim/python.sh create_turtlebot3_burger_from_urdf.py
+~/isaacsim/python.sh create_turtlebot3_burger_with_omnigraph.py
+# and close the window when you see the `Done` message (or seeing segmentation fault)
 ```
+
+> Note that it is entirely unnecessary to convert URDF to USD with scripts, this is just for demonstration purposes. You can directly use the GUI to import the URDF file, and track it in Git easily with USDA. See [stretch3-ws](../stretch3-ws/) for more details.
+>
+> It is also unnecessary to generate OmniGraph with scripts, you can directly use the GUI to create it, and track it in Git easily with USDA. See [stretch3-ws](../stretch3-ws/) commit history for more details.
 
 Start Isaac Sim in GUI mode:
 
@@ -113,6 +121,14 @@ Open the file with OmniGraph we just generated in the bottom panel:
 ```
 
 or use `File > Open Recent` to re-open it, and click `Play (SPACE)` to start simulation.
+
+> There is currently a known issue on the 2D Lidar sensor and are waiting for an [upstream fix](https://github.com/isaac-sim/IsaacSim/issues/438).
+>
+> ```
+> [Error] [isaacsim.sensors.rtx.plugin] IsaacComputeRTXLidarFlatScan: Lidar prim is not a 2D Lidar, and node will not execute. Stop the simulation, correct the issue, and restart.
+> ```
+>
+> (TODO: Fix `turtlebot3_burger_isaacsim.urdf.xacro` and remove this block after the upstream fix is released.)
 
 To view the OmniGraph, right click the ActionGraph on the right panel and select `Open Graph`.
 
@@ -177,6 +193,12 @@ Open a new terminal and visualize published topics in RViz:
 ```sh
 ros2 launch turtlebot3_bringup rviz2.launch.py
 ```
+
+Set RViz GUI:
+
+- `Fixed Frame`: `world`.
+- Add `Camera` with topic `/rgb`.
+- (TODO: Add LaserScan, PointCloud, and Depth after the upstream fix is released.)
 
 ## 💾 Save Output
 

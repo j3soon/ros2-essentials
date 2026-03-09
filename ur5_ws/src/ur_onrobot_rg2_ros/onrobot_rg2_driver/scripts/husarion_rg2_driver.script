@@ -1,0 +1,29 @@
+modbus_add_signal("10.15.20.4", 255, 16, 3, "joint_out")
+modbus_add_signal("10.15.20.4", 255, 17, 1, "rg_busy_out")
+modbus_add_signal("10.15.20.4", 255, 18, 1, "grip_detected_out")
+
+modbus_add_signal("10.15.20.4", 255, 20, 0, "action_trigger_in")
+modbus_add_signal("10.15.20.4", 255, 128, 2, "joint_in")
+modbus_add_signal("10.15.20.4", 255, 129, 2, "force_in")
+
+modbus_set_signal_update_frequency("joint_out", 500)
+modbus_set_signal_update_frequency("rg_busy_out", 500)
+modbus_set_signal_update_frequency("grip_detected_out", 500)
+modbus_set_signal_update_frequency("action_trigger_in", 500)
+modbus_set_signal_update_frequency("joint_in", 500)
+modbus_set_signal_update_frequency("force_in", 500)
+
+while(True):
+    if modbus_get_signal_status("action_trigger_in", False):
+        joint_req = modbus_get_signal_status("joint_in", False) / 10
+        force_req = modbus_get_signal_status("force_in", False) / 10
+        rg_grip(joint_req, force_req, 0, False, False)
+    end
+
+    width = norm(floor(rg_Width * 10))
+    modbus_set_output_register("joint_out", width, False)
+    modbus_set_output_signal("rg_busy_out", rg_Busy, False)
+    modbus_set_output_signal("grip_detected_out", rg_Grip_detected, False)
+    
+    sleep(0.05)
+end

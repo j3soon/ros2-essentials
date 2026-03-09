@@ -23,4 +23,4 @@ docker run --name isaac-sim --entrypoint bash -it --gpus all -e "ACCEPT_EULA=Y" 
   -e DISPLAY=$DISPLAY \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v $HOME/.Xauthority:/root/.Xauthority \
-  nvcr.io/nvidia/isaac-sim:4.5.0
+  nvcr.io/nvidia/isaac-sim:5.0.0

@@ -2,6 +2,10 @@ name: ros2-{PLACEHOLDER}-ws
 services:
   volume-instantiation:
     # Ref: https://github.com/moby/moby/issues/47842#issuecomment-2249050939
+    # Note: We use individual `chown` commands instead of `chown -R` for performance.
+    # This chown is only required for empty volumes. If the volume happens to be non-empty,
+    # `chown -R` would be very time-consuming as it recursively changes ownership of all
+    # existing files and subdirectories.
     image: ubuntu:22.04
     container_name: ros2-{PLACEHOLDER}-volume-instantiation
     command: bash -c "
@@ -18,7 +22,7 @@ services:
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/cache/ov &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/standalone/{logs,data}
-        "
+      "
     volumes:
       - isaac-sim-cache:/isaac-sim
   {PLACEHOLDER}-ws:
@@ -35,17 +39,25 @@ services:
         # TODO: Set the USER_UID
         USER_UID: "${USER_UID:-1000}"
         # TODO: Set CUDA Toolkit version or set to "" if not using CUDA Toolkit
-        # CUDA_TOOLKIT_VERSION: ""
+        {PLACEHOLDER_#}CUDA_TOOLKIT_VERSION: "{PLACEHOLDER}"
         # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
-        # ISAAC_SIM_VERSION: "5.0.0"
+        {PLACEHOLDER_#}ISAAC_SIM_VERSION: "{PLACEHOLDER}"
         # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
-        # ISAAC_LAB_VERSION: "2.2.1"
+        {PLACEHOLDER_#}ISAAC_LAB_VERSION: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Isaac ROS or set to "" if not using Isaac ROS
-        # ISAAC_ROS: ""
+        {PLACEHOLDER_#}ISAAC_ROS: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Cartographer or set to "" if not using Cartographer
         {PLACEHOLDER_#}CARTOGRAPHER: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
         {PLACEHOLDER_#}RTABMAP: "{PLACEHOLDER}"
+        # TODO: Set to "YES" if using NVIDIA OpenUSD tools or set to "" if not using NVIDIA OpenUSD tools
+        {PLACEHOLDER_#}NV_OPENUSD: "{PLACEHOLDER}"
+        # TODO: Set to "YES" if using Newton Tools or set to "" if not using Newton Tools
+        {PLACEHOLDER_#}NEWTON_TOOLS: "{PLACEHOLDER}"
+        # TODO: Set to "YES" if using Claude Code CLI or set to "" if not using Claude Code CLI
+        {PLACEHOLDER_#}CLAUDE_CODE: "{PLACEHOLDER}"
+        # TODO: Set to "YES" if using Codex CLI or set to "" if not using Codex CLI
+        {PLACEHOLDER_#}CODEX: "{PLACEHOLDER}"
       cache_from:
         - j3soon/ros2-{PLACEHOLDER}-ws:buildcache-amd64
         - j3soon/ros2-{PLACEHOLDER}-ws:buildcache-arm64
@@ -134,7 +146,7 @@ services:
           subpath: cache/ov
       - type: volume
         source: isaac-sim-cache
-        target: /home/user/.local/lib/python3.10/site-packages/omni/cache  # For Isaac Sim standalone
+        target: /home/user/.local/lib/python3.11/site-packages/omni/cache  # For Isaac Sim standalone
         volume:
           subpath: standalone/cache/ov
       - type: volume
@@ -159,7 +171,7 @@ services:
           subpath: logs
       - type: volume
         source: isaac-sim-cache
-        target: /home/user/.local/lib/python3.10/site-packages/omni/logs  # For Isaac Sim standalone
+        target: /home/user/.local/lib/python3.11/site-packages/omni/logs  # For Isaac Sim standalone
         volume:
           subpath: standalone/logs
       - type: volume
@@ -169,7 +181,7 @@ services:
           subpath: data
       - type: volume
         source: isaac-sim-cache
-        target: /home/user/.local/lib/python3.10/site-packages/omni/data  # For Isaac Sim standalone
+        target: /home/user/.local/lib/python3.11/site-packages/omni/data  # For Isaac Sim standalone
         volume:
           subpath: standalone/data
       - type: volume
@@ -181,6 +193,10 @@ services:
 {PLACEHOLDER_MULTILINE}
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
+      # Mount credentials (for Claude Code CLI, Codex CLI, and etc.)
+      - ../../.env.d/.claude:/home/user/.claude
+      - ../../.env.d/.claude.json:/home/user/.claude.json
+      - ../../.env.d/.codex:/home/user/.codex
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache

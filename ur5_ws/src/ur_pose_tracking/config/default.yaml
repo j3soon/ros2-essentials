@@ -1,0 +1,7 @@
+ur_pose_tracking_node:
+  ros__parameters:
+    # Publishers
+    output_servo_topic: /servo_node/delta_twist_cmds
+
+    # Parameters
+    publish_frequency: 50.0

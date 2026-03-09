@@ -1,16 +1,17 @@
 #!/bin/bash
 set -e
 
+if [ -z "$CUDA_TOOLKIT_VERSION" ]; then
+    echo "Skipping CUDA Toolkit installation as CUDA_TOOLKIT_VERSION is not set"
+    exit 0
+fi
+
 # Install CUDA Toolkit related components
 
 # Check required environment variables
 if [ -z "$TARGETARCH" ]; then
     echo "Error: TARGETARCH environment variable is required but not set"
     exit 1
-fi
-if [ -z "$CUDA_TOOLKIT_VERSION" ]; then
-    echo "Skipping CUDA Toolkit installation as CUDA_TOOLKIT_VERSION is not set"
-    exit 0
 fi
 
 echo "Installing CUDA Toolkit components for architecture: $TARGETARCH"

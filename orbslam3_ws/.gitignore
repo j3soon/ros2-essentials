@@ -9,6 +9,9 @@
 # Hard Links
 /docker/modules
 
+# Docker environment variables
+/docker/.env
+
 # ROS2 bag files
 V1_02_medium.bag
 V1_02_medium/

@@ -1,0 +1,17 @@
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 125
+
+gripper_joint_position:
+  type: effort_controllers/JointPositionController
+  joint: rg2_gripper_joint
+  pid: { p: 5.0, i: 0.0, d: 0.0 }
+
+gazebo_ros_control:
+  pid_gains:
+    rg2_gripper_joint:          { p: 1.0, i: 0.0, d: 0.0, i_clamp: 0.2 }
+    rg2_l_finger_2_joint:       { p: 1.0, i: 0.0, d: 0.0, i_clamp: 0.2 }
+    rg2_l_finger_passive_joint: { p: 1.0, i: 0.0, d: 0.0, i_clamp: 0.2 }
+    rg2_r_finger_1_joint:       { p: 1.0, i: 0.0, d: 0.0, i_clamp: 0.2 }
+    rg2_r_finger_2_joint:       { p: 1.0, i: 0.0, d: 0.0, i_clamp: 0.2 }
+    rg2_r_finger_passive_joint: { p: 1.0, i: 0.0, d: 0.0, i_clamp: 0.2 }

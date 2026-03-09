@@ -5,7 +5,7 @@
 
 A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs) and robotic arm manipulators. Please setup an Ubuntu environment before using this repo.
 
-The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by [(Omniverse) Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/index.html), [Isaac Lab](https://isaac-sim.github.io/IsaacLab/main/index.html), and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html). In general, the amd64 images support both simulation and real robot control, while the arm64 images only supports real robot control.
+The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by [(Omniverse) Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/index.html), [Isaac Lab](https://isaac-sim.github.io/IsaacLab/main/index.html), and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html). In general, the amd64 images support both simulation and real robot control, while the arm64 images only supports real robot control.
 
 > Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.
 
@@ -15,14 +15,16 @@ The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 
 | Use Case | Platform | Hardware | Software | Notes |
 |----------|----------|----------|----------|-------|
-| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/requirements.html) for more details. |
+| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04/24.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/requirements.html) for more details. |
 | Deployment-Only | Jetson | Jetson Orin, 500GB+ SSD | JetPack 6 | See [this page](https://nvidia-isaac-ros.github.io/getting_started/index.html) for more details.
 
 Make sure to install the required software prerequisites before using this repo.
 
-> Some functionalities may still work on lower-spec systems, such as those without GPUs or on operating systems other than Ubuntu 22.04. However, these configurations are not officially supported and may require manual adjustments. Use them with caution.
+> The code may still work on lower-spec systems, such as those without GPUs or on older operating systems. However, these are not tested and may require manual adjustments. Proceed with caution.
 
 ## Setup
+
+For a standard clone:
 
 ```sh
 git clone https://github.com/j3soon/ros2-essentials.git
@@ -30,10 +32,24 @@ cd ros2-essentials
 ./scripts/post_install.sh
 ```
 
-> Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes).
-> In addition, the script can be run with the `-f` or `--force` flag to force removal of hard links if needed.
+> For a faster depth-1 clone:
+> 
+> ```sh
+> git clone --depth 1 https://github.com/j3soon/ros2-essentials.git
+> cd ros2-essentials
+> ./scripts/post_install.sh
+> # and optionally restore the full git history some time later:
+> git fetch --unshallow
+> ```
 
-and then configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
+> Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes).
+> - Use `--recreate-links` to force replacement of non-hard-link files under workspace `docker/modules/`.
+> - Use `--recreate-volumes` to invalidate Gazebo/Isaac Sim/Isaac ROS cache volumes after related updates or testing.
+> - Use `--remove-containers` to auto-remove containers that block volume recreation.
+>
+> **Troubleshooting**: If you encounter an error like `"failed to solve: failed to compute cache key: failed to calculate checksum of ref ...: "/modules/install_ros.sh": not found` when building Docker images, it means `post_install.sh` hasn't been run. This script creates necessary hard links for the Docker build process.
+
+Then, configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
 
 ```sh
 export USER_UID=$(id -u)
@@ -41,16 +57,20 @@ export USER_UID=$(id -u)
 
 This step is optional if you have user ID 1000 on host.
 
-> Next, choose a workspace from the table below and follow its documentation to get started. The rest of this document contains optional information.
+Next, choose a workspace from the table below and follow its documentation to get started. The rest of this document contains optional information. The search bar at the top right corner of the [documentation site](https://j3soon.github.io/ros2-essentials/) and [GitHub repository](https://github.com/j3soon/ros2-essentials) is a good way to navigate to the relevant documentation and commits.
 
 ## Updating the Repository
 
-Make sure to run the `post_install.sh` script after pulling the latest changes to ensure that the hard links are properly set up.
+To update to the latest commit of the repository, run the following commands:
 
 ```sh
 git pull
-./scripts/post_install.sh -f
+./scripts/post_install.sh --recreate-links --recreate-volumes --remove-containers
 ```
+
+Make sure to run the `post_install.sh` script after pulling the latest changes to ensure that the hard links are properly set up. In addition, you should be prepared to rebuild the Docker images of the workspaces you are using, as some updates may require rebuilding the images to take effect.
+
+> Building Docker images can be time-consuming. Start the build before taking a break so they can finish while you're away.
 
 ## Pre-built Workspaces
 
@@ -62,7 +82,6 @@ The docker image of the template workspace is share by most of the workspace, al
 |-----------|-------|-------|-------|------------|
 | [Template](https://j3soon.github.io/ros2-essentials/template-ws/) | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
 | [ORB-SLAM3](https://j3soon.github.io/ros2-essentials/orbslam3-ws) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
-| [RTAB-Map](https://j3soon.github.io/ros2-essentials/rtabmap-ws/) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
 | [ROS1 Bridge](https://j3soon.github.io/ros2-essentials/ros1-bridge-ws/) | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
 | [Yujin Robot Kobuki](https://j3soon.github.io/ros2-essentials/kobuki-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
@@ -73,6 +92,8 @@ The docker image of the template workspace is share by most of the workspace, al
 | [Tesollo Delto Gripper](https://j3soon.github.io/ros2-essentials/delto-gripper-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Unitree Go2](https://j3soon.github.io/ros2-essentials/go2-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), [Johnson Sun](https://github.com/j3soon) |
 | [Unitree H1](https://j3soon.github.io/ros2-essentials/h1-ws/) | ✔️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
+| [Hello Robot Stretch 3](https://j3soon.github.io/ros2-essentials/stretch3-ws/) | ✔️ | ❌️ | Simulation only | [@JustinShih0918](https://github.com/JustinShih0918), [Johnson Sun](https://github.com/j3soon) |
+| [Universal Robots UR5](https://j3soon.github.io/ros2-essentials/ur5-ws/) | ✔️ | ❌️ | Real-world support (CB3 only) | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 
 If you have trouble using a workspace, please [open an issue](https://github.com/j3soon/ros2-essentials/issues) and tag the current maintainers mentioned above.
 
@@ -81,15 +102,31 @@ If you have trouble using a workspace, please [open an issue](https://github.com
 Modules with `Default: ✔️` are installed by default in all workspaces.
 
 Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild the workspace to add or remove modules.
+For a quick enable helper, use `../scripts/enable_module.sh <MODULE>` from a workspace (or let it prompt for workspace/module selection) when executed outside of a workspace.
 
 | Module | amd64 | arm64 | Notes | Default | Maintainer |
 |--------|-------|-------|-------|---------|------------|
 | [ROS2](https://j3soon.github.io/ros2-essentials/docker-modules/ros2/) | ✔️ | ✔️ | ROS2 Humble | ✔️ | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
 | [Cartographer](https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/) | ✔️ | ✔️ | ROS2 Cartographer | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@yuhsiang1117](https://github.com/yuhsiang1117) |
+| [RTAB-Map](https://j3soon.github.io/ros2-essentials/docker-modules/rtabmap/) | ✔️ | ❔ | ROS2 RTAB-Map | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@JustinShih0918](https://github.com/JustinShih0918) |
 | [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/) | ✔️ | ️TODO | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | Isaac Sim 5.0.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
-| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | Isaac Lab 2.2.1 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | Isaac Lab 2.3.2 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | ✔️ | TODO | Isaac ROS 3.2 Apt Install (Base only) | ❌ | [Johnson Sun](https://github.com/j3soon) |
+| [NVIDIA OpenUSD Tools](https://j3soon.github.io/ros2-essentials/docker-modules/nv-openusd/) | ✔️ | ❌ | NVIDIA OpenUSD Linux Binary Tools (v25.08) | ❌ | [Johnson Sun](https://github.com/j3soon) |
+| [Newton Tools](https://j3soon.github.io/ros2-essentials/docker-modules/newton-tools/) | ✔️ | ❔ | URDF/MJCF to USD Converters | ❌ | [Johnson Sun](https://github.com/j3soon) |
+| [Claude Code](https://j3soon.github.io/ros2-essentials/docker-modules/claude-code/) | ✔️ | ❔ | Claude Code CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
+| [Codex](https://j3soon.github.io/ros2-essentials/docker-modules/codex/) | ✔️ | ❔ | Codex CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
+
+## Docker Compose Cleanup
+
+```sh
+# cd into a workspace directory's docker directory
+docker compose down --volumes --remove-orphans
+docker volume rm ros2-gazebo-cache
+docker volume rm ros2-isaac-sim-cache
+docker volume rm ros2-isaac-ros-assets
+```
 
 ## Building Documentation
 
@@ -152,16 +189,6 @@ The GitHub Actions workflow is designed to share build caches between workspaces
 
 Some current CI builds are flaky and may require re-running.
 
-### Docker Compose Cleanup
-
-```sh
-# cd into a workspace directory's docker directory
-docker compose down --volumes --remove-orphans
-docker volume rm ros2-gazebo-cache
-docker volume rm ros2-isaac-sim-cache
-docker volume rm ros2-isaac-ros-assets
-```
-
 ## Acknowledgement
 
 The code is mainly contributed by [Johnson Sun](https://github.com/j3soon), [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), and others. For a full list of contributors, please refer to the [contribution list](https://github.com/j3soon/ros2-essentials/graphs/contributors).
@@ -179,7 +206,7 @@ All modifications are licensed under [Apache License 2.0](https://github.com/j3s
 
 However, this repository includes many dependencies released under different licenses. For information on these licenses, please check the commit history. Make sure to review the license of each dependency before using this repository.
 
-> The licenses for dependencies will be clearly documented in the workspace README in the future.
+The detailed license information is documented [here](https://j3soon.github.io/ros2-essentials/dependencies/).
 
 ## Supplementary
 

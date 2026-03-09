@@ -34,6 +34,7 @@ cp -r "${TEMPLATE_WS_DIR}" "${NEW_WS_DIR}"
 # Remove the files that should not be copied.
 rm -rf "${NEW_WS_DIR}/.vscode" "${NEW_WS_DIR}/docs"
 rm -rf "${NEW_WS_DIR}/build" "${NEW_WS_DIR}/install" "${NEW_WS_DIR}/log"
+rm -rf "${NEW_WS_DIR}/src/"*
 mkdir "${SCRIPT_DIR}/../docs/${NEW_WS_NAME_HYPHEN}"
 echo "# ${NEW_WS_NAME_UNDERSCORE}" > "${SCRIPT_DIR}/../docs/${NEW_WS_NAME_HYPHEN}/index.md"
 
@@ -43,5 +44,9 @@ sed -i "s/template_ws/${NEW_WS_NAME_UNDERSCORE}/g" "${NEW_WS_DIR}/.devcontainer/
 sed -i "s/template-ws/${NEW_WS_NAME_HYPHEN}/g"     "${NEW_WS_DIR}/.devcontainer/devcontainer.json"
 sed -i "s/template_ws/${NEW_WS_NAME_UNDERSCORE}/g" "${NEW_WS_DIR}/docker/compose.yaml"
 sed -i "s/template-ws/${NEW_WS_NAME_HYPHEN}/g"     "${NEW_WS_DIR}/docker/compose.yaml"
+
+# Disable CARTOGRAPHER and RTABMAP by default in new workspaces.
+sed -i 's/CARTOGRAPHER: "YES"/# CARTOGRAPHER: ""/g'   "${NEW_WS_DIR}/docker/compose.yaml"
+sed -i 's/RTABMAP: "YES"/# RTABMAP: ""/g'             "${NEW_WS_DIR}/docker/compose.yaml"
 
 echo "Done."

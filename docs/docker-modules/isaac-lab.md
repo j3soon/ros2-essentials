@@ -4,6 +4,8 @@
 
 Isaac Lab 2.1.0 Git Install.
 
+> Last tested on commit [1f46f18](https://github.com/j3soon/ros2-essentials/commit/1f46f185edc1cd624c7bb42590be095c776364e5) by [@j3soon](https://github.com/j3soon).
+
 Depends on:
 
 - Vulkan Configuration
@@ -18,6 +20,7 @@ Depends on:
 cd ~/IsaacLab
 ./isaaclab.sh -p scripts/tutorials/00_sim/log_time.py --headless
 # View the logs and press Ctrl+C to stop
+# tail -f ~/IsaacLab/logs/docker_tutorial/log.txt
 ```
 
 [Train Cartpole](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html):
@@ -38,3 +41,7 @@ cd ~/IsaacLab
 > ```sh
 > scripts/docker_run_official_isaac_lab.sh
 > ```
+
+## Known Issues
+
+See [official known issues](https://isaac-sim.github.io/IsaacLab/main/source/refs/issues.html) for Isaac Lab.

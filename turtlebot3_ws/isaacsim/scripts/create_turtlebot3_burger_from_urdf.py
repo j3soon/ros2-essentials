@@ -1,4 +1,4 @@
-# Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/core_api_tutorials/tutorial_core_hello_world.html
+# Ref: https://docs.isaacsim.omniverse.nvidia.com/5.1.0/core_api_tutorials/tutorial_core_hello_world.html
 # launch Isaac Sim before any other imports
 # default first two lines in any standalone application
 from isaacsim import SimulationApp
@@ -8,7 +8,7 @@ import logging
 
 import omni.kit.commands
 import omni.usd
-from omni.importer.urdf import _urdf
+from isaacsim.asset.importer.urdf._urdf import UrdfJointTargetType
 from pxr import UsdPhysics, PhysxSchema
 
 # Ref: https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/logging.html
@@ -18,13 +18,16 @@ logger = logging.getLogger(__name__)
 
 def create_turtlebot3_burger_from_urdf(urdf_path, usd_path):
     # Ref: https://docs.omniverse.nvidia.com/isaacsim/latest/advanced_tutorials/tutorial_advanced_import_urdf.html#importing-urdf-using-python
+    # The link above is dead, see `~/isaacsim/standalone_examples/api/isaacsim.asset.importer.urdf/urdf_import.py` for the updated API.
     # Set the settings in the import config
-    import_config = _urdf.ImportConfig()
+    status, import_config = omni.kit.commands.execute("URDFCreateImportConfig")
     import_config.fix_base = False
     import_config.make_default_prim = True
-    import_config.default_drive_type = _urdf.UrdfJointTargetType.JOINT_DRIVE_VELOCITY
+    import_config.default_drive_type = UrdfJointTargetType.JOINT_DRIVE_VELOCITY
+    # Disabling merging fixed joints is required for sensors to be imported correctly
+    import_config.merge_fixed_joints = False
     # Finally import the robot & save it as USD
-    result, prim_path = omni.kit.commands.execute(
+    status, prim_path = omni.kit.commands.execute(
         "URDFParseAndImportFile", urdf_path=urdf_path,
         import_config=import_config, dest_path=usd_path,
     )

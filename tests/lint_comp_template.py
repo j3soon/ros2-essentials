@@ -85,6 +85,7 @@ def compare_file_with_template(filepath, targetpath=None, ignored_workspaces=[])
             i = j + k
 
 compare_file_with_template(".devcontainer/devcontainer.json", ignored_workspaces=["ros1_bridge_ws"])
+compare_file_with_template(".devcontainer/create_env.sh")
 compare_file_with_template(".gitignore")
 compare_file_with_template("docker/.bashrc")
 compare_file_with_template("docker/.dockerignore", ignored_workspaces=["ros1_bridge_ws"])

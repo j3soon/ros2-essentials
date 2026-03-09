@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ -z "$ISAAC_LAB_VERSION" ]; then
+    echo "Skipping Isaac Lab installation as ISAAC_LAB_VERSION is not set"
+    exit 0
+fi
+
 # Install Isaac Lab
 
 # Check required environment variables
@@ -20,10 +25,6 @@ if [ -z "$ISAACSIM_PATH" ]; then
     echo "Error: ISAACSIM_PATH environment variable is required but not set"
     exit 1
 fi
-if [ -z "$ISAAC_LAB_VERSION" ]; then
-    echo "Skipping Isaac Lab installation as ISAAC_LAB_VERSION is not set"
-    exit 0
-fi
 if [ -z "$ISAACLAB_PATH" ]; then
     echo "Error: ISAACLAB_PATH environment variable is required but not set"
     exit 1
@@ -38,14 +39,14 @@ if [ "$TARGETARCH" != "amd64" ]; then
     exit 0
 fi
 
-if [ "$ISAAC_LAB_VERSION" = "2.2.1" ]; then
-    echo "Installing Isaac Lab 2.2.1..."
-    # Ref: https://isaac-sim.github.io/IsaacLab/v2.2.1/source/setup/installation/binaries_installation.html
+if [ "$ISAAC_LAB_VERSION" = "2.3.2" ]; then
+    echo "Installing Isaac Lab 2.3.2..."
+    # Ref: https://isaac-sim.github.io/IsaacLab/v2.3.2/source/setup/installation/binaries_installation.html
     sudo apt-get update && sudo apt-get install -y \
         cmake build-essential \
         && sudo rm -rf /var/lib/apt/lists/* \
         || exit 1
-    git clone -b v2.2.1 https://github.com/isaac-sim/IsaacLab.git "$ISAACLAB_PATH" \
+    git clone -b v2.3.2 https://github.com/isaac-sim/IsaacLab.git "$ISAACLAB_PATH" \
         && cd "$ISAACLAB_PATH" \
         && ln -s "$ISAACSIM_PATH" _isaac_sim \
         && ./isaaclab.sh --install \

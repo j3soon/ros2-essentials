@@ -3,6 +3,8 @@
     "name": "{PLACEHOLDER}",
     "dockerComposeFile": "../docker/compose.yaml",
     "service": "{PLACEHOLDER}-ws",
+    // Set the USER_UID
+    "initializeCommand": "\"${localWorkspaceFolder}\"/.devcontainer/create_env.sh",
     // Workspace settings
     "workspaceFolder": "/home/ros2-essentials/{PLACEHOLDER}_ws",
     // Vscode extensions
@@ -12,11 +14,11 @@
                 "ms-vscode.cpptools",
                 "ms-vscode.cpptools-themes",
                 "twxs.cmake",
-                "donjayamanne.python-extension-pack",
+                "leojhonsong.python-extension-pack",
                 "eamodio.gitlens",
                 "mhutchie.git-graph",
                 "streetsidesoftware.code-spell-checker",
-                "ms-iot.vscode-ros"
+                "ranch-hand-robotics.rde-pack"
             ]
         }
     }

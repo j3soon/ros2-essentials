@@ -9,6 +9,9 @@
 # Hard Links
 /docker/modules
 
+# Docker environment variables
+/docker/.env
+
 # Custom ignores
 /isaacsim/assets
 /src/interbotix_ros_manipulators/interbotix_ros_xsarms/interbotix_xsarm_descriptions/urdf/*.urdf

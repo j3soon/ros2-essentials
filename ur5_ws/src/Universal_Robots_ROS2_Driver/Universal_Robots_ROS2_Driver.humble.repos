@@ -1,0 +1,37 @@
+repositories:
+  Universal_Robots_Client_Library:
+    type: git
+    url: https://github.com/UniversalRobots/Universal_Robots_Client_Library.git
+    version: master
+  Universal_Robots_ROS2_Description:
+    type: git
+    url: https://github.com/UniversalRobots/Universal_Robots_ROS2_Description.git
+    version: humble
+  ur_msgs:
+    type: git
+    url: https://github.com/ros-industrial/ur_msgs.git
+    version: humble-devel
+  ros2_control:
+    type: git
+    url: https://github.com/ros-controls/ros2_control.git
+    version: humble
+  ros2_controllers:
+    type: git
+    url: https://github.com/ros-controls/ros2_controllers
+    version: humble
+  kinematics_interface:
+    type: git
+    url: https://github.com/ros-controls/kinematics_interface.git
+    version: humble
+  control_msgs:
+    type: git
+    url: https://github.com/ros-controls/control_msgs.git
+    version: humble
+  control_toolbox:
+    type: git
+    url: https://github.com/ros-controls/control_toolbox.git
+    version: humble
+  realtime_tools:
+    type: git
+    url: https://github.com/ros-controls/realtime_tools.git
+    version: humble

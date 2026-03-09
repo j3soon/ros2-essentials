@@ -122,9 +122,9 @@ plugins:
   # Ref: https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#document-contributors
   # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2
   # Ref: https://github.com/ojacques/mkdocs-git-committers-plugin-2/issues/51#issuecomment-1951450239
-  # - git-committers:
-  #     repository: j3soon/ros2-essentials
-  #     branch: main
+  - git-committers:
+      repository: j3soon/ros2-essentials
+      branch: main
   # DONE (Set up git contributors):
   # - Replace the `git-committers` settings above to match your repository.
   # - Generate a GitHub API key as described in the link above.
@@ -211,6 +211,10 @@ nav:
     - docker-modules/isaac-sim.md
     - docker-modules/isaac-lab.md
     - docker-modules/isaac-ros.md
+    - docker-modules/nv-openusd.md
+    - docker-modules/newton-tools.md
+    - docker-modules/claude-code.md
+    - docker-modules/codex.md
   - Workspaces:
     - workspaces/index.md
     - template-ws/index.md
@@ -225,3 +229,6 @@ nav:
     - delto-gripper-ws/index.md
     - go2-ws/index.md
     - h1-ws/index.md
+    - stretch3-ws/index.md
+    - ur5-ws/index.md
+  - dependencies.md

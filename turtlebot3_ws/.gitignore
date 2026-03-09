@@ -9,5 +9,8 @@
 # Hard Links
 /docker/modules
 
+# Docker environment variables
+/docker/.env
+
 # Custom ignores
 /isaacsim/assets

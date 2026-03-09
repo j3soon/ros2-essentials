@@ -1,0 +1,336 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="insert_transmission" params="name">
+    <transmission name="${name}_tran">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+
+      <actuator name="${name}_motor">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <xacro:macro name="mimic_joint_plugin_gazebo"
+    params="name_prefix parent_joint mimic_joint has_pid:=false multiplier:=1.0 offset:=0 sensitiveness:=0.0 max_effort:=1.0 robot_namespace:=''">
+    <gazebo>
+      <plugin name="${name_prefix}mimic_joint_plugin"
+        filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+        <joint>${parent_joint}</joint>
+        <mimicJoint>${mimic_joint}</mimicJoint>
+        <xacro:if value="${has_pid}">
+          <hasPID />
+        </xacro:if>
+        <multiplier>${multiplier}</multiplier>
+        <offset>${offset}</offset>
+        <sensitiveness>${sensitiveness}</sensitiveness>
+        <maxEffort>${max_effort}</maxEffort>
+        <xacro:unless value="${robot_namespace == ''}">
+          <robotNamespace>${robot_namespace}</robotNamespace>
+        </xacro:unless>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="onrobot_rg2"
+    params="parent_link 
+            xyz rpy 
+            use_ros_control:=True">
+
+    <joint name="parent_to_base_fixed_joint" type="fixed">
+      <parent link="${parent_link}" />
+      <child link="rg2_base_link" />
+      <origin xyz="${xyz}" rpy="${rpy}" />
+    </joint>
+
+    <link name="rg2_base_link" />
+
+    <joint name="base_fixed_joint" type="fixed">
+      <parent link="rg2_base_link" />
+      <child link="rg2_hand_link" />
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </joint>
+
+    <link name="rg2_hand_link">
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/hand.stl" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/hand.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.061902 0.000129 -0.000005" rpy="0.0 0.0 0.0" />
+        <mass value="1.684558" />
+        <inertia ixx="0.000862" ixy="0.000000" ixz="0.000000"
+          iyy="0.002401" iyz="-0.000001"
+          izz="0.002620" />
+      </inertial>
+    </link>
+
+    <joint name="rg2_gripper_joint" type="revolute">
+      <parent link="rg2_hand_link" />
+      <child link="rg2_l_moment_arm_link" />
+      <origin xyz="0.105 0.017 0.010" rpy="0.0 0.0 0.0" />
+      <axis xyz="0.0 0.0 1.0" />
+      <limit velocity="3.14" effort="10.6" lower="${-0.45}" upper="${1.0}" />
+      <dynamics damping="0.1" friction="0.0" />
+      <implicitSpringDamper>True</implicitSpringDamper>
+    </joint>
+
+    <xacro:insert_transmission name="rg2_gripper_joint" />
+
+    <link name="rg2_l_moment_arm_link">
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/moment_arm.stl" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/moment_arm.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.017004 0.006397 -0.010300" rpy="0.0 0.0 0.0" />
+        <mass value="0.160209" />
+        <inertia ixx="0.000023" ixy="0.000019" ixz="0.000000"
+          iyy="0.000072" iyz="0.000000"
+          izz="0.000083" />
+      </inertial>
+    </link>
+
+    <joint name="rg2_l_finger_2_joint" type="revolute">
+      <parent link="rg2_l_moment_arm_link" />
+      <child link="rg2_l_finger_link" />
+      <origin xyz="0.049 0.026 0.000" rpy="0.0 0.0 0.0" />
+      <axis xyz="0.0 0.0 1.0" />
+      <limit velocity="3.14" effort="10.6" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <mimic joint="rg2_gripper_joint" multiplier="-1.0" />
+      <dynamics damping="0.1" friction="0.0" />
+      <implicitSpringDamper>True</implicitSpringDamper>
+    </joint>
+
+    <xacro:mimic_joint_plugin_gazebo name_prefix="l_finger_2_joint"
+      parent_joint="rg2_gripper_joint"
+      mimic_joint="rg2_l_finger_2_joint"
+      has_pid="false"
+      multiplier="-1.0"
+      max_effort="10.6" />
+
+    <link name="rg2_l_finger_link">
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/finger.stl" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/finger.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.024695 -0.010178 -0.010001" rpy="0.0 0.0 0.0" />
+        <mass value="0.081638" />
+        <inertia ixx="0.000006" ixy="-0.000005" ixz="0.000000"
+          iyy="0.000025" iyz="0.000000"
+          izz="0.000026" />
+      </inertial>
+    </link>
+
+    <joint name="rg2_l_finger_passive_joint" type="revolute">
+      <parent link="rg2_hand_link" />
+      <child link="rg2_l_truss_arm_link" />
+      <origin xyz="0.122 0.008 0.010" rpy="0.0 0.0 0.0" />
+      <axis xyz="0.0 0.0 1.0" />
+      <limit velocity="3.14" effort="10.6" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <mimic joint="rg2_gripper_joint" multiplier="1" />
+      <dynamics damping="0.1" friction="0.0" />
+      <implicitSpringDamper>True</implicitSpringDamper>
+    </joint>
+
+    <xacro:mimic_joint_plugin_gazebo name_prefix="rg2_l_finger_passive_joint"
+      parent_joint="rg2_gripper_joint"
+      mimic_joint="rg2_l_finger_passive_joint"
+      has_pid="false"
+      multiplier="1.0"
+      max_effort="10.6" />
+
+    <link name="rg2_l_truss_arm_link">
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/truss_arm.stl" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/truss_arm.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.023075 0.012136 -0.010000" rpy="0.0 0.0 0.0" />
+        <mass value="0.065927" />
+        <inertia ixx="0.000010" ixy="0.000010" ixz="0.000000"
+          iyy="0.000024" iyz="0.000000"
+          izz="0.000025" />
+      </inertial>
+    </link>
+
+    <joint name="rg2_r_finger_1_joint" type="revolute">
+      <parent link="rg2_hand_link" />
+      <child link="rg2_r_moment_arm_link" />
+      <origin xyz="0.105 -0.017 0.010" rpy="0.0 0.0 0.0" />
+      <axis xyz="0.0 0.0 1.0" />
+      <limit velocity="3.14" effort="10.6" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <mimic joint="rg2_gripper_joint" multiplier="-1" />
+      <dynamics damping="0.1" friction="0.0" />
+      <implicitSpringDamper>True</implicitSpringDamper>
+    </joint>
+
+    <xacro:mimic_joint_plugin_gazebo name_prefix="rg2_r_finger_1_joint"
+      parent_joint="rg2_gripper_joint"
+      mimic_joint="rg2_r_finger_1_joint"
+      has_pid="false"
+      multiplier="-1.0"
+      max_effort="10.6" />
+
+    <link name="rg2_r_moment_arm_link">
+      <collision>
+        <origin xyz="0.0 0.0 -0.02" rpy="${pi} 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/moment_arm.stl" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0.0 0.0 -0.02" rpy="${pi} 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/moment_arm.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.017004 -0.006397 -0.010300" rpy="0.00 0.00 0.00" />
+        <mass value="0.160209" />
+        <inertia ixx="0.000023" ixy="-0.000019" ixz="0.000000"
+          iyy="0.000072" iyz="0.000000"
+          izz="0.000083" />
+      </inertial>
+    </link>
+
+    <joint name="rg2_r_finger_2_joint" type="revolute">
+      <parent link="rg2_r_moment_arm_link" />
+      <child link="rg2_r_finger_link" />
+      <origin xyz="0.049 -0.026 0.000" rpy="0.0 0.0 0.0" />
+      <axis xyz="0 0 1" />
+      <limit velocity="3.14" effort="10.6" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <mimic joint="rg2_gripper_joint" multiplier="1" />
+      <dynamics damping="0.1" friction="0.0" />
+      <implicitSpringDamper>True</implicitSpringDamper>
+    </joint>
+
+    <xacro:mimic_joint_plugin_gazebo name_prefix="rg2_r_finger_2_joint"
+      parent_joint="rg2_gripper_joint"
+      mimic_joint="rg2_r_finger_2_joint"
+      has_pid="false"
+      multiplier="1.0"
+      max_effort="10.6" />
+
+    <link name="rg2_r_finger_link">
+      <collision>
+        <origin xyz="0.0 0.0 -0.02" rpy="${pi} 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/finger.stl" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0.0 0.0 -0.02" rpy="${pi} 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/finger.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.024695 0.010178 -0.010000" rpy="0.0 0.0 0.0" />
+        <mass value="0.081637" />
+        <inertia ixx="0.000006" ixy="0.000005" ixz="0.000000"
+          iyy="0.000025" iyz="0.000000"
+          izz="0.000026" />
+      </inertial>
+    </link>
+
+    <joint name="rg2_r_finger_passive_joint" type="revolute">
+      <parent link="rg2_hand_link" />
+      <child link="rg2_r_truss_arm_link" />
+      <origin xyz="0.122 -0.008 0.010" rpy="0.0 0.0 0.0" />
+      <axis xyz="0.0 0.0 1.0" />
+      <limit velocity="3.14" effort="10.6" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <mimic joint="rg2_gripper_joint" multiplier="-1" />
+      <dynamics damping="0.1" friction="0.0" />
+      <implicitSpringDamper>True</implicitSpringDamper>
+    </joint>
+
+    <xacro:mimic_joint_plugin_gazebo name_prefix="rg2_r_finger_passive_joint"
+      parent_joint="rg2_gripper_joint"
+      mimic_joint="rg2_r_finger_passive_joint"
+      has_pid="false"
+      multiplier="-1.0"
+      max_effort="10.6" />
+
+    <link name="rg2_r_truss_arm_link">
+      <collision>
+        <origin xyz="0.0 0.0 -0.02" rpy="${pi} 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/truss_arm.stl" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0.0 0.0 -0.02" rpy="${pi} 0.0 0.0" />
+        <geometry>
+          <mesh filename="file://$(find onrobot_rg2_description)/meshes/truss_arm.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.023075 -0.012136 -0.010000" rpy="0.0 0.0 0.0" />
+        <mass value="0.065927" />
+        <inertia ixx="0.000010" ixy="-0.000010" ixz="0.000000"
+          iyy="0.000024" iyz="0.000000"
+          izz="0.000025" />
+      </inertial>
+    </link>
+
+    <xacro:if value="${use_ros_control}">
+      <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        </plugin>
+      </gazebo>
+    </xacro:if>
+      
+  </xacro:macro>
+</robot>
