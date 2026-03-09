@@ -2,6 +2,10 @@ name: ros2-turtlebot3-ws
 services:
   volume-instantiation:
     # Ref: https://github.com/moby/moby/issues/47842#issuecomment-2249050939
+    # Note: We use individual `chown` commands instead of `chown -R` for performance.
+    # This chown is only required for empty volumes. If the volume happens to be non-empty,
+    # `chown -R` would be very time-consuming as it recursively changes ownership of all
+    # existing files and subdirectories.
     image: ubuntu:22.04
     container_name: ros2-turtlebot3-ws-volume-instantiation
     command: bash -c "

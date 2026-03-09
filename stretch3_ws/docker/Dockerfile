@@ -168,10 +168,17 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 
 # TODO: Add more commands here
 
+# download navigation2 and point cloud for stretch3
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    sudo apt-get update && sudo apt-get install -y \
+    ros-${ROS_DISTRO}-navigation2 \
+    ros-${ROS_DISTRO}-nav2-bringup \
+    ros-${ROS_DISTRO}-pointcloud-to-laserscan \
+    && sudo rm -rf /var/lib/apt/lists/*
+
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
-
 # NVIDIA OpenUSD Tools configuration
 ARG NV_OPENUSD=""
 COPY --chown=$USERNAME:$USERNAME \
