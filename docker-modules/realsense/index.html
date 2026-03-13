@@ -11,13 +11,9 @@
       
       
       
-        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/">
+        <link rel="canonical" href="https://j3soon.github.io/ros2-essentials/docker-modules/realsense/">
       
       
-        <link rel="prev" href="../isaac-lab/">
-      
-      
-        <link rel="next" href="../nv-openusd/">
       
       
         
@@ -28,7 +24,7 @@
     
     
       
-        <title>Isaac ROS - ROS2 Essentials</title>
+        <title>Realsense - ROS2 Essentials</title>
       
     
     
@@ -72,17 +68,17 @@
     
   
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Isaac ROS - ROS2 Essentials" />
+<meta property="og:title" content="Realsense - ROS2 Essentials" />
 <meta property="og:description" content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." />
-<meta property="og:image" content="https://j3soon.github.io/ros2-essentials/assets/images/social/docker-modules/isaac-ros.png" />
+<meta property="og:image" content="https://j3soon.github.io/ros2-essentials/assets/images/social/docker-modules/realsense.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:url" content="https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/" />
+<meta property="og:url" content="https://j3soon.github.io/ros2-essentials/docker-modules/realsense/" />
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:title" content="Isaac ROS - ROS2 Essentials" />
+<meta property="twitter:title" content="Realsense - ROS2 Essentials" />
 <meta property="twitter:description" content="A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs)." />
-<meta property="twitter:image" content="https://j3soon.github.io/ros2-essentials/assets/images/social/docker-modules/isaac-ros.png" />
+<meta property="twitter:image" content="https://j3soon.github.io/ros2-essentials/assets/images/social/docker-modules/realsense.png" />
 </head>
   
   
@@ -102,7 +98,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#isaac-ros" class="md-skip">
+        <a href="#realsense" class="md-skip">
           Skip to content
         </a>
       
@@ -139,7 +135,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Isaac ROS
+              Realsense
             
           </span>
         </div>
@@ -355,8 +351,6 @@
       
   
   
-    
-  
   
   
     
@@ -392,11 +386,13 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -424,7 +420,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -609,37 +605,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Isaac ROS
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../isaac-ros/" class="md-nav__link">
         
   
   
@@ -655,92 +624,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Setup
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#start-simulation-environment-isaac-sim" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Start Simulation Environment (Isaac Sim)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#isaac-ros-apriltag" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Isaac ROS AprilTag
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#isaac-ros-visual-slam" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Isaac ROS Visual SLAM
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#isaac-ros-nvblox" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Isaac ROS Nvblox
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#known-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Known Issues
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1410,10 +1293,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
+  <a href="#start-container" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Setup
+        🐳 Start Container
       
     </span>
   </a>
@@ -1421,54 +1304,99 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#start-simulation-environment-isaac-sim" class="md-nav__link">
+  <a href="#simulation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Start Simulation Environment (Isaac Sim)
+        Simulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#realsense-test-with-gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Realsense test with gazebo
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#isaac-ros-apriltag" class="md-nav__link">
+  <a href="#real-hardware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Isaac ROS AprilTag
+        Real Hardware
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real Hardware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#realsense-test-in-real-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Realsense test in real world
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#isaac-ros-visual-slam" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Isaac ROS Visual SLAM
+        Tools
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#isaac-ros-nvblox" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#updating-firmware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Isaac ROS Nvblox
+        Updating Firmware
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#known-issues" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Known Issues
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
       
     </span>
   </a>
@@ -1495,114 +1423,118 @@
   
 
 
-<h1 id="isaac-ros">Isaac ROS<a class="headerlink" href="#isaac-ros" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_ros.sh"><img alt="GitHub code" src="https://img.shields.io/badge/code-blue?logo=github&amp;label=github" /></a></p>
+<h1 id="realsense">Realsense<a class="headerlink" href="#realsense" title="Permanent link">&para;</a></h1>
+<p><a href="https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_realsense.sh"><img alt="GitHub code" src="https://img.shields.io/badge/code-blue?logo=github&amp;label=github" /></a></p>
+<p>ROS2 Realsense. (Only installed by default for the template workspace.)</p>
+<p>To enable Realsense, set the <code>REALSENSE</code> argument to <code>YES</code> in the <code>compose.yaml</code> file of your desired workspace (e.g., <code>husky_ws/docker/compose.yaml</code>). After making these changes, rebuild the Docker image.</p>
 <blockquote>
-<p>Note: This is a work in progress. Currently only the base Isaac ROS is installed. Running examples requires additional dependencies that are not yet included in this setup.</p>
+<p><strong>Note:</strong> These scripts have only been tested on the <strong>RealSense D435i</strong>.</p>
 </blockquote>
-<p>Isaac ROS 3.2. (Not installed by default.)</p>
+<h2 id="start-container">🐳 Start Container<a class="headerlink" href="#start-container" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p>Last tested on commit <a href="https://github.com/j3soon/ros2-essentials/commit/14e949ae986aee39cc7913a804ba07b50b5b3855">14e949a</a> by <a href="https://github.com/j3soon">@j3soon</a>.</p>
+<p>Make sure your system meets the <a href="https://j3soon.github.io/ros2-essentials/#system-requirements">system requirements</a> and have followed the <a href="https://j3soon.github.io/ros2-essentials/#setup">setup instructions</a> before using this workspace.</p>
 </blockquote>
-<p>Depends on:</p>
-<ul>
-<li>ROS 2 Humble</li>
-<li>CUDA Toolkit 12.6</li>
-</ul>
-<p>Including:</p>
-<ul>
-<li>VPI</li>
-</ul>
-<p>To enable Isaac ROS, set the <code>ISAAC_ROS</code> argument to <code>YES</code> and the <code>CUDA_TOOLKIT_VERSION</code> argument to <code>12.6</code> in the <code>compose.yaml</code> file of your desired workspace (e.g., <code>template_ws/docker/compose.yaml</code>). After making these changes, rebuild the Docker image.</p>
-<p>Note that most packages are not installed by default to save disk space. Feel free to open an issue for requesting more packages to be installed along with Isaac ROS.</p>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<p>On host:</p>
-<ol>
-<li>Edit <code>~/template_ws/docker/compose.yaml</code> to set <code>CUDA_TOOLKIT_VERSION: "12.6"</code> and <code>ISAAC_ROS: "YES"</code>.</li>
-<li>Re-build the docker image with <code>docker compose build</code>.</li>
-</ol>
-<p>The remaining steps should all be executed within the docker container.</p>
-<p>Install Isaac ROS Examples package (optional):</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-isaac-ros-examples
+<p>Run the following commands in a Ubuntu desktop environment. If you are using a remote server, make sure you're using a terminal within a remote desktop session (e.g., VNC) instead of SSH (i.e., don't use <code>ssh -X</code> or <code>ssh -Y</code>).</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/ros2-essentials/template_ws/docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>build
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>xhost<span class="w"> </span>+local:docker
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># The initial build will take a while, please wait patiently.</span>
 </span></code></pre></div>
-<h2 id="start-simulation-environment-isaac-sim">Start Simulation Environment (Isaac Sim)<a class="headerlink" href="#start-simulation-environment-isaac-sim" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/isaac-sim/IsaacSim/issues/81#issuecomment-3098732838">Remove CUDA 12.6 from <code>LD_LIBRARY_PATH</code></a> and launch Isaac Sim:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Workaround for CUDA version</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LD_LIBRARY_PATH</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s|:/usr/local/cuda-12.6/lib64||&#39;</span><span class="k">)</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>~/isaacsim/isaac-sim.sh
+<blockquote>
+<p>If your user's UID is <code>1000</code>, you may replace the <code>docker compose build</code> command with <code>docker compose pull</code>.</p>
+</blockquote>
+<p>The commands in the following sections assume that you are inside the Docker container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># in a new terminal</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ros2-template-ws<span class="w"> </span>bash
 </span></code></pre></div>
+<p>If the initial build somehow failed, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rm<span class="w"> </span>-r<span class="w"> </span>build<span class="w"> </span>install
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span></code></pre></div>
+<p>Once you have finished testing, you can stop and remove the container with:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
+</span></code></pre></div>
+<h2 id="simulation">Simulation<a class="headerlink" href="#simulation" title="Permanent link">&para;</a></h2>
+<h3 id="realsense-test-with-gazebo">Realsense test with gazebo<a class="headerlink" href="#realsense-test-with-gazebo" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>For AprilTag and Visual SLAM:</p>
-<p>Click <code>Window &gt; Examples &gt; Robotics Examples</code>. In the <code>Robotics Examples</code> window, select <code>ROS2 &gt; Isaac ROS &gt; Sample Scene</code> and click <code>Load Sample Scene</code>. After the scene loaded, click the <code>Play</code> button to start the simulation.</p>
-<p><img alt="" src="../assets/isaac-ros-isaac-sim.png" /></p>
-</li>
+<li>realsense_gazebo package: Gazebo simulation of the robot with RealSense D435 camera.</li>
+<li>Launch Gazebo with turtlebot3 in <code>tmux</code>
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>realsense_gazebo<span class="w"> </span>realsense_bringup.launch.py
+</span></code></pre></div></li>
 </ul>
 <ul>
-<li>
-<p>For Nvblox:</p>
-<p>Open the <code>nvblox_sample_scene.usd</code> scene by pasting the following to the <code>Content</code> window:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/Samples/NvBlox/nvblox_sample_scene.usd
-</span></code></pre></div>
-<p>After the scene loaded, click the <code>Play</code> button to start the simulation. If a warning message appears, click <code>OK</code> to allow script execution.</p>
-<p><img alt="" src="../assets/isaac-ros-isaac-sim-nvblox.png" /></p>
-</li>
+<li>Run the control tool in new window of <code>tmux</code>
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
+</span></code></pre></div></li>
 </ul>
-<p>Open another terminal and exec into the docker container. Then, follow one of the tutorials below.</p>
-<h2 id="isaac-ros-apriltag">Isaac ROS AprilTag<a class="headerlink" href="#isaac-ros-apriltag" title="Permanent link">&para;</a></h2>
-<p>Follow the <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#quickstart">Quickstart</a> and <a href="https://nvidia-isaac-ros.github.io/concepts/fiducials/apriltag/tutorial_isaac_sim.html">Isaac Sim</a> tutorials.</p>
-<p>Install Isaac ROS AprilTag package:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-isaac-ros-apriltag
+<h2 id="real-hardware">Real Hardware<a class="headerlink" href="#real-hardware" title="Permanent link">&para;</a></h2>
+<h3 id="realsense-test-in-real-world">Realsense test in real world<a class="headerlink" href="#realsense-test-in-real-world" title="Permanent link">&para;</a></h3>
+<p>You can modify the camera setting in <code>realsense.yaml</code> under <code>realsense_launch/config</code></p>
+<ul>
+<li>Launch Realsense camera node
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>realsense_launch<span class="w"> </span>realsense.launch.py
+</span></code></pre></div></li>
+</ul>
+<ul>
+<li>Along with RViz
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>realsense_launch<span class="w"> </span>realsense.launch.py<span class="w"> </span>launch_rviz:<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div></li>
+</ul>
+<h3 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h3>
+<p>Realsense viewer:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>realsense-viewer
 </span></code></pre></div>
-<p>Start the pre-composed pipeline:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>isaac_ros_apriltag<span class="w"> </span>isaac_ros_apriltag_isaac_sim_pipeline.launch.py
+<h3 id="updating-firmware">Updating Firmware<a class="headerlink" href="#updating-firmware" title="Permanent link">&para;</a></h3>
+<p>Updating firmware via <code>realsense-viewer</code> <a href="https://github.com/realsenseai/librealsense/issues/14345">will fail at 30%</a> if <code>systemd-udevd</code> is not running, which could result in the following error:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Recovery device did not connect in time!
 </span></code></pre></div>
-<p>In another terminal, launch RViz:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>rviz2<span class="w"> </span>-d<span class="w"> </span><span class="k">$(</span>ros2<span class="w"> </span>pkg<span class="w"> </span>prefix<span class="w"> </span>isaac_ros_apriltag<span class="w"> </span>--share<span class="k">)</span>/rviz/default.rviz
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># or</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># ros2 topic echo /tag_detections</span>
+<p>Make sure to start <code>systemd-udevd</code> in the container before updating firmware:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>/lib/systemd/systemd-udevd<span class="w"> </span>--daemon
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>realsense-viewer
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># and then update firmware via realsense-viewer</span>
 </span></code></pre></div>
-<p><img alt="" src="../assets/isaac-ros-apriltag-rviz.png" /></p>
-<p>For further info, see more tutorials in <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#try-more-examples">the official documentation</a>.</p>
-<h2 id="isaac-ros-visual-slam">Isaac ROS Visual SLAM<a class="headerlink" href="#isaac-ros-visual-slam" title="Permanent link">&para;</a></h2>
+<p><code>systemd-udevd</code> is required to detect when the (recovery) device reconnects after requesting the camera to switch to recovery mode.</p>
 <blockquote>
-<p>Using <a href="https://nvidia-isaac-ros.github.io/concepts/visual_slam/cuvslam/index.html">cuVSLAM</a> under the hood.</p>
+<p>Example output of a successful firmware update:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Started Firmware Update process
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Trying to back-up camera flash memory
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Backup completed and saved as &#39;/home/user/.xxxxxxxxxxxx.xxxxxxxx_xxxxxx.bin&#39;
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Requesting to switch to recovery mode
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>DFU device &#39;xxxxxxxxxxxx&#39; found
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>Recovery device connected, starting update..
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>Internal write is in progress
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>Please DO NOT DISCONNECT the camera
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>Firmware Download completed, await DFU transition event
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>Discovered connection of the original device
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>Device reconnected successfully!
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>FW update process completed successfully
+</span></code></pre></div>
 </blockquote>
-<p>Follow the <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_visual_slam/index.html#quickstarts">Quickstart</a> and <a href="https://nvidia-isaac-ros.github.io/concepts/visual_slam/cuvslam/tutorial_isaac_sim.html">Isaac Sim</a> tutorials.</p>
-<p>Install Isaac ROS Visual SLAM package:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-isaac-ros-visual-slam
+<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
+<p>Check USB devices (on host):</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>lsusb
 </span></code></pre></div>
-<p>Start the pre-composed pipeline:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>isaac_ros_visual_slam<span class="w"> </span>isaac_ros_visual_slam_isaac_sim.launch.py
+<p>Check udev rules:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ls<span class="w"> </span>-l<span class="w"> </span>/lib/udev/rules.d/<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>realsense
 </span></code></pre></div>
-<p>In another terminal, send the control command to the robot:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/msg/Twist<span class="w"> </span><span class="s2">&quot;{linear: {x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.2}}&quot;</span>
+<p>Show extrinsic and intrinsics:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>rs-enumerate-devices<span class="w"> </span>-c
 </span></code></pre></div>
-<p>Then, launch RViz:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>rviz2<span class="w"> </span>-d<span class="w"> </span><span class="k">$(</span>ros2<span class="w"> </span>pkg<span class="w"> </span>prefix<span class="w"> </span>isaac_ros_visual_slam<span class="w"> </span>--share<span class="k">)</span>/rviz/isaac_sim.cfg.rviz
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># or</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># ros2 topic echo /visual_slam/tracking/odometry</span>
+<p>Show serial number:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>rs-enumerate-devices<span class="w"> </span>-s
 </span></code></pre></div>
-<p><img alt="" src="../assets/isaac-ros-vslam-rviz.png" /></p>
-<p>For further info, see more tutorials in <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_visual_slam/isaac_ros_visual_slam/index.html#try-more-examples">the official documentation</a>.</p>
-<h2 id="isaac-ros-nvblox">Isaac ROS Nvblox<a class="headerlink" href="#isaac-ros-nvblox" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>Using <a href="https://nvidia-isaac-ros.github.io/concepts/scene_reconstruction/nvblox/technical_details.html">Nvblox</a> under the hood.</p>
-</blockquote>
-<p>Follow the <a href="https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_nvblox/isaac_ros_nvblox/index.html#quickstart">Quickstart</a> and <a href="https://nvidia-isaac-ros.github.io/concepts/scene_reconstruction/nvblox/tutorials/tutorial_isaac_sim.html">Isaac Sim</a> tutorials.</p>
-<p>Install Isaac ROS Nvblox package:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-navigation2<span class="w"> </span>ros-humble-nav2-bringup
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ros-humble-isaac-ros-nvblox
+<p>List firmware version:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>rs-fw-update<span class="w"> </span>-l
 </span></code></pre></div>
-<p>Start the pre-composed pipeline:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nvblox_examples_bringup<span class="w"> </span>isaac_sim_example.launch.py
-</span></code></pre></div>
-<p>Then, click <code>2D Goal Pose</code> in the RViz window to set the goal pose.</p>
-<p><img alt="" src="../assets/isaac-ros-nvblox-rviz.png" /></p>
-<p>For further info, see more tutorials in <a href="https://nvidia-isaac-ros.github.io/concepts/scene_reconstruction/nvblox/index.html#examples">the official documentation</a>.</p>
-<h2 id="known-issues">Known Issues<a class="headerlink" href="#known-issues" title="Permanent link">&para;</a></h2>
-<p>See <a href="https://nvidia-isaac-ros.github.io/troubleshooting/index.html">official troubleshooting guide</a> for Isaac ROS.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://github.com/IntelRealSense/realsense-ros">Realsense ROS Wrapper</a></li>
+<li><a href="https://github.com/pal-robotics/realsense_gazebo_plugin">RealSense Gazebo ROS Plugin</a></li>
+<li><a href="https://github.com/realsenseai/librealsense/wiki/Troubleshooting-Q%26A">Troubleshooting Q&amp;A</a></li>
+<li><a href="https://dev.realsenseai.com/docs/troubleshooting">Troubleshooting Tips and Tricks</a></li>
+<li><a href="https://github.com/realsenseai/librealsense/tree/master/scripts/Docker">Librealsense Docker</a></li>
+</ul>
 
 
 
@@ -1625,7 +1557,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 5, 2026 23:05:00 UTC">February 5, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 26, 2026 13:27:15 UTC">February 26, 2026</span>
   </span>
 
     
@@ -1635,7 +1567,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 28, 2025 07:42:09 UTC">July 28, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 10, 2025 17:03:00 UTC">November 10, 2025</span>
   </span>
 
     
@@ -1652,6 +1584,11 @@
 
     
     <nav>
+      
+        <a href="https://github.com/yuhsiang1117" class="md-author" title="@yuhsiang1117">
+          
+          <img src="https://avatars.githubusercontent.com/u/157332964?v=4&size=72" alt="yuhsiang1117">
+        </a>
       
         <a href="https://github.com/j3soon" class="md-author" title="@j3soon">
           
