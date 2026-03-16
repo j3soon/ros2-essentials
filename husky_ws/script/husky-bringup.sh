@@ -4,7 +4,7 @@
 # It is assumed that the robot is powered on and the computer is connected to the robot via USB cable.
 
 # Running udevd in the background, it will listen for events from the kernel and manage the device nodes in /dev.
-# Reference: 
+# Reference:
 # - https://forums.docker.com/t/udevadm-control-reload-rules/135564/2
 # - https://manpages.ubuntu.com/manpages/focal/en/man8/systemd-udevd-kernel.socket.8.html
 if ! pidof "systemd-udevd" > /dev/null; then
