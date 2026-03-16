@@ -50,6 +50,8 @@ services:
         CARTOGRAPHER: "YES"
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
         RTABMAP: "YES"
+        # TODO: Set to "YES" if using RealSense or set to "" if not using RealSense
+        # REALSENSE: ""
         # TODO: Set to "YES" if using NVIDIA OpenUSD tools or set to "" if not using NVIDIA OpenUSD tools
         # NV_OPENUSD: ""
         # TODO: Set to "YES" if using Newton Tools or set to "" if not using Newton Tools
@@ -195,6 +197,12 @@ services:
       - ../../.env.d/.claude:/home/user/.claude
       - ../../.env.d/.claude.json:/home/user/.claude.json
       - ../../.env.d/.codex:/home/user/.codex
+    # Add device cgroup rules to allow access to specific devices (like realsense).
+    # Reference: https://github.com/2b-t/docker-for-robotics/blob/main/doc/WorkingWithHardware.md
+    # Note that this is required only when using privileged: false.
+    # device_cgroup_rules:
+    #   - 'c 81:* rmw'
+    #   - 'c 189:* rmw'
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache

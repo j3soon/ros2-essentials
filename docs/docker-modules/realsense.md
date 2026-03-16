@@ -29,6 +29,8 @@ The commands in the following sections assume that you are inside the Docker con
 ```sh
 # in a new terminal
 docker exec -it ros2-template-ws bash
+# and then start systemd-udevd in the container
+sudo /lib/systemd/systemd-udevd --daemon
 ```
 
 If the initial build somehow failed, run:
@@ -74,6 +76,8 @@ You can modify the camera setting in `realsense.yaml` under `realsense_launch/co
     ```bash
     ros2 launch realsense_launch realsense.launch.py launch_rviz:=true
     ```
+
+If you encountered strange issues, make sure that `systemd-udevd` is running in the container, which is required to access IMU data.
 
 ### Tools
 
