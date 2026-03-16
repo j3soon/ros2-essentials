@@ -20,10 +20,11 @@ Run the repository validation loop from the repo root. Fix the actual problem re
 
 - Prefer full-suite reruns over single-test shortcuts. It is fine to run an individual failing script once while debugging, but always finish with `./tests/test_all.sh`.
 - Preserve user changes. Avoid broad cleanup outside the failing check's scope.
-- When the failure comes from `lint_comp_template.py`, inspect the matching file under `tests/diff_base/` before editing workspaces.
+- When the failure comes from `lint_comp_template.py`, treat `tests/diff_base/` as the baseline, but confirm whether `template_ws` is the intended source of truth before changing workspace files.
 - Respect repo rules in `AGENTS.md`, especially `docker/compose.yaml` naming, required default files, and README/docs parity.
 - Use `IGNORED_WORKSPACES` only when the user asks to exclude workspaces or when a temporary workspace would otherwise make the suite meaningless.
 - If a fix to `template_ws` implies syncing many workspaces, keep the immediate test fix minimal unless the failure already proves broader drift that must be corrected.
+- Do not use `{PLACEHOLDER_MULTILINE}` unless the user explicitly asks for it. Prefer explicit placeholder lines such as `{PLACEHOLDER_#}` when updating `tests/diff_base/`.
 
 ## Failure Routing
 

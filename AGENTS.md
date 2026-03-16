@@ -24,6 +24,7 @@
 
 ## Testing Guidelines
 - Primary checks are Python-based lint scripts executed via `./tests/test_all.sh`.
+- `lint_comp_template.py` treats `tests/diff_base/` as the canonical baseline; when `template_ws` intentionally changes, update `tests/diff_base/` and sync other workspaces as needed. Do not use `{PLACEHOLDER_MULTILINE}` in the baseline templates unless the user explicitly asks for it.
 - You can skip workspaces by setting `IGNORED_WORKSPACES` (e.g., `export IGNORED_WORKSPACES="tmp_ws"`).
 
 ## Commit & Pull Request Guidelines

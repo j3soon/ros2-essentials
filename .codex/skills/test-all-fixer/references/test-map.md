@@ -1,6 +1,6 @@
 # Test Map
 
-- `lint_comp_template.py`: Enforce that workspace defaults match `tests/diff_base/` templates, with placeholder support. Check the matching template file first, then the workspace copy.
+- `lint_comp_template.py`: Enforce that workspace defaults match `tests/diff_base/` templates, with placeholder support. Check the matching `tests/diff_base/` file first, confirm whether `template_ws` is the intended new baseline, and do not use `{PLACEHOLDER_MULTILINE}` unless the user explicitly asks for it.
 - `lint_compose.py`: Validate `*_ws/docker/compose.yaml` files. Remove obsolete `version:` keys and unresolved `PLACEHOLDER` text.
 - `lint_dockerfile.py`: Validate `*_ws/docker/Dockerfile*`. Reject hard-coded `ros-humble-`, `$USER_GID`, standalone `apt-get update/install`, `$HOME`, and `PLACEHOLDER`.
 - `lint_filenames.py`: Ensure every `*_ws` has the required default files and none of the obsolete paths like `docker/compose.yml`.
