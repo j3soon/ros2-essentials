@@ -194,9 +194,9 @@ services:
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
       # Mount credentials (for Claude Code CLI, Codex CLI, and etc.)
-      - ../../.env.d/.claude:/home/user/.claude
-      - ../../.env.d/.claude.json:/home/user/.claude.json
-      - ../../.env.d/.codex:/home/user/.codex
+      - ${HOME}/docker/.claude:/home/user/.claude
+      - ${HOME}/docker/.claude.json:/home/user/.claude.json
+      - ${HOME}/docker/.codex:/home/user/.codex
     # Add device cgroup rules to allow access to specific devices (like realsense). 
     # Reference: https://github.com/2b-t/docker-for-robotics/blob/main/doc/WorkingWithHardware.md
     # Note that this is required only when using privileged: false.
