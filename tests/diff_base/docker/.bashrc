@@ -46,9 +46,11 @@ command -v realsense-viewer >/dev/null 2>&1 && RUN_UDEVD=true
 # Reference:
 # - https://forums.docker.com/t/udevadm-control-reload-rules/135564/2
 # - https://manpages.ubuntu.com/manpages/focal/en/man8/systemd-udevd-kernel.socket.8.html
-if [ "$RUN_UDEVD" = true ] && ! pidof systemd-udevd >/dev/null; then
+if [ "$RUN_UDEVD" = true ] && ! pidof systemd-udevd >/dev/null 2>&1; then
     echo "Launching systemd-udevd ..."
-    sudo /lib/systemd/systemd-udevd --daemon &> /dev/null
+    if ! sudo /lib/systemd/systemd-udevd --daemon; then
+        echo "Warning: Failed to launch systemd-udevd"
+    fi
 fi
 
 # Source gazebo environment
