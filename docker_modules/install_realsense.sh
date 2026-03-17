@@ -39,9 +39,26 @@ sudo rm librealsense.tar.gz
 sudo ln -s "/usr/src/librealsense-$LIBRS_VERSION" /usr/src/librealsense
 
 cd /usr/src/librealsense
+# When building examples (including graphics example), cmake will encounter the following OpenGL error:
+#   CMake Error at examples/*/CMakeLists.txt:* Target * links to target "OpenGL::GL" but the target was not found.  Perhaps a find_package() call is missing for an target, or an ALIAS target is missing?
+#
+# librealsense v2.56.4 examples unconditionally link OpenGL::GL on Linux, but
+# Ubuntu 22.04 with GLVND may only expose OpenGL::OpenGL and OpenGL::GLX.
+# Add the legacy compatibility target before configuring so examples can build.
+sudo sed -i '/# Check the platform and conditionally link OpenGL and libdl (for linux)/i \
+find_package(OpenGL REQUIRED)\
+if(NOT TARGET OpenGL::GL)\
+    if(TARGET OpenGL::OpenGL AND TARGET OpenGL::GLX)\
+        add_library(OpenGL::GL INTERFACE IMPORTED)\
+        set_property(TARGET OpenGL::GL PROPERTY INTERFACE_LINK_LIBRARIES "OpenGL::OpenGL;OpenGL::GLX")\
+    elseif(TARGET OpenGL::OpenGL)\
+        add_library(OpenGL::GL INTERFACE IMPORTED)\
+        set_property(TARGET OpenGL::GL PROPERTY INTERFACE_LINK_LIBRARIES OpenGL::OpenGL)\
+    endif()\
+endif()\
+' examples/CMakeLists.txt
 sudo mkdir build
 cd build
-# `-DBUILD_EXAMPLES=OFF` to prevent OpenGL errors
 # `-DFORCE_RSUSB_BACKEND=TRUE` to avoid the need of dkms with rsusb
 # Ref: https://github.com/realsenseai/librealsense/issues/9931#issuecomment-964289692
 # Ref: https://github.com/realsenseai/librealsense/issues/5212#issuecomment-552184604
@@ -53,8 +70,6 @@ sudo cmake \
     -DCMAKE_C_FLAGS_RELEASE="${CMAKE_C_FLAGS_RELEASE} -s" \
     -DCMAKE_CXX_FLAGS_RELEASE="${CMAKE_CXX_FLAGS_RELEASE} -s" \
     -DCMAKE_INSTALL_PREFIX=/opt/librealsense \
-    -DBUILD_EXAMPLES=OFF \
-    -DBUILD_GRAPHICAL_EXAMPLES=OFF \
     -DFORCE_RSUSB_BACKEND=TRUE \
     -DBUILD_PYTHON_BINDINGS:bool=true \
     -DCMAKE_BUILD_TYPE=Release ..
