@@ -197,12 +197,17 @@ services:
       - ${HOME}/docker/.claude:/home/user/.claude
       - ${HOME}/docker/.claude.json:/home/user/.claude.json
       - ${HOME}/docker/.codex:/home/user/.codex
-    # Add device cgroup rules to allow access to specific devices (like realsense). 
+    # Add device cgroup rules to allow access to specific devices (like realsense).
     # Reference: https://github.com/2b-t/docker-for-robotics/blob/main/doc/WorkingWithHardware.md
     # Note that this is required only when using privileged: false.
-    device_cgroup_rules:
-      - 'c 81:* rmw'
-      - 'c 189:* rmw'
+    # device_cgroup_rules:
+    #   - 'c 81:* rmw'
+    #   - 'c 189:* rmw'
+    # Reference: https://github.com/2b-t/docker-for-robotics/blob/main/doc/WorkingWithHardware.md
+    # Note that this is required only when using privileged: false.
+    # device_cgroup_rules:
+    #   - 'c 81:* rmw'
+    #   - 'c 189:* rmw'
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache

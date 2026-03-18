@@ -38,6 +38,20 @@ if [ ! -f $ROS2_WS/install/setup.bash ]; then
     fi
     echo "Workspace built."
 fi
+
+RUN_UDEVD=false
+command -v realsense-viewer >/dev/null 2>&1 && RUN_UDEVD=true
+# Running udevd in the background, it will listen for events from the kernel and manage the device nodes in /dev.
+# Reference:
+# - https://forums.docker.com/t/udevadm-control-reload-rules/135564/2
+# - https://manpages.ubuntu.com/manpages/focal/en/man8/systemd-udevd-kernel.socket.8.html
+if [ "$RUN_UDEVD" = true ] && ! pidof systemd-udevd >/dev/null 2>&1; then
+    echo "Launching systemd-udevd ..."
+    if ! sudo /lib/systemd/systemd-udevd --daemon; then
+        echo "Warning: Failed to launch systemd-udevd"
+    fi
+fi
+
 # Source gazebo environment
 # Ref: https://github.com/Interbotix/interbotix_ros_manipulators/issues/81#issuecomment-1562118208
 # Ref: https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros#InstallGazebo

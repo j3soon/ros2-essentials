@@ -50,6 +50,8 @@ services:
         {PLACEHOLDER_#}CARTOGRAPHER: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
         {PLACEHOLDER_#}RTABMAP: "{PLACEHOLDER}"
+        # TODO: Set to "YES" if using RealSense or set to "" if not using RealSense
+        {PLACEHOLDER_#}REALSENSE: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using NVIDIA OpenUSD tools or set to "" if not using NVIDIA OpenUSD tools
         {PLACEHOLDER_#}NV_OPENUSD: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Newton Tools or set to "" if not using Newton Tools
@@ -190,13 +192,18 @@ services:
         volume:
           subpath: documents
       # TODO: Add more volume mounts here.
-{PLACEHOLDER_MULTILINE}
       # Mount root workspace to allow easy access to all workspaces.
       - ../..:/home/ros2-essentials
       # Mount credentials (for Claude Code CLI, Codex CLI, and etc.)
       - ${HOME}/docker/.claude:/home/user/.claude
       - ${HOME}/docker/.claude.json:/home/user/.claude.json
       - ${HOME}/docker/.codex:/home/user/.codex
+    # Add device cgroup rules to allow access to specific devices (like realsense).
+    # Reference: https://github.com/2b-t/docker-for-robotics/blob/main/doc/WorkingWithHardware.md
+    # Note that this is required only when using privileged: false.
+    # device_cgroup_rules:
+    #   - 'c 81:* rmw'
+    #   - 'c 189:* rmw'
 volumes:
   gazebo-cache:
     name: ros2-gazebo-cache

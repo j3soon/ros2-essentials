@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test All Fixer"
+  short_description: "Run test_all.sh and fix failures iteratively."
+  default_prompt: "Use $test-all-fixer to run ./tests/test_all.sh, fix the reported failures, and repeat until it passes."
