@@ -15,7 +15,7 @@
       
       
       
-        <link rel="next" href="contributing/">
+        <link rel="next" href="last-tested/">
       
       
         
@@ -592,6 +592,33 @@
   
   
     <li class="md-nav__item">
+      <a href="last-tested/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Last Tested
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="contributing/" class="md-nav__link">
         
   
@@ -647,6 +674,8 @@
       
         
       
+        
+      
     
     
     
@@ -657,7 +686,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -679,14 +708,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -769,6 +798,34 @@
     
   
     RTAB-Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="docker-modules/realsense/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Realsense
   
 
     
@@ -1064,7 +1121,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -1086,14 +1143,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1797,7 +1854,7 @@
 <p><a href="https://github.com/j3soon/ros2-essentials/actions/workflows/test-common.yaml"><img alt="tests" src="https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/test-common.yaml?label=tests" /></a>
 <a href="https://j3soon.github.io/ros2-essentials/"><img alt="docs" src="https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-docs.yaml?label=docs" /></a></p>
 <p>A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs) and robotic arm manipulators. Please setup an Ubuntu environment before using this repo.</p>
-<p>The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by <a href="https://docs.isaacsim.omniverse.nvidia.com/5.1.0/index.html">(Omniverse) Isaac Sim</a>, <a href="https://isaac-sim.github.io/IsaacLab/main/index.html">Isaac Lab</a>, and <a href="https://nvidia-isaac-ros.github.io/index.html">Isaac ROS</a>. In general, the amd64 images support both simulation and real robot control, while the arm64 images only supports real robot control.</p>
+<p>The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by <a href="https://docs.isaacsim.omniverse.nvidia.com/5.1.0/index.html">(Omniverse) Isaac Sim</a>, <a href="https://isaac-sim.github.io/IsaacLab/main/index.html">Isaac Lab</a>, and <a href="https://nvidia-isaac-ros.github.io/index.html">Isaac ROS</a>. In general, the <code>x86_64</code> images support both simulation and real robot control, while <code>Jetson</code> and <code>DGX Spark</code> support should be checked per workspace and module in the matrices below.</p>
 <blockquote>
 <p>Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.</p>
 </blockquote>
@@ -1827,6 +1884,13 @@
 <td>Jetson Orin, 500GB+ SSD</td>
 <td>JetPack 6</td>
 <td>See <a href="https://nvidia-isaac-ros.github.io/getting_started/index.html">this page</a> for more details.</td>
+</tr>
+<tr>
+<td>Simulation/Deployment</td>
+<td>DGX Spark</td>
+<td>DGX Spark</td>
+<td>Ubuntu 24.04</td>
+<td>Is actually <a href="https://docs.nvidia.com/dgx/dgx-os-7-user-guide/introduction.html">DGX OS 7.2.3</a></td>
 </tr>
 </tbody>
 </table>
@@ -1875,8 +1939,9 @@
 <thead>
 <tr>
 <th>Workspace</th>
-<th>amd64</th>
-<th>arm64</th>
+<th>x86_64</th>
+<th>Jetson</th>
+<th>DGX Spark</th>
 <th>Notes</th>
 <th>Maintainer</th>
 </tr>
@@ -1886,18 +1951,21 @@
 <td><a href="https://j3soon.github.io/ros2-essentials/template-ws/">Template</a></td>
 <td>✔️</td>
 <td>✔️</td>
-<td></td>
+<td>✔️</td>
+<td>ARM support currently tracked identically for Jetson and DGX Spark.</td>
 <td><a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a>, <a href="https://github.com/j3soon">Johnson Sun</a></td>
 </tr>
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/orbslam3-ws">ORB-SLAM3</a></td>
 <td>✔️</td>
 <td>❌</td>
+<td>❌</td>
 <td></td>
 <td><a href="https://github.com/Assume-Zhan">Assume Zhan</a></td>
 </tr>
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/ros1-bridge-ws/">ROS1 Bridge</a></td>
+<td>✔️</td>
 <td>✔️</td>
 <td>✔️</td>
 <td>Skip linting</td>
@@ -1907,11 +1975,13 @@
 <td><a href="https://j3soon.github.io/ros2-essentials/husky-ws/">Clearpath Husky</a></td>
 <td>✔️</td>
 <td>✔️</td>
+<td>✔️</td>
 <td>Real-world support</td>
 <td><a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a>, <a href="https://github.com/j3soon">Johnson Sun</a></td>
 </tr>
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/kobuki-ws/">Yujin Robot Kobuki</a></td>
+<td>✔️</td>
 <td>✔️</td>
 <td>✔️</td>
 <td>Real-world support</td>
@@ -1921,6 +1991,7 @@
 <td><a href="https://j3soon.github.io/ros2-essentials/vlp-ws/">Velodyne VLP-16</a></td>
 <td>✔️</td>
 <td>✔️</td>
+<td>✔️</td>
 <td>Real-world support</td>
 <td><a href="https://github.com/Assume-Zhan">Assume Zhan</a></td>
 </tr>
@@ -1928,11 +1999,13 @@
 <td><a href="https://j3soon.github.io/ros2-essentials/gazebo-world-ws/">Gazebo World</a></td>
 <td>✔️</td>
 <td>❌️</td>
+<td>❌️</td>
 <td></td>
 <td><a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a></td>
 </tr>
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/aloha-ws/">ALOHA</a></td>
+<td>✔️</td>
 <td>✔️</td>
 <td>✔️</td>
 <td>Simulation only</td>
@@ -1942,12 +2015,14 @@
 <td><a href="https://j3soon.github.io/ros2-essentials/turtlebot3-ws/">Turtlebot3</a></td>
 <td>✔️</td>
 <td>❌️</td>
+<td>❌️</td>
 <td>Simulation only</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a></td>
 </tr>
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/delto-gripper-ws/">Tesollo Delto Gripper</a></td>
 <td>✔️</td>
+<td>❌️</td>
 <td>❌️</td>
 <td>Simulation only</td>
 <td><a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a></td>
@@ -1956,12 +2031,14 @@
 <td><a href="https://j3soon.github.io/ros2-essentials/go2-ws/">Unitree Go2</a></td>
 <td>✔️</td>
 <td>❌️</td>
+<td>❌️</td>
 <td>Simulation only</td>
 <td><a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a>, <a href="https://github.com/Assume-Zhan">Assume Zhan</a>, <a href="https://github.com/j3soon">Johnson Sun</a></td>
 </tr>
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/h1-ws/">Unitree H1</a></td>
 <td>✔️</td>
+<td>❌️</td>
 <td>❌️</td>
 <td>Simulation only</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a></td>
@@ -1970,12 +2047,14 @@
 <td><a href="https://j3soon.github.io/ros2-essentials/stretch3-ws/">Hello Robot Stretch 3</a></td>
 <td>✔️</td>
 <td>❌️</td>
+<td>❌️</td>
 <td>Simulation only</td>
 <td><a href="https://github.com/JustinShih0918">@JustinShih0918</a>, <a href="https://github.com/j3soon">Johnson Sun</a></td>
 </tr>
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/ur5-ws/">Universal Robots UR5</a></td>
 <td>✔️</td>
+<td>❌️</td>
 <td>❌️</td>
 <td>Real-world support (CB3 only)</td>
 <td><a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a></td>
@@ -1991,8 +2070,9 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <thead>
 <tr>
 <th>Module</th>
-<th>amd64</th>
-<th>arm64</th>
+<th>x86_64</th>
+<th>Jetson</th>
+<th>DGX Spark</th>
 <th>Notes</th>
 <th>Default</th>
 <th>Maintainer</th>
@@ -2003,12 +2083,14 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/ros2/">ROS2</a></td>
 <td>✔️</td>
 <td>✔️</td>
+<td>✔️</td>
 <td>ROS2 Humble</td>
 <td>✔️</td>
 <td><a href="https://github.com/YuZhong-Chen">Yu-Zhong Chen</a></td>
 </tr>
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/">Cartographer</a></td>
+<td>✔️</td>
 <td>✔️</td>
 <td>✔️</td>
 <td>ROS2 Cartographer</td>
@@ -2019,6 +2101,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/rtabmap/">RTAB-Map</a></td>
 <td>✔️</td>
 <td>❔</td>
+<td>❔</td>
 <td>ROS2 RTAB-Map</td>
 <td>➖</td>
 <td><a href="https://github.com/Assume-Zhan">Assume Zhan</a>, <a href="https://github.com/JustinShih0918">@JustinShih0918</a></td>
@@ -2026,7 +2109,8 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/">CUDA Toolkit</a></td>
 <td>✔️</td>
-<td>️TODO</td>
+<td>TODO</td>
+<td>TODO</td>
 <td>CUDA 12.6</td>
 <td>❌</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a></td>
@@ -2035,6 +2119,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/">Isaac Sim</a></td>
 <td>✔️</td>
 <td>❌</td>
+<td>❔</td>
 <td>Isaac Sim 5.0.0 Binary Install</td>
 <td>✔️</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a>, <a href="https://github.com/JustinShih0918">@JustinShih0918</a></td>
@@ -2043,6 +2128,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/">Isaac Lab</a></td>
 <td>✔️</td>
 <td>❌</td>
+<td>❔</td>
 <td>Isaac Lab 2.3.2 Git Install</td>
 <td>✔️</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a></td>
@@ -2050,6 +2136,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/">Isaac ROS</a></td>
 <td>✔️</td>
+<td>TODO</td>
 <td>TODO</td>
 <td>Isaac ROS 3.2 Apt Install (Base only)</td>
 <td>❌</td>
@@ -2059,6 +2146,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/nv-openusd/">NVIDIA OpenUSD Tools</a></td>
 <td>✔️</td>
 <td>❌</td>
+<td>❔</td>
 <td>NVIDIA OpenUSD Linux Binary Tools (v25.08)</td>
 <td>❌</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a></td>
@@ -2067,6 +2155,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/newton-tools/">Newton Tools</a></td>
 <td>✔️</td>
 <td>❔</td>
+<td>❔</td>
 <td>URDF/MJCF to USD Converters</td>
 <td>❌</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a></td>
@@ -2074,7 +2163,8 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/claude-code/">Claude Code</a></td>
 <td>✔️</td>
-<td>❔</td>
+<td>✔️</td>
+<td>✔️</td>
 <td>Claude Code CLI</td>
 <td>❌</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a></td>
@@ -2082,7 +2172,8 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <tr>
 <td><a href="https://j3soon.github.io/ros2-essentials/docker-modules/codex/">Codex</a></td>
 <td>✔️</td>
-<td>❔</td>
+<td>✔️</td>
+<td>✔️</td>
 <td>Codex CLI</td>
 <td>❌</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a></td>
@@ -2171,7 +2262,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 26, 2026 21:04:48 UTC">February 26, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 18, 2026 13:34:33 UTC">March 18, 2026</span>
   </span>
 
     
