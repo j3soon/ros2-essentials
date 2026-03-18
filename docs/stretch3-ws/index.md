@@ -11,7 +11,7 @@
 
 > Please note that this workspace is only tested in simulation.
 
-> Last tested on commit [a9e1166](https://github.com/j3soon/ros2-essentials/commit/a9e116664353b8d874d7e559d023c625b08c9dd1) by [@j3soon](https://github.com/j3soon).
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

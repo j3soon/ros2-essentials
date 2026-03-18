@@ -11,6 +11,8 @@
 This workspace provides a ROS 2 Humble environment for controlling **Universal Robots UR5** manipulators. It includes the official [Universal_Robots_ROS2_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver), description packages, **OnRobot RG2** gripper support, **servo control**, and **pose tracking**.
 
 > Please note that this workspace has only been tested on the UR5 (CB3 version). In theory, it can support other models with minor configuration adjustments; please feel free to modify the settings as needed for your specific use case.
+>
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## Start Container
 

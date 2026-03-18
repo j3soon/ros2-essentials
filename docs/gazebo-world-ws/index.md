@@ -11,7 +11,7 @@
 
 This repository contains several Gazebo worlds, which are valuable for testing robots or agents in both indoor and outdoor environments.
 
-> Last tested on TODO.
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

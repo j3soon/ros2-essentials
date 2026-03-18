@@ -2,7 +2,7 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_rtabmap.sh)
 
-> Last tested on TODO.
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

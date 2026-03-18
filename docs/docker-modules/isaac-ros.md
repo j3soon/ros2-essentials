@@ -6,7 +6,7 @@
 
 Isaac ROS 3.2. (Not installed by default.)
 
-> Last tested on commit [14e949a](https://github.com/j3soon/ros2-essentials/commit/14e949ae986aee39cc7913a804ba07b50b5b3855) by [@j3soon](https://github.com/j3soon).
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 Depends on:
 

@@ -11,7 +11,7 @@
 
 This template will help you set up a ROS-Humble environment quickly.
 
-> Last tested on TODO.
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

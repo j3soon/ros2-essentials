@@ -12,7 +12,7 @@
 > This workspace may only work with Isaac Sim 4.5.0, and require code update to support the latest version.  
 > (TODO: Update the code to support the latest Isaac Sim. Refer to the commit history of [turtlebot3-ws](../turtlebot3-ws/) for more details.)
 
-> Last tested on commit [d24f0a1](https://github.com/j3soon/ros2-essentials/commit/d24f0a12609ffb2aea245cba4462e46b18577e4e) by [@j3soon](https://github.com/j3soon).
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

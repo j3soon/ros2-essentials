@@ -4,7 +4,7 @@
 
 CUDA Toolkit 12.6 Deb Install. (Not installed by default.)
 
-> Last tested on commit [14e949a](https://github.com/j3soon/ros2-essentials/commit/14e949ae986aee39cc7913a804ba07b50b5b3855) by [@j3soon](https://github.com/j3soon).
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 To enable CUDA Toolkit, set the `CUDA_TOOLKIT_VERSION` argument to `12.6` in the `compose.yaml` file of your desired workspace (e.g., `template_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 

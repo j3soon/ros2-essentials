@@ -11,7 +11,7 @@
 
 This repository will help you configure the environment for Delto Gripper quickly.
 
-> Last tested on TODO.
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

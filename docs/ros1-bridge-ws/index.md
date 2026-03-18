@@ -16,7 +16,7 @@
 
 This workspace is utilized to create a bridge between ROS1 and ROS2-humble.
 
-> Last tested on TODO.
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## ◻️ Introduction ◻️
 

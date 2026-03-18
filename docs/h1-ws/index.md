@@ -11,7 +11,7 @@
 
 > Please note that this workspace is only tested in simulation.
 
-> Last tested on TODO.
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

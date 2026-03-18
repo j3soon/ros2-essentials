@@ -11,7 +11,7 @@
 
 This repository facilitates the quick configuration of the simulation environment and real robot driver for Kobuki.
 
-> Last tested on TODO.
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

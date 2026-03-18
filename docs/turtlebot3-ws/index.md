@@ -11,8 +11,7 @@
 
 > Please note that this workspace is only tested in simulation.
 
-> Last tested (Isaac Sim only) on commit [bdbb82d](https://github.com/j3soon/ros2-essentials/commit/bdbb82d1a67c7c34b21fbc5c9ed4b795acd20c4d) by [@j3soon](https://github.com/j3soon).  
-> Last tested on commit [e8f1c8d](https://github.com/j3soon/ros2-essentials/commit/e8f1c8dd1880e1e2126ffcde93a2256acc11e6f7) by [@j3soon](https://github.com/j3soon).
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

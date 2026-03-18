@@ -4,7 +4,7 @@
 
 Isaac Lab 2.1.0 Git Install.
 
-> Last tested on commit [1f46f18](https://github.com/j3soon/ros2-essentials/commit/1f46f185edc1cd624c7bb42590be095c776364e5) by [@j3soon](https://github.com/j3soon).
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 Depends on:
 

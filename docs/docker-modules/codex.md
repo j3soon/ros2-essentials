@@ -4,7 +4,7 @@
 
 Codex CLI for AI-assisted development directly inside workspace containers.
 
-> Last tested on commit [d43ad1c](https://github.com/j3soon/ros2-essentials/commit/d43ad1c11075808d5fbf194c5979ffedec213b5e) by [@j3soon](https://github.com/j3soon).
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 To enable Codex CLI, set the `CODEX` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `template_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 

@@ -191,6 +191,7 @@ site_description: A repo containing essential ROS2 Humble features for controlli
 
 nav:
   - Home: index.md
+  - Last Tested: last-tested.md
     # - styling-syntaxes.md
     # - dlbook-notations.md
     # DONE (Remove sample pages):
@@ -207,6 +208,7 @@ nav:
     - docker-modules/ros2.md
     - docker-modules/cartographer.md
     - docker-modules/rtabmap.md
+    - docker-modules/realsense.md
     - docker-modules/cuda-toolkit.md
     - docker-modules/isaac-sim.md
     - docker-modules/isaac-lab.md

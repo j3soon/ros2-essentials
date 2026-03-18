@@ -6,7 +6,9 @@ ROS2 Realsense. (Only installed by default for the template workspace.)
 
 To enable Realsense, set the `REALSENSE` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `husky_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 
-> **Note:** These scripts have only been tested on the **RealSense D435i**.
+> **Note:** These scripts have only been tested on the **RealSense D435i** and **D455**.
+>
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 

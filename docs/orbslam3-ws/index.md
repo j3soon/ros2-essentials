@@ -9,7 +9,7 @@
 ![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-orbslam3-ws)
 ![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-orbslam3-ws)
 
-> Last tested on TODO.
+> See [Last tested](../last-tested.md) for the latest validation status.
 
 ## 🐳 Start Container
 
