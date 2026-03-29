@@ -2,8 +2,9 @@
 
 IMAGE="${1:-ubuntu:22.04}"
 
-get_local_image_digest() {
-    docker image inspect "$IMAGE" --format '{{index .RepoDigests 0}}' 2>/dev/null | sed 's/.*@//'
+get_local_image_digests() {
+    docker image inspect "$IMAGE" 2>/dev/null | \
+        jq -r '.[0].RepoDigests[]? | split("@")[1]'
 }
 
 get_image_repo() {
@@ -58,8 +59,8 @@ if ! command -v docker >/dev/null 2>&1; then
     exit 0
 fi
 
-local_digest="$(get_local_image_digest)"
-if [ -z "$local_digest" ]; then
+local_digests="$(get_local_image_digests)"
+if [ -z "$local_digests" ]; then
     echo "Local ${IMAGE} image not found. Pulling it now."
     docker pull "$IMAGE"
     exit 0
@@ -71,13 +72,14 @@ if [ -z "$remote_digest" ]; then
     exit 0
 fi
 
-if [ "$local_digest" = "$remote_digest" ]; then
+if printf '%s\n' "$local_digests" | grep -Fxq "$remote_digest"; then
     echo "${IMAGE} is already up to date."
     exit 0
 fi
 
 echo "A newer ${IMAGE} image is available."
-echo "Local digest:  ${local_digest}"
+echo "Local digests:"
+printf '  %s\n' "$local_digests"
 echo "Remote digest: ${remote_digest}"
 
 if [ -t 0 ]; then
