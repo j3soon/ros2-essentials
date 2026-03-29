@@ -2,7 +2,7 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_sim.sh)
 
-Isaac Sim 5.1.0 Binary Install.
+Isaac Sim 5.1.0 binary install, with `ISAAC_SIM_VERSION: "develop"` available for upstream source builds.
 
 > See [Last tested](../last-tested.md) for the latest validation status.
 
@@ -28,6 +28,16 @@ cd ~/isaacsim
 # or
 ./python.sh standalone_examples/api/isaacsim.core.api/simulation_callbacks.py
 ```
+
+Source build from `compose.yaml`:
+
+```yaml
+build:
+  args:
+    ISAAC_SIM_VERSION: "develop"
+```
+
+`develop` clones `https://github.com/isaac-sim/IsaacSim.git` at `develop` into `~/IsaacSim`, runs `git lfs pull`, builds from source, runs the upstream standalone packaging flow, then extracts that packaged runtime into `~/isaacsim`.
 
 Launch GUI:
 

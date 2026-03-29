@@ -39,14 +39,21 @@ if [ "$TARGETARCH" != "amd64" ]; then
     exit 0
 fi
 
+ISAAC_LAB_GIT_REF=""
 if [ "$ISAAC_LAB_VERSION" = "2.3.2" ]; then
-    echo "Installing Isaac Lab 2.3.2..."
+    ISAAC_LAB_GIT_REF="v2.3.2"
+elif [ "$ISAAC_LAB_VERSION" = "develop" ]; then
+    ISAAC_LAB_GIT_REF="develop"
+fi
+
+if [ -n "$ISAAC_LAB_GIT_REF" ]; then
+    echo "Installing Isaac Lab from git ref: $ISAAC_LAB_GIT_REF..."
     # Ref: https://isaac-sim.github.io/IsaacLab/v2.3.2/source/setup/installation/binaries_installation.html
     sudo apt-get update && sudo apt-get install -y \
         cmake build-essential \
         && sudo rm -rf /var/lib/apt/lists/* \
         || exit 1
-    git clone -b v2.3.2 https://github.com/isaac-sim/IsaacLab.git "$ISAACLAB_PATH" \
+    git clone -b "$ISAAC_LAB_GIT_REF" https://github.com/isaac-sim/IsaacLab.git "$ISAACLAB_PATH" \
         && cd "$ISAACLAB_PATH" \
         && ln -s "$ISAACSIM_PATH" _isaac_sim \
         && ./isaaclab.sh --install \
