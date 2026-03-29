@@ -49,7 +49,7 @@ Modules are enabled/disabled via `build.args` in `compose.yaml`:
 args:
   CARTOGRAPHER: "YES"  # or "" to disable
   RTABMAP: "YES"
-  ISAAC_SIM_VERSION: "5.0.0"  # or "" to skip
+  ISAAC_SIM_VERSION: "5.1.0"  # or "" to skip
   ISAAC_LAB_VERSION: "2.3.2"
 ```
 

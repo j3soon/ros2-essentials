@@ -105,7 +105,7 @@ RUN mkdir -p /home/$USERNAME/.cache/pip
 RUN mkdir /home/$USERNAME/.gazebo
 
 # Isaac Sim version configuration
-ARG ISAAC_SIM_VERSION=5.0.0
+ARG ISAAC_SIM_VERSION=5.1.0
 # Ref: https://isaac-sim.github.io/IsaacLab/v2.3.2/source/setup/installation/binaries_installation.html
 ENV ISAACSIM_PATH="/home/$USERNAME/isaacsim"
 # Copy and run Isaac Sim installation script
@@ -167,11 +167,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
 # realsense configuration
-{PLACEHOLDER_#}ARG REALSENSE=""
-{PLACEHOLDER_#}COPY --chown=$USERNAME:$USERNAME \
-{PLACEHOLDER_#}     modules/install_realsense.sh /tmp/install_realsense.sh
-{PLACEHOLDER_#}RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
-{PLACEHOLDER_#}    /tmp/install_realsense.sh && rm /tmp/install_realsense.sh
+ARG REALSENSE=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_realsense.sh /tmp/install_realsense.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_realsense.sh && rm /tmp/install_realsense.sh
 
 # TODO: Add more commands here
 {PLACEHOLDER_MULTILINE}
