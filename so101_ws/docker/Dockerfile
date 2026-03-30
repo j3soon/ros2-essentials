@@ -105,7 +105,7 @@ RUN mkdir -p /home/$USERNAME/.cache/pip
 RUN mkdir /home/$USERNAME/.gazebo
 
 # Isaac Sim version configuration
-ARG ISAAC_SIM_VERSION=5.0.0
+ARG ISAAC_SIM_VERSION=5.1.0
 # Ref: https://isaac-sim.github.io/IsaacLab/v2.3.2/source/setup/installation/binaries_installation.html
 ENV ISAACSIM_PATH="/home/$USERNAME/isaacsim"
 # Copy and run Isaac Sim installation script
@@ -166,6 +166,13 @@ COPY --chown=$USERNAME:$USERNAME \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
+# realsense configuration
+ARG REALSENSE=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_realsense.sh /tmp/install_realsense.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_realsense.sh && rm /tmp/install_realsense.sh
+
 # TODO: Add more commands here
 # Ref: https://huggingface.co/docs/lerobot/installation
 # Install ffmpeg 7 from ubuntuhandbook PPA
@@ -173,15 +180,37 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo add-apt-repository -y ppa:ubuntuhandbook1/ffmpeg7 \
     && sudo apt-get update && sudo apt-get install -y ffmpeg \
     && sudo rm -rf /var/lib/apt/lists/*
+# # Install `spd-say`, which is used in many lerobot command for text-to-speech signaling.
+# RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+#     sudo apt-get update && sudo apt-get install -y speech-dispatcher \
+#     && sudo rm -rf /var/lib/apt/lists/*
 # Install lerobot
 # Note: `colcon-core 0.20.1` requires `setuptools<80`
+#        numpy 2.x requires a newer version of scipy, therefore the upgrade
 RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
-    python3 -m pip install "lerobot[feetech]==0.4.3" && \
-    python3 -m pip install "setuptools<80"
+    python3 -m pip install "lerobot[feetech]==0.4.4" && \
+    python3 -m pip install "setuptools<80" && \
+    python3 -m pip install -U scipy
 
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
+
+# NVIDIA OpenUSD Tools configuration
+ARG NV_OPENUSD=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_nv_openusd.sh /tmp/install_nv_openusd.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_nv_openusd.sh && rm /tmp/install_nv_openusd.sh
+
+# Newton Tools configuration
+ARG NEWTON_TOOLS=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_newton_tools.sh /tmp/install_newton_tools.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
+    /tmp/install_newton_tools.sh && rm /tmp/install_newton_tools.sh
+
 # Claude Code CLI configuration (installed last since the installation is fast)
 ARG CLAUDE_CODE=""
 COPY --chown=$USERNAME:$USERNAME \
