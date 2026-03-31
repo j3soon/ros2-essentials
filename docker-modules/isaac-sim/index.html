@@ -1510,7 +1510,7 @@
 
 <h1 id="isaac-sim">Isaac Sim<a class="headerlink" href="#isaac-sim" title="Permanent link">&para;</a></h1>
 <p><a href="https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_sim.sh"><img alt="GitHub code" src="https://img.shields.io/badge/code-blue?logo=github&amp;label=github" /></a></p>
-<p>Isaac Sim 5.1.0 Binary Install.</p>
+<p>Isaac Sim 5.1.0 binary install, with <code>ISAAC_SIM_VERSION: "develop"</code> available for upstream source builds.</p>
 <blockquote>
 <p>See <a href="../../last-tested/">Last tested</a> for the latest validation status.</p>
 </blockquote>
@@ -1532,26 +1532,32 @@
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># or</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>./python.sh<span class="w"> </span>standalone_examples/api/isaacsim.core.api/simulation_callbacks.py
 </span></code></pre></div>
+<p>Source build from <code>compose.yaml</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">build</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">args</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">ISAAC_SIM_VERSION</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;develop&quot;</span>
+</span></code></pre></div>
+<p><code>develop</code> clones <code>https://github.com/isaac-sim/IsaacSim.git</code> at <code>develop</code> into <code>~/IsaacSim</code>, runs <code>git lfs pull</code>, builds from source, runs the upstream standalone packaging flow, then extracts that packaged runtime into <code>~/isaacsim</code>.</p>
 <p>Launch GUI:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>~/isaacsim
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>./isaac-sim.sh
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>~/isaacsim
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>./isaac-sim.sh
 </span></code></pre></div>
 <blockquote>
 <p><strong>On Host</strong>:</p>
 <p>Quick test using official Docker image:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>scripts/docker_run_official_isaac_sim.sh
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>scripts/docker_run_official_isaac_sim.sh
 </span></code></pre></div>
 </blockquote>
 <p>Always make sure to check the console output for any errors.</p>
 <h2 id="importing-urdf">Importing URDF<a class="headerlink" href="#importing-urdf" title="Permanent link">&para;</a></h2>
 <p><code>File &gt; Import</code> and select the URDF file.</p>
 <p>If your URDF file is in the Xacro format, you may need to convert it to the URDF format first:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">XACRO_FILE</span><span class="o">=</span>&lt;XACRO_FILE&gt;.xacro
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">URDF_FILE</span><span class="o">=</span>&lt;URDF_FILE&gt;.urdf
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>xacro<span class="w"> </span><span class="nv">$XACRO_FILE</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$URDF_FILE</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">XACRO_FILE</span><span class="o">=</span>&lt;XACRO_FILE&gt;.xacro
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nv">URDF_FILE</span><span class="o">=</span>&lt;URDF_FILE&gt;.urdf
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>xacro<span class="w"> </span><span class="nv">$XACRO_FILE</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$URDF_FILE</span>
 </span></code></pre></div>
 <p>You can also check the URDF hierarchy:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>check_urdf<span class="w"> </span><span class="nv">$URDF_FILE</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>check_urdf<span class="w"> </span><span class="nv">$URDF_FILE</span>
 </span></code></pre></div>
 <blockquote>
 <p>Note: URDF files are often not self-contained and may reference additional resources within their ROS package. For successful import, consider downloading/moving the entire package (such as the <code>&lt;ROBOT_NAME&gt;_description</code> directory) along with the URDF file. Otherwise, the import will fail.</p>
@@ -1568,10 +1574,10 @@
 <p>Instead of manually creating the OmniGraph via Isaac Sim GUI or Python code, the easier way is to use the <a href="https://docs.isaacsim.omniverse.nvidia.com/5.1.0/ros2_tutorials/tutorial_ros2_manipulation.html#graph-shortcut">Graph Shortcut tool</a>. A concrete example can be found in <a href="https://github.com/j3soon/ros2-essentials/pull/83">PR#83</a>.</p>
 <h2 id="known-issues">Known Issues<a class="headerlink" href="#known-issues" title="Permanent link">&para;</a></h2>
 <p>See <a href="https://docs.isaacsim.omniverse.nvidia.com/5.1.0/overview/known_issues.html">official known issues</a> for Isaac Sim.</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="m">2025</span>-07-10<span class="w"> </span><span class="m">21</span>:42:18<span class="w"> </span><span class="o">[</span><span class="m">11</span>,579ms<span class="o">]</span><span class="w"> </span><span class="o">[</span>Error<span class="o">]</span><span class="w"> </span><span class="o">[</span>omni.ext._impl._internal<span class="o">]</span><span class="w"> </span>Failed<span class="w"> </span>to<span class="w"> </span>import<span class="w"> </span>python<span class="w"> </span>module<span class="w"> </span>isaacsim.core.simulation_manager<span class="w"> </span>from<span class="w"> </span>/isaac-sim/exts/isaacsim.core.simulation_manager.<span class="w"> </span>Error:<span class="w"> </span>numpy.dtype<span class="w"> </span>size<span class="w"> </span>changed,<span class="w"> </span>may<span class="w"> </span>indicate<span class="w"> </span>binary<span class="w"> </span>incompatibility.<span class="w"> </span>Expected<span class="w"> </span><span class="m">96</span><span class="w"> </span>from<span class="w"> </span>C<span class="w"> </span>header,<span class="w"> </span>got<span class="w"> </span><span class="m">88</span><span class="w"> </span>from<span class="w"> </span>PyObject.<span class="w"> </span>Traceback:
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Traceback<span class="w"> </span><span class="o">(</span>most<span class="w"> </span>recent<span class="w"> </span>call<span class="w"> </span>last<span class="o">)</span>:
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>A<span class="w"> </span>NumPy<span class="w"> </span>version<span class="w"> </span>&gt;<span class="o">=</span><span class="m">1</span>.19.5<span class="w"> </span>and<span class="w"> </span>&lt;<span class="m">1</span>.27.0<span class="w"> </span>is<span class="w"> </span>required<span class="w"> </span><span class="k">for</span><span class="w"> </span>this<span class="w"> </span>version<span class="w"> </span>of<span class="w"> </span>SciPy<span class="w"> </span><span class="o">(</span>detected<span class="w"> </span>version<span class="w"> </span><span class="m">2</span>.2.6<span class="o">)</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="m">2025</span>-07-10<span class="w"> </span><span class="m">21</span>:42:18<span class="w"> </span><span class="o">[</span><span class="m">11</span>,579ms<span class="o">]</span><span class="w"> </span><span class="o">[</span>Error<span class="o">]</span><span class="w"> </span><span class="o">[</span>omni.ext._impl._internal<span class="o">]</span><span class="w"> </span>Failed<span class="w"> </span>to<span class="w"> </span>import<span class="w"> </span>python<span class="w"> </span>module<span class="w"> </span>isaacsim.core.simulation_manager<span class="w"> </span>from<span class="w"> </span>/isaac-sim/exts/isaacsim.core.simulation_manager.<span class="w"> </span>Error:<span class="w"> </span>numpy.dtype<span class="w"> </span>size<span class="w"> </span>changed,<span class="w"> </span>may<span class="w"> </span>indicate<span class="w"> </span>binary<span class="w"> </span>incompatibility.<span class="w"> </span>Expected<span class="w"> </span><span class="m">96</span><span class="w"> </span>from<span class="w"> </span>C<span class="w"> </span>header,<span class="w"> </span>got<span class="w"> </span><span class="m">88</span><span class="w"> </span>from<span class="w"> </span>PyObject.<span class="w"> </span>Traceback:
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Traceback<span class="w"> </span><span class="o">(</span>most<span class="w"> </span>recent<span class="w"> </span>call<span class="w"> </span>last<span class="o">)</span>:
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>A<span class="w"> </span>NumPy<span class="w"> </span>version<span class="w"> </span>&gt;<span class="o">=</span><span class="m">1</span>.19.5<span class="w"> </span>and<span class="w"> </span>&lt;<span class="m">1</span>.27.0<span class="w"> </span>is<span class="w"> </span>required<span class="w"> </span><span class="k">for</span><span class="w"> </span>this<span class="w"> </span>version<span class="w"> </span>of<span class="w"> </span>SciPy<span class="w"> </span><span class="o">(</span>detected<span class="w"> </span>version<span class="w"> </span><span class="m">2</span>.2.6<span class="o">)</span>
 </span></code></pre></div>
 <p>See <a href="https://github.com/j3soon/ros2-essentials/issues/86">Issue #86</a> for more details.</p>
 
@@ -1596,7 +1602,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 24, 2026 15:53:35 UTC">March 24, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 29, 2026 18:52:21 UTC">March 29, 2026</span>
   </span>
 
     
