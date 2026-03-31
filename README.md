@@ -111,8 +111,8 @@ For a quick enable helper, use `../scripts/enable_module.sh <MODULE>` from a wor
 | [Cartographer](https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/) | ✔️ | ✔️ | ✔️ | ROS2 Cartographer | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@yuhsiang1117](https://github.com/yuhsiang1117) |
 | [RTAB-Map](https://j3soon.github.io/ros2-essentials/docker-modules/rtabmap/) | ✔️ | ❔ | ❔ | ROS2 RTAB-Map | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@JustinShih0918](https://github.com/JustinShih0918) |
 | [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/) | ✔️ | TODO | TODO | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
-| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | ❔ | Isaac Sim 5.1.0 Binary Install | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
-| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | ❔ | Isaac Lab 2.3.2 Git Install | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | ❔ | Isaac Sim 5.1.0 Binary Install / `develop` Build | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
+| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | ❔ | Isaac Lab 2.3.2 Git Install / `develop` Build | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | ✔️ | TODO | TODO | Isaac ROS 3.2 Apt Install (Base only) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [NVIDIA OpenUSD Tools](https://j3soon.github.io/ros2-essentials/docker-modules/nv-openusd/) | ✔️ | ❌ | ❔ | NVIDIA OpenUSD Linux Binary Tools (v25.08) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Newton Tools](https://j3soon.github.io/ros2-essentials/docker-modules/newton-tools/) | ✔️ | ❔ | ❔ | URDF/MJCF to USD Converters | ❌ | [Johnson Sun](https://github.com/j3soon) |

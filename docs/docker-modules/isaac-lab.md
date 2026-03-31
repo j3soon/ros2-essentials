@@ -2,7 +2,7 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_lab.sh)
 
-Isaac Lab 2.1.0 Git Install.
+Isaac Lab 2.3.2 git install, with `ISAAC_LAB_VERSION: "develop"` available for upstream source builds.
 
 > See [Last tested](../last-tested.md) for the latest validation status.
 
@@ -13,6 +13,16 @@ Depends on:
 - Isaac Sim
 
 > Note that CUDA Toolkit is not required for Isaac Lab.
+
+Source build from `compose.yaml`:
+
+```yaml
+build:
+  args:
+    ISAAC_LAB_VERSION: "develop"
+```
+
+`develop` clones `https://github.com/isaac-sim/IsaacLab.git` at `develop` into `~/IsaacLab`, links the installed Isaac Sim runtime via `_isaac_sim`, then runs `./isaaclab.sh --install`.
 
 [Quick test](https://isaac-sim.github.io/IsaacLab/main/source/deployment/docker.html#running-pre-built-isaac-lab-container):
 

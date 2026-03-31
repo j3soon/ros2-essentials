@@ -37,26 +37,26 @@ services:
         USER_UID: "${USER_UID:-1000}"
         # TODO: Set CUDA Toolkit version or set to "" if not using CUDA Toolkit
         # CUDA_TOOLKIT_VERSION: ""
-        # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
-        # ISAAC_SIM_VERSION: "5.1.0"
-        # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
-        # ISAAC_LAB_VERSION: "2.3.2"
+        # TODO: Set Isaac Sim version, set to "" if not using Isaac Sim, set to "5.1.0" for the binary install, or set to "develop" to build upstream IsaacSim from source
+        # ISAAC_SIM_VERSION: "5.1.0" # "develop"
+        # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab, set to "2.3.2" for the latest stable version, or set to "develop" to build upstream Isaac Lab from source
+        # ISAAC_LAB_VERSION: "2.3.2" # "develop"
         # TODO: Set to "YES" if using Isaac ROS or set to "" if not using Isaac ROS
         # ISAAC_ROS: ""
         # TODO: Set to "YES" if using Cartographer or set to "" if not using Cartographer
-        # CARTOGRAPHER: ""
+        CARTOGRAPHER: "YES"
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
-        # RTABMAP: ""
+        RTABMAP: "YES"
         # TODO: Set to "YES" if using RealSense or set to "" if not using RealSense
-        # REALSENSE: ""
+        REALSENSE: "YES"
         # TODO: Set to "YES" if using NVIDIA OpenUSD tools or set to "" if not using NVIDIA OpenUSD tools
         # NV_OPENUSD: ""
         # TODO: Set to "YES" if using Newton Tools or set to "" if not using Newton Tools
         # NEWTON_TOOLS: ""
         # TODO: Set to "YES" if using Claude Code CLI or set to "" if not using Claude Code CLI
-        # CLAUDE_CODE: ""
+        CLAUDE_CODE: "YES"
         # TODO: Set to "YES" if using Codex CLI or set to "" if not using Codex CLI
-        # CODEX: ""
+        CODEX: "YES"
       cache_from:
         - j3soon/ros2-turtlebot3-ws:buildcache-amd64
         - j3soon/ros2-turtlebot3-ws:buildcache-arm64
@@ -114,13 +114,13 @@ services:
       - $HOME/.Xauthority:/home/user/.Xauthority
         # Xauthority is mounted to allow X11 forwarding for remote display.
       # Mount Direct Rendering Infrastructure (DRI) for hardware acceleration support such as OpenGL.
-      - /dev/dri:/dev/dri
+      # - /dev/dri:/dev/dri
       # Mount sound card to prevent Gazebo warning.
-      - /dev/snd:/dev/snd
+      # - /dev/snd:/dev/snd
       # Mount shared memory for ROS2 communication.
-      - /dev/shm:/dev/shm
+      # - /dev/shm:/dev/shm
       # TODO: Uncomment the line below and comment out the three entries above to enable USB support.
-      # - /dev:/dev
+      - /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
