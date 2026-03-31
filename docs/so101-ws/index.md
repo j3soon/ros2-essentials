@@ -146,6 +146,8 @@ After configuring the motors, you can now assemble the arm following the [offici
 
     It's normal to spend a few hours assembling the arm for the first time. If you have questions, don't hesitate to ask the maintainers of this workspace.
 
+## Hardware Testing
+
 ### Calibration
 
 After assembling the arm, you can now calibrate the arm following the [official guide](https://huggingface.co/docs/lerobot/so101?example=Linux&setup_motors=Command#calibrate). Specifically, you'll use the commands below.
@@ -190,6 +192,165 @@ lerobot-teleoperate \
     --teleop.port=/dev/ttyACM1 \
     --teleop.id=my_awesome_leader_arm
 ```
+
+### Setup Camera (RealSense)
+
+Find camera and capture images following [the docs](https://huggingface.co/docs/lerobot/cameras):
+
+```sh
+lerobot-find-cameras realsense
+```
+
+and note the serial number of your front camera.
+
+### Teleoperation with Camera
+
+Follow [the docs](https://huggingface.co/docs/lerobot/il_robots#teleoperate-with-cameras):
+
+```sh
+sudo chmod 666 /dev/ttyACM*
+SERIAL_NUMBER=XXXXXXXXXXXX  # <- paste here the serial number of your camera
+lerobot-teleoperate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=my_awesome_follower_arm \
+    --robot.cameras="{ front: {type: intelrealsense, serial_number_or_name: '$SERIAL_NUMBER', width: 1280, height: 720, fps: 30}}" \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM1 \
+    --teleop.id=my_awesome_leader_arm \
+    --display_data=true
+```
+
+> Replace `XXXXXXXXXXXX` with the serial number of your camera, which can be found in the output of `lerobot-find-cameras realsense`.
+
+Alternatively use `opencv` directly,
+
+```sh
+lerobot-find-cameras opencv
+# check the RGB index (is 4 in our case)
+sudo chmod 666 /dev/ttyACM*
+lerobot-teleoperate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=my_awesome_follower_arm \
+    --robot.cameras="{ front: {type: opencv, index_or_path: 4, width: 640, height: 480, fps: 30}}" \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM1 \
+    --teleop.id=my_awesome_leader_arm \
+    --display_data=true
+```
+
+## Imitation Learning
+
+This follow the [official guide](https://huggingface.co/docs/lerobot/il_robots#record) to record demonstrations for imitation learning. First login to Hugging Face Hub:
+
+```sh
+hf auth login
+HF_USER=$(NO_COLOR=1 hf auth whoami | awk -F': *' 'NR==1 {print $2}')
+echo $HF_USER
+```
+
+### Record Demonstrations
+
+```sh
+sudo chmod 666 /dev/ttyACM*
+HF_USER=$(NO_COLOR=1 hf auth whoami | awk -F': *' 'NR==1 {print $2}')
+lerobot-record \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=my_awesome_follower_arm \
+    --robot.cameras="{ front: {type: opencv, index_or_path: 4, width: 640, height: 480, fps: 30}}" \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM1 \
+    --teleop.id=my_awesome_leader_arm \
+    --display_data=true \
+    --dataset.repo_id=${HF_USER}/record-test \
+    --dataset.private=true \
+    --dataset.num_episodes=5 \
+    --dataset.single_task="Pick the blue cube and put it in the box" \
+    --dataset.streaming_encoding=true \
+    --dataset.encoder_threads=2 \
+    --play_sounds=false
+```
+
+When seeing `Recording episode 1`, start the demonstration by moving the leader arm. After finishing the demonstration, press the right arrow key and reset the environment, when done physical environment resetting, press the right arrow key again to start the next episode (or simply wait for the 60s timeout). After finishing all episodes, you can find the private dataset in your Hugging Face Hub account. If you want to cancel an episode and restart it, press the left arrow key once.
+
+Optionally add `--resume=true` to continue recording more episodes.
+
+### Visualize Dataset
+
+Visualize the recorded dataset locally with [Lerobot Dataset Visualizer](https://github.com/huggingface/lerobot-dataset-visualizer):
+
+```sh
+DATASET_URL=http://localhost:8000 bun dev
+cd ~/lerobot-dataset-visualizer
+bun dev
+```
+
+then open <http://localhost:3000> and enter your Hugging Face dataset ID (e.g., `j3soon/record-test`) to visualize the dataset.
+
+Note that we used the [`feat/private_repo_viz`](https://github.com/huggingface/lerobot-dataset-visualizer/tree/feat/private_repo_viz) branch and therefore can visualize private datasets on HuggingFace. To the best of my knowledge, the [hosted version](https://huggingface.co/spaces/lerobot/visualize_dataset) does not support visualizing private datasets.
+
+### Replay Episodes
+
+```sh
+sudo chmod 666 /dev/ttyACM*
+HF_USER=$(NO_COLOR=1 hf auth whoami | awk -F': *' 'NR==1 {print $2}')
+EPISODE_INDEX=0  # <- change to the index of the episode you want to replay
+lerobot-replay \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=my_awesome_follower_arm \
+    --dataset.repo_id=${HF_USER}/record-test \
+    --dataset.episode=${EPISODE_INDEX} \
+    --play_sounds=false
+```
+
+### Train Policy
+
+```sh
+wandb login
+```
+
+```sh
+HF_USER=$(NO_COLOR=1 hf auth whoami | awk -F': *' 'NR==1 {print $2}')
+lerobot-train \
+  --dataset.repo_id=${HF_USER}/record-test \
+  --policy.type=act \
+  --output_dir=outputs/train/act_so101_test \
+  --job_name=act_so101_test \
+  --policy.device=cuda \
+  --wandb.enable=true \
+  --policy.repo_id=${HF_USER}/my_so101_policy \
+  --policy.private=true
+```
+
+You can submit it as a job to a remote cluster with Docker image [`huggingface/lerobot-gpu`](https://hub.docker.com/r/huggingface/lerobot-gpu/tags) or via [`j3soon/runai-lerobot-gpu:0.4.4`](https://hub.docker.com/r/j3soon/runai-lerobot-gpu).
+
+### Policy Inference
+
+```sh
+sudo chmod 666 /dev/ttyACM*
+HF_USER=$(NO_COLOR=1 hf auth whoami | awk -F': *' 'NR==1 {print $2}')
+lerobot-record  \
+  --robot.type=so100_follower \
+  --robot.port=/dev/ttyACM0 \
+  --robot.cameras="{ front: {type: opencv, index_or_path: 4, width: 640, height: 480, fps: 30}}" \
+  --robot.id=my_awesome_follower_arm \
+  --teleop.type=so101_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=my_awesome_leader_arm \
+  --display_data=false \
+  --dataset.repo_id=${HF_USER}/eval_so101 \
+  --dataset.private=true \
+  --dataset.single_task="Pick the blue cube and put it in the box" \
+  --dataset.streaming_encoding=true \
+  --dataset.encoder_threads=2 \
+  --policy.path=${HF_USER}/my_so101_policy \
+  --play_sounds=false
+```
+
+Note that the 3 teleoperator args are optional here yet useful for environment reset.
 
 ## References
 

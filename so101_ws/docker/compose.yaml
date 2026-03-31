@@ -18,7 +18,9 @@ services:
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.cache &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.nv{,/ComputeCache} &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.nvidia-omniverse{,/logs,/config} &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.local{,/share,/share/ov,/share/ov/data,/share/ov/pkg}
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.local{,/share,/share/ov,/share/ov/data,/share/ov/pkg} &&
+        rm -rf /isaac-sim/.cache/huggingface &&
+        ln -s /home/ros2-essentials/so101_ws/.cache/huggingface /isaac-sim/.cache/huggingface
       "
     volumes:
       - isaac-sim-cache:/isaac-sim
@@ -56,7 +58,7 @@ services:
         # TODO: Set to "YES" if using Claude Code CLI or set to "" if not using Claude Code CLI
         # CLAUDE_CODE: "YES"
         # TODO: Set to "YES" if using Codex CLI or set to "" if not using Codex CLI
-        # CODEX: "YES"
+        CODEX: "YES"
       cache_from:
         - j3soon/ros2-so101-ws:buildcache-amd64
         - j3soon/ros2-so101-ws:buildcache-arm64

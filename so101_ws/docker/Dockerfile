@@ -195,6 +195,12 @@ RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$US
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
+# Install Lerobot Dataset Visualizer and its dependencies
+# Ref: https://bun.sh/docs/installation
+# Ref: https://github.com/huggingface/lerobot-dataset-visualizer
+RUN curl -fsSL https://bun.sh/install | bash
+RUN git clone -b feat/private_repo_viz https://github.com/huggingface/lerobot-dataset-visualizer.git /home/$USERNAME/lerobot-dataset-visualizer
+RUN cd /home/$USERNAME/lerobot-dataset-visualizer && /home/$USERNAME/.bun/bin/bun install
 
 # NVIDIA OpenUSD Tools configuration
 ARG NV_OPENUSD=""
