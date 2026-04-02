@@ -53,7 +53,11 @@ if [ -n "$ISAAC_LAB_GIT_REF" ]; then
         cmake build-essential \
         && sudo rm -rf /var/lib/apt/lists/* \
         || exit 1
+    # Note that the flatdict patch is for preventing
+    #    ModuleNotFoundError: No module named 'pkg_resources'
+    # Ref: https://github.com/isaac-sim/IsaacLab/issues/4576#issuecomment-4083197347
     git clone -b "$ISAAC_LAB_GIT_REF" https://github.com/isaac-sim/IsaacLab.git "$ISAACLAB_PATH" \
+        && sed -i 's/"flatdict==4.0.1"/"flatdict==4.1.0"/' "$ISAACLAB_PATH/source/isaaclab/setup.py" \
         && cd "$ISAACLAB_PATH" \
         && ln -s "$ISAACSIM_PATH" _isaac_sim \
         && ./isaaclab.sh --install \
