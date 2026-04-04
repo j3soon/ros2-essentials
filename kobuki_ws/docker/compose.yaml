@@ -57,6 +57,8 @@ services:
         # CLAUDE_CODE: ""
         # TODO: Set to "YES" if using Codex CLI or set to "" if not using Codex CLI
         # CODEX: ""
+        # TODO: Set to "YES" if using OpenCode CLI or set to "" if not using OpenCode CLI
+        # OPENCODE: ""
       cache_from:
         - j3soon/ros2-kobuki-ws:buildcache-amd64
         - j3soon/ros2-kobuki-ws:buildcache-arm64
@@ -169,6 +171,8 @@ services:
       - ${HOME}/docker/.claude:/home/user/.claude
       - ${HOME}/docker/.claude.json:/home/user/.claude.json
       - ${HOME}/docker/.codex:/home/user/.codex
+      - ${HOME}/docker/.config/opencode:/home/user/.config/opencode
+      - ${HOME}/docker/.local/share/opencode:/home/user/.local/share/opencode
     # Add device cgroup rules to allow access to specific devices (like realsense).
     # Reference: https://github.com/2b-t/docker-for-robotics/blob/main/doc/WorkingWithHardware.md
     # Note that this is required only when using privileged: false.

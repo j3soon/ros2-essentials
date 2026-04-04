@@ -118,6 +118,7 @@ For a quick enable helper, use `../scripts/enable_module.sh <MODULE>` from a wor
 | [Newton Tools](https://j3soon.github.io/ros2-essentials/docker-modules/newton-tools/) | ✔️ | ❔ | ❔ | URDF/MJCF to USD Converters | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Claude Code](https://j3soon.github.io/ros2-essentials/docker-modules/claude-code/) | ✔️ | ✔️ | ✔️ | Claude Code CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Codex](https://j3soon.github.io/ros2-essentials/docker-modules/codex/) | ✔️ | ✔️ | ✔️ | Codex CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
+| [OpenCode](https://j3soon.github.io/ros2-essentials/docker-modules/opencode/) | ✔️ | ✔️ | ✔️ | OpenCode CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
 
 ## Docker Compose Cleanup
 

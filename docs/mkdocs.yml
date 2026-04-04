@@ -217,6 +217,7 @@ nav:
     - docker-modules/newton-tools.md
     - docker-modules/claude-code.md
     - docker-modules/codex.md
+    - docker-modules/opencode.md
   - Workspaces:
     - workspaces/index.md
     - template-ws/index.md

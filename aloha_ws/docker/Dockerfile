@@ -250,6 +250,12 @@ COPY --chown=$USERNAME:$USERNAME \
      modules/install_codex.sh /tmp/install_codex.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_codex.sh && rm /tmp/install_codex.sh
+# OpenCode CLI configuration
+ARG OPENCODE=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_opencode.sh /tmp/install_opencode.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_opencode.sh && rm /tmp/install_opencode.sh
 # TODO: Install more optional development tools here
 ENTRYPOINT []
 CMD ["/bin/bash"]

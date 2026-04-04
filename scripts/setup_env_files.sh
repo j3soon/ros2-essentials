@@ -8,5 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 mkdir -p "${HOME}/docker/.claude"
 touch "${HOME}/docker/.claude.json"
 mkdir -p "${HOME}/docker/.codex"
+mkdir -p "${HOME}/docker/.config/opencode"
+mkdir -p "${HOME}/docker/.local/share/opencode"
 
 echo "Set up host environment files under ${HOME}/docker done."
