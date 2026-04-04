@@ -18,10 +18,11 @@ services:
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.cache &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.nv{,/ComputeCache} &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.nvidia-omniverse{,/logs,/config} &&
-        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.local{,/share,/share/ov,/share/ov/data,/share/ov/pkg} &&
-        rm -rf /isaac-sim/.cache/huggingface &&
-        ln -s /home/ros2-essentials/so101_ws/.cache/huggingface /isaac-sim/.cache/huggingface
+        chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.local{,/share,/share/ov,/share/ov/data,/share/ov/pkg}
+        && rm -rf /isaac-sim/.cache/huggingface
+        && ln -s /home/ros2-essentials/so101_ws/.cache/huggingface /isaac-sim/.cache/huggingface
       "
+    # TODO: Append other cache directories creation in the command above.
     volumes:
       - isaac-sim-cache:/isaac-sim
   so101-ws:
@@ -39,10 +40,10 @@ services:
         USER_UID: "${USER_UID:-1000}"
         # TODO: Set CUDA Toolkit version or set to "" if not using CUDA Toolkit
         # CUDA_TOOLKIT_VERSION: ""
-        # TODO: Set Isaac Sim version or set to "" if not using Isaac Sim
-        ISAAC_SIM_VERSION: "5.1.0"
-        # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab
-        ISAAC_LAB_VERSION: "2.3.0"
+        # TODO: Set Isaac Sim version, set to "" if not using Isaac Sim, set to "5.1.0" for the binary install, or set to "develop" to build upstream IsaacSim from source
+        ISAAC_SIM_VERSION: "5.1.0" # "develop"
+        # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab, set to "2.3.2" for the latest stable version, or set to "develop" to build upstream Isaac Lab from source
+        ISAAC_LAB_VERSION: "2.3.0" # "develop"
         # TODO: Set to "YES" if using Isaac ROS or set to "" if not using Isaac ROS
         # ISAAC_ROS: ""
         # TODO: Set to "YES" if using Cartographer or set to "" if not using Cartographer
@@ -56,9 +57,11 @@ services:
         # TODO: Set to "YES" if using Newton Tools or set to "" if not using Newton Tools
         # NEWTON_TOOLS: ""
         # TODO: Set to "YES" if using Claude Code CLI or set to "" if not using Claude Code CLI
-        # CLAUDE_CODE: "YES"
+        CLAUDE_CODE: "YES"
         # TODO: Set to "YES" if using Codex CLI or set to "" if not using Codex CLI
         CODEX: "YES"
+        # TODO: Set to "YES" if using OpenCode CLI or set to "" if not using OpenCode CLI
+        OPENCODE: "YES"
       cache_from:
         - j3soon/ros2-so101-ws:buildcache-amd64
         - j3soon/ros2-so101-ws:buildcache-arm64
@@ -171,6 +174,8 @@ services:
       - ${HOME}/docker/.claude:/home/user/.claude
       - ${HOME}/docker/.claude.json:/home/user/.claude.json
       - ${HOME}/docker/.codex:/home/user/.codex
+      - ${HOME}/docker/.config/opencode:/home/user/.config/opencode
+      - ${HOME}/docker/.local/share/opencode:/home/user/.local/share/opencode
     # Add device cgroup rules to allow access to specific devices (like realsense).
     # Reference: https://github.com/2b-t/docker-for-robotics/blob/main/doc/WorkingWithHardware.md
     # Note that this is required only when using privileged: false.

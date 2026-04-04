@@ -221,11 +221,9 @@ RUN mkdir -p /home/$USERNAME/leisaac/assets/robots && \
 RUN curl -fsSL https://bun.sh/install | bash
 RUN git clone -b feat/private_repo_viz https://github.com/huggingface/lerobot-dataset-visualizer.git /home/$USERNAME/lerobot-dataset-visualizer
 RUN cd /home/$USERNAME/lerobot-dataset-visualizer && /home/$USERNAME/.bun/bin/bun install
-
 COPY --chown=$USERNAME:$USERNAME \
      .bashrc /home/$USERNAME/.bashrc
 # TODO: Copy additional files here
-
 # NVIDIA OpenUSD Tools configuration
 ARG NV_OPENUSD=""
 COPY --chown=$USERNAME:$USERNAME \
@@ -253,6 +251,12 @@ COPY --chown=$USERNAME:$USERNAME \
      modules/install_codex.sh /tmp/install_codex.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_codex.sh && rm /tmp/install_codex.sh
+# OpenCode CLI configuration
+ARG OPENCODE=""
+COPY --chown=$USERNAME:$USERNAME \
+     modules/install_opencode.sh /tmp/install_opencode.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_opencode.sh && rm /tmp/install_opencode.sh
 # TODO: Install more optional development tools here
 ENTRYPOINT []
 CMD ["/bin/bash"]
