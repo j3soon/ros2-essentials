@@ -1,4 +1,4 @@
-# LeRobot SO-ARM 101 Pro
+# LeRobot SO-101
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/tree/main/so101_ws)
 [![build](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-so101-ws.yaml?label=build)](https://github.com/j3soon/ros2-essentials/actions/workflows/build-so101-ws.yaml)
@@ -343,6 +343,7 @@ lerobot-record  \
   --display_data=false \
   --dataset.repo_id=${HF_USER}/eval_so101 \
   --dataset.private=true \
+  --dataset.num_episodes=5 \
   --dataset.single_task="Pick the blue cube and put it in the box" \
   --dataset.streaming_encoding=true \
   --dataset.encoder_threads=2 \
@@ -351,6 +352,33 @@ lerobot-record  \
 ```
 
 Note that the 3 teleoperator args are optional here yet useful for environment reset.
+
+Optionally add `--resume=true` to continue recording more episodes via the policy.
+
+## LeIsaac
+
+We also include [LightwheelAI's LeIsaac](https://lightwheelai.github.io/leisaac/).
+
+Follow the [teleoperation guide](https://lightwheelai.github.io/leisaac/docs/getting_started/teleoperation/) or the [video tutorial](https://youtu.be/mQ7O73dEDcU):
+
+```sh
+# export LEISAAC_ASSETS_ROOT=~/leisaac/assets
+sudo chmod 666 /dev/ttyACM*
+cd ~/leisaac
+~/IsaacLab/isaaclab.sh -p scripts/environments/teleoperation/teleop_se3_agent.py \
+    --task=LeIsaac-SO101-PickOrange-v0 \
+    --teleop_device=so101leader \
+    --port=/dev/ttyACM0 \
+    --num_envs=1 \
+    --device=cuda \
+    --enable_cameras \
+    --record \
+    --dataset_file=./datasets/dataset.hdf5
+```
+
+and in Isaac Lab window press `b` to start teleoperation. Press `r` or `n` to reset the environment, which corresponds to episode success and failure. Press `q` to quit.
+
+> Currently runs with Isaac Lab v2.3.0. v2.3.2 may work, but I haven't tested it yet.
 
 ## References
 

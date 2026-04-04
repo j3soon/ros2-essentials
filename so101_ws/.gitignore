@@ -11,3 +11,7 @@
 
 # Docker environment variables
 /docker/.env
+
+# Custom ignores
+/.cache
+/leisaac/.cache

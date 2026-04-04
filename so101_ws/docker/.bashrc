@@ -8,6 +8,16 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+LEISAAC_CACHE_SOURCE="$ROS2_WS/leisaac/.cache"
+LEISAAC_CACHE_TARGET="/home/user/isaacsim/kit/python/lib/python3.11/site-packages/leisaac/devices/lerobot/.cache"
+mkdir -p "$LEISAAC_CACHE_SOURCE"
+mkdir -p "$(dirname "$LEISAAC_CACHE_TARGET")"
+if [ ! -L "$LEISAAC_CACHE_TARGET" ] || [ "$(readlink "$LEISAAC_CACHE_TARGET")" != "$LEISAAC_CACHE_SOURCE" ]; then
+    rm -rf "$LEISAAC_CACHE_TARGET"
+    ln -s "$LEISAAC_CACHE_SOURCE" "$LEISAAC_CACHE_TARGET"
+    echo "Created symbolic link for LeIsaac cache: $LEISAAC_CACHE_TARGET -> $LEISAAC_CACHE_SOURCE"
+fi
+
 # Source global ROS2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Source colcon-argcomplete

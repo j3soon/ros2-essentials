@@ -192,15 +192,39 @@ RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$US
     python3 -m pip install "setuptools<80" && \
     python3 -m pip install -U scipy
 
-COPY --chown=$USERNAME:$USERNAME \
-     .bashrc /home/$USERNAME/.bashrc
-# TODO: Copy additional files here
+# Install LeIsaac (official instructions assume Isaac Sim 5.1.0 and Isaac Lab 2.3.0)
+# Ref: https://lightwheelai.github.io/leisaac/docs/getting_started/installation/
+# Ref: https://huggingface.co/docs/lerobot/main/en/envhub_leisaac
+RUN --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
+    cd /home/$USERNAME && \
+    git clone https://github.com/LightwheelAI/leisaac.git && \
+    cd /home/$USERNAME/leisaac && \
+    git checkout 241779b8439593d4bec4df5e3182a97f205814b5 && \
+    /home/$USERNAME/IsaacLab/isaaclab.sh -p -m pip install "source/leisaac"
+
+# Download LeIsaac Assets
+# Ref: https://lightwheelai.github.io/leisaac/docs/getting_started/installation/#2-asset-preparation
+RUN mkdir -p /home/$USERNAME/leisaac/assets/robots && \
+    mkdir -p /home/$USERNAME/leisaac/assets/scenes && \
+    cd /home/$USERNAME/leisaac/assets && \
+    wget -q https://github.com/LightwheelAI/leisaac/releases/download/v0.1.0/so101_follower.usd \
+        -O robots/so101_follower.usd && \
+    wget -q https://github.com/LightwheelAI/leisaac/releases/download/v0.1.0/kitchen_with_orange.zip \
+        -O /tmp/kitchen_with_orange.zip && \
+    unzip -q /tmp/kitchen_with_orange.zip -d scenes && \
+    rm -f /tmp/kitchen_with_orange.zip
+    # There are several other scenes (4 at the time of writing) that can be downloaded, but we only download one for now to save space.
+
 # Install Lerobot Dataset Visualizer and its dependencies
 # Ref: https://bun.sh/docs/installation
 # Ref: https://github.com/huggingface/lerobot-dataset-visualizer
 RUN curl -fsSL https://bun.sh/install | bash
 RUN git clone -b feat/private_repo_viz https://github.com/huggingface/lerobot-dataset-visualizer.git /home/$USERNAME/lerobot-dataset-visualizer
 RUN cd /home/$USERNAME/lerobot-dataset-visualizer && /home/$USERNAME/.bun/bin/bun install
+
+COPY --chown=$USERNAME:$USERNAME \
+     .bashrc /home/$USERNAME/.bashrc
+# TODO: Copy additional files here
 
 # NVIDIA OpenUSD Tools configuration
 ARG NV_OPENUSD=""
