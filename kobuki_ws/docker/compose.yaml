@@ -44,19 +44,19 @@ services:
         # TODO: Set to "YES" if using Isaac ROS or set to "" if not using Isaac ROS
         # ISAAC_ROS: ""
         # TODO: Set to "YES" if using Cartographer or set to "" if not using Cartographer
-        CARTOGRAPHER: "YES"
+        # CARTOGRAPHER: ""
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
-        RTABMAP: "YES"
+        # RTABMAP: ""
         # TODO: Set to "YES" if using RealSense or set to "" if not using RealSense
-        REALSENSE: "YES"
+        # REALSENSE: ""
         # TODO: Set to "YES" if using NVIDIA OpenUSD tools or set to "" if not using NVIDIA OpenUSD tools
         # NV_OPENUSD: ""
         # TODO: Set to "YES" if using Newton Tools or set to "" if not using Newton Tools
         # NEWTON_TOOLS: ""
         # TODO: Set to "YES" if using Claude Code CLI or set to "" if not using Claude Code CLI
-        CLAUDE_CODE: "YES"
+        # CLAUDE_CODE: ""
         # TODO: Set to "YES" if using Codex CLI or set to "" if not using Codex CLI
-        CODEX: "YES"
+        # CODEX: ""
       cache_from:
         - j3soon/ros2-kobuki-ws:buildcache-amd64
         - j3soon/ros2-kobuki-ws:buildcache-arm64

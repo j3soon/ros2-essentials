@@ -36,27 +36,27 @@ services:
         # TODO: Set the USER_UID
         USER_UID: "${USER_UID:-1000}"
         # TODO: Set CUDA Toolkit version or set to "" if not using CUDA Toolkit
-        # CUDA_TOOLKIT_VERSION: ""
+        {PLACEHOLDER_#}CUDA_TOOLKIT_VERSION: "{PLACEHOLDER}"
         # TODO: Set Isaac Sim version, set to "" if not using Isaac Sim, set to "5.1.0" for the binary install, or set to "develop" to build upstream IsaacSim from source
-        # ISAAC_SIM_VERSION: "5.1.0" # "develop"
+        {PLACEHOLDER_#}ISAAC_SIM_VERSION: "{PLACEHOLDER}"
         # TODO: Set Isaac Lab version or set to "" if not using Isaac Lab, set to "2.3.2" for the latest stable version, or set to "develop" to build upstream Isaac Lab from source
-        # ISAAC_LAB_VERSION: "2.3.2" # "develop"
+        {PLACEHOLDER_#}ISAAC_LAB_VERSION: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Isaac ROS or set to "" if not using Isaac ROS
-        # ISAAC_ROS: ""
+        {PLACEHOLDER_#}ISAAC_ROS: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Cartographer or set to "" if not using Cartographer
-        CARTOGRAPHER: "YES"
+        {PLACEHOLDER_#}CARTOGRAPHER: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using RTAB-Map or set to "" if not using RTAB-Map
-        RTABMAP: "YES"
+        {PLACEHOLDER_#}RTABMAP: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using RealSense or set to "" if not using RealSense
-        REALSENSE: "YES"
+        {PLACEHOLDER_#}REALSENSE: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using NVIDIA OpenUSD tools or set to "" if not using NVIDIA OpenUSD tools
-        # NV_OPENUSD: ""
+        {PLACEHOLDER_#}NV_OPENUSD: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Newton Tools or set to "" if not using Newton Tools
-        # NEWTON_TOOLS: ""
+        {PLACEHOLDER_#}NEWTON_TOOLS: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Claude Code CLI or set to "" if not using Claude Code CLI
-        CLAUDE_CODE: "YES"
+        {PLACEHOLDER_#}CLAUDE_CODE: "{PLACEHOLDER}"
         # TODO: Set to "YES" if using Codex CLI or set to "" if not using Codex CLI
-        CODEX: "YES"
+        {PLACEHOLDER_#}CODEX: "{PLACEHOLDER}"
       cache_from:
         - j3soon/ros2-{PLACEHOLDER}-ws:buildcache-amd64
         - j3soon/ros2-{PLACEHOLDER}-ws:buildcache-arm64
@@ -65,7 +65,7 @@ services:
     stdin_open: true
     tty: true
     # TODO: Comment the line below if the workspace don't need to communicate through `/dev/*` devices.
-    privileged: true
+    {PLACEHOLDER_#}privileged: true
     command: /bin/bash
     network_mode: host
     working_dir: /home/ros2-essentials/{PLACEHOLDER}_ws
@@ -91,6 +91,7 @@ services:
       # Set the ROS workspace path.
       - ROS2_WS=/home/ros2-essentials/{PLACEHOLDER}_ws
       # TODO: Add more environment variables here.
+{PLACEHOLDER_MULTILINE}
     # Enable GPU support.
     # Reference: https://docs.docker.com/compose/gpu-support/
     deploy:
@@ -114,13 +115,13 @@ services:
       - $HOME/.Xauthority:/home/user/.Xauthority
         # Xauthority is mounted to allow X11 forwarding for remote display.
       # Mount Direct Rendering Infrastructure (DRI) for hardware acceleration support such as OpenGL.
-      # - /dev/dri:/dev/dri
+      {PLACEHOLDER_#}- /dev/dri:/dev/dri
       # Mount sound card to prevent Gazebo warning.
-      # - /dev/snd:/dev/snd
+      {PLACEHOLDER_#}- /dev/snd:/dev/snd
       # Mount shared memory for ROS2 communication.
-      # - /dev/shm:/dev/shm
+      {PLACEHOLDER_#}- /dev/shm:/dev/shm
       # TODO: Uncomment the line below and comment out the three entries above to enable USB support.
-      - /dev:/dev
+      {PLACEHOLDER_#}- /dev:/dev
       # Mount Gazebo models directory to reuse models downloaded during first launch.
       # Reference: https://answers.ros.org/question/365658
       # Note that this volume is shared among all workspaces.
