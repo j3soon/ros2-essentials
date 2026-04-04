@@ -40,4 +40,5 @@ Commit labels on this page follow `git describe --tags --always`.
 | [Newton Tools](docker-modules/newton-tools.md) | [v0.0.3-47-g1e1cd11](https://github.com/j3soon/ros2-essentials/commit/1e1cd1164077924c226c39557d4a384042522a00) by [@j3soon](https://github.com/j3soon) (x86) |
 | [Claude Code](docker-modules/claude-code.md) | [v0.0.3-39-gd43ad1c](https://github.com/j3soon/ros2-essentials/commit/d43ad1c11075808d5fbf194c5979ffedec213b5e) by [@j3soon](https://github.com/j3soon) (x86) |
 | [Codex](docker-modules/codex.md) | [v0.0.3-146-g7724f25](https://github.com/j3soon/ros2-essentials/commit/7724f25e195c727d8d986f8d4b43dc10082b9d33) by [@j3soon](https://github.com/j3soon) (x86/DGX Spark) |
+| [OpenCode](docker-modules/opencode.md) | TODO |
 | [Realsense](docker-modules/realsense.md) | - [v0.0.3-146-g7724f25](https://github.com/j3soon/ros2-essentials/commit/7724f25e195c727d8d986f8d4b43dc10082b9d33) by [@j3soon](https://github.com/j3soon) (x86, D435i/D455)<br>- [v0.0.3-146-g7724f25](https://github.com/j3soon/ros2-essentials/commit/7724f25e195c727d8d986f8d4b43dc10082b9d33) by [@j3soon](https://github.com/j3soon) (DGX Spark, D435i). |
