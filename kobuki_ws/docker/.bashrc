@@ -8,7 +8,7 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# TODO: Environment independent commmands here (e.g., set up symbolic link upon first launch)
+# TODO: Environment independent commands here (e.g., set up symbolic link upon first launch)
 # Source global ROS2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Source colcon-argcomplete

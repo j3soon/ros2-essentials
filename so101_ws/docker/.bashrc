@@ -8,7 +8,8 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# TODO: Environment independent commmands here (e.g., set up symbolic link upon first launch)
+# TODO: Environment independent commands here (e.g., set up symbolic link upon first launch)
+export PATH="$HOME/.bun/bin:$PATH"
 LEISAAC_CACHE_SOURCE="$ROS2_WS/leisaac/.cache"
 LEISAAC_CACHE_TARGET="/home/user/isaacsim/kit/python/lib/python3.11/site-packages/leisaac/devices/lerobot/.cache"
 mkdir -p "$LEISAAC_CACHE_SOURCE"

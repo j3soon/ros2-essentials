@@ -284,7 +284,6 @@ Optionally add `--resume=true` to continue recording more episodes.
 Visualize the recorded dataset locally with [Lerobot Dataset Visualizer](https://github.com/huggingface/lerobot-dataset-visualizer):
 
 ```sh
-DATASET_URL=http://localhost:8000 bun dev
 cd ~/lerobot-dataset-visualizer
 bun dev
 ```
@@ -335,7 +334,7 @@ You can submit it as a job to a remote cluster with Docker image [`huggingface/l
 sudo chmod 666 /dev/ttyACM*
 HF_USER=$(NO_COLOR=1 hf auth whoami | awk -F': *' 'NR==1 {print $2}')
 lerobot-record  \
-  --robot.type=so100_follower \
+  --robot.type=so101_follower \
   --robot.port=/dev/ttyACM0 \
   --robot.cameras="{ front: {type: opencv, index_or_path: 4, width: 640, height: 480, fps: 30}}" \
   --robot.id=my_awesome_follower_arm \
