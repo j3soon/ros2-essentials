@@ -36,7 +36,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 cd "$SCRIPT_DIR"
 
 ./pull_latest_docker_image.sh ubuntu:22.04
-
 ./setup_env_files.sh
 
 if [ "$RECREATE_LINKS" = true ]; then

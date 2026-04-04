@@ -9,6 +9,17 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 # TODO: Environment independent commands here (e.g., set up symbolic link upon first launch)
+export PATH="$HOME/.bun/bin:$PATH"
+LEISAAC_CACHE_SOURCE="$ROS2_WS/leisaac/.cache"
+LEISAAC_CACHE_TARGET="/home/user/isaacsim/kit/python/lib/python3.11/site-packages/leisaac/devices/lerobot/.cache"
+mkdir -p "$LEISAAC_CACHE_SOURCE"
+mkdir -p "$(dirname "$LEISAAC_CACHE_TARGET")"
+if [ ! -L "$LEISAAC_CACHE_TARGET" ] || [ "$(readlink "$LEISAAC_CACHE_TARGET")" != "$LEISAAC_CACHE_SOURCE" ]; then
+    rm -rf "$LEISAAC_CACHE_TARGET"
+    ln -s "$LEISAAC_CACHE_SOURCE" "$LEISAAC_CACHE_TARGET"
+    echo "Created symbolic link for LeIsaac cache: $LEISAAC_CACHE_TARGET -> $LEISAAC_CACHE_SOURCE"
+fi
+
 # Source global ROS2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Source colcon-argcomplete
@@ -54,7 +65,6 @@ if [ "$RUN_UDEVD" = true ] && ! pidof systemd-udevd >/dev/null 2>&1; then
 fi
 
 # Source gazebo environment
-# Ref: https://github.com/Interbotix/interbotix_ros_manipulators/issues/81#issuecomment-1562118208
 # Ref: https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros#InstallGazebo
 if [ $(arch) == "x86_64" ]; then
   source /usr/share/gazebo/setup.bash

@@ -20,6 +20,7 @@ services:
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.nvidia-omniverse{,/logs,/config} &&
         chown ${USER_UID:-1000}:${USER_UID:-1000} /isaac-sim/.local{,/share,/share/ov,/share/ov/data,/share/ov/pkg}
       "
+    # TODO: Append other cache directories creation in the command above.
     volumes:
       - isaac-sim-cache:/isaac-sim
   kobuki-ws:

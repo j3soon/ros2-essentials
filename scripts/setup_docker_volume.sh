@@ -123,4 +123,7 @@ for v in "${volumes[@]}"; do
 	fi
 done
 
+# Create huggingface cache directory
+mkdir -p $HOME/.cache/huggingface
+
 echo "Set up docker volume done."

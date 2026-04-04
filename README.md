@@ -47,8 +47,13 @@ cd ros2-essentials
 > - Use `--recreate-links` to force replacement of non-hard-link files under workspace `docker/modules/`.
 > - Use `--recreate-volumes` to invalidate Gazebo/Isaac Sim/Isaac ROS cache volumes after related updates or testing.
 > - Use `--remove-containers` to auto-remove containers that block volume recreation.
+
+> **Troubleshooting**:
 >
-> **Troubleshooting**: If you encounter an error like `"failed to solve: failed to compute cache key: failed to calculate checksum of ref ...: "/modules/install_ros.sh": not found` when building Docker images, it means `post_install.sh` hasn't been run. This script creates necessary hard links for the Docker build process.
+> If you encounter an error like `"failed to solve: failed to compute cache key: failed to calculate checksum of ref ...: "/modules/install_ros.sh": not found` when building Docker images, it means `post_install.sh` hasn't been run. This script creates necessary hard links for the Docker build process.
+>
+> If you encountered error like `Error response from daemon: remove ros2-isaac-sim-cache: volume is in use` when running `./scripts/post_install.sh`, it means that previous containers are not removed successfully. Run `docker ps -a | grep ros2` and use `docker rm <container_id>` to remove the containers and then run the script again.
+> 
 
 Then, configure the container user ID to match your host user ID by modifying the host `~/.bashrc` (or `~/.zshrc`) to include the following line:
 
@@ -79,22 +84,23 @@ Pre-built Docker images for each workspace can be pulled by running `docker comp
 
 The docker image of the template workspace is share by most of the workspace, allowing saving spaces by sharing common packages. Click on the following workspaces to navigate to their respective documentation.
 
-| Workspace | x86_64 | Jetson | DGX Spark | Notes | Maintainer |
-|-----------|--------|--------|-----------|-------|------------|
-| [Template](https://j3soon.github.io/ros2-essentials/template-ws/) | ✔️ | ✔️ | ✔️ | ARM support currently tracked identically for Jetson and DGX Spark. | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
-| [ORB-SLAM3](https://j3soon.github.io/ros2-essentials/orbslam3-ws) | ✔️ | ❌ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
-| [ROS1 Bridge](https://j3soon.github.io/ros2-essentials/ros1-bridge-ws/) | ✔️ | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky-ws/) | ✔️ | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
-| [Yujin Robot Kobuki](https://j3soon.github.io/ros2-essentials/kobuki-ws/) | ✔️ | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| [Velodyne VLP-16](https://j3soon.github.io/ros2-essentials/vlp-ws/) | ✔️ | ✔️ | ✔️ | Real-world support | [Assume Zhan](https://github.com/Assume-Zhan) |
-| [Gazebo World](https://j3soon.github.io/ros2-essentials/gazebo-world-ws/) | ✔️ | ❌️ | ❌️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| [ALOHA](https://j3soon.github.io/ros2-essentials/aloha-ws/) | ✔️ | ✔️ | ✔️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
-| [Turtlebot3](https://j3soon.github.io/ros2-essentials/turtlebot3-ws/) | ✔️ | ❌️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
-| [Tesollo Delto Gripper](https://j3soon.github.io/ros2-essentials/delto-gripper-ws/) | ✔️ | ❌️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| [Unitree Go2](https://j3soon.github.io/ros2-essentials/go2-ws/) | ✔️ | ❌️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), [Johnson Sun](https://github.com/j3soon) |
-| [Unitree H1](https://j3soon.github.io/ros2-essentials/h1-ws/) | ✔️ | ❌️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
-| [Hello Robot Stretch 3](https://j3soon.github.io/ros2-essentials/stretch3-ws/) | ✔️ | ❌️ | ❌️ | Simulation only | [@JustinShih0918](https://github.com/JustinShih0918), [Johnson Sun](https://github.com/j3soon) |
-| [Universal Robots UR5](https://j3soon.github.io/ros2-essentials/ur5-ws/) | ✔️ | ❌️ | ❌️ | Real-world support (CB3 only) | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| Workspace | amd64 | arm64 | Notes | Maintainer |
+|-----------|-------|-------|-------|------------|
+| [Template](https://j3soon.github.io/ros2-essentials/template-ws/) | ✔️ | ✔️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
+| [ORB-SLAM3](https://j3soon.github.io/ros2-essentials/orbslam3-ws) | ✔️ | ❌ | | [Assume Zhan](https://github.com/Assume-Zhan) |
+| [ROS1 Bridge](https://j3soon.github.io/ros2-essentials/ros1-bridge-ws/) | ✔️ | ✔️ | Skip linting | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Clearpath Husky](https://j3soon.github.io/ros2-essentials/husky-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Johnson Sun](https://github.com/j3soon) |
+| [Yujin Robot Kobuki](https://j3soon.github.io/ros2-essentials/kobuki-ws/) | ✔️ | ✔️ | Real-world support | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Velodyne VLP-16](https://j3soon.github.io/ros2-essentials/vlp-ws/) | ✔️ | ✔️ | Real-world support | [Assume Zhan](https://github.com/Assume-Zhan) |
+| [Gazebo World](https://j3soon.github.io/ros2-essentials/gazebo-world-ws/) | ✔️ | ❌️ | | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [ALOHA](https://j3soon.github.io/ros2-essentials/aloha-ws/) | ✔️ | ✔️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
+| [Turtlebot3](https://j3soon.github.io/ros2-essentials/turtlebot3-ws/) | ✔️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
+| [Tesollo Delto Gripper](https://j3soon.github.io/ros2-essentials/delto-gripper-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [Unitree Go2](https://j3soon.github.io/ros2-essentials/go2-ws/) | ✔️ | ❌️ | Simulation only | [Yu-Zhong Chen](https://github.com/YuZhong-Chen), [Assume Zhan](https://github.com/Assume-Zhan), [Johnson Sun](https://github.com/j3soon) |
+| [Unitree H1](https://j3soon.github.io/ros2-essentials/h1-ws/) | ✔️ | ❌️ | Simulation only | [Johnson Sun](https://github.com/j3soon) |
+| [Hello Robot Stretch 3](https://j3soon.github.io/ros2-essentials/stretch3-ws/) | ✔️ | ❌️ | Simulation only | [@JustinShih0918](https://github.com/JustinShih0918), [Johnson Sun](https://github.com/j3soon) |
+| [Universal Robots UR5](https://j3soon.github.io/ros2-essentials/ur5-ws/) | ✔️ | ❌️ | Real-world support (CB3 only) | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
+| [LeRobot SO-101](https://j3soon.github.io/ros2-essentials/so101-ws/) | ✔️ | ❔ | Real-world support | [Johnson Sun](https://github.com/j3soon) |
 
 If you have trouble using a workspace, please [open an issue](https://github.com/j3soon/ros2-essentials/issues) and tag the current maintainers mentioned above.
 
