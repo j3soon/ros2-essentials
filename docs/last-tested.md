@@ -24,6 +24,7 @@ Commit labels on this page follow `git describe --tags --always`.
 | [Unitree H1](h1-ws/index.md) | TODO |
 | [Hello Robot Stretch 3](stretch3-ws/index.md) | [v0.0.3-18-ga9e1166](https://github.com/j3soon/ros2-essentials/commit/a9e116664353b8d874d7e559d023c625b08c9dd1) by [@j3soon](https://github.com/j3soon) (x86, sim) |
 | [Universal Robots UR5](ur5-ws/index.md) | TODO |
+| [LeRobot SO-101](so101-ws/index.md) | - [v0.0.3-174-g4a528053](https://github.com/j3soon/ros2-essentials/commit/4a52805372baeae180018a686e2d6bfd113a9ceb) by [@j3soon](https://github.com/j3soon) (x86, sim)<br>- [v0.0.3-173-g62ee6e6a](https://github.com/j3soon/ros2-essentials/commit/62ee6e6a5307aad31178ccbd1813c8078f2cc16b) by [@j3soon](https://github.com/j3soon) (x86, real)<br>- TODO by [@j3soon](https://github.com/j3soon) (DGX Spark, real) |
 
 ## Docker Modules
 
