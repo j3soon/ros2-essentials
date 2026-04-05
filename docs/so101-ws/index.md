@@ -379,6 +379,27 @@ cd ~/leisaac
 
 and in Isaac Lab window press `b` to start teleoperation. Press `r` or `n` to reset the environment, which corresponds to episode success and failure. Press `q` to quit.
 
+Note that the following error message can be ignored:
+
+```
+[Error] [omni.physx.plugin] PhysicsUSD: Parse collision - triangle mesh collision (approximation None/MeshSimplification) cannot be a part of a dynamic body, falling back to convexHull approximation
+```
+
+Alternatively, if you don’t have a real device, you can test using the keyboard. However, this method is not suitable for recording due to the difficulty of maintaining precise control.
+
+```sh
+# export LEISAAC_ASSETS_ROOT=~/leisaac/assets
+cd ~/leisaac
+~/IsaacLab/isaaclab.sh -p scripts/environments/teleoperation/teleop_se3_agent.py \
+    --task=LeIsaac-SO101-PickOrange-v0 \
+    --teleop_device=keyboard \
+    --num_envs=1 \
+    --device=cuda \
+    --enable_cameras \
+    --record \
+    --dataset_file=./datasets/dataset.hdf5
+```
+
 > Currently runs with Isaac Lab v2.3.0. v2.3.2 may work, but I haven't tested it yet.
 
 ## References
