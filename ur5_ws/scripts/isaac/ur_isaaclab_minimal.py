@@ -17,6 +17,12 @@ from isaaclab.app import AppLauncher
 parser = argparse.ArgumentParser(description="Minimal UR articulation in Isaac Lab")
 parser.add_argument("--ur_type", choices=["ur5", "ur5e"], default="ur5")
 parser.add_argument("--num_envs", type=int, default=1)
+parser.add_argument(
+    "--steps",
+    type=int,
+    default=0,
+    help="number of sim steps to run; 0 = until the window is closed or Ctrl-C",
+)
 AppLauncher.add_app_launcher_args(parser)
 args = parser.parse_args()
 
@@ -26,7 +32,7 @@ simulation_app = app_launcher.app
 import torch
 
 import isaaclab.sim as sim_utils
-from isaaclab.assets import Articulation, ArticulationCfg
+from isaaclab.assets import Articulation, ArticulationCfg, AssetBaseCfg
 from isaaclab.actuators import ImplicitActuatorCfg
 from isaaclab.scene import InteractiveScene, InteractiveSceneCfg
 from isaaclab.utils import configclass
@@ -61,8 +67,14 @@ UR_CFG = ArticulationCfg(
 
 @configclass
 class URSceneCfg(InteractiveSceneCfg):
-    ground = sim_utils.GroundPlaneCfg()
-    light = sim_utils.DomeLightCfg(intensity=2000.0, color=(0.75, 0.75, 0.75))
+    ground = AssetBaseCfg(
+        prim_path="/World/defaultGroundPlane",
+        spawn=sim_utils.GroundPlaneCfg(),
+    )
+    light = AssetBaseCfg(
+        prim_path="/World/Light",
+        spawn=sim_utils.DomeLightCfg(intensity=2000.0, color=(0.75, 0.75, 0.75)),
+    )
     robot: ArticulationCfg = UR_CFG
 
 
@@ -86,5 +98,7 @@ while simulation_app.is_running():
     sim.step()
     scene.update(sim.get_physics_dt())
     step += 1
+    if args.steps > 0 and step >= args.steps:
+        break
 
 simulation_app.close()
