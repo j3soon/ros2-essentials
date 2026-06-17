@@ -50,19 +50,9 @@ jobs:
   docker:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.results == 'true' || startsWith(needs.paths-filter.outputs.original_ref, 'refs/tags/') }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    timeout-minutes: 1440
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-          build-mount-path: /var/lib/docker/
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
-          remove-codeql: 'true'
-          remove-docker-images: 'true'
-      - name: Restart docker
-        run: sudo service docker restart
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run post install script
