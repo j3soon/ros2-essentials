@@ -8,9 +8,9 @@
 ![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-ur5-ws)
 ![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-ur5-ws)
 
-This workspace provides a ROS 2 Humble environment for controlling **Universal Robots UR5** manipulators. It includes the official [Universal_Robots_ROS2_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver), description packages, **OnRobot RG2** gripper support, **servo control**, and **pose tracking**.
+This workspace provides a ROS 2 Humble environment for controlling **Universal Robots UR5** and **UR5e** manipulators. It includes the official [Universal_Robots_ROS2_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver), description packages, **OnRobot RG2** gripper support, **servo control**, **pose tracking**, and **Isaac Sim / Isaac Lab** for high-fidelity simulation and policy learning.
 
-> Please note that this workspace has only been tested on the UR5 (CB3 version). In theory, it can support other models with minor configuration adjustments; please feel free to modify the settings as needed for your specific use case.
+> Please note that this workspace has been primarily tested on the UR5 (CB3 version) and UR5e. The bundled `Universal_Robots_ROS2_Description` covers the rest of the UR family, so other models can be supported with minor configuration adjustments.
 >
 > See [Last tested](../last-tested.md) for the latest validation status.
 
@@ -71,6 +71,33 @@ Regarding the RG2 gripper: although it is not explicitly modeled in URSim, our c
 
 Since URSim aims to faithfully replicate the real robot's behavior, you should follow all the steps outlined in the subsequent sections, including calibration and bring-up.
 
+## Simulation with Isaac Sim
+
+The container ships with Isaac Sim 5.1.0 (enabled via `ISAAC_SIM_VERSION` in `docker/compose.yaml`). Two helper scripts spawn a UR5 or UR5e in Isaac Sim:
+
+```sh
+cd /home/ros2-essentials/ur5_ws
+./scripts/isaac_sim_ur5.sh        # UR5
+./scripts/isaac_sim_ur5e.sh       # UR5e
+```
+
+Both wrappers call `${ISAACSIM_PYTHON_EXE} scripts/isaac/spawn_ur.py` with the appropriate `--ur_type`. The script loads the bundled UR USD asset from `Isaac/Robots/UniversalRobots/<ur_type>/<ur_type>.usd`, drops the robot onto a ground plane, and steps the simulator until the window is closed. Add `--headless` for offscreen rendering.
+
+Isaac Sim/Lab assume a desktop X11 environment. If you are on a remote server, use a remote-desktop session (VNC, NoMachine, etc.) — the same caveats described in the [SO-101 workspace docs](../so101-ws/index.md) apply here.
+
+## Imitation Learning / RL with Isaac Lab
+
+Isaac Lab 2.3.2 is also pre-installed (see `ISAAC_LAB_VERSION` in `docker/compose.yaml`). A minimal scaffold loads UR5/UR5e as an Isaac Lab `Articulation`:
+
+```sh
+cd /home/ros2-essentials/ur5_ws
+./scripts/isaac_lab_ur_minimal.sh --ur_type ur5e
+```
+
+This is a starting point, not a full task. To build a Reach / Pick / RL task, copy Isaac Lab's existing UR10 manager-based config (under `$ISAACLAB_PATH/source/isaaclab_tasks/isaaclab_tasks/manager_based/manipulation/reach/config/ur_10/`) and swap the USD path for `ur5` or `ur5e`. UR robots share joint names across the family, so most of the config carries over unchanged.
+
+See `scripts/isaac/README.md` for more notes.
+
 ## Setup Robot
 
 > For URSim users, the settings are already pre-configured in the docker compose file, so you can skip this step.
@@ -81,25 +108,41 @@ For network setup, please refer to [this section](https://docs.universal-robots.
 
 ## Robot Calibration
 
-To improve accuracy, run the calibration correction and save the result to the workspace description config:
+To improve accuracy, run the calibration correction and save the result to the workspace description config.
+
+For **UR5**:
 
 ```sh
 cd /home/ros2-essentials/ur5_ws
 ./scripts/ur5_calibration.sh
 ```
 
-You only need to run this once for each robot. This creates `default_kinematics.yaml` which is required for the subsequent steps.
+For **UR5e**:
+
+```sh
+cd /home/ros2-essentials/ur5_ws
+./scripts/ur5e_calibration.sh
+```
+
+You only need to run this once for each robot. This creates `default_kinematics.yaml` (under `src/Universal_Robots_ROS2_Description/config/<ur_type>/`) which is required for the subsequent steps.
 
 ## Bring Up Robot
 
-Use the script:
+For **UR5**:
 
 ```sh
 cd /home/ros2-essentials/ur5_ws
 ./scripts/ur5_bringup.sh
 ```
 
-Or run the launch file directly:
+For **UR5e**:
+
+```sh
+cd /home/ros2-essentials/ur5_ws
+./scripts/ur5e_bringup.sh
+```
+
+Or run the launch file directly (swap `ur_type:=ur5` for `ur5e` as needed):
 
 ```sh
 ros2 launch ur_robot_driver ur_control.launch.py \
