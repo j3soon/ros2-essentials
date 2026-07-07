@@ -1,5 +1,4 @@
 *
 !.bashrc
-!modules
 !kobuki_driver_ws
 !udev_rules

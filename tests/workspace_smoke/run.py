@@ -44,7 +44,6 @@ SHARED_PATHS = (
     ".github/workflows/workspace-smoke.yaml",
     "docker_modules/",
     "scripts/post_install.sh",
-    "scripts/setup_docker_modules_link.sh",
     "scripts/setup_env_files.sh",
     "scripts/setup_isaac_link.sh",
     "tests/workspace_smoke/",

@@ -15,7 +15,7 @@ The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 
 | Use Case | Platform | Hardware | Software | Notes |
 |----------|----------|----------|----------|-------|
-| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04/24.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/), [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/requirements.html) for more details. |
+| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04/24.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/) with Docker Compose v2.17.0+, [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/requirements.html) for more details. |
 | Deployment-Only | Jetson | Jetson Orin, 500GB+ SSD | JetPack 6 | See [this page](https://nvidia-isaac-ros.github.io/getting_started/index.html) for more details.
 | Simulation/Deployment | DGX Spark | DGX Spark | Ubuntu 24.04 | Is actually [DGX OS 7.2.3](https://docs.nvidia.com/dgx/dgx-os-7-user-guide/introduction.html) |
 
@@ -43,14 +43,13 @@ cd ros2-essentials
 > git fetch --unshallow
 > ```
 
-> Note that the `post_install.sh` script should be run after each change to the repository (such as switching to another branch or pulling the latest changes).
-> - Use `--recreate-links` to force replacement of non-hard-link files under workspace `docker/modules/`.
+> Note that the `post_install.sh` script prepares local environment files, shared cache volumes, and the optional Isaac Sim host link.
 > - Use `--recreate-volumes` to invalidate Gazebo/Isaac Sim/Isaac ROS cache volumes after related updates or testing.
 > - Use `--remove-containers` to auto-remove containers that block volume recreation.
 
 > **Troubleshooting**:
 >
-> If you encounter an error like `"failed to solve: failed to compute cache key: failed to calculate checksum of ref ...: "/modules/install_ros.sh": not found` when building Docker images, it means `post_install.sh` hasn't been run. This script creates necessary hard links for the Docker build process.
+> If Docker Compose reports that `additional_contexts` is unsupported, upgrade Docker Compose to v2.17.0 or newer. The workspace Dockerfiles use a named `docker_modules` build context instead of generated module links.
 >
 > If you encountered error like `Error response from daemon: remove ros2-isaac-sim-cache: volume is in use` when running `./scripts/post_install.sh`, it means that previous containers are not removed successfully. Run `docker ps -a | grep ros2` and use `docker rm <container_id>` to remove the containers and then run the script again.
 > 
@@ -71,10 +70,10 @@ To update to the latest commit of the repository, run the following commands:
 
 ```sh
 git pull
-./scripts/post_install.sh --recreate-links --recreate-volumes --remove-containers
+./scripts/post_install.sh --recreate-volumes --remove-containers
 ```
 
-Make sure to run the `post_install.sh` script after pulling the latest changes to ensure that the hard links are properly set up. In addition, you should be prepared to rebuild the Docker images of the workspaces you are using, as some updates may require rebuilding the images to take effect.
+Run `post_install.sh` after pulling changes when you need to refresh local env files, shared cache volumes, or the optional Isaac Sim host link. You should also be prepared to rebuild the Docker images of the workspaces you are using, as some updates may require rebuilding the images to take effect.
 
 > Building Docker images can be time-consuming. Start the build before taking a break so they can finish while you're away.
 

@@ -190,7 +190,6 @@ Changes under shared infrastructure paths affect all workspaces:
 
 - `docker_modules/`
 - `scripts/post_install.sh`
-- `scripts/setup_docker_modules_link.sh`
 - `scripts/setup_env_files.sh`
 - `scripts/setup_isaac_link.sh`
 - `.agents/skills/`

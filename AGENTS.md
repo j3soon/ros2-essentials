@@ -2,13 +2,13 @@
 
 ## Project Structure & Module Organization
 - `*_ws/` are independent ROS2 workspaces. Each contains `docker/compose.yaml`, `docker/Dockerfile`, `.devcontainer/`, and `src/` (ROS2 packages built with colcon inside the container).
-- `docker_modules/` holds shared install scripts that are hard-linked into each workspace via `./scripts/post_install.sh`.
+- `docker_modules/` holds shared install scripts exposed to workspace builds through Docker Compose `additional_contexts`.
 - `docs/` is MkDocs content, including per-workspace docs under `docs/<workspace-name>/`.
 - `scripts/` contains setup helpers (e.g., `post_install.sh`, `create_workspace.sh`).
 - `tests/` contains lint-style checks for compose files, Dockerfiles, MkDocs, and workspace templates.
 
 ## Build, Test, and Development Commands
-- `./scripts/post_install.sh` (or `-f` to force): refreshes docker module hard links; run after any repo change or branch switch.
+- `./scripts/post_install.sh`: refreshes local env files, shared cache volumes, and the optional Isaac Sim host link.
 - `./scripts/enable_module.sh <MODULE>`: enable a module in the current workspace `docker/compose.yaml` (prompts for workspace/module selection if needed).
 - `cd <workspace>/docker && docker compose build`: builds the workspace image.
 - `cd <workspace>/docker && docker compose up -d`: starts containers in the background.

@@ -30,6 +30,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      additional_contexts:
+        docker_modules: ../../docker_modules
       # TODO: Specify the target platform to build the image, otherwise it will build for the host platform.
       # Reference: https://docs.docker.com/compose/compose-file/build/#platforms
       # platforms:
