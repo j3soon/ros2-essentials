@@ -188,6 +188,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     sudo apt-get update && sudo apt-get install -y \
     ros-$ROS_DISTRO-rviz2 \
+    ros-$ROS_DISTRO-xacro \
     ros-$ROS_DISTRO-ros-testing \
     ros-$ROS_DISTRO-kobuki-velocity-smoother \
     ros-$ROS_DISTRO-diagnostics \

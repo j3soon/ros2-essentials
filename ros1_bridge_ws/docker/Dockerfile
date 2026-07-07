@@ -121,7 +121,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 # This is because we will copy the built files from the build stage to the release stage.
 # If we use the flag --symlink-install, the release stage will not be able to find the built files.
 # Reference: https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html#build-the-code-in-the-workspace
-RUN colcon build
+RUN MAKEFLAGS=-j2 CMAKE_BUILD_PARALLEL_LEVEL=2 colcon build --parallel-workers 4
 
 # Delete packages.ros.org from sources.list and remove conflicts packages manually.
 # Removing those conflicts packages is necessary for install ros-core-dev.
@@ -145,7 +145,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 # Reference: https://github.com/ros2/ros1_bridge/tree/3d5328dc21564d2130b4ded30afe5cd1c41cf033#building-the-bridge-from-source
 RUN git clone https://github.com/ros2/ros1_bridge src/ros1_bridge
 RUN source install/setup.bash \
-    && colcon build --packages-select ros1_bridge --cmake-force-configure
+    && MAKEFLAGS=-j4 CMAKE_BUILD_PARALLEL_LEVEL=4 colcon build --parallel-workers 1 --packages-select ros1_bridge --cmake-force-configure
 
 # Other configurations
 USER $USERNAME
