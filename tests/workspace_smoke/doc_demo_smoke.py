@@ -14,6 +14,7 @@ import time
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
+from typing import TextIO
 
 from proof_capture import capture_x11_screenshot, record_x11_video
 
@@ -370,16 +371,21 @@ def run_command(command: list[str], log_path: Path) -> int:
         return process.wait()
 
 
+def append_command_to_log(command: list[str], log_file: TextIO, *, cwd: Path) -> int:
+    print(f"$ {' '.join(command)}")
+    log_file.write(f"$ {' '.join(command)}\n")
+    log_file.flush()
+    result = subprocess.run(command, cwd=cwd, stdout=log_file, stderr=subprocess.STDOUT, text=True)
+    log_file.write(f"[exit {result.returncode}] {' '.join(command)}\n")
+    log_file.flush()
+    return result.returncode
+
+
 def append_command(command: list[str], log_path: Path, *, cwd: Path) -> int:
     log_path.parent.mkdir(parents=True, exist_ok=True)
-    print(f"$ {' '.join(command)}")
     print(f"log: {display_path(log_path)}")
     with log_path.open("a", encoding="utf-8") as log_file:
-        log_file.write(f"$ {' '.join(command)}\n")
-        log_file.flush()
-        result = subprocess.run(command, cwd=cwd, stdout=log_file, stderr=subprocess.STDOUT, text=True)
-        log_file.write(f"[exit {result.returncode}] {' '.join(command)}\n")
-        return result.returncode
+        return append_command_to_log(command, log_file, cwd=cwd)
 
 
 def compose_exec_shell(demo: Demo, shell_command: str, *, tty: bool = False) -> list[str]:
@@ -605,90 +611,98 @@ def run_joint_command(demo: Demo, args: argparse.Namespace) -> Result:
             text=True,
         )
 
-    artifacts: list[Path] = []
-    recording_result: list[int | None] = [None]
-    recording_thread: threading.Thread | None = None
-    try:
-        ready_markers = (
-            "ISAAC_GUI_STAGE_OPENED",
-            "ISAAC_GUI_EXPECTED_PRIM_OK",
-            "ISAAC_GUI_WAITING_FOR_PLAY_TRIGGER",
-        )
-        ready = wait_for_log_markers(log_path, ready_markers, demo.timeout_seconds)
-        if not ready:
-            capture_x11(screenshot_path, args)
-            artifacts.append(screenshot_path)
-            return Result(
-                demo.workspace,
-                demo.kind,
-                "failed",
-                demo.command,
-                demo.doc,
-                log_path,
-                screenshot_path if screenshot_path.is_file() else None,
-                f"Isaac GUI did not reach {demo.workspace} stage readiness markers",
-                artifact_paths=tuple(path for path in artifacts if path.is_file()),
+        artifacts: list[Path] = []
+        recording_result: list[int | None] = [None]
+        recording_thread: threading.Thread | None = None
+        try:
+            ready_markers = (
+                "ISAAC_GUI_STAGE_OPENED",
+                "ISAAC_GUI_EXPECTED_PRIM_OK",
+                "ISAAC_GUI_WAITING_FOR_PLAY_TRIGGER",
             )
+            ready = wait_for_log_markers(log_path, ready_markers, demo.timeout_seconds)
+            if not ready:
+                capture_x11(screenshot_path, args)
+                artifacts.append(screenshot_path)
+                return Result(
+                    demo.workspace,
+                    demo.kind,
+                    "failed",
+                    demo.command,
+                    demo.doc,
+                    log_path,
+                    screenshot_path if screenshot_path.is_file() else None,
+                    f"Isaac GUI did not reach {demo.workspace} stage readiness markers",
+                    artifact_paths=tuple(path for path in artifacts if path.is_file()),
+                )
 
-        def record_motion() -> None:
-            recording_result[0] = record_x11_video(
-                recording_path,
-                display=args.display,
-                x11_size=args.x11_size,
-                seconds=demo.recording_seconds,
-                framerate=15,
-            )
+            def record_motion() -> None:
+                recording_result[0] = record_x11_video(
+                    recording_path,
+                    display=args.display,
+                    x11_size=args.x11_size,
+                    seconds=demo.recording_seconds,
+                    framerate=15,
+                )
 
-        recording_thread = threading.Thread(target=record_motion)
-        recording_thread.start()
-        with log_path.open("a", encoding="utf-8") as log_file:
+            recording_thread = threading.Thread(target=record_motion)
+            recording_thread.start()
             log_file.write(
                 "Recording started before Isaac timeline play. "
                 f"Pre-play capture: {demo.pre_play_record_seconds}s\n"
             )
-        time.sleep(demo.pre_play_record_seconds)
-        append_command(
-            compose_exec_shell(demo, f"touch {shlex.quote(play_trigger_path)}"),
-            log_path,
-            cwd=compose_dir(demo),
-        )
-        timeline_ready = wait_for_log_markers(log_path, ("ISAAC_GUI_TIMELINE_PLAYING",), 45)
+            log_file.flush()
+            time.sleep(demo.pre_play_record_seconds)
+            append_command_to_log(
+                compose_exec_shell(demo, f"touch {shlex.quote(play_trigger_path)}"),
+                log_file,
+                cwd=compose_dir(demo),
+            )
+            timeline_ready = wait_for_log_markers(log_path, ("ISAAC_GUI_TIMELINE_PLAYING",), 45)
 
-        topic_checks = [
-            (
-                "/clock",
-                "timeout --preserve-status 35s ros2 topic echo --once /clock",
-            ),
-            (
-                "/joint_states",
-                "timeout --preserve-status 35s ros2 topic echo --once /joint_states",
-            ),
-        ]
-        topic_failures = []
-        if timeline_ready:
-            for topic_name, topic_command in topic_checks:
-                code = append_command(compose_exec_shell(demo, ros_shell(demo, topic_command)), log_path, cwd=compose_dir(demo))
-                if code != 0:
-                    topic_failures.append(topic_name)
-            with log_path.open("a", encoding="utf-8") as log_file:
+            topic_checks = [
+                (
+                    "/clock",
+                    "timeout --preserve-status 35s ros2 topic echo --once /clock",
+                ),
+                (
+                    "/joint_states",
+                    "timeout --preserve-status 35s ros2 topic echo --once /joint_states",
+                ),
+            ]
+            topic_failures = []
+            if timeline_ready:
+                for topic_name, topic_command in topic_checks:
+                    code = append_command_to_log(
+                        compose_exec_shell(demo, ros_shell(demo, topic_command)),
+                        log_file,
+                        cwd=compose_dir(demo),
+                    )
+                    if code != 0:
+                        topic_failures.append(topic_name)
                 log_file.write(
                     f"Scene stabilization after timeline play before /joint_command: {demo.post_play_stable_seconds}s\n"
                 )
-            time.sleep(demo.post_play_stable_seconds)
-        else:
-            topic_failures.append("timeline_play")
+                log_file.flush()
+                time.sleep(demo.post_play_stable_seconds)
+            else:
+                topic_failures.append("timeline_play")
 
-        publish_code = append_command(compose_exec_shell(demo, ros_shell(demo, demo.joint_command)), log_path, cwd=compose_dir(demo))
-        recording_thread.join(timeout=demo.recording_seconds + 10)
-        capture_x11(screenshot_path, args)
-        for path in (screenshot_path, recording_path):
-            if path.is_file():
-                artifacts.append(path)
-    finally:
-        with log_path.open("a", encoding="utf-8") as log_file:
+            publish_code = append_command_to_log(
+                compose_exec_shell(demo, ros_shell(demo, demo.joint_command)),
+                log_file,
+                cwd=compose_dir(demo),
+            )
+            recording_thread.join(timeout=demo.recording_seconds + 10)
+            capture_x11(screenshot_path, args)
+            for path in (screenshot_path, recording_path):
+                if path.is_file():
+                    artifacts.append(path)
+        finally:
             if recording_thread and recording_thread.is_alive():
                 log_file.write("recording thread did not finish before cleanup\n")
             log_file.write("$ docker compose down --remove-orphans\n")
+            log_file.flush()
             subprocess.run(
                 ["docker", "compose", "down", "--remove-orphans"],
                 cwd=compose_dir(demo),
@@ -696,15 +710,15 @@ def run_joint_command(demo: Demo, args: argparse.Namespace) -> Result:
                 stderr=subprocess.STDOUT,
                 text=True,
             )
-        try:
-            code = process.wait(timeout=30)
-        except subprocess.TimeoutExpired:
-            process.terminate()
             try:
                 code = process.wait(timeout=30)
             except subprocess.TimeoutExpired:
-                process.kill()
-                code = process.wait(timeout=30)
+                process.terminate()
+                try:
+                    code = process.wait(timeout=30)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    code = process.wait(timeout=30)
 
     text = log_path.read_text(encoding="utf-8", errors="replace")
     screenshot_ok = screenshot_path.is_file() and screenshot_path.stat().st_size >= MIN_GUI_SCREENSHOT_BYTES

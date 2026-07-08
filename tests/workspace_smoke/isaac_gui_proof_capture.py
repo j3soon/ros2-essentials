@@ -186,6 +186,9 @@ def main():
     timing.add_argument("--settle-seconds", type=int, default=10, help="Seconds to wait before capture")
 
     args = parser.parse_args()
+    if not args.screenshot and not args.recording:
+        print("At least one of --screenshot or --recording must be specified.", file=sys.stderr)
+        return False
 
     workspace_compose_dir = compose_dir(args.workspace)
     if not (workspace_compose_dir / "compose.yaml").is_file():

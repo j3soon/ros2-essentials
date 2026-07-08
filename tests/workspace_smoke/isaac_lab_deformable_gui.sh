@@ -22,6 +22,10 @@ if [ ! -f "$COMPOSE_DIR/compose.yaml" ]; then
 fi
 
 cd "$COMPOSE_DIR"
+cleanup() {
+  docker compose -f compose.yaml -f "$BUILD_OVERRIDE" down --remove-orphans
+}
+
 cat >"$BUILD_OVERRIDE" <<EOF
 services:
   $SERVICE:
@@ -45,5 +49,6 @@ if [ "$MODE" = "--detach" ]; then
   echo "  python3 tests/workspace_smoke/proof_capture.py record --display \"$DISPLAY_VALUE\" --x11-size 1280x720 --seconds 10 --framerate 15 --output tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-visible.mp4"
   echo "Stop: kill \$(cat $PID_PATH); cd $COMPOSE_DIR && docker compose down --remove-orphans"
 else
+  trap cleanup EXIT
   script -qefc "$exec_command" /dev/null | tee "$LOG_PATH"
 fi
