@@ -30,10 +30,18 @@ needed. If they only need a quick non-GUI check, prefer `image-cli`.
 - Isaac Lab deformable smoke: `python3 tests/workspace_smoke/run.py --workspace <ws> --level isaac-lab-deformable`
 - Documented GUI/Isaac proof: `python3 tests/workspace_smoke/doc_demo_smoke.py --workspace <ws> --summary-json tests/workspace_smoke/artifacts/<ws>-doc-demo.json`
 
-For Isaac Sim/Lab proof paths, prefer the workspace `docker/compose.yaml`
-runtime contract: `docker compose up -d`, then `docker compose exec <service>
-bash -lc ...`. Keep direct `docker run` only for cheap image CLI and Docker GPU
-preflight checks.
+For Compose-backed smoke paths, always build locally and refuse registry pulls:
+`docker compose up -d --build --pull never`, then
+`docker compose exec <service> bash -lc ...`. Keep direct `docker run` only for
+cheap image CLI and Docker GPU preflight checks, and require those images to
+already exist locally.
+
+For documented Isaac joint-command motion proofs, capture the whole sequence:
+open the stage with the timeline paused, validate the expected robot prim,
+start host X11 recording, trigger Isaac timeline Play, wait for ROS topics and
+scene stabilization, then publish the documented `/joint_command`. The
+recording must include the start of simulation and pre-command frames, not only
+the post-command motion.
 
 For Isaac Lab deformable-object Kit GUI proof, run
 `tests/workspace_smoke/isaac_lab_deformable_gui.sh --detach`, follow the printed

@@ -82,6 +82,11 @@ def parse_args() -> argparse.Namespace:
         help="Start the timeline after opening the stage.",
     )
     parser.add_argument(
+        "--play-trigger-path",
+        default=os.environ.get("ISAAC_GUI_PLAY_TRIGGER_PATH"),
+        help="Wait for this file to exist before starting the timeline.",
+    )
+    parser.add_argument(
         "--settle-frames",
         type=int,
         default=int(os.environ.get("ISAAC_GUI_SETTLE_FRAMES", "180")),
@@ -124,7 +129,12 @@ async def main_async() -> None:
             )
             frame_prim(stage, args.expected_prim)
 
-    if args.play:
+    if args.play_trigger_path:
+        print(f"ISAAC_GUI_WAITING_FOR_PLAY_TRIGGER path={args.play_trigger_path}", flush=True)
+        while not os.path.exists(args.play_trigger_path):
+            await app.next_update_async()
+
+    if args.play or args.play_trigger_path:
         omni.timeline.get_timeline_interface().play()
         print("ISAAC_GUI_TIMELINE_PLAYING", flush=True)
 

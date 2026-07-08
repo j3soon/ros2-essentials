@@ -9,18 +9,21 @@ import os
 import shlex
 import subprocess
 import sys
+import threading
 import time
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 
-from proof_capture import capture_x11_screenshot
+from proof_capture import capture_x11_screenshot, record_x11_video
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPORT_DIR = REPO_ROOT / "tests" / "workspace_smoke" / "artifacts" / "doc-demo"
 ISAAC_GUI_SCRIPT = REPO_ROOT / "tests" / "workspace_smoke" / "isaac_gui_open_stage.py"
 MIN_GUI_SCREENSHOT_BYTES = 10_000
+MIN_GUI_RECORDING_BYTES = 100_000
+COMPOSE_UP_LOCAL_ARGS = ["up", "-d", "--build", "--pull", "never"]
 GUI_FAILURE_MARKERS = (
     "[ERROR]",
     "Caught exception",
@@ -41,6 +44,10 @@ class Demo:
     env: dict[str, str] = field(default_factory=dict)
     stage: str | None = None
     expected_prim: str | None = None
+    joint_command: str | None = None
+    pre_play_record_seconds: int = 3
+    post_play_stable_seconds: int = 8
+    recording_seconds: int = 24
     reason: str | None = None
     settle_seconds: int = 18
     timeout_seconds: int = 45
@@ -91,27 +98,63 @@ DEMOS: dict[str, Demo] = {
     ),
     "go2_ws": Demo(
         workspace="go2_ws",
-        kind="isaac_stage",
+        kind="joint_command",
         doc="docs/go2-ws/index.md#custom-isaac-sim-environment",
         command=(
-            "~/isaacsim/isaac-sim.sh and open "
-            "/home/ros2-essentials/go2_ws/isaacsim/assets/go2_og.usda"
+            "open go2_og.usda in Isaac Sim, echo /clock and /joint_states, "
+            "then publish the documented /joint_command"
         ),
         stage="/home/ros2-essentials/go2_ws/src/isaacsim/assets/go2_og.usda",
         expected_prim="/World/go2",
+        joint_command="""ros2 topic pub --once /joint_command sensor_msgs/msg/JointState "{
+  name: [
+    'FL_hip_joint', 'FR_hip_joint', 'RL_hip_joint', 'RR_hip_joint',
+    'FL_thigh_joint', 'FR_thigh_joint', 'RL_thigh_joint', 'RR_thigh_joint',
+    'FL_calf_joint', 'FR_calf_joint', 'RL_calf_joint', 'RR_calf_joint'
+  ],
+  position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0],
+  velocity: [],
+  effort: []
+}" """,
         settle_seconds=110,
         timeout_seconds=150,
     ),
     "h1_ws": Demo(
         workspace="h1_ws",
-        kind="isaac_stage",
+        kind="joint_command",
         doc="docs/h1-ws/index.md#custom-isaac-sim-environment",
         command=(
-            "~/isaacsim/isaac-sim.sh and open "
-            "/home/ros2-essentials/h1_ws/isaacsim/assets/h1_og.usda"
+            "open h1_og.usda in Isaac Sim, echo /clock and /joint_states, "
+            "then publish the documented /joint_command"
         ),
         stage="/home/ros2-essentials/h1_ws/isaacsim/assets/h1_og.usda",
         expected_prim="/World/h1",
+        joint_command="""ros2 topic pub --once /joint_command sensor_msgs/msg/JointState "{
+  name: [
+    'left_hip_yaw_joint',
+    'right_hip_yaw_joint',
+    'torso_joint',
+    'left_hip_roll_joint',
+    'right_hip_roll_joint',
+    'left_shoulder_pitch_joint',
+    'right_shoulder_pitch_joint',
+    'left_hip_pitch_joint',
+    'right_hip_pitch_joint',
+    'left_shoulder_roll_joint',
+    'right_shoulder_roll_joint',
+    'left_knee_joint',
+    'right_knee_joint',
+    'left_shoulder_yaw_joint',
+    'right_shoulder_yaw_joint',
+    'left_ankle_joint',
+    'right_ankle_joint',
+    'left_elbow_joint',
+    'right_elbow_joint'
+  ],
+  position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.57, -1.57, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+  velocity: [],
+  effort: []
+}" """,
         settle_seconds=110,
         timeout_seconds=150,
     ),
@@ -210,6 +253,7 @@ class Result:
     log_path: Path | None = None
     artifact_path: Path | None = None
     reason: str | None = None
+    artifact_paths: tuple[Path, ...] = ()
 
 
 def parse_args() -> argparse.Namespace:
@@ -256,6 +300,10 @@ def artifact_base(report_dir: Path, workspace: str, kind: str) -> Path:
     return report_dir / workspace / f"{timestamp}-{kind}"
 
 
+def artifact_timestamp(path: Path) -> str:
+    return path.name.split("-", 1)[0]
+
+
 def image_overrides(args: argparse.Namespace) -> dict[str, str]:
     overrides = {}
     for override in args.image_override:
@@ -280,6 +328,34 @@ def compose_dir(demo: Demo) -> Path:
     return REPO_ROOT / demo.workspace / "docker"
 
 
+def no_registry_cache_override_path(report_dir: Path, demo: Demo) -> Path:
+    override_path = report_dir / demo.workspace / "no-registry-cache.compose.yaml"
+    override_path.parent.mkdir(parents=True, exist_ok=True)
+    override_path.write_text(
+        "\n".join(
+            [
+                "services:",
+                f"  {compose_service(demo)}:",
+                "    build:",
+                "      cache_from: !reset []",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return override_path
+
+
+def compose_command(demo: Demo, args: list[str], override_files: tuple[Path, ...] = ()) -> list[str]:
+    command = ["docker", "compose"]
+    for index, override_file in enumerate(override_files):
+        if index == 0:
+            command.extend(["-f", "compose.yaml"])
+        command.extend(["-f", str(override_file)])
+    command.extend(args)
+    return command
+
+
 def run_command(command: list[str], log_path: Path) -> int:
     log_path.parent.mkdir(parents=True, exist_ok=True)
     print(f"$ {' '.join(command)}")
@@ -292,6 +368,48 @@ def run_command(command: list[str], log_path: Path) -> int:
             print(line, end="")
             log_file.write(line)
         return process.wait()
+
+
+def append_command(command: list[str], log_path: Path, *, cwd: Path) -> int:
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    print(f"$ {' '.join(command)}")
+    print(f"log: {display_path(log_path)}")
+    with log_path.open("a", encoding="utf-8") as log_file:
+        log_file.write(f"$ {' '.join(command)}\n")
+        log_file.flush()
+        result = subprocess.run(command, cwd=cwd, stdout=log_file, stderr=subprocess.STDOUT, text=True)
+        log_file.write(f"[exit {result.returncode}] {' '.join(command)}\n")
+        return result.returncode
+
+
+def compose_exec_shell(demo: Demo, shell_command: str, *, tty: bool = False) -> list[str]:
+    command = ["docker", "compose", "exec"]
+    if not tty:
+        command.append("-T")
+    command.extend([compose_service(demo), "bash", "-lc", shell_command])
+    return command
+
+
+def ros_shell(demo: Demo, command: str) -> str:
+    workspace_path = shlex.quote(f"/home/ros2-essentials/{demo.workspace}")
+    return (
+        "set -o pipefail; "
+        "source /home/user/.bashrc; "
+        f"cd {workspace_path}; "
+        "if [ -f install/setup.bash ]; then source install/setup.bash; fi; "
+        f"{command}"
+    )
+
+
+def wait_for_log_markers(log_path: Path, markers: tuple[str, ...], timeout_seconds: int) -> bool:
+    deadline = time.monotonic() + timeout_seconds
+    while time.monotonic() < deadline:
+        if log_path.is_file():
+            text = log_path.read_text(encoding="utf-8", errors="replace")
+            if all(marker in text for marker in markers):
+                return True
+        time.sleep(1)
+    return False
 
 
 def docker_base(demo: Demo, args: argparse.Namespace) -> list[str]:
@@ -350,11 +468,14 @@ def run_isaac_stage(demo: Demo, args: argparse.Namespace) -> Result:
     base = artifact_base(args.report_dir, demo.workspace, "doc-isaac-stage")
     log_path = base.with_suffix(".log")
     output_path = base.with_suffix(".png")
+    override_files = (no_registry_cache_override_path(args.report_dir, demo),)
+    play_trigger_path = f"/tmp/{demo.workspace}-{artifact_timestamp(base)}-play.trigger"
     env = {
         "DISPLAY": args.display,
         "XAUTHORITY": "/home/user/.Xauthority",
         "ISAAC_GUI_STAGE_PATH": demo.stage,
-        "ISAAC_GUI_PLAY": "true",
+        "ISAAC_GUI_PLAY": "false",
+        "ISAAC_GUI_PLAY_TRIGGER_PATH": play_trigger_path,
         "ISAAC_GUI_SETTLE_FRAMES": "180",
     }
     if demo.expected_prim:
@@ -375,7 +496,7 @@ def run_isaac_stage(demo: Demo, args: argparse.Namespace) -> Result:
     print(f"$ {' '.join(command)}")
     print(f"log: {display_path(log_path)}")
     with log_path.open("w", encoding="utf-8") as log_file:
-        up_command = ["docker", "compose", "up", "-d"]
+        up_command = compose_command(demo, COMPOSE_UP_LOCAL_ARGS, override_files)
         log_file.write(f"$ {' '.join(up_command)}\n")
         subprocess.run(up_command, cwd=compose_dir(demo), stdout=log_file, stderr=subprocess.STDOUT, text=True)
         log_file.write(f"$ {' '.join(command)}\n")
@@ -418,6 +539,209 @@ def run_isaac_stage(demo: Demo, args: argparse.Namespace) -> Result:
         log_path,
         output_path if output_path.is_file() else None,
         reason,
+    )
+
+
+def run_joint_command(demo: Demo, args: argparse.Namespace) -> Result:
+    assert demo.stage is not None
+    assert demo.joint_command is not None
+    base = artifact_base(args.report_dir, demo.workspace, "doc-joint-command")
+    log_path = base.with_suffix(".log")
+    screenshot_path = base.with_suffix(".png")
+    recording_path = base.with_suffix(".mp4")
+    override_files = (no_registry_cache_override_path(args.report_dir, demo),)
+    env = {
+        "DISPLAY": args.display,
+        "XAUTHORITY": "/home/user/.Xauthority",
+        "ISAAC_GUI_STAGE_PATH": demo.stage,
+        "ISAAC_GUI_PLAY": "true",
+        "ISAAC_GUI_SETTLE_FRAMES": "180",
+    }
+    if demo.expected_prim:
+        env["ISAAC_GUI_EXPECTED_PRIM"] = demo.expected_prim
+    exec_command = [
+        "docker",
+        "compose",
+        "exec",
+        *[item for key, value in env.items() for item in ("-e", f"{key}={value}")],
+        compose_service(demo),
+        "bash",
+        "-lc",
+        "/home/user/isaacsim/isaac-sim.sh --exec "
+        "/home/ros2-essentials/tests/workspace_smoke/isaac_gui_open_stage.py",
+    ]
+    isaac_command = ["script", "-qefc", " ".join(shlex.quote(part) for part in exec_command), "/dev/null"]
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    print(f"$ {' '.join(isaac_command)}")
+    print(f"log: {display_path(log_path)}")
+    with log_path.open("w", encoding="utf-8") as log_file:
+        up_command = compose_command(demo, COMPOSE_UP_LOCAL_ARGS, override_files)
+        log_file.write(f"$ {' '.join(up_command)}\n")
+        up_result = subprocess.run(
+            up_command,
+            cwd=compose_dir(demo),
+            stdout=log_file,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        log_file.write(f"[exit {up_result.returncode}] {' '.join(up_command)}\n")
+        log_file.write(f"$ {' '.join(isaac_command)}\n")
+        log_file.flush()
+        if up_result.returncode != 0:
+            return Result(
+                demo.workspace,
+                demo.kind,
+                "failed",
+                demo.command,
+                demo.doc,
+                log_path,
+                reason="docker compose up failed",
+            )
+        process = subprocess.Popen(
+            isaac_command,
+            cwd=compose_dir(demo),
+            stdout=log_file,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+
+    artifacts: list[Path] = []
+    recording_result: list[int | None] = [None]
+    recording_thread: threading.Thread | None = None
+    try:
+        ready_markers = (
+            "ISAAC_GUI_STAGE_OPENED",
+            "ISAAC_GUI_EXPECTED_PRIM_OK",
+            "ISAAC_GUI_WAITING_FOR_PLAY_TRIGGER",
+        )
+        ready = wait_for_log_markers(log_path, ready_markers, demo.timeout_seconds)
+        if not ready:
+            capture_x11(screenshot_path, args)
+            artifacts.append(screenshot_path)
+            return Result(
+                demo.workspace,
+                demo.kind,
+                "failed",
+                demo.command,
+                demo.doc,
+                log_path,
+                screenshot_path if screenshot_path.is_file() else None,
+                f"Isaac GUI did not reach {demo.workspace} stage readiness markers",
+                artifact_paths=tuple(path for path in artifacts if path.is_file()),
+            )
+
+        def record_motion() -> None:
+            recording_result[0] = record_x11_video(
+                recording_path,
+                display=args.display,
+                x11_size=args.x11_size,
+                seconds=demo.recording_seconds,
+                framerate=15,
+            )
+
+        recording_thread = threading.Thread(target=record_motion)
+        recording_thread.start()
+        with log_path.open("a", encoding="utf-8") as log_file:
+            log_file.write(
+                "Recording started before Isaac timeline play. "
+                f"Pre-play capture: {demo.pre_play_record_seconds}s\n"
+            )
+        time.sleep(demo.pre_play_record_seconds)
+        append_command(
+            compose_exec_shell(demo, f"touch {shlex.quote(play_trigger_path)}"),
+            log_path,
+            cwd=compose_dir(demo),
+        )
+        timeline_ready = wait_for_log_markers(log_path, ("ISAAC_GUI_TIMELINE_PLAYING",), 45)
+
+        topic_checks = [
+            (
+                "/clock",
+                "timeout --preserve-status 35s ros2 topic echo --once /clock",
+            ),
+            (
+                "/joint_states",
+                "timeout --preserve-status 35s ros2 topic echo --once /joint_states",
+            ),
+        ]
+        topic_failures = []
+        if timeline_ready:
+            for topic_name, topic_command in topic_checks:
+                code = append_command(compose_exec_shell(demo, ros_shell(demo, topic_command)), log_path, cwd=compose_dir(demo))
+                if code != 0:
+                    topic_failures.append(topic_name)
+            with log_path.open("a", encoding="utf-8") as log_file:
+                log_file.write(
+                    f"Scene stabilization after timeline play before /joint_command: {demo.post_play_stable_seconds}s\n"
+                )
+            time.sleep(demo.post_play_stable_seconds)
+        else:
+            topic_failures.append("timeline_play")
+
+        publish_code = append_command(compose_exec_shell(demo, ros_shell(demo, demo.joint_command)), log_path, cwd=compose_dir(demo))
+        recording_thread.join(timeout=demo.recording_seconds + 10)
+        capture_x11(screenshot_path, args)
+        for path in (screenshot_path, recording_path):
+            if path.is_file():
+                artifacts.append(path)
+    finally:
+        with log_path.open("a", encoding="utf-8") as log_file:
+            if recording_thread and recording_thread.is_alive():
+                log_file.write("recording thread did not finish before cleanup\n")
+            log_file.write("$ docker compose down --remove-orphans\n")
+            subprocess.run(
+                ["docker", "compose", "down", "--remove-orphans"],
+                cwd=compose_dir(demo),
+                stdout=log_file,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+        try:
+            code = process.wait(timeout=30)
+        except subprocess.TimeoutExpired:
+            process.terminate()
+            try:
+                code = process.wait(timeout=30)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                code = process.wait(timeout=30)
+
+    text = log_path.read_text(encoding="utf-8", errors="replace")
+    screenshot_ok = screenshot_path.is_file() and screenshot_path.stat().st_size >= MIN_GUI_SCREENSHOT_BYTES
+    recording_ok = recording_path.is_file() and recording_path.stat().st_size >= MIN_GUI_RECORDING_BYTES
+    stage_ok = "ISAAC_GUI_STAGE_OPENED" in text
+    prim_ok = "ISAAC_GUI_EXPECTED_PRIM_OK" in text
+    timeline_ok = "ISAAC_GUI_TIMELINE_PLAYING" in text
+    reason = None
+    if not stage_ok:
+        reason = f"Isaac GUI did not report {demo.workspace} stage opened"
+    elif not prim_ok:
+        reason = f"Isaac GUI did not report expected prim: {demo.expected_prim}"
+    elif not timeline_ok:
+        reason = "Isaac GUI did not report timeline playing"
+    elif topic_failures:
+        reason = f"ROS topic echo failed for: {', '.join(topic_failures)}"
+    elif publish_code != 0:
+        reason = f"/joint_command publish exited with {publish_code}"
+    elif not screenshot_ok:
+        reason = f"{demo.workspace} final screenshot was not captured or appears blank"
+    elif not recording_ok:
+        reason = f"{demo.workspace} motion recording was not captured or appears too small"
+    elif recording_result[0] != 0:
+        reason = f"{demo.workspace} motion recording exited with {recording_result[0]}"
+    elif code not in {0, 124, 130, 137, 143}:
+        reason = f"Isaac GUI container exited with {code}"
+    status = "passed" if reason is None else "failed"
+    return Result(
+        demo.workspace,
+        demo.kind,
+        status,
+        demo.command,
+        demo.doc,
+        log_path,
+        screenshot_path if screenshot_path.is_file() else None,
+        reason,
+        artifact_paths=tuple(path for path in artifacts if path.is_file()),
     )
 
 
@@ -493,6 +817,8 @@ def run_demo(demo: Demo, args: argparse.Namespace) -> Result:
         return Result(demo.workspace, demo.kind, "skipped", demo.command, demo.doc, reason=demo.reason)
     if demo.kind == "isaac_stage":
         return run_isaac_stage(demo, args)
+    if demo.kind == "joint_command":
+        return run_joint_command(demo, args)
     if demo.kind == "gui":
         return run_gui(demo, args)
     raise ValueError(f"Unsupported demo kind: {demo.kind}")
@@ -505,8 +831,11 @@ def print_summary(results: list[Result]) -> None:
         detail = ""
         if result.log_path:
             detail += f" log={display_path(result.log_path)}"
-        if result.artifact_path:
-            detail += f" artifact={display_path(result.artifact_path)}"
+        artifact_paths = result.artifact_paths or ((result.artifact_path,) if result.artifact_path else ())
+        if len(artifact_paths) == 1:
+            detail += f" artifact={display_path(artifact_paths[0])}"
+        elif artifact_paths:
+            detail += " artifacts=" + ",".join(display_path(path) or "" for path in artifact_paths)
         if result.reason:
             detail += f" reason={result.reason}"
         print(f"  {result.workspace}: {result.kind}: {result.status}{detail}")
@@ -525,6 +854,10 @@ def write_summary(path: Path, results: list[Result]) -> None:
                 "doc": result.doc,
                 "log_path": display_path(result.log_path),
                 "artifact_path": display_path(result.artifact_path),
+                "artifact_paths": [
+                    display_path(artifact)
+                    for artifact in (result.artifact_paths or ((result.artifact_path,) if result.artifact_path else ()))
+                ],
                 "reason": result.reason,
             }
             for result in results

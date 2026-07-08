@@ -22,7 +22,7 @@ For full control over the proof capture process:
 
 ```bash
 # 1. Start the workspace
-cd h1_ws/docker && docker compose up -d
+cd h1_ws/docker && docker compose up -d --build --pull never
 
 # 2. Launch Isaac Sim with the stage in background
 docker compose exec -e DISPLAY=:0 -e XAUTHORITY=/home/user/.Xauthority \

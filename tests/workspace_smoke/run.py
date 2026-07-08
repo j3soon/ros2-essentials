@@ -34,7 +34,7 @@ CHECKS = (
 LEVELS = {
     "config": ("config",),
     "build": ("config", "build"),
-    "image-cli": ("image-cli",),
+    "image-cli": ("config", "build", "image-cli"),
     "runtime": ("config", "up", "ps", "logs", "down"),
     "cli": ("config", "up", "ps", "cli", "logs", "down"),
     "isaac-visual": ("isaac-visual",),
@@ -50,6 +50,8 @@ SHARED_PATHS = (
     "scripts/setup_isaac_link.sh",
     "tests/workspace_smoke/",
 )
+COMPOSE_UP_LOCAL_ARGS = ("up", "-d", "--build", "--pull", "never")
+COMPOSE_UP_LOCAL_SHELL = "docker compose up -d --build --pull never"
 
 
 @dataclass(frozen=True)
@@ -175,11 +177,6 @@ def parse_args() -> argparse.Namespace:
             "Command executed with docker run against the built image for the "
             "image-cli check."
         ),
-    )
-    checks.add_argument(
-        "--pull",
-        action="store_true",
-        help="Pass --pull to docker compose build.",
     )
     checks.add_argument(
         "--no-gpu",
@@ -448,6 +445,24 @@ def gpu_override_path(report_dir: Path, workspace: Workspace) -> Path:
     return override_path
 
 
+def no_registry_cache_override_path(report_dir: Path, workspace: Workspace) -> Path:
+    override_path = report_dir / workspace.name / "no-registry-cache.compose.yaml"
+    override_path.parent.mkdir(parents=True, exist_ok=True)
+    override_path.write_text(
+        "\n".join(
+            [
+                "services:",
+                f"  {workspace.service}:",
+                "    build:",
+                "      cache_from: !reset []",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return override_path
+
+
 def run_command(
     command: list[str],
     *,
@@ -485,11 +500,13 @@ def run_command(
 def compose_command(
     workspace: Workspace,
     args: list[str],
-    override_file: Path | None = None,
+    override_files: Iterable[Path] = (),
 ) -> list[str]:
     command = ["docker", "compose"]
-    if override_file is not None:
-        command.extend(["-f", "compose.yaml", "-f", str(override_file)])
+    for index, override_file in enumerate(override_files):
+        if index == 0:
+            command.extend(["-f", "compose.yaml"])
+        command.extend(["-f", str(override_file)])
     command.extend(args)
     return command
 
@@ -498,40 +515,36 @@ def check_config(
     workspace: Workspace,
     env: dict[str, str],
     log_path: Path,
-    override_file: Path | None,
+    override_files: Iterable[Path],
 ) -> int:
-    return run_command(compose_command(workspace, ["config"], override_file), cwd=workspace.docker_dir, env=env, log_path=log_path)
+    return run_command(compose_command(workspace, ["config"], override_files), cwd=workspace.docker_dir, env=env, log_path=log_path)
 
 
 def check_build(
     workspace: Workspace,
     env: dict[str, str],
     log_path: Path,
-    pull: bool,
-    override_file: Path | None,
+    override_files: Iterable[Path],
 ) -> int:
-    args = ["build"]
-    if pull:
-        args.append("--pull")
-    return run_command(compose_command(workspace, args, override_file), cwd=workspace.docker_dir, env=env, log_path=log_path)
+    return run_command(compose_command(workspace, ["build"], override_files), cwd=workspace.docker_dir, env=env, log_path=log_path)
 
 
 def check_up(
     workspace: Workspace,
     env: dict[str, str],
     log_path: Path,
-    override_file: Path | None,
+    override_files: Iterable[Path],
 ) -> int:
-    return run_command(compose_command(workspace, ["up", "-d"], override_file), cwd=workspace.docker_dir, env=env, log_path=log_path)
+    return run_command(compose_command(workspace, list(COMPOSE_UP_LOCAL_ARGS), override_files), cwd=workspace.docker_dir, env=env, log_path=log_path)
 
 
 def check_ps(
     workspace: Workspace,
     env: dict[str, str],
     log_path: Path,
-    override_file: Path | None,
+    override_files: Iterable[Path],
 ) -> int:
-    return run_command(compose_command(workspace, ["ps", "--all"], override_file), cwd=workspace.docker_dir, env=env, log_path=log_path)
+    return run_command(compose_command(workspace, ["ps", "--all"], override_files), cwd=workspace.docker_dir, env=env, log_path=log_path)
 
 
 def check_cli(
@@ -539,9 +552,9 @@ def check_cli(
     env: dict[str, str],
     log_path: Path,
     cli_command: str,
-    override_file: Path | None,
+    override_files: Iterable[Path],
 ) -> int:
-    command = compose_command(workspace, ["exec", "-T", workspace.service, "bash", "-lc", cli_command], override_file)
+    command = compose_command(workspace, ["exec", "-T", workspace.service, "bash", "-lc", cli_command], override_files)
     return run_command(command, cwd=workspace.docker_dir, env=env, log_path=log_path)
 
 
@@ -575,14 +588,17 @@ def check_compose_exec(
     *,
     timeout_seconds: int,
     tty: bool,
+    override_files: Iterable[Path],
 ) -> int:
+    up_command = " ".join(shlex.quote(part) for part in compose_command(workspace, list(COMPOSE_UP_LOCAL_ARGS), override_files))
+    down_command = " ".join(shlex.quote(part) for part in compose_command(workspace, ["down", "--remove-orphans"], override_files))
     command = (
         "set -e; "
-        "docker compose up -d; "
+        f"{up_command}; "
         "code=0; "
         f"timeout {timeout_seconds:d}s "
         f"{compose_shell_command(workspace, shell_command, tty=tty)} || code=$?; "
-        "docker compose down --remove-orphans; "
+        f"{down_command}; "
         "exit $code"
     )
     return run_command(["bash", "-lc", command], cwd=workspace.docker_dir, env=env, log_path=log_path)
@@ -593,14 +609,18 @@ def check_image_cli(
     env: dict[str, str],
     log_path: Path,
     image_cli_command: str,
+    override_files: Iterable[Path],
 ) -> int:
     image = image_name(workspace)
+    build_command = " ".join(shlex.quote(part) for part in compose_command(workspace, ["build"], override_files))
     command = (
-        f"docker image inspect {shlex.quote(image)} >/dev/null && "
+        "set -e; "
+        f"{build_command}; "
+        f"docker image inspect {shlex.quote(image)} >/dev/null; "
         f"docker run --rm --network host --entrypoint bash {shlex.quote(image)} "
         f"-c {shlex.quote(image_cli_command)}"
     )
-    return run_command(["bash", "-lc", command], cwd=REPO_ROOT, env=env, log_path=log_path)
+    return run_command(["bash", "-lc", command], cwd=workspace.docker_dir, env=env, log_path=log_path)
 
 
 def check_isaac_visual(
@@ -608,6 +628,7 @@ def check_isaac_visual(
     env: dict[str, str],
     log_path: Path,
     timeout_seconds: int,
+    override_files: Iterable[Path],
 ) -> int:
     output_path = log_path.with_suffix(".png")
     container_script = "/home/ros2-essentials/tests/workspace_smoke/isaac_visual_smoke.py"
@@ -625,6 +646,7 @@ def check_isaac_visual(
         shell_command,
         timeout_seconds=timeout_seconds,
         tty=False,
+        override_files=override_files,
     )
 
 
@@ -633,6 +655,7 @@ def check_isaac_lab_deformable(
     env: dict[str, str],
     log_path: Path,
     timeout_seconds: int,
+    override_files: Iterable[Path],
 ) -> int:
     tutorial_command = (
         "./isaaclab.sh -p "
@@ -674,9 +697,11 @@ def check_isaac_lab_deformable(
         "tail -n 160 \"$log\" \"$typescript\" 2>/dev/null || true"
     )
     exec_prefix = "docker compose exec -T " + shlex.quote(workspace.service) + " bash -lc "
+    up_command = " ".join(shlex.quote(part) for part in compose_command(workspace, list(COMPOSE_UP_LOCAL_ARGS), override_files))
+    down_command = " ".join(shlex.quote(part) for part in compose_command(workspace, ["down", "--remove-orphans"], override_files))
     command = (
         "set -e; "
-        "docker compose up -d; "
+        f"{up_command}; "
         "code=124; "
         f"{exec_prefix}{shlex.quote(start_command)}; "
         f"deadline=$((SECONDS + {timeout_seconds:d})); "
@@ -699,7 +724,7 @@ def check_isaac_lab_deformable(
         "echo 'Timed out waiting for Isaac Lab deformable readiness markers.' >&2; "
         f"{exec_prefix}{shlex.quote(tail_command)}; "
         "fi; "
-        "docker compose down --remove-orphans; "
+        f"{down_command}; "
         "exit $code"
     )
     return run_command(["bash", "-lc", command], cwd=workspace.docker_dir, env=env, log_path=log_path)
@@ -716,6 +741,7 @@ def check_gpu_preflight(
         "nvidia-smi; "
         "echo; "
         "echo 'Docker GPU startup:'; "
+        f"docker image inspect {shlex.quote(image)} >/dev/null; "
         f"docker run --rm --gpus all {shlex.quote(image)} nvidia-smi"
     )
     return run_command(["bash", "-lc", command], cwd=REPO_ROOT, env=env, log_path=log_path)
@@ -726,6 +752,7 @@ def check_isaac_startup_preflight(
     env: dict[str, str],
     log_path: Path,
     timeout_seconds: int,
+    override_files: Iterable[Path],
 ) -> int:
     shell_command = (
         "/home/user/isaacsim/python.sh -c "
@@ -745,6 +772,7 @@ def check_isaac_startup_preflight(
         shell_command,
         timeout_seconds=timeout_seconds,
         tty=False,
+        override_files=override_files,
     )
 
 
@@ -753,9 +781,9 @@ def check_logs(
     env: dict[str, str],
     log_path: Path,
     log_tail: int,
-    override_file: Path | None,
+    override_files: Iterable[Path],
 ) -> int:
-    command = compose_command(workspace, ["logs", "--no-color", "--tail", str(log_tail)], override_file)
+    command = compose_command(workspace, ["logs", "--no-color", "--tail", str(log_tail)], override_files)
     return run_command(command, cwd=workspace.docker_dir, env=env, log_path=log_path)
 
 
@@ -763,9 +791,9 @@ def check_down(
     workspace: Workspace,
     env: dict[str, str],
     log_path: Path,
-    override_file: Path | None,
+    override_files: Iterable[Path],
 ) -> int:
-    command = compose_command(workspace, ["down", "--remove-orphans"], override_file)
+    command = compose_command(workspace, ["down", "--remove-orphans"], override_files)
     return run_command(command, cwd=workspace.docker_dir, env=env, log_path=log_path)
 
 
@@ -812,6 +840,7 @@ def run_isaac_startup_preflight(
         env,
         log_path,
         args.isaac_visual_timeout,
+        (no_registry_cache_override_path(args.report_dir, workspace),),
     )
     status = "passed" if code == 0 else "failed"
     return Result("host", "isaac-startup-preflight", status, log_path)
@@ -832,31 +861,30 @@ def run_check(
 
     log_path = command_log_path(args.report_dir, workspace, check)
     artifact_path = log_path.with_suffix(".png") if check == "isaac-visual" else None
-    override_file = (
-        gpu_override_path(args.report_dir, workspace)
-        if args.disable_gpu_reservation and check != "isaac-visual"
-        else None
-    )
+    override_files = [no_registry_cache_override_path(args.report_dir, workspace)]
+    if args.disable_gpu_reservation and check != "isaac-visual":
+        override_files.append(gpu_override_path(args.report_dir, workspace))
+    override_files_tuple = tuple(override_files)
     if check == "config":
-        code = check_config(workspace, env, log_path, override_file)
+        code = check_config(workspace, env, log_path, override_files_tuple)
     elif check == "build":
-        code = check_build(workspace, env, log_path, args.pull, override_file)
+        code = check_build(workspace, env, log_path, override_files_tuple)
     elif check == "up":
-        code = check_up(workspace, env, log_path, override_file)
+        code = check_up(workspace, env, log_path, override_files_tuple)
     elif check == "ps":
-        code = check_ps(workspace, env, log_path, override_file)
+        code = check_ps(workspace, env, log_path, override_files_tuple)
     elif check == "cli":
-        code = check_cli(workspace, env, log_path, args.cli_command, override_file)
+        code = check_cli(workspace, env, log_path, args.cli_command, override_files_tuple)
     elif check == "image-cli":
-        code = check_image_cli(workspace, env, log_path, args.image_cli_command)
+        code = check_image_cli(workspace, env, log_path, args.image_cli_command, override_files_tuple)
     elif check == "isaac-visual":
-        code = check_isaac_visual(workspace, env, log_path, args.isaac_visual_timeout)
+        code = check_isaac_visual(workspace, env, log_path, args.isaac_visual_timeout, override_files_tuple)
     elif check == "isaac-lab-deformable":
-        code = check_isaac_lab_deformable(workspace, env, log_path, args.isaac_lab_timeout)
+        code = check_isaac_lab_deformable(workspace, env, log_path, args.isaac_lab_timeout, override_files_tuple)
     elif check == "logs":
-        code = check_logs(workspace, env, log_path, args.log_tail, override_file)
+        code = check_logs(workspace, env, log_path, args.log_tail, override_files_tuple)
     elif check == "down":
-        code = check_down(workspace, env, log_path, override_file)
+        code = check_down(workspace, env, log_path, override_files_tuple)
     else:
         raise ValueError(f"Unsupported check: {check}")
 

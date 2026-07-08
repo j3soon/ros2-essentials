@@ -43,6 +43,7 @@ DEFAULT_EXPECTED_PRIMS = {
     "go2_ws": "/World/go2",
     "stretch3_ws": "/World/stretch3",
 }
+COMPOSE_UP_LOCAL_ARGS = ["up", "-d", "--build", "--pull", "never"]
 
 
 def compose_service(workspace: str) -> str:
@@ -51,6 +52,34 @@ def compose_service(workspace: str) -> str:
 
 def compose_dir(workspace: str) -> Path:
     return REPO_ROOT / workspace / "docker"
+
+
+def no_registry_cache_override_path(output_dir: Path, workspace: str) -> Path:
+    override_path = output_dir / "no-registry-cache.compose.yaml"
+    override_path.parent.mkdir(parents=True, exist_ok=True)
+    override_path.write_text(
+        "\n".join(
+            [
+                "services:",
+                f"  {compose_service(workspace)}:",
+                "    build:",
+                "      cache_from: !reset []",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return override_path
+
+
+def compose_command(workspace: str, args: list[str], override_files: tuple[Path, ...] = ()) -> list[str]:
+    command = ["docker", "compose"]
+    for index, override_file in enumerate(override_files):
+        if index == 0:
+            command.extend(["-f", "compose.yaml"])
+        command.extend(["-f", str(override_file)])
+    command.extend(args)
+    return command
 
 
 def container_repo_path(relative_path: str) -> str:
@@ -165,6 +194,7 @@ def main():
 
     output_dir = Path(args.output_dir) if args.output_dir else REPO_ROOT / "tests/workspace_smoke/artifacts" / args.workspace
     output_dir.mkdir(parents=True, exist_ok=True)
+    override_files = (no_registry_cache_override_path(output_dir, args.workspace),)
 
     stage = args.stage
     if not stage:
@@ -202,7 +232,7 @@ def main():
     print(f"Starting Isaac Sim with stage: {stage}", flush=True)
     print(f"Log file: {log_file}", flush=True)
 
-    up_cmd = ["docker", "compose", "up", "-d"]
+    up_cmd = compose_command(args.workspace, COMPOSE_UP_LOCAL_ARGS, override_files)
     with log_file.open("a", encoding="utf-8") as log:
         log.write(f"$ {' '.join(up_cmd)}\n")
         up_result = subprocess.run(

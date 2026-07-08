@@ -10,7 +10,7 @@ containers, or require local graphics/GPU setup.
 - `build`: run `config`, then `docker compose build`.
 - `image-cli`: run basic ROS/colcon commands in the already-built image with
   `docker run`, without starting the GPU-requesting Compose service.
-- `runtime`: run `config`, `docker compose up -d`, `docker compose ps`,
+- `runtime`: run `config`, `docker compose up -d --build --pull never`, `docker compose ps`,
   collect logs, and `docker compose down`.
 - `cli`: run `runtime` plus basic commands inside the primary workspace
   service.
@@ -37,6 +37,14 @@ workspace docs. It starts GUI/Isaac demos, captures screenshots under
 For Isaac doc demos it launches the normal Isaac Sim GUI, validates the
 expected robot prim, and captures the full desktop/window rather than a cropped
 render.
+
+The Go2 and H1 doc-demo smokes are motion proofs: each opens the documented
+Isaac stage with the timeline paused, validates the expected robot prim, starts
+host X11 recording, triggers Isaac timeline Play, waits for `/clock` and
+`/joint_states` with `ros2 topic echo --once`, waits for the scene to
+stabilize, publishes the documented `/joint_command`, and writes both a final
+screenshot and a short X11 screen recording to the summary artifacts. The MP4
+must include the start of simulation and pre-command frames.
 
 `proof_capture.py` is the shared host-side X11 capture helper used by GUI proof
 runs. It can also be called directly for reusable screenshots or short
@@ -100,10 +108,12 @@ tests/workspace_smoke/isaac_lab_deformable_gui.sh --detach
 tail -f tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-gui.log
 ```
 
-Isaac Sim/Lab proof paths use `docker compose up -d` and `docker compose exec`
-so GPU, X11, `/dev`, workspace mounts, and cache volumes come from the same
-`docker/compose.yaml` contract users run locally. Direct `docker run` remains
-only for cheap image CLI and Docker GPU preflight checks.
+Isaac Sim/Lab proof paths use `docker compose up -d --build --pull never` and
+`docker compose exec` so GPU, X11, `/dev`, workspace mounts, and cache volumes
+come from the same `docker/compose.yaml` contract users run locally. Smoke
+tests build the workspace image locally and refuse DockerHub service-image
+pulls. Direct `docker run` remains only for cheap image CLI and Docker GPU
+preflight checks, and those paths require the image to already exist locally.
 
 Wait for both markers before capturing:
 

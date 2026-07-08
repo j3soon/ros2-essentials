@@ -9,6 +9,7 @@ COMPOSE_DIR="${ISAAC_LAB_COMPOSE_DIR:-$REPO_ROOT/$WORKSPACE/docker}"
 DISPLAY_VALUE="${DISPLAY:-:0}"
 LOG_PATH="${ISAAC_LAB_LOG_PATH:-$ARTIFACT_DIR/isaac-lab-deformable-kit-gui.log}"
 PID_PATH="${ISAAC_LAB_PID_PATH:-$ARTIFACT_DIR/isaac-lab-deformable-kit-gui.pid}"
+BUILD_OVERRIDE="$ARTIFACT_DIR/isaac-lab-deformable-no-registry-cache.compose.yaml"
 MODE="${1:-run}"
 
 LAB_COMMAND="cd /home/user/IsaacLab && ./isaaclab.sh -p scripts/tutorials/01_assets/run_deformable_object.py --viz kit"
@@ -21,7 +22,13 @@ if [ ! -f "$COMPOSE_DIR/compose.yaml" ]; then
 fi
 
 cd "$COMPOSE_DIR"
-docker compose up -d
+cat >"$BUILD_OVERRIDE" <<EOF
+services:
+  $SERVICE:
+    build:
+      cache_from: !reset []
+EOF
+docker compose -f compose.yaml -f "$BUILD_OVERRIDE" up -d --build --pull never
 
 printf -v exec_command "%q " docker compose exec "$SERVICE" bash -lc "$LAB_COMMAND"
 
