@@ -13,6 +13,9 @@ import omni.timeline
 import omni.usd
 
 
+_STAGE_TASK: asyncio.Future | None = None
+
+
 def look_at_transform(eye, target, up):
     from pxr import Gf
 
@@ -130,7 +133,8 @@ async def main_async() -> None:
 
 
 def main() -> None:
-    asyncio.ensure_future(main_async())
+    global _STAGE_TASK
+    _STAGE_TASK = asyncio.ensure_future(main_async())
 
 
 main()

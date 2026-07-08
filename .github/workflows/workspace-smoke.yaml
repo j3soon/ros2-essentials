@@ -6,7 +6,6 @@ on:
       - "*_ws/**"
       - "docker_modules/**"
       - "scripts/post_install.sh"
-      - "scripts/setup_docker_modules_link.sh"
       - "scripts/setup_env_files.sh"
       - "scripts/setup_isaac_link.sh"
       - ".agents/skills/**"
@@ -17,7 +16,6 @@ on:
       - "*_ws/**"
       - "docker_modules/**"
       - "scripts/post_install.sh"
-      - "scripts/setup_docker_modules_link.sh"
       - "scripts/setup_env_files.sh"
       - "scripts/setup_isaac_link.sh"
       - ".agents/skills/**"
@@ -31,6 +29,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Refresh workspace links
         run: scripts/post_install.sh
       - name: Run affected workspace compose config checks

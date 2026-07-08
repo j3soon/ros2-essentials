@@ -454,13 +454,9 @@ def run_gui(demo: Demo, args: argparse.Namespace) -> Result:
     print(f"log: {display_path(log_path)}")
     with log_path.open("w", encoding="utf-8") as log_file:
         log_file.write(f"$ {' '.join(command)}\n")
-        process = subprocess.Popen(command, cwd=REPO_ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        process = subprocess.Popen(command, cwd=REPO_ROOT, text=True, stdout=log_file, stderr=subprocess.STDOUT)
         time.sleep(demo.settle_seconds)
         capture_x11(output_path, args)
-        assert process.stdout is not None
-        for line in process.stdout:
-            print(line, end="")
-            log_file.write(line)
         code = process.wait()
 
     text = log_path.read_text(encoding="utf-8", errors="replace")
