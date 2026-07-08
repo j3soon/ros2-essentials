@@ -218,8 +218,8 @@ def parse_args() -> argparse.Namespace:
     checks.add_argument(
         "--isaac-lab-timeout",
         type=int,
-        default=300,
-        help="Seconds allowed for Isaac Lab smoke checks. Defaults to 300.",
+        default=480,
+        help="Seconds allowed for Isaac Lab smoke checks. Defaults to 480.",
     )
     checks.add_argument(
         "--gpu-preflight-image",
@@ -549,6 +549,45 @@ def image_name(workspace: Workspace) -> str:
     return workspace.image
 
 
+def with_pty(command: str) -> str:
+    return f"script -qefc {shlex.quote(command)} /dev/null"
+
+
+def compose_shell_command(
+    workspace: Workspace,
+    shell_command: str,
+    *,
+    tty: bool,
+) -> str:
+    exec_args = ["docker", "compose", "exec"]
+    if not tty:
+        exec_args.append("-T")
+    exec_args.extend([workspace.service, "bash", "-lc", shell_command])
+    command = " ".join(shlex.quote(part) for part in exec_args)
+    return with_pty(command) if tty else command
+
+
+def check_compose_exec(
+    workspace: Workspace,
+    env: dict[str, str],
+    log_path: Path,
+    shell_command: str,
+    *,
+    timeout_seconds: int,
+    tty: bool,
+) -> int:
+    command = (
+        "set -e; "
+        "docker compose up -d; "
+        "code=0; "
+        f"timeout {timeout_seconds:d}s "
+        f"{compose_shell_command(workspace, shell_command, tty=tty)} || code=$?; "
+        "docker compose down --remove-orphans; "
+        "exit $code"
+    )
+    return run_command(["bash", "-lc", command], cwd=workspace.docker_dir, env=env, log_path=log_path)
+
+
 def check_image_cli(
     workspace: Workspace,
     env: dict[str, str],
@@ -570,23 +609,23 @@ def check_isaac_visual(
     log_path: Path,
     timeout_seconds: int,
 ) -> int:
-    image = image_name(workspace)
     output_path = log_path.with_suffix(".png")
-    script_path = REPO_ROOT / "tests" / "workspace_smoke" / "isaac_visual_smoke.py"
-    container_output = f"/artifacts/{output_path.name}"
-    container_script = "/workspace_smoke/isaac_visual_smoke.py"
-    command = (
-        f"docker image inspect {shlex.quote(image)} >/dev/null && "
-        f"timeout {timeout_seconds:d}s "
-        "docker run --rm --gpus all --privileged --network host "
-        "-v /dev:/dev "
-        "-v /tmp/.X11-unix:/tmp/.X11-unix "
-        f"-v {shlex.quote(str(script_path))}:{container_script}:ro "
-        f"-v {shlex.quote(str(log_path.parent))}:/artifacts "
-        f"--entrypoint bash {shlex.quote(image)} "
-        f"--noprofile --norc -c {shlex.quote('/home/user/isaacsim/python.sh ' + container_script + ' --output ' + container_output + ' --label ' + workspace.name)}"
+    container_script = "/home/ros2-essentials/tests/workspace_smoke/isaac_visual_smoke.py"
+    container_output = f"/home/ros2-essentials/{display_path(output_path)}"
+    shell_command = (
+        "/home/user/isaacsim/python.sh "
+        f"{shlex.quote(container_script)} "
+        f"--output {shlex.quote(container_output)} "
+        f"--label {shlex.quote(workspace.name)}"
     )
-    return run_command(["bash", "-lc", command], cwd=REPO_ROOT, env=env, log_path=log_path)
+    return check_compose_exec(
+        workspace,
+        env,
+        log_path,
+        shell_command,
+        timeout_seconds=timeout_seconds,
+        tty=False,
+    )
 
 
 def check_isaac_lab_deformable(
@@ -595,38 +634,75 @@ def check_isaac_lab_deformable(
     log_path: Path,
     timeout_seconds: int,
 ) -> int:
-    image = image_name(workspace)
-    lab_command = (
+    tutorial_command = (
+        "./isaaclab.sh -p "
+        "scripts/tutorials/01_assets/run_deformable_object.py --viz kit"
+    )
+    start_command = (
         "set -e; "
         "test -x /home/user/IsaacLab/isaaclab.sh; "
+        "command -v script >/dev/null; "
         "cd /home/user/IsaacLab; "
-        "rm -f /tmp/isaac-lab-deformable.log; "
-        "set +e; "
-        "timeout "
-        f"{timeout_seconds:d}s "
-        "bash --noprofile --norc -c "
-        + shlex.quote(
-            "./isaaclab.sh -p scripts/tutorials/01_assets/run_deformable_object.py --viz kit "
-            "2>&1 | tee /tmp/isaac-lab-deformable.log | "
-            "awk '{ print; fflush(); if ($0 ~ /\\[INFO\\]: Setup complete/) exit 0 }'"
-        )
-        + "; "
-        "code=$?; "
+        "log=/tmp/isaac-lab-deformable.log; "
+        "typescript=/tmp/isaac-lab-deformable.typescript; "
+        "pidfile=/tmp/isaac-lab-deformable.pid; "
+        "rm -f \"$log\" \"$typescript\" \"$pidfile\"; "
+        f"nohup script -qefc {shlex.quote(tutorial_command)} \"$typescript\" "
+        ">\"$log\" 2>&1 </dev/null & "
+        "echo $! >\"$pidfile\""
+    )
+    markers_command = (
+        "log=/tmp/isaac-lab-deformable.log; "
+        "typescript=/tmp/isaac-lab-deformable.typescript; "
+        "grep -q \"Registered backend 'kit'\" \"$log\" \"$typescript\" 2>/dev/null "
+        "&& grep -q '\\[INFO\\]: Setup complete' \"$log\" \"$typescript\" 2>/dev/null "
+        "&& grep -q 'Root position (in world)' \"$log\" \"$typescript\" 2>/dev/null"
+    )
+    print_markers_command = (
+        "log=/tmp/isaac-lab-deformable.log; "
+        "typescript=/tmp/isaac-lab-deformable.typescript; "
+        "grep -hm 12 \"Registered backend 'kit'\\|\\[INFO\\]: Setup complete\\|Root position (in world)\" "
+        "\"$log\" \"$typescript\" 2>/dev/null"
+    )
+    process_alive_command = (
+        "pidfile=/tmp/isaac-lab-deformable.pid; "
+        "test -f \"$pidfile\" && kill -0 \"$(cat \"$pidfile\")\" 2>/dev/null"
+    )
+    tail_command = (
+        "log=/tmp/isaac-lab-deformable.log; "
+        "typescript=/tmp/isaac-lab-deformable.typescript; "
+        "tail -n 160 \"$log\" \"$typescript\" 2>/dev/null || true"
+    )
+    exec_prefix = "docker compose exec -T " + shlex.quote(workspace.service) + " bash -lc "
+    command = (
         "set -e; "
-        "grep -q \"Registered backend 'kit'\" /tmp/isaac-lab-deformable.log "
-        "&& grep -q '\\[INFO\\]: Setup complete' /tmp/isaac-lab-deformable.log "
-        "&& exit 0; "
+        "docker compose up -d; "
+        "code=124; "
+        f"{exec_prefix}{shlex.quote(start_command)}; "
+        f"deadline=$((SECONDS + {timeout_seconds:d})); "
+        "while [ \"$SECONDS\" -lt \"$deadline\" ]; do "
+        f"if {exec_prefix}{shlex.quote(markers_command)} >/dev/null 2>&1; then "
+        "echo 'Isaac Lab deformable readiness markers found.'; "
+        f"{exec_prefix}{shlex.quote(print_markers_command)}; "
+        "code=0; "
+        "break; "
+        "fi; "
+        f"if ! {exec_prefix}{shlex.quote(process_alive_command)} >/dev/null 2>&1; then "
+        "echo 'Isaac Lab deformable process exited before readiness markers.' >&2; "
+        f"{exec_prefix}{shlex.quote(tail_command)}; "
+        "code=1; "
+        "break; "
+        "fi; "
+        "sleep 2; "
+        "done; "
+        "if [ \"$code\" -eq 124 ]; then "
+        "echo 'Timed out waiting for Isaac Lab deformable readiness markers.' >&2; "
+        f"{exec_prefix}{shlex.quote(tail_command)}; "
+        "fi; "
+        "docker compose down --remove-orphans; "
         "exit $code"
     )
-    command = (
-        f"docker image inspect {shlex.quote(image)} >/dev/null && "
-        "docker run --rm --gpus all --privileged --network host "
-        "-v /dev:/dev "
-        "-v /tmp/.X11-unix:/tmp/.X11-unix "
-        f"--entrypoint bash {shlex.quote(image)} "
-        f"--noprofile --norc -c {shlex.quote(lab_command)}"
-    )
-    return run_command(["bash", "-lc", command], cwd=REPO_ROOT, env=env, log_path=log_path)
+    return run_command(["bash", "-lc", command], cwd=workspace.docker_dir, env=env, log_path=log_path)
 
 
 def check_gpu_preflight(
@@ -651,25 +727,25 @@ def check_isaac_startup_preflight(
     log_path: Path,
     timeout_seconds: int,
 ) -> int:
-    command = (
-        f"docker image inspect {shlex.quote(workspace.image)} >/dev/null && "
-        f"timeout {timeout_seconds:d}s "
-        "docker run --rm --gpus all --privileged --network host "
-        f"--entrypoint bash {shlex.quote(workspace.image)} "
-        "--noprofile --norc -c "
+    shell_command = (
+        "/home/user/isaacsim/python.sh -c "
         + shlex.quote(
-            "/home/user/isaacsim/python.sh -c "
-            + shlex.quote(
-                "from isaacsim import SimulationApp; "
-                "print('ISAAC_STARTUP_BEFORE'); "
-                "app=SimulationApp({'headless': True, 'limit_cpu_threads': 16}); "
-                "print('ISAAC_STARTUP_AFTER'); "
-                "app.close(); "
-                "print('ISAAC_STARTUP_CLOSED')"
-            )
+            "from isaacsim import SimulationApp; "
+            "print('ISAAC_STARTUP_BEFORE'); "
+            "app=SimulationApp({'headless': True, 'limit_cpu_threads': 16}); "
+            "print('ISAAC_STARTUP_AFTER'); "
+            "app.close(); "
+            "print('ISAAC_STARTUP_CLOSED')"
         )
     )
-    return run_command(["bash", "-lc", command], cwd=REPO_ROOT, env=env, log_path=log_path)
+    return check_compose_exec(
+        workspace,
+        env,
+        log_path,
+        shell_command,
+        timeout_seconds=timeout_seconds,
+        tty=False,
+    )
 
 
 def check_logs(
@@ -882,7 +958,8 @@ def main() -> int:
                 write_summary_json(args.summary_json, results)
                 print(f"JSON summary: {display_path(args.summary_json)}")
             return 1
-    if needs_isaac_gpu and not args.skip_isaac_startup_preflight:
+    needs_isaac_startup = needs_isaac_gpu
+    if needs_isaac_startup and not args.skip_isaac_startup_preflight:
         print()
         print("== host ==")
         result = run_isaac_startup_preflight(args, env, selected)

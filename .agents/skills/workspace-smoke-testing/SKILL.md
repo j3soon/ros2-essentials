@@ -30,15 +30,27 @@ needed. If they only need a quick non-GUI check, prefer `image-cli`.
 - Isaac Lab deformable smoke: `python3 tests/workspace_smoke/run.py --workspace <ws> --level isaac-lab-deformable`
 - Documented GUI/Isaac proof: `python3 tests/workspace_smoke/doc_demo_smoke.py --workspace <ws> --summary-json tests/workspace_smoke/artifacts/<ws>-doc-demo.json`
 
+For Isaac Sim/Lab proof paths, prefer the workspace `docker/compose.yaml`
+runtime contract: `docker compose up -d`, then `docker compose exec <service>
+bash -lc ...`. Keep direct `docker run` only for cheap image CLI and Docker GPU
+preflight checks.
+
 For Isaac Lab deformable-object Kit GUI proof, run
-`tests/workspace_smoke/isaac_lab_deformable_gui.sh --detach`, follow
-`docker logs -f isaac-lab-deformable-proof`, and wait for both
-`Registered backend 'kit' for factory Visualizer.` and `[INFO]: Setup complete...`
-before calling `proof_capture.py`. These log markers can appear before the
-first useful host X11 frame. Always take and inspect a check screenshot before
-recording; if it shows a black viewport, wait until the orange deformable
-objects render, then record. Confirm MP4 proof by extracting a frame from the
-recording and verifying it shows the deformable scene.
+`tests/workspace_smoke/isaac_lab_deformable_gui.sh --detach`, follow the printed
+log path, and wait for `Registered backend 'kit'`, `[INFO]: Setup complete...`,
+and the first `Root position (in world)` line. `Setup complete` can still
+precede the first rendered viewport frame. Always take and inspect a check
+screenshot before recording; if it shows a black viewport, wait until the
+orange deformable objects render, then record. Confirm MP4 proof by extracting a
+frame from the recording and verifying it shows the deformable scene. The Kit
+GUI tutorial must run with a TTY; use `docker compose exec` from an interactive
+terminal, or `script -qefc ... /dev/null` from non-interactive smoke runners.
+For automated checks, poll the log inside the Compose service rather than the
+outer PTY transcript; the host transcript can lag or remain attached after the
+container has already emitted root-position lines.
+Expect first Compose-based Kit launches to take minutes while Isaac/RTX/cache
+startup work completes; compare `Simulation App Starting` to
+`Simulation App Startup Complete` before calling it a deformable simulation hang.
 
 For screenshot/recording proof requests, prefer the direct GUI capture path:
 launch the workspace GUI, wait for a visible readiness marker/window, then use

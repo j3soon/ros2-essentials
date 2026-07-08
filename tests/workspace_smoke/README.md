@@ -14,19 +14,21 @@ containers, or require local graphics/GPU setup.
   collect logs, and `docker compose down`.
 - `cli`: run `runtime` plus basic commands inside the primary workspace
   service.
-- `isaac-visual`: run the already-built image with GPU access, start Isaac Sim
-  headless, render a deterministic cube/ground/camera scene, and write a PNG
-  proof artifact next to the command log. The runner first validates host
+- `isaac-visual`: start the workspace Compose service with GPU access, run
+  Isaac Sim headless through `docker compose exec`, render a deterministic
+  cube/ground/camera scene, and write a PNG proof artifact next to the command
+  log. The runner first validates host
   Docker GPU startup with `docker run --gpus all ... nvidia-smi`; if that
   preflight fails, workspace visual checks are skipped because they cannot
   start either. It then starts one minimal Isaac Sim `SimulationApp`; if RTX
   renderer startup fails there, workspace visual checks are skipped because the
   common renderer path cannot produce screenshots.
-- `isaac-lab-deformable`: run the already-built image with GPU access, start
-  Isaac Lab's deformable object tutorial with the Kit visualizer, and treat the
-  check as passed once the tutorial reports setup complete. The deformable
-  object path requires GPU simulation, so this check uses the same Docker GPU
-  and Isaac Sim startup preflights as `isaac-visual`.
+- `isaac-lab-deformable`: start the workspace Compose service with GPU access,
+  run Isaac Lab's deformable object tutorial with the Kit visualizer through
+  `docker compose exec`, and treat the check as passed once the tutorial emits
+  the first root-position line. The deformable object path requires GPU
+  simulation, so this check uses the same Docker GPU and Isaac Sim startup
+  preflights as `isaac-visual`.
 - `gui`: reserved for manual/local GUI validation placeholders.
 
 `doc_demo_smoke.py` is the local proof runner for representative commands from
@@ -90,14 +92,18 @@ python3 tests/workspace_smoke/run.py \
   --summary-json tests/workspace_smoke/artifacts/template_ws-isaac-lab-deformable.json
 ```
 
-Launch the Isaac Lab deformable-object tutorial with the Kit visualizer on the
-host X display for screenshot or recording proof:
+Launch the Isaac Lab deformable-object tutorial with the Kit visualizer through
+the workspace Compose service for screenshot or recording proof:
 
 ```bash
 tests/workspace_smoke/isaac_lab_deformable_gui.sh --detach
-docker logs -f isaac-lab-deformable-proof | \
-  tee tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-gui.log
+tail -f tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-gui.log
 ```
+
+Isaac Sim/Lab proof paths use `docker compose up -d` and `docker compose exec`
+so GPU, X11, `/dev`, workspace mounts, and cache volumes come from the same
+`docker/compose.yaml` contract users run locally. Direct `docker run` remains
+only for cheap image CLI and Docker GPU preflight checks.
 
 Wait for both markers before capturing:
 
@@ -106,10 +112,27 @@ Registered backend 'kit' for factory Visualizer.
 [INFO]: Setup complete...
 ```
 
-These log markers prove the tutorial has initialized, but they can appear
-before the host X display has a useful rendered frame. A black recording means
-capture started too early, so capture a check screenshot and inspect it first.
-If the viewport is black, wait and capture again before recording:
+Then wait for the first simulation line before capturing:
+
+```text
+Root position (in world)
+```
+
+`Setup complete` proves `sim.reset()` returned, but it can still appear before
+the host X display has a useful rendered frame. A black recording means capture
+started too early, so capture a check screenshot and inspect it first. If the
+viewport is black, wait and capture again before recording. The Kit GUI
+tutorial also needs a TTY (`docker compose exec` from an interactive terminal,
+or `script -qefc ... /dev/null` from non-interactive smoke runners); without it,
+the run can stall before `Setup complete`.
+
+For automated smoke checks, treat the container log as the readiness source.
+The host-side PTY transcript can lag or stay attached even after the tutorial
+has started printing root positions inside the container.
+First Compose-based Kit launches can take minutes while Isaac/RTX/cache startup
+work completes. Check the gap between `Simulation App Starting` and
+`Simulation App Startup Complete` before treating the run as a deformable
+simulation hang.
 
 ```bash
 python3 tests/workspace_smoke/proof_capture.py screenshot \
@@ -149,10 +172,11 @@ ffmpeg -y \
 ```
 
 The extracted frame should show the Isaac Lab UI with the rendered orange
-deformable objects. Stop the proof container after capturing:
+deformable objects. Stop the proof process and Compose service after capturing:
 
 ```bash
-docker stop isaac-lab-deformable-proof
+kill "$(cat tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-gui.pid)"
+cd template_ws/docker && docker compose down --remove-orphans
 ```
 
 Run only the visual path after a host GPU service fix:

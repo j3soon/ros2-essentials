@@ -272,6 +272,14 @@ def image_for(demo: Demo, args: argparse.Namespace) -> str:
     return image_overrides(args).get(demo.workspace, demo.image)
 
 
+def compose_service(demo: Demo) -> str:
+    return demo.workspace.replace("_", "-")
+
+
+def compose_dir(demo: Demo) -> Path:
+    return REPO_ROOT / demo.workspace / "docker"
+
+
 def run_command(command: list[str], log_path: Path) -> int:
     log_path.parent.mkdir(parents=True, exist_ok=True)
     print(f"$ {' '.join(command)}")
@@ -342,7 +350,6 @@ def run_isaac_stage(demo: Demo, args: argparse.Namespace) -> Result:
     base = artifact_base(args.report_dir, demo.workspace, "doc-isaac-stage")
     log_path = base.with_suffix(".log")
     output_path = base.with_suffix(".png")
-    container_name = f"workspace-smoke-{demo.workspace.replace('_', '-')}-{datetime.now().strftime('%H%M%S')}"
     env = {
         "DISPLAY": args.display,
         "XAUTHORITY": "/home/user/.Xauthority",
@@ -352,49 +359,40 @@ def run_isaac_stage(demo: Demo, args: argparse.Namespace) -> Result:
     }
     if demo.expected_prim:
         env["ISAAC_GUI_EXPECTED_PRIM"] = demo.expected_prim
-    command = [
+    exec_command = [
         "docker",
-        "run",
-        "--rm",
-        "--name",
-        container_name,
-        "--gpus",
-        "all",
-        "--privileged",
-        "--network",
-        "host",
+        "compose",
+        "exec",
         *[item for key, value in env.items() for item in ("-e", f"{key}={value}")],
-        "-v",
-        "/dev:/dev",
-        "-v",
-        "/tmp/.X11-unix:/tmp/.X11-unix",
-        "-v",
-        f"{Path.home() / '.Xauthority'}:/home/user/.Xauthority:ro",
-        "-v",
-        f"{REPO_ROOT}:/home/ros2-essentials:ro",
-        "-v",
-        f"{ISAAC_GUI_SCRIPT}:/workspace_smoke/isaac_gui_open_stage.py:ro",
-        "--entrypoint",
+        compose_service(demo),
         "bash",
-        image_for(demo, args),
-        "--noprofile",
-        "--norc",
         "-lc",
-        "/home/user/isaacsim/isaac-sim.sh --exec /workspace_smoke/isaac_gui_open_stage.py",
+        "/home/user/isaacsim/isaac-sim.sh --exec "
+        "/home/ros2-essentials/tests/workspace_smoke/isaac_gui_open_stage.py",
     ]
+    command = ["script", "-qefc", " ".join(shlex.quote(part) for part in exec_command), "/dev/null"]
     log_path.parent.mkdir(parents=True, exist_ok=True)
     print(f"$ {' '.join(command)}")
     print(f"log: {display_path(log_path)}")
     with log_path.open("w", encoding="utf-8") as log_file:
+        up_command = ["docker", "compose", "up", "-d"]
+        log_file.write(f"$ {' '.join(up_command)}\n")
+        subprocess.run(up_command, cwd=compose_dir(demo), stdout=log_file, stderr=subprocess.STDOUT, text=True)
         log_file.write(f"$ {' '.join(command)}\n")
-        process = subprocess.Popen(command, cwd=REPO_ROOT, stdout=log_file, stderr=subprocess.STDOUT, text=True)
+        process = subprocess.Popen(command, cwd=compose_dir(demo), stdout=log_file, stderr=subprocess.STDOUT, text=True)
         time.sleep(demo.settle_seconds)
         capture_x11(output_path, args)
-        subprocess.run(["docker", "stop", "--timeout", "20", container_name], cwd=REPO_ROOT, stdout=log_file, stderr=subprocess.STDOUT)
+        subprocess.run(
+            ["docker", "compose", "down", "--remove-orphans"],
+            cwd=compose_dir(demo),
+            stdout=log_file,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
         try:
             code = process.wait(timeout=30)
         except subprocess.TimeoutExpired:
-            subprocess.run(["docker", "kill", container_name], cwd=REPO_ROOT, stdout=log_file, stderr=subprocess.STDOUT)
+            process.terminate()
             code = process.wait(timeout=30)
 
     text = log_path.read_text(encoding="utf-8", errors="replace")

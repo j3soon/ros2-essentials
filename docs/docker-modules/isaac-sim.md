@@ -2,7 +2,7 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_sim.sh)
 
-Isaac Sim 5.1.0 binary install, with `ISAAC_SIM_VERSION: "develop"` available for upstream source builds.
+Isaac Sim 6.0.1 binary install, with `ISAAC_SIM_VERSION: "develop"` available for upstream source builds.
 
 > See [Last tested](../last-tested.md) for the latest validation status.
 
@@ -13,7 +13,7 @@ Depends on:
 
 > Note that CUDA Toolkit is not required for Isaac Sim.
 
-[Compatibility test](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_workstation.html#isaac-sim-compatibility-checker):
+[Compatibility test](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/installation/install_workstation.html#isaac-sim-compatibility-checker):
 
 ```sh
 cd ~/isaacsim
@@ -78,19 +78,19 @@ check_urdf $URDF_FILE
 
 ## Debugging Physics Simulation
 
-- [Physics Inspector](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/physics/joint_inspector.html) to test the joints and limits.
-- [Visualize Colliders](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/physics/physics_static_collision.html#enable-visualization), Joints, and Mass Properties.
-- [Simulation Data Visualizer](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/physics/ext_isaacsim_inspect_physics.html) to track physics-related data during simulation.
+- [Physics Inspector](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/physics/joint_inspector.html) to test the joints and limits.
+- [Visualize Colliders](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/physics/physics_static_collision.html#enable-visualization), Joints, and Mass Properties.
+- [Simulation Data Visualizer](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/physics/ext_isaacsim_inspect_physics.html) to track physics-related data during simulation.
 - [Measure Tool](https://docs.omniverse.nvidia.com/extensions/latest/ext_measure-tool.html) that can be installed under `Window > Extensions`.
 - `Utilities > Statistics` and select `RTX Scene` for scene optimization metrics.
 
 ## Generating OmniGraph for ROS2
 
-Instead of manually creating the OmniGraph via Isaac Sim GUI or Python code, the easier way is to use the [Graph Shortcut tool](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/ros2_tutorials/tutorial_ros2_manipulation.html#graph-shortcut). A concrete example can be found in [PR#83](https://github.com/j3soon/ros2-essentials/pull/83).
+Instead of manually creating the OmniGraph via Isaac Sim GUI or Python code, the easier way is to use the [Graph Shortcut tool](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/ros2_tutorials/tutorial_ros2_manipulation.html#graph-shortcut). A concrete example can be found in [PR#83](https://github.com/j3soon/ros2-essentials/pull/83).
 
 ## Known Issues
 
-See [official known issues](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/overview/known_issues.html) for Isaac Sim.
+See [official known issues](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/overview/known_issues.html) for Isaac Sim.
 
 ```sh
 2025-07-10 21:42:18 [11,579ms] [Error] [omni.ext._impl._internal] Failed to import python module isaacsim.core.simulation_manager from /isaac-sim/exts/isaacsim.core.simulation_manager. Error: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject. Traceback:

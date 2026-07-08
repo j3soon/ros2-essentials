@@ -2,7 +2,7 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_lab.sh)
 
-Isaac Lab git install. Supported `ISAAC_LAB_VERSION` values are `2.3.0`, `2.3.2`, `3.0.0-beta2.patch1`, and `develop`.
+Isaac Lab git install. The default is `3.0.0-beta2.patch1`; supported `ISAAC_LAB_VERSION` values are `2.3.0`, `2.3.2`, `3.0.0-beta2.patch1`, and `develop`.
 
 > See [Last tested](../last-tested.md) for the latest validation status.
 
