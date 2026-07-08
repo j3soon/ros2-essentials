@@ -22,6 +22,11 @@ containers, or require local graphics/GPU setup.
   start either. It then starts one minimal Isaac Sim `SimulationApp`; if RTX
   renderer startup fails there, workspace visual checks are skipped because the
   common renderer path cannot produce screenshots.
+- `isaac-lab-deformable`: run the already-built image with GPU access, start
+  Isaac Lab's deformable object tutorial with the Kit visualizer, and treat the
+  check as passed once the tutorial reports setup complete. The deformable
+  object path requires GPU simulation, so this check uses the same Docker GPU
+  and Isaac Sim startup preflights as `isaac-visual`.
 - `gui`: reserved for manual/local GUI validation placeholders.
 
 `doc_demo_smoke.py` is the local proof runner for representative commands from
@@ -73,6 +78,81 @@ Run a GPU-backed Isaac Sim screenshot check in an already-built image:
 
 ```bash
 python3 tests/workspace_smoke/run.py --workspace so101_ws --level isaac-visual
+```
+
+Run a GPU-backed Isaac Lab deformable-object smoke check in an already-built
+image:
+
+```bash
+python3 tests/workspace_smoke/run.py \
+  --workspace template_ws \
+  --level isaac-lab-deformable \
+  --summary-json tests/workspace_smoke/artifacts/template_ws-isaac-lab-deformable.json
+```
+
+Launch the Isaac Lab deformable-object tutorial with the Kit visualizer on the
+host X display for screenshot or recording proof:
+
+```bash
+tests/workspace_smoke/isaac_lab_deformable_gui.sh --detach
+docker logs -f isaac-lab-deformable-proof | \
+  tee tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-gui.log
+```
+
+Wait for both markers before capturing:
+
+```text
+Registered backend 'kit' for factory Visualizer.
+[INFO]: Setup complete...
+```
+
+These log markers prove the tutorial has initialized, but they can appear
+before the host X display has a useful rendered frame. A black recording means
+capture started too early, so capture a check screenshot and inspect it first.
+If the viewport is black, wait and capture again before recording:
+
+```bash
+python3 tests/workspace_smoke/proof_capture.py screenshot \
+  --display "${DISPLAY:-:0}" \
+  --x11-size 1280x720 \
+  --output tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-visible-check.png
+```
+
+Record only after the check screenshot shows the rendered orange deformable
+objects:
+
+```bash
+python3 tests/workspace_smoke/proof_capture.py record \
+  --display "${DISPLAY:-:0}" \
+  --x11-size 1280x720 \
+  --seconds 10 \
+  --framerate 15 \
+  --output tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-visible.mp4
+```
+
+Confirm the MP4 is valid and non-black by checking its stream metadata and
+extracting a frame:
+
+```bash
+ffprobe -v error \
+  -select_streams v:0 \
+  -show_entries stream=codec_name,width,height,r_frame_rate \
+  -show_entries format=duration,size \
+  -of default=nw=1 \
+  tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-visible.mp4
+
+ffmpeg -y \
+  -ss 5 \
+  -i tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-visible.mp4 \
+  -frames:v 1 \
+  tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-visible-frame.png
+```
+
+The extracted frame should show the Isaac Lab UI with the rendered orange
+deformable objects. Stop the proof container after capturing:
+
+```bash
+docker stop isaac-lab-deformable-proof
 ```
 
 Run only the visual path after a host GPU service fix:

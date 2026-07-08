@@ -8,6 +8,18 @@ description: Reusable host-side GUI proof capture for robotics workspace tests. 
 Use `tests/workspace_smoke/proof_capture.py` from the repository root. The GUI
 application may run inside Docker, but the capture runs on the host X11 display.
 
+When a user asks for a screenshot or recording as proof, start with this
+host-side X11 capture path after launching the relevant GUI. Do not start with
+Isaac Replicator, offscreen rendering, or other internal renderer export paths
+unless the user explicitly asks for a rendered scene artifact, headless render,
+or no GUI/display is available. For Isaac proof, a visible Isaac Sim window plus
+CLI/version logs is usually the fastest sufficient evidence.
+
+For Isaac Sim screenshot proof, use
+`tests/workspace_smoke/isaac_gui_proof_scene.py` as the container-side scene
+launcher. Wait for `ISAAC_GUI_SCENE_READY` in its log before capturing; a black
+viewport usually means Isaac was still loading or settling the scene.
+
 Screenshot:
 
 ```bash

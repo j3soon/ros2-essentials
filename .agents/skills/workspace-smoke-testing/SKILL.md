@@ -27,7 +27,31 @@ needed. If they only need a quick non-GUI check, prefer `image-cli`.
 - CLI without Compose startup: `python3 tests/workspace_smoke/run.py --workspace <ws> --level image-cli`
 - Runtime CLI through Compose: `python3 tests/workspace_smoke/run.py --workspace <ws> --level cli`
 - Isaac headless renderer proof: `python3 tests/workspace_smoke/run.py --workspace <ws> --level isaac-visual`
+- Isaac Lab deformable smoke: `python3 tests/workspace_smoke/run.py --workspace <ws> --level isaac-lab-deformable`
 - Documented GUI/Isaac proof: `python3 tests/workspace_smoke/doc_demo_smoke.py --workspace <ws> --summary-json tests/workspace_smoke/artifacts/<ws>-doc-demo.json`
+
+For Isaac Lab deformable-object Kit GUI proof, run
+`tests/workspace_smoke/isaac_lab_deformable_gui.sh --detach`, follow
+`docker logs -f isaac-lab-deformable-proof`, and wait for both
+`Registered backend 'kit' for factory Visualizer.` and `[INFO]: Setup complete...`
+before calling `proof_capture.py`. These log markers can appear before the
+first useful host X11 frame. Always take and inspect a check screenshot before
+recording; if it shows a black viewport, wait until the orange deformable
+objects render, then record. Confirm MP4 proof by extracting a frame from the
+recording and verifying it shows the deformable scene.
+
+For screenshot/recording proof requests, prefer the direct GUI capture path:
+launch the workspace GUI, wait for a visible readiness marker/window, then use
+`gui-proof-capture` / `proof_capture.py` to capture the host X11 display. Treat
+`isaac-visual` as a deeper renderer smoke test, not the default proof path; use
+it only when the user specifically asks for a headless render, deterministic
+rendered scene, or simulator image output.
+
+For Isaac GUI proof scenes, run
+`tests/workspace_smoke/isaac_gui_proof_scene.py` inside the workspace container
+and wait for `ISAAC_GUI_SCENE_READY` before calling `proof_capture.py`. The
+helper authors a cube, ground, lights, and camera view, then keeps Isaac open
+for host-side screenshot or recording capture.
 
 Use `--no-gpu` only for config/build/image-cli checks. Use
 `--disable-gpu-reservation` only as an explicit fallback when Compose runtime
@@ -49,11 +73,35 @@ For GUI screenshots or recordings, use the shared `gui-proof-capture` skill and
 `tests/workspace_smoke/proof_capture.py`. GUI proof captures the host X11
 desktop/window after the container renders to the host display.
 
+## Reusable Test Logic
+
+Treat `tests/workspace_smoke/artifacts/` as the normal output location for logs,
+screenshots, recordings, and temporary proof data. Avoid `/tmp` for validation
+work because a crash or reboot can erase it; use `/tmp` only when a tool
+requires it, and immediately copy any useful result back into the repository's
+artifact tree. Do not leave reusable validation scripts in output-only or
+ephemeral locations.
+
+When a docker-module or workspace validation needs a repeatable helper, promote
+it to a git-tracked path before finishing:
+
+- General repo helpers: `tests/workspace_smoke/`
+- Shared Python utility code: `tests/workspace_smoke/lib/`
+- Docker-module-specific helpers: `tests/workspace_smoke/modules/<module>/`
+- Workspace-specific helpers: `tests/workspace_smoke/workspaces/<workspace>/`
+
+If a prompt teaches a reusable workflow rule, update the relevant skill in
+`.agents/skills/`. Skills should stay concise: point to the tracked script,
+state readiness markers, capture/report expectations, and avoid embedding large
+script bodies.
+
 ## Guardrails
 
 - Keep heavy Docker/GPU checks out of `tests/test_all.sh`.
 - Run `scripts/post_install.sh` when Docker module hard links may be stale.
 - Use `--continue-on-failure` for broad proof collection.
 - Always include log and artifact paths in the final report.
+- Before finishing, check whether any ad hoc command or script should become a
+  tracked helper or skill instruction for future reuse.
 - Run `./tests/test_all.sh` after changing scripts, skills, workflows, or linted
   repository structure.

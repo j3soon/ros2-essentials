@@ -28,6 +28,7 @@ CHECKS = (
     "logs",
     "down",
     "isaac-visual",
+    "isaac-lab-deformable",
     "gui",
 )
 LEVELS = {
@@ -37,6 +38,7 @@ LEVELS = {
     "runtime": ("config", "up", "ps", "logs", "down"),
     "cli": ("config", "up", "ps", "cli", "logs", "down"),
     "isaac-visual": ("isaac-visual",),
+    "isaac-lab-deformable": ("isaac-lab-deformable",),
     "gui": ("gui",),
 }
 SHARED_PATHS = (
@@ -193,7 +195,7 @@ def parse_args() -> argparse.Namespace:
         help=(
             "Use a generated Compose override that removes the primary service "
             "GPU reservation for runtime/cli fallback checks. This does not "
-            "apply to isaac-visual."
+            "apply to Isaac GPU checks."
         ),
     )
     checks.add_argument(
@@ -214,17 +216,23 @@ def parse_args() -> argparse.Namespace:
         help="Seconds allowed for the Isaac visual screenshot check. Defaults to 300.",
     )
     checks.add_argument(
+        "--isaac-lab-timeout",
+        type=int,
+        default=300,
+        help="Seconds allowed for Isaac Lab smoke checks. Defaults to 300.",
+    )
+    checks.add_argument(
         "--gpu-preflight-image",
         default="nvidia/cuda:12.4.1-base-ubuntu22.04",
         help=(
-            "Image used to validate Docker GPU startup before isaac-visual "
+            "Image used to validate Docker GPU startup before Isaac GPU "
             "checks. Defaults to nvidia/cuda:12.4.1-base-ubuntu22.04."
         ),
     )
     checks.add_argument(
         "--skip-gpu-preflight",
         action="store_true",
-        help="Skip the Docker GPU startup preflight before isaac-visual checks.",
+        help="Skip the Docker GPU startup preflight before Isaac GPU checks.",
     )
     checks.add_argument(
         "--skip-isaac-startup-preflight",
@@ -391,7 +399,15 @@ def selected_checks(args: argparse.Namespace) -> tuple[str, ...]:
 def validate_gpu_mode(args: argparse.Namespace, checks: tuple[str, ...]) -> None:
     if not args.no_gpu:
         return
-    gpu_runtime_checks = {"up", "ps", "cli", "logs", "down", "isaac-visual"}
+    gpu_runtime_checks = {
+        "up",
+        "ps",
+        "cli",
+        "logs",
+        "down",
+        "isaac-visual",
+        "isaac-lab-deformable",
+    }
     blocked = [check for check in checks if check in gpu_runtime_checks]
     if blocked:
         blocked_text = ", ".join(blocked)
@@ -573,6 +589,46 @@ def check_isaac_visual(
     return run_command(["bash", "-lc", command], cwd=REPO_ROOT, env=env, log_path=log_path)
 
 
+def check_isaac_lab_deformable(
+    workspace: Workspace,
+    env: dict[str, str],
+    log_path: Path,
+    timeout_seconds: int,
+) -> int:
+    image = image_name(workspace)
+    lab_command = (
+        "set -e; "
+        "test -x /home/user/IsaacLab/isaaclab.sh; "
+        "cd /home/user/IsaacLab; "
+        "rm -f /tmp/isaac-lab-deformable.log; "
+        "set +e; "
+        "timeout "
+        f"{timeout_seconds:d}s "
+        "bash --noprofile --norc -c "
+        + shlex.quote(
+            "./isaaclab.sh -p scripts/tutorials/01_assets/run_deformable_object.py --viz kit "
+            "2>&1 | tee /tmp/isaac-lab-deformable.log | "
+            "awk '{ print; fflush(); if ($0 ~ /\\[INFO\\]: Setup complete/) exit 0 }'"
+        )
+        + "; "
+        "code=$?; "
+        "set -e; "
+        "grep -q \"Registered backend 'kit'\" /tmp/isaac-lab-deformable.log "
+        "&& grep -q '\\[INFO\\]: Setup complete' /tmp/isaac-lab-deformable.log "
+        "&& exit 0; "
+        "exit $code"
+    )
+    command = (
+        f"docker image inspect {shlex.quote(image)} >/dev/null && "
+        "docker run --rm --gpus all --privileged --network host "
+        "-v /dev:/dev "
+        "-v /tmp/.X11-unix:/tmp/.X11-unix "
+        f"--entrypoint bash {shlex.quote(image)} "
+        f"--noprofile --norc -c {shlex.quote(lab_command)}"
+    )
+    return run_command(["bash", "-lc", command], cwd=REPO_ROOT, env=env, log_path=log_path)
+
+
 def check_gpu_preflight(
     env: dict[str, str],
     log_path: Path,
@@ -644,7 +700,7 @@ def check_gui(workspace: Workspace) -> None:
     )
 
 
-def supports_isaac_visual(workspace: Workspace) -> bool:
+def supports_isaac_gpu_check(workspace: Workspace) -> bool:
     return workspace.name != "ros1_bridge_ws"
 
 
@@ -694,8 +750,8 @@ def run_check(
     if check == "gui":
         check_gui(workspace)
         return Result(workspace.name, check, "skipped")
-    if check == "isaac-visual" and not supports_isaac_visual(workspace):
-        print(f"[SKIP] {workspace.name}: Isaac visual proof is not applicable to this workspace image.")
+    if check in {"isaac-visual", "isaac-lab-deformable"} and not supports_isaac_gpu_check(workspace):
+        print(f"[SKIP] {workspace.name}: {check} is not applicable to this workspace image.")
         return Result(workspace.name, check, "skipped")
 
     log_path = command_log_path(args.report_dir, workspace, check)
@@ -719,6 +775,8 @@ def run_check(
         code = check_image_cli(workspace, env, log_path, args.image_cli_command)
     elif check == "isaac-visual":
         code = check_isaac_visual(workspace, env, log_path, args.isaac_visual_timeout)
+    elif check == "isaac-lab-deformable":
+        code = check_isaac_lab_deformable(workspace, env, log_path, args.isaac_lab_timeout)
     elif check == "logs":
         code = check_logs(workspace, env, log_path, args.log_tail, override_file)
     elif check == "down":
@@ -806,14 +864,16 @@ def main() -> int:
             return code
 
     results: list[Result] = []
-    if "isaac-visual" in checks and not args.skip_gpu_preflight:
+    isaac_gpu_checks = {"isaac-visual", "isaac-lab-deformable"}
+    needs_isaac_gpu = any(check in isaac_gpu_checks for check in checks)
+    if needs_isaac_gpu and not args.skip_gpu_preflight:
         print()
         print("== host ==")
         result = run_gpu_preflight(args, env)
         results.append(result)
         if result.status == "failed":
             print(
-                "GPU preflight failed; skipping isaac-visual workspace checks. "
+                "GPU preflight failed; skipping Isaac GPU workspace checks. "
                 "Verify `docker run --rm --gpus all ... nvidia-smi` before "
                 "rerunning visual proof."
             )
@@ -822,7 +882,7 @@ def main() -> int:
                 write_summary_json(args.summary_json, results)
                 print(f"JSON summary: {display_path(args.summary_json)}")
             return 1
-    if "isaac-visual" in checks and not args.skip_isaac_startup_preflight:
+    if needs_isaac_gpu and not args.skip_isaac_startup_preflight:
         print()
         print("== host ==")
         result = run_isaac_startup_preflight(args, env, selected)
@@ -831,8 +891,8 @@ def main() -> int:
             if result.status == "failed":
                 print(
                     "Isaac Sim startup preflight failed; skipping workspace "
-                    "visual checks. Verify SimulationApp startup before "
-                    "rerunning screenshot proof."
+                    "Isaac GPU checks. Verify SimulationApp startup before "
+                    "rerunning proof."
                 )
                 print_summary(results)
                 if args.summary_json:

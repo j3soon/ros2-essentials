@@ -2,7 +2,7 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_lab.sh)
 
-Isaac Lab 2.3.2 git install, with `ISAAC_LAB_VERSION: "develop"` available for upstream source builds.
+Isaac Lab git install. Supported `ISAAC_LAB_VERSION` values are `2.3.0`, `2.3.2`, `3.0.0-beta2.patch1`, and `develop`.
 
 > See [Last tested](../last-tested.md) for the latest validation status.
 
@@ -32,6 +32,17 @@ cd ~/IsaacLab
 # View the logs and press Ctrl+C to stop
 # tail -f ~/IsaacLab/logs/docker_tutorial/log.txt
 ```
+
+[Deformable object tutorial](https://isaac-sim.github.io/IsaacLab/main/source/tutorials/01_assets/run_deformable_object.html):
+
+```sh
+cd ~/IsaacLab
+./isaaclab.sh -p scripts/tutorials/01_assets/run_deformable_object.py --viz kit
+```
+
+Use `--viz kit` for the Kit visualizer. On first launch, let the Kit window
+finish rendering the scene before judging the viewport; the setup logs may
+finish before the first visible frame appears.
 
 [Train Cartpole](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html):
 
