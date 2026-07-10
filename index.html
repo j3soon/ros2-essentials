@@ -1914,7 +1914,7 @@
 <p><a href="https://github.com/j3soon/ros2-essentials/actions/workflows/test-common.yaml"><img alt="tests" src="https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/test-common.yaml?label=tests" /></a>
 <a href="https://j3soon.github.io/ros2-essentials/"><img alt="docs" src="https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-docs.yaml?label=docs" /></a></p>
 <p>A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs) and robotic arm manipulators. Please setup an Ubuntu environment before using this repo.</p>
-<p>The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by <a href="https://docs.isaacsim.omniverse.nvidia.com/5.1.0/index.html">(Omniverse) Isaac Sim</a>, <a href="https://isaac-sim.github.io/IsaacLab/main/index.html">Isaac Lab</a>, and <a href="https://nvidia-isaac-ros.github.io/index.html">Isaac ROS</a>. In general, the <code>x86_64</code> images support both simulation and real robot control, while <code>Jetson</code> and <code>DGX Spark</code> support should be checked per workspace and module in the matrices below.</p>
+<p>The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by <a href="https://docs.isaacsim.omniverse.nvidia.com/6.0.1/index.html">(Omniverse) Isaac Sim</a>, <a href="https://isaac-sim.github.io/IsaacLab/main/index.html">Isaac Lab</a>, and <a href="https://nvidia-isaac-ros.github.io/index.html">Isaac ROS</a>. In general, the <code>x86_64</code> images support both simulation and real robot control, while <code>Jetson</code> and <code>DGX Spark</code> support should be checked per workspace and module in the matrices below.</p>
 <blockquote>
 <p>Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.</p>
 </blockquote>
@@ -1935,8 +1935,8 @@
 <td>Simulation/Deployment</td>
 <td>x86_64</td>
 <td>RTX GPU, 500GB+ SSD</td>
-<td>Ubuntu 22.04/24.04, <a href="https://ubuntu.com/server/docs/nvidia-drivers-installation">NVIDIA Driver</a>, <a href="https://docs.docker.com/engine/install/ubuntu/">Docker</a>, <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">NVIDIA Container Toolkit</a></td>
-<td>See <a href="https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/requirements.html">this page</a> for more details.</td>
+<td>Ubuntu 22.04/24.04, <a href="https://ubuntu.com/server/docs/nvidia-drivers-installation">NVIDIA Driver</a>, <a href="https://docs.docker.com/engine/install/ubuntu/">Docker</a> with Docker Compose v2.17.0+, <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">NVIDIA Container Toolkit</a></td>
+<td>See <a href="https://docs.isaacsim.omniverse.nvidia.com/6.0.1/installation/requirements.html">this page</a> for more details.</td>
 </tr>
 <tr>
 <td>Deployment-Only</td>
@@ -1972,12 +1972,11 @@
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># and optionally restore the full git history some time later:</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>git<span class="w"> </span>fetch<span class="w"> </span>--unshallow
 </span></code></pre></div>
-<p>Note that the <code>post_install.sh</code> script should be run after each change to the repository (such as switching to another branch or pulling the latest changes).
-- Use <code>--recreate-links</code> to force replacement of non-hard-link files under workspace <code>docker/modules/</code>.
+<p>Note that the <code>post_install.sh</code> script prepares local environment files, shared cache volumes, and the optional Isaac Sim host link.
 - Use <code>--recreate-volumes</code> to invalidate Gazebo/Isaac Sim/Isaac ROS cache volumes after related updates or testing.
 - Use <code>--remove-containers</code> to auto-remove containers that block volume recreation.</p>
 <p><strong>Troubleshooting</strong>:</p>
-<p>If you encounter an error like <code>"failed to solve: failed to compute cache key: failed to calculate checksum of ref ...: "/modules/install_ros.sh": not found</code> when building Docker images, it means <code>post_install.sh</code> hasn't been run. This script creates necessary hard links for the Docker build process.</p>
+<p>If Docker Compose reports that <code>additional_contexts</code> is unsupported, upgrade Docker Compose to v2.17.0 or newer. The workspace Dockerfiles use a named <code>docker_modules</code> build context instead of generated module links.</p>
 <p>If you encountered error like <code>Error response from daemon: remove ros2-isaac-sim-cache: volume is in use</code> when running <code>./scripts/post_install.sh</code>, it means that previous containers are not removed successfully. Run <code>docker ps -a | grep ros2</code> and use <code>docker rm &lt;container_id&gt;</code> to remove the containers and then run the script again.
 </p>
 </blockquote>
@@ -1989,9 +1988,9 @@
 <h2 id="updating-the-repository">Updating the Repository<a class="headerlink" href="#updating-the-repository" title="Permanent link">&para;</a></h2>
 <p>To update to the latest commit of the repository, run the following commands:</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>pull
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>./scripts/post_install.sh<span class="w"> </span>--recreate-links<span class="w"> </span>--recreate-volumes<span class="w"> </span>--remove-containers
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>./scripts/post_install.sh<span class="w"> </span>--recreate-volumes<span class="w"> </span>--remove-containers
 </span></code></pre></div>
-<p>Make sure to run the <code>post_install.sh</code> script after pulling the latest changes to ensure that the hard links are properly set up. In addition, you should be prepared to rebuild the Docker images of the workspaces you are using, as some updates may require rebuilding the images to take effect.</p>
+<p>Run <code>post_install.sh</code> after pulling changes when you need to refresh local env files, shared cache volumes, or the optional Isaac Sim host link. You should also be prepared to rebuild the Docker images of the workspaces you are using, as some updates may require rebuilding the images to take effect.</p>
 <blockquote>
 <p>Building Docker images can be time-consuming. Start the build before taking a break so they can finish while you're away.</p>
 </blockquote>
@@ -2175,7 +2174,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <td>✔️</td>
 <td>❌</td>
 <td>❔</td>
-<td>Isaac Sim 5.1.0 Binary Install / <code>develop</code> Build</td>
+<td>Isaac Sim 6.0.1 Binary Install / <code>develop</code> Build</td>
 <td>✔️</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a>, <a href="https://github.com/JustinShih0918">@JustinShih0918</a></td>
 </tr>
@@ -2184,7 +2183,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
 <td>✔️</td>
 <td>❌</td>
 <td>❔</td>
-<td>Isaac Lab 2.3.2 Git Install / <code>develop</code> Build</td>
+<td>Isaac Lab 3.0.0-beta2.patch1 Git Install / <code>develop</code> Build</td>
 <td>✔️</td>
 <td><a href="https://github.com/j3soon">Johnson Sun</a></td>
 </tr>
@@ -2326,7 +2325,7 @@ For a quick enable helper, use <code>../scripts/enable_module.sh &lt;MODULE&gt;<
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 4, 2026 17:29:14 UTC">April 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 8, 2026 15:38:56 UTC">July 8, 2026</span>
   </span>
 
     
