@@ -54,7 +54,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 ARG ROS_DISTRO=humble
 ENV ROS_DISTRO=$ROS_DISTRO
 # Copy and run ROS installation script
-COPY modules/install_ros.sh /tmp/install_ros.sh
+COPY --from=docker_modules /install_ros.sh /tmp/install_ros.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_ros.sh && rm /tmp/install_ros.sh
 # Set the CycloneDDS configuration file
@@ -66,14 +66,14 @@ ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=all
 
 # Install GUI debugging tools and configure Vulkan
-COPY modules/install_x11_opengl_vulkan.sh /tmp/install_x11_opengl_vulkan.sh
+COPY --from=docker_modules /install_x11_opengl_vulkan.sh /tmp/install_x11_opengl_vulkan.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_x11_opengl_vulkan.sh && rm /tmp/install_x11_opengl_vulkan.sh
 
 # Install CUDA Toolkit (not installed by default)
 ARG CUDA_TOOLKIT_VERSION=""
 # Copy and run CUDA Toolkit installation script
-COPY modules/install_cuda_toolkit.sh /tmp/install_cuda_toolkit.sh
+COPY --from=docker_modules /install_cuda_toolkit.sh /tmp/install_cuda_toolkit.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_cuda_toolkit.sh && rm /tmp/install_cuda_toolkit.sh
 # Ref: https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#post-installation-actions
@@ -105,12 +105,12 @@ RUN mkdir -p /home/$USERNAME/.cache/pip
 RUN mkdir /home/$USERNAME/.gazebo
 
 # Isaac Sim version configuration
-ARG ISAAC_SIM_VERSION=5.1.0
-# Ref: https://isaac-sim.github.io/IsaacLab/v2.3.2/source/setup/installation/binaries_installation.html
+ARG ISAAC_SIM_VERSION=6.0.1
+# Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0-beta2/source/setup/installation/binaries_installation.html
 ENV ISAACSIM_PATH="/home/$USERNAME/isaacsim"
 # Copy and run Isaac Sim installation script
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_isaac_sim.sh /tmp/install_isaac_sim.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_isaac_sim.sh /tmp/install_isaac_sim.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
     /tmp/install_isaac_sim.sh && rm /tmp/install_isaac_sim.sh
@@ -120,18 +120,18 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 ENV OMNI_USER=admin
 ENV OMNI_PASS=admin
 ENV OMNI_KIT_ACCEPT_EULA=YES
-# Ref: https://isaac-sim.github.io/IsaacLab/v2.3.2/source/setup/installation/binaries_installation.html
+# Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0-beta2/source/setup/installation/binaries_installation.html
 ENV ISAACSIM_PYTHON_EXE="${ISAACSIM_PATH}/python.sh"
 
 # Set TERM to prevent Isaac Lab error during docker build:
 #    'ansi+tabs': unknown terminal type.
 ENV TERM=xterm-256color
 # Isaac Lab version configuration
-ARG ISAAC_LAB_VERSION=2.3.2
-# Ref: https://isaac-sim.github.io/IsaacLab/v2.3.2/source/policy_deployment/00_hover/hover_policy.html
+ARG ISAAC_LAB_VERSION=3.0.0-beta2.patch1
+# Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0-beta2/source/policy_deployment/00_hover/hover_policy.html
 ENV ISAACLAB_PATH="/home/$USERNAME/IsaacLab"
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_isaac_lab.sh /tmp/install_isaac_lab.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_isaac_lab.sh /tmp/install_isaac_lab.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
     /tmp/install_isaac_lab.sh && rm /tmp/install_isaac_lab.sh
@@ -140,8 +140,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 ARG ISAAC_ROS=""
 ENV ISAAC_ROS_WS="/home/$USERNAME/workspaces/isaac_ros-dev/"
 # Copy and run Isaac ROS installation script
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_isaac_ros.sh /tmp/install_isaac_ros.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_isaac_ros.sh /tmp/install_isaac_ros.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_isaac_ros.sh && rm /tmp/install_isaac_ros.sh
 # Ref: https://nvidia-isaac-ros.github.io/getting_started/dev_env_setup.html
@@ -154,22 +154,22 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 
 # Cartographer configuration
 ARG CARTOGRAPHER=""
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_cartographer.sh /tmp/install_cartographer.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_cartographer.sh /tmp/install_cartographer.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_cartographer.sh && rm /tmp/install_cartographer.sh
 
 # rtabmap configuration
 ARG RTABMAP=""
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_rtabmap.sh /tmp/install_rtabmap.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_rtabmap.sh /tmp/install_rtabmap.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_rtabmap.sh && rm /tmp/install_rtabmap.sh
 
 # realsense configuration
 ARG REALSENSE=""
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_realsense.sh /tmp/install_realsense.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_realsense.sh /tmp/install_realsense.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_realsense.sh && rm /tmp/install_realsense.sh
 
@@ -192,35 +192,35 @@ COPY --chown=$USERNAME:$USERNAME \
 
 # NVIDIA OpenUSD Tools configuration
 ARG NV_OPENUSD=""
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_nv_openusd.sh /tmp/install_nv_openusd.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_nv_openusd.sh /tmp/install_nv_openusd.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_nv_openusd.sh && rm /tmp/install_nv_openusd.sh
 
 # Newton Tools configuration
 ARG NEWTON_TOOLS=""
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_newton_tools.sh /tmp/install_newton_tools.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_newton_tools.sh /tmp/install_newton_tools.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
     /tmp/install_newton_tools.sh && rm /tmp/install_newton_tools.sh
 
 # Claude Code CLI configuration (installed last since the installation is fast)
 ARG CLAUDE_CODE=""
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_claude_code.sh /tmp/install_claude_code.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_claude_code.sh /tmp/install_claude_code.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_claude_code.sh && rm /tmp/install_claude_code.sh
 # Codex CLI configuration
 ARG CODEX=""
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_codex.sh /tmp/install_codex.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_codex.sh /tmp/install_codex.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_codex.sh && rm /tmp/install_codex.sh
 # OpenCode CLI configuration
 ARG OPENCODE=""
-COPY --chown=$USERNAME:$USERNAME \
-     modules/install_opencode.sh /tmp/install_opencode.sh
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_opencode.sh /tmp/install_opencode.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_opencode.sh && rm /tmp/install_opencode.sh
 # TODO: Install more optional development tools here

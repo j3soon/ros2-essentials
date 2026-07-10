@@ -124,10 +124,12 @@ cd ~/IsaacLab
 
 ### Custom Isaac Sim Environment
 
-Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/go2_ws/isaacsim/assets/go2_og.usda` in Omniverse, and then press Play.
+Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/go2_ws/src/isaacsim/assets/go2_og.usda` in Omniverse, and then press Play.
 
-![](assets/01-isaac-sim-open-scene.png)
-![](assets/02-isaac-sim-play.png)
+![Go2 Isaac Sim scene opened](assets/01-isaac-sim-open-scene.png)
+![Go2 Isaac Sim playback running](assets/02-isaac-sim-play.png)
+
+> Note: Currently will fall over after pressing Play in Isaac Sim 6.0.1. To be fixed.
 
 In another terminal, exec into the container:
 

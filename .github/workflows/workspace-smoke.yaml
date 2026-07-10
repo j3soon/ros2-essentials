@@ -1,0 +1,48 @@
+name: Workspace Smoke Tests
+
+on:
+  pull_request:
+    paths:
+      - "*_ws/**"
+      - "docker_modules/**"
+      - "scripts/post_install.sh"
+      - "scripts/setup_env_files.sh"
+      - "scripts/setup_isaac_link.sh"
+      - ".agents/skills/**"
+      - "tests/workspace_smoke/**"
+      - ".github/workflows/workspace-smoke.yaml"
+  push:
+    paths:
+      - "*_ws/**"
+      - "docker_modules/**"
+      - "scripts/post_install.sh"
+      - "scripts/setup_env_files.sh"
+      - "scripts/setup_isaac_link.sh"
+      - ".agents/skills/**"
+      - "tests/workspace_smoke/**"
+      - ".github/workflows/workspace-smoke.yaml"
+
+jobs:
+  compose-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Refresh workspace links
+        run: scripts/post_install.sh
+      - name: Run affected workspace compose config checks
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_REF: ${{ github.sha }}
+        run: |
+          if [ -z "$BASE_REF" ] || [ "$BASE_REF" = "0000000000000000000000000000000000000000" ]; then
+            python3 tests/workspace_smoke/run.py --all --level config --no-gpu
+          else
+            python3 tests/workspace_smoke/run.py \
+              --changed-from "$BASE_REF" \
+              --changed-to "$HEAD_REF" \
+              --level config \
+              --no-gpu
+          fi

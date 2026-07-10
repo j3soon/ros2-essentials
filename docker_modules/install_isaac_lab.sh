@@ -44,6 +44,8 @@ if [ "$ISAAC_LAB_VERSION" = "2.3.0" ]; then
     ISAAC_LAB_GIT_REF="v2.3.0"
 elif [ "$ISAAC_LAB_VERSION" = "2.3.2" ]; then
     ISAAC_LAB_GIT_REF="v2.3.2"
+elif [ "$ISAAC_LAB_VERSION" = "3.0.0-beta2.patch1" ]; then
+    ISAAC_LAB_GIT_REF="v3.0.0-beta2.patch1"
 elif [ "$ISAAC_LAB_VERSION" = "develop" ]; then
     ISAAC_LAB_GIT_REF="develop"
 fi

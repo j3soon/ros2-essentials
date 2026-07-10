@@ -78,6 +78,15 @@ elif [ "$ISAAC_SIM_VERSION" = "5.1.0" ]; then
         || exit 1
 
     ISAAC_SIM_STANDALONE_ARCHIVE="/tmp/isaac-sim-standalone-5.1.0-linux-x86_64.zip"
+elif [ "$ISAAC_SIM_VERSION" = "6.0.1" ]; then
+    echo "Installing Isaac Sim 6.0.1 (packaged with Python 3.12)..."
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/6.0.1/installation/install_workstation.html
+    cd /tmp \
+        && wget -q https://downloads.isaacsim.nvidia.com/isaac-sim-standalone-6.0.1-linux-x86_64.zip \
+            -O /tmp/isaac-sim-standalone-6.0.1-linux-x86_64.zip \
+        || exit 1
+
+    ISAAC_SIM_STANDALONE_ARCHIVE="/tmp/isaac-sim-standalone-6.0.1-linux-x86_64.zip"
 else
     echo "Error: Unsupported Isaac Sim version: $ISAAC_SIM_VERSION"
     exit 1
@@ -94,7 +103,7 @@ if [ "$ISAAC_SIM_VERSION" = "develop" ]; then
     rm -rf "$ISAAC_SIM_SOURCE_PATH" \
         && rm -rf "/home/$USERNAME/.cache/packman" \
         || exit 1
-elif [ "$ISAAC_SIM_VERSION" = "5.1.0" ]; then
+elif [ "$ISAAC_SIM_VERSION" = "5.1.0" ] || [ "$ISAAC_SIM_VERSION" = "6.0.1" ]; then
     # It's a bit unfortunate that we are currently manually compressing the source build and then extracting
     # it again to install, but without this process, the build will not be standalone (depends on `.cache`).
     echo "Extracting standalone package to $ISAACSIM_PATH..."
@@ -103,30 +112,36 @@ elif [ "$ISAAC_SIM_VERSION" = "5.1.0" ]; then
         && 7z x "$ISAAC_SIM_STANDALONE_ARCHIVE" -o"$ISAACSIM_PATH" \
         || exit 1
 
+    export ACCEPT_EULA=Y
+    export OMNI_KIT_ACCEPT_EULA=YES
+
     cd "$ISAACSIM_PATH" \
         && ./post_install.sh \
         && rm -f "$ISAAC_SIM_STANDALONE_ARCHIVE" \
         || exit 1
 
     # Note: Optional dependencies and the Isaac Sim ROS workspace are not installed to minimize image size
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_ros.html#install-ros-2
-    # Ref: https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_ros.html#setting-up-workspaces
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/latest/installation/install_ros.html#install-ros-2
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/latest/installation/install_ros.html#setting-up-workspaces
 fi
 
 echo "Creating Isaac Sim directories with correct ownership to avoid permission issues after volume mount..."
 sudo mkdir -p /isaac-sim && sudo chown $USERNAME:$USERNAME /isaac-sim || exit 1
 
-if [ "$ISAAC_SIM_VERSION" = "develop" ] || [ "$ISAAC_SIM_VERSION" = "5.1.0" ]; then
-    echo "Creating Isaac Sim 5.1.0 specific directories with correct ownership to avoid permission issues after volume mount..."
+if [ "$ISAAC_SIM_VERSION" = "develop" ] || [ "$ISAAC_SIM_VERSION" = "5.1.0" ] || [ "$ISAAC_SIM_VERSION" = "6.0.1" ]; then
+    echo "Creating Isaac Sim runtime directories with correct ownership to avoid permission issues after volume mount..."
     mkdir -p /isaac-sim/kit/cache \
         && mkdir -p /home/$USERNAME/.cache/ov \
+        && mkdir -p /home/$USERNAME/.local/lib/python3.12/site-packages/omni/cache \
         && mkdir -p /home/$USERNAME/.local/lib/python3.11/site-packages/omni/cache \
         && mkdir -p /home/$USERNAME/.cache/pip \
         && mkdir -p /home/$USERNAME/.cache/nvidia/GLCache \
         && mkdir -p /home/$USERNAME/.nv/ComputeCache \
         && mkdir -p /home/$USERNAME/.nvidia-omniverse/logs \
+        && mkdir -p /home/$USERNAME/.local/lib/python3.12/site-packages/omni/logs \
         && mkdir -p /home/$USERNAME/.local/lib/python3.11/site-packages/omni/logs \
         && mkdir -p /home/$USERNAME/.local/share/ov/data \
+        && mkdir -p /home/$USERNAME/.local/lib/python3.12/site-packages/omni/data \
         && mkdir -p /home/$USERNAME/.local/lib/python3.11/site-packages/omni/data \
         && mkdir -p /home/$USERNAME/Documents \
         || exit 1

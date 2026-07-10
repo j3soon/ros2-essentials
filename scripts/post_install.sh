@@ -1,13 +1,13 @@
 #!/bin/bash -e
 
 # Parse command line arguments
-RECREATE_LINKS=false
 RECREATE_VOLUMES=false
 REMOVE_CONTAINERS=false
 while [[ $# -gt 0 ]]; do
     case $1 in
         --recreate-links)
-            RECREATE_LINKS=true
+            echo "Warning: --recreate-links is deprecated and ignored."
+            echo "Docker modules are provided through Compose additional_contexts."
             shift
             ;;
         --recreate-volumes)
@@ -20,8 +20,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         *)
             echo "Unknown option: $1"
-            echo "Usage: $0 [--recreate-links] [--recreate-volumes] [--remove-containers]"
-            echo "  --recreate-links    Replace non-hard-link docker module files"
+            echo "Usage: $0 [--recreate-volumes] [--remove-containers]"
             echo "  --recreate-volumes  Recreate Gazebo/Isaac cache volumes"
             echo "  --remove-containers Remove containers that block volume recreation"
             exit 1
@@ -37,12 +36,6 @@ cd "$SCRIPT_DIR"
 
 ./pull_latest_docker_image.sh ubuntu:22.04
 ./setup_env_files.sh
-
-if [ "$RECREATE_LINKS" = true ]; then
-    ./setup_docker_modules_link.sh --recreate-links
-else
-    ./setup_docker_modules_link.sh
-fi
 
 if [ "$RECREATE_VOLUMES" = true ]; then
     if [ "$REMOVE_CONTAINERS" = true ]; then
