@@ -3,9 +3,9 @@
 [![tests](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/test-common.yaml?label=tests)](https://github.com/j3soon/ros2-essentials/actions/workflows/test-common.yaml)
 [![docs](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-docs.yaml?label=docs)](https://j3soon.github.io/ros2-essentials/)
 
-A repo containing essential ROS2 Humble features for controlling Autonomous Mobile Robots (AMRs) and robotic arm manipulators. Please setup an Ubuntu environment before using this repo.
+A reusable sim-to-real ROS 2 robotics stack for developing and deploying robot policies across simulation and physical robots, built around [(Omniverse) Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/index.html), [Isaac Lab](https://isaac-sim.github.io/IsaacLab/main/index.html), and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html).
 
-The goal of this repo is to allow seamless robot policy reuse between simulation and reality powered by [(Omniverse) Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/index.html), [Isaac Lab](https://isaac-sim.github.io/IsaacLab/main/index.html), and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html). In general, the `x86_64` images support both simulation and real robot control, while `Jetson` and `DGX Spark` support should be checked per workspace and module in the matrices below.
+The repository provides reusable Docker workspaces and modules covering the simulation-to-reality workflow: develop and test robot policies in simulation, then deploy them to physical robots where the workspace supports it. It supports multiple robots and workspaces (mobile robots, manipulators, and humanoids) and targets `x86_64`, Jetson Orin, and DGX Spark. In general, the `x86_64` images support both simulation and real-robot control, while Jetson (deployment-only) and DGX Spark support should be checked per workspace and module in the matrices below.
 
 > Please note that this repo is under rapid development. The code is not guaranteed to be stable, and breaking changes may occur.
 
