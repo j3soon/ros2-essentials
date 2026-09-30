@@ -379,7 +379,7 @@ cd ~/leisaac
 
 and in Isaac Lab window press `b` to start teleoperation. Press `r` or `n` to reset the environment, which corresponds to episode success and failure. Press `q` to quit.
 
-> Currently runs with Isaac Lab v2.3.0. v2.3.2 may work, but I haven't tested it yet.
+> LeIsaac 0.4.0 pins Isaac Lab 2.3.0 and documents support through Isaac Sim 5.1. The SO-101 workspace therefore keeps explicit Isaac Sim 5.1.0 and Isaac Lab 2.3.0 build overrides while the shared workspace defaults use Isaac Sim 6.1.0 and Isaac Lab 3.0.0-EA.
 
 ## References
 

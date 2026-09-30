@@ -129,7 +129,7 @@ Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/go2_ws/src/isaacsi
 ![Go2 Isaac Sim scene opened](assets/01-isaac-sim-open-scene.png)
 ![Go2 Isaac Sim playback running](assets/02-isaac-sim-play.png)
 
-> Note: Currently will fall over after pressing Play in Isaac Sim 6.0.1. To be fixed.
+> Note: This scene was known to fall over after pressing Play in Isaac Sim 6.0.1. Revalidate its behavior with Isaac Sim 6.1.0.
 
 In another terminal, exec into the container:
 

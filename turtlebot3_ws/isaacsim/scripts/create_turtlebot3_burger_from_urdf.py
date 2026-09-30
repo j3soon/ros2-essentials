@@ -1,4 +1,4 @@
-# Ref: https://docs.isaacsim.omniverse.nvidia.com/5.1.0/core_api_tutorials/tutorial_core_hello_world.html
+# Ref: https://docs.isaacsim.omniverse.nvidia.com/6.1.0/core_api_tutorials/tutorial_core_hello_world.html
 # launch Isaac Sim before any other imports
 # default first two lines in any standalone application
 from isaacsim import SimulationApp
