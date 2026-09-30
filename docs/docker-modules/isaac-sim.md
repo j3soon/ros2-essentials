@@ -24,9 +24,7 @@ Quick test:
 
 ```sh
 cd ~/isaacsim
-./python.sh standalone_examples/api/isaacsim.core.api/time_stepping.py
-# or
-./python.sh standalone_examples/api/isaacsim.core.api/simulation_callbacks.py
+./python.sh standalone_examples/api/isaacsim.simulation_app/hello_world.py
 ```
 
 Source build from `compose.yaml`:

@@ -28,7 +28,7 @@ build:
 
 ```sh
 cd ~/IsaacLab
-./isaaclab.sh -p scripts/tutorials/00_sim/log_time.py --headless
+./isaaclab.sh -p scripts/tutorials/00_sim/log_time.py
 # View the logs and press Ctrl+C to stop
 # tail -f ~/IsaacLab/logs/docker_tutorial/log.txt
 ```
