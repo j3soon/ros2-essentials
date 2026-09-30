@@ -28,7 +28,6 @@
 - You can skip workspaces by setting `IGNORED_WORKSPACES` (e.g., `export IGNORED_WORKSPACES="tmp_ws"`).
 
 ## Commit & Pull Request Guidelines
-- Open and self-assign a GitHub issue before starting.
 - Branch naming: `feat/<name>` or `fix/<name>`.
 - Commit messages must follow Conventional Commits and include rationale and sources when relevant.
 - When `template_ws` changes require syncing other workspaces, make a separate minimal "unify" commit (preferred message: `feat: Unify workspaces style`).

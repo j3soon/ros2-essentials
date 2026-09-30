@@ -105,25 +105,26 @@ If you have trouble using a workspace, please [open an issue](https://github.com
 
 ## Pre-configured Modules
 
-Modules with `Default: ✔️` are installed by default in all workspaces.
+The `Template default` column shows what `template_ws/docker/compose.yaml` enables. Other workspaces set their own build arguments; check their `docker/compose.yaml` files before building.
 
-Edit the `build.args` section in the `*_ws/docker/compose.yml` file and rebuild the workspace to add or remove modules.
+Edit the `build.args` section in the chosen workspace's `docker/compose.yaml` file and rebuild the image to add or remove modules. To disable Isaac Sim or Isaac Lab, explicitly set the corresponding version argument to `""`; omitting it uses the Dockerfile default.
 For a quick enable helper, use `../scripts/enable_module.sh <MODULE>` from a workspace (or let it prompt for workspace/module selection) when executed outside of a workspace.
 
-| Module | x86_64 | Jetson | DGX Spark | Notes | Default | Maintainer |
+| Module | x86_64 | Jetson | DGX Spark | Notes | Template default | Maintainer |
 |--------|--------|--------|-----------|-------|---------|------------|
 | [ROS2](https://j3soon.github.io/ros2-essentials/docker-modules/ros2/) | ✔️ | ✔️ | ✔️ | ROS2 Humble | ✔️ | [Yu-Zhong Chen](https://github.com/YuZhong-Chen) |
-| [Cartographer](https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/) | ✔️ | ✔️ | ✔️ | ROS2 Cartographer | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@yuhsiang1117](https://github.com/yuhsiang1117) |
-| [RTAB-Map](https://j3soon.github.io/ros2-essentials/docker-modules/rtabmap/) | ✔️ | ❔ | ❔ | ROS2 RTAB-Map | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@JustinShih0918](https://github.com/JustinShih0918) |
+| [Cartographer](https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/) | ✔️ | ✔️ | ✔️ | ROS2 Cartographer | ✔️ | [Assume Zhan](https://github.com/Assume-Zhan), [@yuhsiang1117](https://github.com/yuhsiang1117) |
+| [RTAB-Map](https://j3soon.github.io/ros2-essentials/docker-modules/rtabmap/) | ✔️ | ❔ | ❔ | ROS2 RTAB-Map | ✔️ | [Assume Zhan](https://github.com/Assume-Zhan), [@JustinShih0918](https://github.com/JustinShih0918) |
+| [RealSense](https://j3soon.github.io/ros2-essentials/docker-modules/realsense/) | ✔️ | ❔ | ❔ | RealSense camera support | ✔️ | — |
 | [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/) | ✔️ | TODO | TODO | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | ❔ | Isaac Sim 6.1.0 Binary Install / `develop` Build | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
 | [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | ❔ | Isaac Lab 3.0.0-EA Git Install / `develop` Build | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | ✔️ | TODO | TODO | Isaac ROS 3.2 Apt Install (Base only) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [NVIDIA OpenUSD Tools](https://j3soon.github.io/ros2-essentials/docker-modules/nv-openusd/) | ✔️ | ❌ | ❔ | NVIDIA OpenUSD Linux Binary Tools (v25.08) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Newton Tools](https://j3soon.github.io/ros2-essentials/docker-modules/newton-tools/) | ✔️ | ❔ | ❔ | URDF/MJCF to USD Converters | ❌ | [Johnson Sun](https://github.com/j3soon) |
-| [Claude Code](https://j3soon.github.io/ros2-essentials/docker-modules/claude-code/) | ✔️ | ✔️ | ✔️ | Claude Code CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
-| [Codex](https://j3soon.github.io/ros2-essentials/docker-modules/codex/) | ✔️ | ✔️ | ✔️ | Codex CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
-| [OpenCode](https://j3soon.github.io/ros2-essentials/docker-modules/opencode/) | ✔️ | ✔️ | ✔️ | OpenCode CLI | ❌ | [Johnson Sun](https://github.com/j3soon) |
+| [Claude Code](https://j3soon.github.io/ros2-essentials/docker-modules/claude-code/) | ✔️ | ✔️ | ✔️ | Claude Code CLI | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Codex](https://j3soon.github.io/ros2-essentials/docker-modules/codex/) | ✔️ | ✔️ | ✔️ | Codex CLI | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [OpenCode](https://j3soon.github.io/ros2-essentials/docker-modules/opencode/) | ✔️ | ✔️ | ✔️ | OpenCode CLI | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 
 ## Docker Compose Cleanup
 
