@@ -46,23 +46,28 @@ elif [ "$ISAAC_LAB_VERSION" = "2.3.2" ]; then
     ISAAC_LAB_GIT_REF="v2.3.2"
 elif [ "$ISAAC_LAB_VERSION" = "3.0.0-beta2.patch1" ]; then
     ISAAC_LAB_GIT_REF="v3.0.0-beta2.patch1"
+elif [ "$ISAAC_LAB_VERSION" = "3.0.0-EA" ]; then
+    ISAAC_LAB_GIT_REF="v3.0.0-EA"
 elif [ "$ISAAC_LAB_VERSION" = "develop" ]; then
     ISAAC_LAB_GIT_REF="develop"
 fi
 
 if [ -n "$ISAAC_LAB_GIT_REF" ]; then
     echo "Installing Isaac Lab from git ref: $ISAAC_LAB_GIT_REF..."
-    # Ref: https://isaac-sim.github.io/IsaacLab/source/setup/installation/binaries_installation.html
+    # Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0/source/setup/installation/index.html
     sudo apt-get update && sudo apt-get install -y \
         cmake build-essential \
         && sudo rm -rf /var/lib/apt/lists/* \
         || exit 1
-    # Note that the flatdict patch is for preventing
-    #    ModuleNotFoundError: No module named 'pkg_resources'
-    # Ref: https://github.com/isaac-sim/IsaacLab/issues/4576#issuecomment-4083197347
     git clone -b "$ISAAC_LAB_GIT_REF" https://github.com/isaac-sim/IsaacLab.git "$ISAACLAB_PATH" \
-        && sed -i 's/"flatdict==4.0.1"/"flatdict==4.1.0"/' "$ISAACLAB_PATH/source/isaaclab/setup.py" \
-        && cd "$ISAACLAB_PATH" \
+        || exit 1
+    if [ "$ISAAC_LAB_VERSION" = "3.0.0-beta2.patch1" ]; then
+        # Prevent ModuleNotFoundError: No module named 'pkg_resources'.
+        # Ref: https://github.com/isaac-sim/IsaacLab/issues/4576#issuecomment-4083197347
+        sed -i 's/"flatdict==4.0.1"/"flatdict==4.1.0"/' "$ISAACLAB_PATH/source/isaaclab/setup.py" \
+            || exit 1
+    fi
+    cd "$ISAACLAB_PATH" \
         && ln -s "$ISAACSIM_PATH" _isaac_sim \
         && ./isaaclab.sh --install \
         || exit 1

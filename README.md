@@ -3,7 +3,7 @@
 [![tests](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/test-common.yaml?label=tests)](https://github.com/j3soon/ros2-essentials/actions/workflows/test-common.yaml)
 [![docs](https://img.shields.io/github/actions/workflow/status/j3soon/ros2-essentials/build-docs.yaml?label=docs)](https://j3soon.github.io/ros2-essentials/)
 
-A reusable sim-to-real ROS 2 robotics stack for developing and deploying robot policies across simulation and physical robots, built around [(Omniverse) Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/index.html), [Isaac Lab](https://isaac-sim.github.io/IsaacLab/main/index.html), and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html).
+A reusable sim-to-real ROS 2 robotics stack for developing and deploying robot policies across simulation and physical robots, built around [(Omniverse) Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/6.1.0/index.html), [Isaac Lab](https://isaac-sim.github.io/IsaacLab/release/3.0.0/index.html), and [Isaac ROS](https://nvidia-isaac-ros.github.io/index.html).
 
 The repository provides reusable Docker workspaces and modules covering the simulation-to-reality workflow: develop and test robot policies in simulation, then deploy them to physical robots where the workspace supports it. It supports multiple robots and workspaces (mobile robots, manipulators, and humanoids) and targets `x86_64`, Jetson Orin, and DGX Spark. In general, the `x86_64` images support both simulation and real-robot control, while Jetson (deployment-only) and DGX Spark support should be checked per workspace and module in the matrices below.
 
@@ -15,7 +15,7 @@ The documentation is hosted on <https://j3soon.github.io/ros2-essentials/>.
 
 | Use Case | Platform | Hardware | Software | Notes |
 |----------|----------|----------|----------|-------|
-| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04/24.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/) with Docker Compose v2.17.0+, [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/installation/requirements.html) for more details. |
+| Simulation/Deployment | x86_64 | RTX GPU, 500GB+ SSD | Ubuntu 22.04/24.04, [NVIDIA Driver](https://ubuntu.com/server/docs/nvidia-drivers-installation), [Docker](https://docs.docker.com/engine/install/ubuntu/) with Docker Compose v2.17.0+, [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) | See [this page](https://docs.isaacsim.omniverse.nvidia.com/6.1.0/installation/requirements.html) for more details. |
 | Deployment-Only | Jetson | Jetson Orin, 500GB+ SSD | JetPack 6 | See [this page](https://nvidia-isaac-ros.github.io/getting_started/index.html) for more details.
 | Simulation/Deployment | DGX Spark | DGX Spark | Ubuntu 24.04 | Is actually [DGX OS 7.2.3](https://docs.nvidia.com/dgx/dgx-os-7-user-guide/introduction.html) |
 
@@ -116,8 +116,8 @@ For a quick enable helper, use `../scripts/enable_module.sh <MODULE>` from a wor
 | [Cartographer](https://j3soon.github.io/ros2-essentials/docker-modules/cartographer/) | ✔️ | ✔️ | ✔️ | ROS2 Cartographer | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@yuhsiang1117](https://github.com/yuhsiang1117) |
 | [RTAB-Map](https://j3soon.github.io/ros2-essentials/docker-modules/rtabmap/) | ✔️ | ❔ | ❔ | ROS2 RTAB-Map | ➖ | [Assume Zhan](https://github.com/Assume-Zhan), [@JustinShih0918](https://github.com/JustinShih0918) |
 | [CUDA Toolkit](https://j3soon.github.io/ros2-essentials/docker-modules/cuda-toolkit/) | ✔️ | TODO | TODO | CUDA 12.6 | ❌ | [Johnson Sun](https://github.com/j3soon) |
-| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | ❔ | Isaac Sim 6.0.1 Binary Install / `develop` Build | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
-| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | ❔ | Isaac Lab 3.0.0-beta2.patch1 Git Install / `develop` Build | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Isaac Sim](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-sim/) | ✔️ | ❌ | ❔ | Isaac Sim 6.1.0 Binary Install / `develop` Build | ✔️ | [Johnson Sun](https://github.com/j3soon), [@JustinShih0918](https://github.com/JustinShih0918) |
+| [Isaac Lab](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-lab/) | ✔️ | ❌ | ❔ | Isaac Lab 3.0.0-EA Git Install / `develop` Build | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Isaac ROS](https://j3soon.github.io/ros2-essentials/docker-modules/isaac-ros/) | ✔️ | TODO | TODO | Isaac ROS 3.2 Apt Install (Base only) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [NVIDIA OpenUSD Tools](https://j3soon.github.io/ros2-essentials/docker-modules/nv-openusd/) | ✔️ | ❌ | ❔ | NVIDIA OpenUSD Linux Binary Tools (v25.08) | ❌ | [Johnson Sun](https://github.com/j3soon) |
 | [Newton Tools](https://j3soon.github.io/ros2-essentials/docker-modules/newton-tools/) | ✔️ | ❔ | ❔ | URDF/MJCF to USD Converters | ❌ | [Johnson Sun](https://github.com/j3soon) |
@@ -153,7 +153,7 @@ mkdocs serve
 
 ## VSCode Intellisense
 
-If you have installed [Isaac Sim 4.5.0](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_workstation.html) to the default path `~/isaacsim`, you can simply enable IntelliSense for editing any Isaac Sim scripts by running the following script:
+If you have installed [Isaac Sim 6.1.0](https://docs.isaacsim.omniverse.nvidia.com/6.1.0/installation/install_workstation.html) to the default path `~/isaacsim`, you can simply enable IntelliSense for editing any Isaac Sim scripts by running the following script:
 
 ```sh
 scripts/setup_isaac_link.sh

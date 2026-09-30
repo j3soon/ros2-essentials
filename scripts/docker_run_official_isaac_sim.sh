@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
 
 cd "$SCRIPT_DIR/.."
 
-# Ref: https://docs.isaacsim.omniverse.nvidia.com/latest/installation/install_container.html#container-deployment
+# Ref: https://docs.isaacsim.omniverse.nvidia.com/6.1.0/installation/install_container.html#container-deployment
 # Ref: https://github.com/j3soon/docker-isaac-sim
 mkdir -p ~/docker/isaac-sim/cache/main/ov
 mkdir -p ~/docker/isaac-sim/cache/main/warp
@@ -32,4 +32,4 @@ docker run --name isaac-sim --entrypoint bash -it --gpus all -e "ACCEPT_EULA=Y" 
   -e DISPLAY=$DISPLAY \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v $HOME/.Xauthority:/root/.Xauthority \
-  nvcr.io/nvidia/isaac-sim:5.1.0
+  nvcr.io/nvidia/isaac-sim:6.1.0

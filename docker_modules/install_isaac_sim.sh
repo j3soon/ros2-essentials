@@ -87,6 +87,15 @@ elif [ "$ISAAC_SIM_VERSION" = "6.0.1" ]; then
         || exit 1
 
     ISAAC_SIM_STANDALONE_ARCHIVE="/tmp/isaac-sim-standalone-6.0.1-linux-x86_64.zip"
+elif [ "$ISAAC_SIM_VERSION" = "6.1.0" ]; then
+    echo "Installing Isaac Sim 6.1.0 (packaged with Python 3.12)..."
+    # Ref: https://docs.isaacsim.omniverse.nvidia.com/6.1.0/installation/install_workstation.html
+    cd /tmp \
+        && wget -q https://downloads.isaacsim.nvidia.com/isaac-sim-standalone-6.1.0-linux-x86_64.zip \
+            -O /tmp/isaac-sim-standalone-6.1.0-linux-x86_64.zip \
+        || exit 1
+
+    ISAAC_SIM_STANDALONE_ARCHIVE="/tmp/isaac-sim-standalone-6.1.0-linux-x86_64.zip"
 else
     echo "Error: Unsupported Isaac Sim version: $ISAAC_SIM_VERSION"
     exit 1
@@ -103,7 +112,7 @@ if [ "$ISAAC_SIM_VERSION" = "develop" ]; then
     rm -rf "$ISAAC_SIM_SOURCE_PATH" \
         && rm -rf "/home/$USERNAME/.cache/packman" \
         || exit 1
-elif [ "$ISAAC_SIM_VERSION" = "5.1.0" ] || [ "$ISAAC_SIM_VERSION" = "6.0.1" ]; then
+elif [ "$ISAAC_SIM_VERSION" = "5.1.0" ] || [ "$ISAAC_SIM_VERSION" = "6.0.1" ] || [ "$ISAAC_SIM_VERSION" = "6.1.0" ]; then
     # It's a bit unfortunate that we are currently manually compressing the source build and then extracting
     # it again to install, but without this process, the build will not be standalone (depends on `.cache`).
     echo "Extracting standalone package to $ISAACSIM_PATH..."
@@ -128,7 +137,7 @@ fi
 echo "Creating Isaac Sim directories with correct ownership to avoid permission issues after volume mount..."
 sudo mkdir -p /isaac-sim && sudo chown $USERNAME:$USERNAME /isaac-sim || exit 1
 
-if [ "$ISAAC_SIM_VERSION" = "develop" ] || [ "$ISAAC_SIM_VERSION" = "5.1.0" ] || [ "$ISAAC_SIM_VERSION" = "6.0.1" ]; then
+if [ "$ISAAC_SIM_VERSION" = "develop" ] || [ "$ISAAC_SIM_VERSION" = "5.1.0" ] || [ "$ISAAC_SIM_VERSION" = "6.0.1" ] || [ "$ISAAC_SIM_VERSION" = "6.1.0" ]; then
     echo "Creating Isaac Sim runtime directories with correct ownership to avoid permission issues after volume mount..."
     mkdir -p /isaac-sim/kit/cache \
         && mkdir -p /home/$USERNAME/.cache/ov \
