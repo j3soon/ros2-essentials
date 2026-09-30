@@ -12,11 +12,16 @@ fi
 # This script is intended to be run inside the Dockerfile during build.
 echo "Installing OpenCode CLI"
 
-# The official installer places the binary in ~/.opencode/bin by default.
-curl -fsSL https://opencode.ai/install | bash
+# Install Node.js before the npm package. Keep this module usable when Codex is disabled.
+sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg \
+    && sudo rm -rf /var/lib/apt/lists/*
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
+sudo apt-get update && sudo apt-get install -y nodejs \
+    && sudo rm -rf /var/lib/apt/lists/*
+sudo npm install -g opencode-ai@latest
 
 echo "OpenCode CLI installed successfully!"
 echo "Version information:"
-opencode --version || true
+opencode --version
 
 echo "OpenCode installation completed!"

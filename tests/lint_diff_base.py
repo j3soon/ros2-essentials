@@ -24,6 +24,7 @@ required_lines = [
     '{PLACEHOLDER_#}CLAUDE_CODE: "{PLACEHOLDER}"',
     '{PLACEHOLDER_#}CODEX: "{PLACEHOLDER}"',
     '{PLACEHOLDER_#}OPENCODE: "{PLACEHOLDER}"',
+    '{PLACEHOLDER_#}PI: "{PLACEHOLDER}"',
     "{PLACEHOLDER_#}privileged: true",
     "{PLACEHOLDER_#}- /dev/dri:/dev/dri",
     "{PLACEHOLDER_#}- /dev/snd:/dev/snd",

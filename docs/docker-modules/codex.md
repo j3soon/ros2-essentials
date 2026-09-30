@@ -42,6 +42,7 @@ If you want to run Codex CLI to run continuously without asking for permissions,
 
 ```sh
 codex --yolo
+# Equivalent shell shortcut: co
 ```
 
 > This is not the most secure way to run Codex CLI, but it's often good enough as it's inside a container.

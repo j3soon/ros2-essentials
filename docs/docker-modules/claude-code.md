@@ -39,6 +39,7 @@ If you want to run Claude Code CLI to run continuously without asking for permis
 
 ```sh
 claude --dangerously-skip-permissions
+# Equivalent shell shortcut: cl
 ```
 
 > This is not as secure as the [official container](https://code.claude.com/docs/en/devcontainer) due to the lack of firewall protection. But it should be fine for most cases as it's inside a container.

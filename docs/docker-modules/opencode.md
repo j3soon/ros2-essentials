@@ -12,9 +12,7 @@ To enable OpenCode CLI, set the `OPENCODE` argument to `YES` in the `compose.yam
 
 ## Installation
 
-The module installs OpenCode CLI using the official installer from [https://opencode.ai/install](https://opencode.ai/install).
-
-> The current installer adds the CLI binary under `~/.opencode/bin`, which is already available on the default container `PATH`.
+The module installs the latest `opencode-ai` npm package using Node.js 24. Docker checks npm release metadata during builds so a new release refreshes the install layer.
 
 ## Usage
 
@@ -31,6 +29,9 @@ opencode --version
 
 # Run OpenCode CLI
 opencode
+
+# Shortcut for automatic mode
+op
 ```
 
 The first time you run OpenCode, it will prompt you to choose and authenticate a model provider.
@@ -39,7 +40,7 @@ The first time you run OpenCode, it will prompt you to choose and authenticate a
 
 Follow the [OpenCode config locations](https://opencode.ai/docs/config/#locations) guide and edit `~/.config/opencode/opencode.json` directly.
 
-The default `compose.yaml` mounts `${HOME}/docker/.config/opencode` to `/home/user/.config/opencode` and `${HOME}/docker/.local/share/opencode` to `/home/user/.local/share/opencode` so the installed binary and provider credentials can persist across containers.
+The default `compose.yaml` mounts `${HOME}/docker/.config/opencode` to `/home/user/.config/opencode` and `${HOME}/docker/.local/share/opencode` to `/home/user/.local/share/opencode` so configuration and provider credentials persist across containers.
 
 For a local [llama.cpp](https://github.com/ggml-org/llama.cpp) endpoint, add a provider entry like this by downloading and running the setup helper script:
 
@@ -58,6 +59,6 @@ Note that using cloud-hosted models may allow your code to be used for training.
 ## References
 
 - [OpenCode](https://opencode.ai/)
-- [OpenCode install command](https://opencode.ai/)
+- [OpenCode CLI](https://opencode.ai/docs/cli/)
 - [OpenCode source code](https://github.com/anomalyco/opencode)
 - [Dockerfile fragment reference](https://github.com/j3soon/dockerfile-fragments/tree/main/opencode)

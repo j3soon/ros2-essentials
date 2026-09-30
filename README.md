@@ -125,6 +125,7 @@ For a quick enable helper, use `../scripts/enable_module.sh <MODULE>` from a wor
 | [Claude Code](https://j3soon.github.io/ros2-essentials/docker-modules/claude-code/) | ✔️ | ✔️ | ✔️ | Claude Code CLI | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [Codex](https://j3soon.github.io/ros2-essentials/docker-modules/codex/) | ✔️ | ✔️ | ✔️ | Codex CLI | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 | [OpenCode](https://j3soon.github.io/ros2-essentials/docker-modules/opencode/) | ✔️ | ✔️ | ✔️ | OpenCode CLI | ✔️ | [Johnson Sun](https://github.com/j3soon) |
+| [Pi](https://j3soon.github.io/ros2-essentials/docker-modules/pi/) | ✔️ | ✔️ | ✔️ | Pi Coding Agent | ✔️ | [Johnson Sun](https://github.com/j3soon) |
 
 ## Docker Compose Cleanup
 

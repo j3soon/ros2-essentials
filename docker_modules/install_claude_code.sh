@@ -16,6 +16,6 @@ curl -fsSL https://claude.ai/install.sh | bash
 
 echo "Claude Code CLI installed successfully!"
 echo "Version information:"
-claude --version || true
+claude --version
 
 echo "Claude Code installation completed!"

@@ -31,6 +31,6 @@ echo "Codex CLI installed successfully!"
 echo "Version information:"
 node --version || true
 npm --version || true
-codex --version || true
+codex --version
 
 echo "Codex installation completed!"
