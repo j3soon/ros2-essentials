@@ -9,8 +9,10 @@
 
 ## Build, Test, and Development Commands
 - `./scripts/post_install.sh`: refreshes local env files, shared cache volumes, and the optional Isaac Sim host link.
+- `./scripts/post_install.sh --recreate-volumes --remove-containers`: recreates shared cache volumes when needed.
 - `./scripts/enable_module.sh <MODULE>`: enable a module in the current workspace `docker/compose.yaml` (prompts for workspace/module selection if needed).
 - `cd <workspace>/docker && docker compose build`: builds the workspace image.
+- `cd <workspace>/docker && docker compose pull`: pulls a pre-built workspace image.
 - `cd <workspace>/docker && docker compose up -d`: starts containers in the background.
 - `cd <workspace>/docker && docker compose exec <service> bash`: opens a shell in the container.
 - `./scripts/create_workspace.sh <new_workspace_name>`: scaffolds a new workspace from `template_ws`.
@@ -27,6 +29,10 @@
 - `lint_comp_template.py` treats `tests/diff_base/` as the canonical baseline; when `template_ws` intentionally changes, update `tests/diff_base/` and sync other workspaces as needed. Do not use `{PLACEHOLDER_MULTILINE}` in the baseline templates unless the user explicitly asks for it.
 - You can skip workspaces by setting `IGNORED_WORKSPACES` (e.g., `export IGNORED_WORKSPACES="tmp_ws"`).
 
+## Agent Skills
+- Maintain skill content in `skills/`. The `.agents/skills`, `.codex/skills`, and `.claude/skills` directories are discovery links to it.
+- Update a canonical skill and its references together; keep discovery links valid.
+
 ## Commit & Pull Request Guidelines
 - Branch naming: `feat/<name>` or `fix/<name>`.
 - Commit messages must follow Conventional Commits and include rationale and sources when relevant.
@@ -36,4 +42,4 @@
 
 ## Configuration Tips
 - Set `export USER_UID=$(id -u)` on the host to match container user permissions.
-- Enable/disable modules via `build.args` in `docker/compose.yaml` (e.g., `CARTOGRAPHER=ON`).
+- Enable/disable modules via `build.args` in `docker/compose.yaml` (e.g., `CARTOGRAPHER: "YES"` or `CARTOGRAPHER: ""`). Rebuild affected images after changing a shared `docker_modules/` installer.

@@ -14,7 +14,7 @@ Use this as the router. For workspace-specific expectations, read the matching
 - Explicit workspace: pass `--workspace <name>_ws`.
 - Changed files: pass `--changed-from <base> --changed-to HEAD`, or pipe paths
   with `--changed-files-from -`.
-- Shared testing changes under `.agents/skills/`, `tests/workspace_smoke/`,
+- Shared testing changes under `skills/`, `tests/workspace_smoke/`,
   `docker_modules/`, or setup scripts select all workspaces.
 
 If the user has not chosen the validation depth and the run is expensive or
@@ -111,7 +111,7 @@ it to a git-tracked path before finishing:
 - Workspace-specific helpers: `tests/workspace_smoke/workspaces/<workspace>/`
 
 If a prompt teaches a reusable workflow rule, update the relevant skill in
-`.agents/skills/`. Skills should stay concise: point to the tracked script,
+`skills/`. Skills should stay concise: point to the tracked script,
 state readiness markers, capture/report expectations, and avoid embedding large
 script bodies.
 

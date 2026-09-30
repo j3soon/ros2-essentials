@@ -8,7 +8,10 @@ on:
       - "scripts/post_install.sh"
       - "scripts/setup_env_files.sh"
       - "scripts/setup_isaac_link.sh"
-      - ".agents/skills/**"
+      - ".agents/skills"
+      - ".codex/skills"
+      - ".claude/skills"
+      - "skills/**"
       - "tests/workspace_smoke/**"
       - ".github/workflows/workspace-smoke.yaml"
   push:
@@ -18,7 +21,10 @@ on:
       - "scripts/post_install.sh"
       - "scripts/setup_env_files.sh"
       - "scripts/setup_isaac_link.sh"
-      - ".agents/skills/**"
+      - ".agents/skills"
+      - ".codex/skills"
+      - ".claude/skills"
+      - "skills/**"
       - "tests/workspace_smoke/**"
       - ".github/workflows/workspace-smoke.yaml"
 

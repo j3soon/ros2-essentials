@@ -306,7 +306,8 @@ Changes under shared infrastructure paths affect all workspaces:
 - `scripts/post_install.sh`
 - `scripts/setup_env_files.sh`
 - `scripts/setup_isaac_link.sh`
-- `.agents/skills/`
+- `skills/` (canonical skill content)
+- `.agents/skills`, `.codex/skills`, and `.claude/skills` (discovery directory links)
 - `tests/workspace_smoke/`
 - `.github/workflows/workspace-smoke.yaml`
 

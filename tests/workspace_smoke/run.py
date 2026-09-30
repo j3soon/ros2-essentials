@@ -42,7 +42,10 @@ LEVELS = {
     "gui": ("gui",),
 }
 SHARED_PATHS = (
+    "skills/",
     ".agents/skills/",
+    ".codex/skills/",
+    ".claude/skills",
     ".github/workflows/workspace-smoke.yaml",
     "docker_modules/",
     "scripts/post_install.sh",
