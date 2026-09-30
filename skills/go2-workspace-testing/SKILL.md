@@ -1,6 +1,6 @@
 ---
 name: go2-workspace-testing
-description: Test and generate proof for go2_ws. Use when validating the Go2 workspace build, Docker image CLI health, runtime checks, or Isaac Sim Go2 joint-command motion proof.
+description: Test and generate proof for go2_ws. Use for workspace build and runtime checks, Isaac Sim joint-command motion, or Isaac Lab rough-terrain training and playback.
 ---
 
 # Go2 Workspace Testing
@@ -27,9 +27,8 @@ host X11 recording, triggers Isaac timeline Play, verifies ROS traffic with
 waits for the scene to stabilize, publishes the documented `/joint_command`,
 then captures a final host X11 screenshot. The MP4 must include the start of
 simulation and pre-command frames.
-The doc-demo runner starts Compose with `docker compose up -d --build --pull
-never`, so it must build the local workspace image and must not pull the
-published DockerHub image.
+The doc-demo runner builds locally and refuses registry pulls. After a
+successful build, add `--no-build` to reuse the tested image.
 
 ```bash
 python3 tests/workspace_smoke/doc_demo_smoke.py --workspace go2_ws \
@@ -38,3 +37,22 @@ python3 tests/workspace_smoke/doc_demo_smoke.py --workspace go2_ws \
 
 Report back with the summary JSON path, log path, screenshot path, and MP4
 recording path.
+
+## Isaac Lab Rough-Terrain Proof
+
+The Go2 Isaac Lab check runs two RSL-RL training iterations, verifies and
+copies `model_1.pt`, then loads the published pretrained policy with the Kit
+visualizer. It captures a screenshot and a 15-second X11 recording after the
+playback readiness marker. Use a local image that includes Isaac Lab 3.0.0-EA.
+The runner reuses it without rebuilding and leaves the Compose service running
+so the logs and checkpoint remain available inside the container.
+Its camera-following CLI overrides work in 3.0.0-EA but are deprecated. Use
+`KitVisualizerCfg` in custom task code, as shown in `docs/go2-ws/index.md`.
+
+```bash
+python3 tests/workspace_smoke/go2_rough_smoke.py --workspace go2_ws
+```
+
+If only the fully built template image is available, pass
+`--workspace template_ws`. Pass `--build` to build the chosen workspace first.
+Report the summary JSON, training log, checkpoint, screenshot, and MP4 paths.

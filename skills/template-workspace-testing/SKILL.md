@@ -18,6 +18,10 @@ python3 tests/workspace_smoke/run.py --workspace template_ws --level image-cli
 python3 tests/workspace_smoke/run.py --workspace template_ws --level cli
 ```
 
+After a successful full build, add `--no-build` to image CLI or runtime CLI
+checks to reuse the tested local image. This avoids restarting the large Isaac
+installation build during a follow-up Compose check.
+
 ## GUI Proof
 
 The template does not document a simulator-specific GUI demo, so the doc-demo

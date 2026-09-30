@@ -41,8 +41,12 @@ cd ~/IsaacLab
 ```
 
 Use `--viz kit` for the Kit visualizer. On first launch, let the Kit window
-finish rendering the scene before judging the viewport; the setup logs may
-finish before the first visible frame appears.
+finish rendering the scene before judging the viewport. The first run may
+spend several minutes compiling shaders even after the startup log appears.
+If the desktop offers to close an unresponsive Kit window during that time,
+choose Wait while the process is still active. Later launches use the caches.
+Isaac Lab 3.0.0-EA also warns that `isaaclab.sh` will be replaced by
+`uv run isaaclab` in a future release.
 
 [Train Cartpole](https://isaac-sim.github.io/IsaacLab/release/3.0.0/source/how-to/run_rl_training.html):
 

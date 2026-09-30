@@ -50,6 +50,13 @@ must include the start of simulation and pre-command frames.
 runs. It can also be called directly for reusable screenshots or short
 recordings after any container renders to the host display.
 
+`go2_rough_smoke.py` is an opt-in Isaac Lab check. It trains the rough-terrain
+Go2 task for two RSL-RL iterations, checks the saved checkpoint, loads the
+published pretrained policy, and records its Kit viewport. It reuses an
+already-built local image by default and leaves the Compose container running
+for inspection. Its JSON summary points to the logs, checkpoint, screenshot,
+and video.
+
 Use `--no-gpu` when the host does not have a GPU mounted. In that mode, the
 runner allows `config`, `build`, `image-cli`, and `gui`, but rejects checks that
 start or inspect running Compose services, including `isaac-visual`.
@@ -84,6 +91,19 @@ Run basic ROS/colcon checks inside an already-built image without Compose:
 python3 tests/workspace_smoke/run.py --workspace turtlebot3_ws --level image-cli --no-gpu
 ```
 
+Reuse a previously built image for CLI or runtime checks:
+
+```bash
+python3 tests/workspace_smoke/run.py --workspace template_ws --level cli --no-build
+python3 tests/workspace_smoke/doc_demo_smoke.py --workspace go2_ws --no-build
+```
+
+`--no-build` skips the implicit build and uses `docker compose up -d --no-build
+--pull never` for Compose checks. It fails when the required image is missing.
+An explicit `build` check cannot be combined with this flag.
+The standalone `isaac_gui_proof_capture.py` and `isaac_lab_deformable_gui.sh`
+helpers accept the same flag after an image has been built.
+
 Run a GPU-backed Isaac Sim screenshot check in an already-built image:
 
 ```bash
@@ -108,12 +128,17 @@ tests/workspace_smoke/isaac_lab_deformable_gui.sh --detach
 tail -f tests/workspace_smoke/artifacts/isaac-lab-deformable-kit-gui.log
 ```
 
-Isaac Sim/Lab proof paths use `docker compose up -d --build --pull never` and
-`docker compose exec` so GPU, X11, `/dev`, workspace mounts, and cache volumes
-come from the same `docker/compose.yaml` contract users run locally. Smoke
-tests build the workspace image locally and refuse DockerHub service-image
-pulls. Direct `docker run` remains only for cheap image CLI and Docker GPU
-preflight checks, and those paths require the image to already exist locally.
+Isaac Sim/Lab proof paths use `docker compose exec` so GPU, X11, `/dev`,
+workspace mounts, and cache volumes come from the same `docker/compose.yaml`
+contract users run locally. New builds use `docker compose up -d --build --pull
+never`. Reuse a tested local image with `--no-build`. Direct `docker run`
+remains only for cheap image CLI and Docker GPU preflight checks.
+
+Run the Go2 rough-terrain train and inference check against a built image:
+
+```bash
+python3 tests/workspace_smoke/go2_rough_smoke.py --workspace template_ws
+```
 
 Wait for both markers before capturing:
 

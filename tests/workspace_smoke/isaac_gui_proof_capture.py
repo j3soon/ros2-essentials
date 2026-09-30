@@ -44,6 +44,7 @@ DEFAULT_EXPECTED_PRIMS = {
     "stretch3_ws": "/World/stretch3",
 }
 COMPOSE_UP_LOCAL_ARGS = ["up", "-d", "--build", "--pull", "never"]
+COMPOSE_UP_EXISTING_ARGS = ["up", "-d", "--no-build", "--pull", "never"]
 
 
 def compose_service(workspace: str) -> str:
@@ -180,6 +181,7 @@ def main():
     capture.add_argument("--framerate", type=int, default=15, help="Recording framerate")
     capture.add_argument("--output-dir", help="Output directory for artifacts")
     capture.add_argument("--display", default=os.environ.get("DISPLAY", ":0"), help="X11 display")
+    capture.add_argument("--no-build", action="store_true", help="Reuse the existing local workspace image")
 
     timing = parser.add_argument_group("timing options")
     timing.add_argument("--timeout", type=int, default=180, help="Timeout for Isaac Sim ready")
@@ -235,7 +237,8 @@ def main():
     print(f"Starting Isaac Sim with stage: {stage}", flush=True)
     print(f"Log file: {log_file}", flush=True)
 
-    up_cmd = compose_command(args.workspace, COMPOSE_UP_LOCAL_ARGS, override_files)
+    up_args = COMPOSE_UP_EXISTING_ARGS if args.no_build else COMPOSE_UP_LOCAL_ARGS
+    up_cmd = compose_command(args.workspace, up_args, override_files)
     with log_file.open("a", encoding="utf-8") as log:
         log.write(f"$ {' '.join(up_cmd)}\n")
         up_result = subprocess.run(

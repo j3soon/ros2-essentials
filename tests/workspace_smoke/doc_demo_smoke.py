@@ -25,6 +25,11 @@ ISAAC_GUI_SCRIPT = REPO_ROOT / "tests" / "workspace_smoke" / "isaac_gui_open_sta
 MIN_GUI_SCREENSHOT_BYTES = 10_000
 MIN_GUI_RECORDING_BYTES = 100_000
 COMPOSE_UP_LOCAL_ARGS = ["up", "-d", "--build", "--pull", "never"]
+COMPOSE_UP_EXISTING_ARGS = ["up", "-d", "--no-build", "--pull", "never"]
+
+
+def compose_up_args(no_build: bool) -> list[str]:
+    return COMPOSE_UP_EXISTING_ARGS if no_build else COMPOSE_UP_LOCAL_ARGS
 GUI_FAILURE_MARKERS = (
     "[ERROR]",
     "Caught exception",
@@ -268,6 +273,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--display", default=os.environ.get("DISPLAY", ":0"))
     parser.add_argument("--x11-size", default="1280x720")
     parser.add_argument(
+        "--no-build",
+        action="store_true",
+        help="Reuse the existing local image for Compose-backed demos.",
+    )
+    parser.add_argument(
         "--image-override",
         action="append",
         default=[],
@@ -302,7 +312,7 @@ def artifact_base(report_dir: Path, workspace: str, kind: str) -> Path:
 
 
 def artifact_timestamp(path: Path) -> str:
-    return path.name.split("-", 1)[0]
+    return "-".join(path.name.split("-", 2)[:2])
 
 
 def image_overrides(args: argparse.Namespace) -> dict[str, str]:
@@ -502,7 +512,7 @@ def run_isaac_stage(demo: Demo, args: argparse.Namespace) -> Result:
     print(f"$ {' '.join(command)}")
     print(f"log: {display_path(log_path)}")
     with log_path.open("w", encoding="utf-8") as log_file:
-        up_command = compose_command(demo, COMPOSE_UP_LOCAL_ARGS, override_files)
+        up_command = compose_command(demo, compose_up_args(args.no_build), override_files)
         log_file.write(f"$ {' '.join(up_command)}\n")
         subprocess.run(up_command, cwd=compose_dir(demo), stdout=log_file, stderr=subprocess.STDOUT, text=True)
         log_file.write(f"$ {' '.join(command)}\n")
@@ -556,11 +566,13 @@ def run_joint_command(demo: Demo, args: argparse.Namespace) -> Result:
     screenshot_path = base.with_suffix(".png")
     recording_path = base.with_suffix(".mp4")
     override_files = (no_registry_cache_override_path(args.report_dir, demo),)
+    play_trigger_path = f"/tmp/{demo.workspace}-{artifact_timestamp(base)}-play.trigger"
     env = {
         "DISPLAY": args.display,
         "XAUTHORITY": "/home/user/.Xauthority",
         "ISAAC_GUI_STAGE_PATH": demo.stage,
-        "ISAAC_GUI_PLAY": "true",
+        "ISAAC_GUI_PLAY": "false",
+        "ISAAC_GUI_PLAY_TRIGGER_PATH": play_trigger_path,
         "ISAAC_GUI_SETTLE_FRAMES": "180",
     }
     if demo.expected_prim:
@@ -581,7 +593,7 @@ def run_joint_command(demo: Demo, args: argparse.Namespace) -> Result:
     print(f"$ {' '.join(isaac_command)}")
     print(f"log: {display_path(log_path)}")
     with log_path.open("w", encoding="utf-8") as log_file:
-        up_command = compose_command(demo, COMPOSE_UP_LOCAL_ARGS, override_files)
+        up_command = compose_command(demo, compose_up_args(args.no_build), override_files)
         log_file.write(f"$ {' '.join(up_command)}\n")
         up_result = subprocess.run(
             up_command,

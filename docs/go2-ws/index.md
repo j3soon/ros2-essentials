@@ -71,6 +71,35 @@ cd ~/IsaacLab
 ./isaaclab.sh play --rl_library rsl_rl --task Isaac-Velocity-Rough-UnitreeGo2 --num_envs 4 --checkpoint pretrained --viz kit
 ```
 
+The Go2 task currently selects Newton MJWarp physics by default, including
+when `--viz kit` opens an Isaac Sim viewport. The published checkpoint may
+download on first use. Wait for `Policy playback is running` before judging
+the motion or recording the window.
+
+The default camera looks at the world origin, so Go2 may appear small or leave
+the viewport. For a custom task configuration, set the supported Kit camera
+configuration before launching the simulation:
+
+```python
+from isaaclab_visualizers.kit import KitVisualizerCfg
+
+env_cfg.sim.default_visualizer_cfg = KitVisualizerCfg(
+    eye=(3.0, 3.0, 2.0),
+    lookat=(0.0, 0.0, 0.0),
+    origin_type="asset",
+    origin_env_index=0,
+    origin_track_path="robot",
+)
+```
+
+The Go2 rough-terrain smoke check can train for two iterations and capture a
+playback video with a camera that follows the robot. Run it from the repository
+root after building the workspace image:
+
+```sh
+python3 tests/workspace_smoke/go2_rough_smoke.py --workspace go2_ws
+```
+
 ### Champ Controller Demo
 
 1. Launch the Go2 in the Isaac Sim.
