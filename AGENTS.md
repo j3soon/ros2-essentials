@@ -23,6 +23,14 @@
 - Use `docker/compose.yaml` (not `compose.yml` or other variants).
 - Keep required default files in each workspace: `.devcontainer/devcontainer.json`, `docker/Dockerfile`, `docker/compose.yaml`, `src/`, and `README.md`.
 - Prefer USDA over USD for Omniverse/Isaac assets where possible.
+- Keep comments and documentation concise and informative. Do not use em dashes or semicolons to join sentences.
+
+## Shared Workflow
+- Keep edits scoped to the request and preserve existing patterns.
+- Run affected checks before finishing.
+- Preserve each file's staged or unstaged state. Stage, unstage, or commit only when explicitly asked.
+- Avoid trailing spaces and end files with a newline.
+- Record durable, general guidance in the nearest relevant `AGENTS.md`.
 
 ## Testing Guidelines
 - Primary checks are Python-based lint scripts executed via `./tests/test_all.sh`.
@@ -35,10 +43,16 @@
 
 ## Commit & Pull Request Guidelines
 - Branch naming: `feat/<name>` or `fix/<name>`.
-- Commit messages must follow Conventional Commits and include rationale and sources when relevant.
+- Keep commits focused so each change can be understood, validated, and reverted independently.
+- Commit messages must follow Conventional Commits. Keep the body short, explain the rationale, and include sources when relevant.
 - When `template_ws` changes require syncing other workspaces, make a separate minimal "unify" commit (preferred message: `feat: Unify workspaces style`).
 - If code/content is copied, include source and commit permalink in the commit message.
-- Add `Co-authored-by` lines for contributors who helped; avoid force-pushes once review starts.
+- Check `git config user.name` and `git config user.email` before committing. Use the configured human identity as author and committer; if either is missing, ask the user. Never use a coding agent identity as author, committer, or co-author.
+- For commits created by a coding agent, include a validation paragraph naming checks and results. End the body with a separate plain `by <Harness> (<Model>)` line using the actual harness and full canonical lowercase model slug, such as `by Codex (gpt-5.6-sol)`. Verify the active model before committing if its slug is unclear.
+- The `by` line is the only agent attribution. Do not add co-author trailers or session links after it.
+- Build multi-paragraph commit messages with separate `git commit -m` arguments. Do not embed escaped `\\n` sequences.
+- After committing or rewriting a commit, inspect `git log -1 --format=fuller` to confirm paragraph breaks and the attribution as the final line.
+- Avoid force-pushes once review starts.
 
 ## Configuration Tips
 - Set `export USER_UID=$(id -u)` on the host to match container user permissions.
