@@ -72,6 +72,22 @@ python3 tests/workspace_smoke/test_gui_capture.py -v
 Set `WORKSPACE_SMOKE_X11_DISPLAY=:0` to include the live synthetic-window
 capture and occlusion check.
 
+Set `WORKSPACE_SMOKE_DOCKER_TEST=1` when running
+`test_agent_build.py` to check disabled-agent layers with networking disabled
+and unavailable release metadata endpoints. It also uses a local HTTP server
+and stub installers to verify that enabled agents check only their own
+endpoints, reuse install layers for unchanged releases, and rerun installation
+when release metadata changes. It covers enabled agents and empty or omitted
+disabled arguments. The Docker check needs a local `ubuntu:22.04` image.
+These checks are opt-in and stay outside `test_all.sh`.
+
+Agent switches use the documented `YES`/empty convention. Each release `ADD`
+selects its remote URL when enabled and the existing local `.bashrc` file when
+disabled. The local file is only a cache marker. Installers do not read it.
+This keeps automatic release refresh without extra build stages or flag
+normalization. The existing Compose arguments control both installation and
+release checks.
+
 Use `--no-gpu` when the host does not have a GPU mounted. In that mode, the
 runner allows `config`, `build`, `image-cli`, and `gui`, but rejects checks that
 start or inspect running Compose services, including `isaac-visual`.

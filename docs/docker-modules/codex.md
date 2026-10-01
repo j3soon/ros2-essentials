@@ -12,7 +12,7 @@ To enable Codex CLI, set the `CODEX` argument to `YES` in the `compose.yaml` fil
 
 ## Installation
 
-The module installs the Codex CLI (latest version) via npm during the Docker image build.
+The module installs the Codex CLI (latest version) via npm during the Docker image build. Use `YES` to enable this agent and `""` to disable it. Enabled agents check release metadata during builds so a new release refreshes the install layer. Disabled agents use a local cache marker and skip the release download.
 
 > Alternatively, if you want to install the Codex extension for your favorite IDE (e.g., [Codex for VSCode](https://marketplace.visualstudio.com/items?itemName=openai.chatgpt)), refer to the [Codex IDE extension](https://developers.openai.com/codex/ide/) for more details instead. This module doesn't need to be enabled if you just want to use the IDE extension.
 

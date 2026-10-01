@@ -58,3 +58,4 @@
 ## Configuration Tips
 - Set `export USER_UID=$(id -u)` on the host to match container user permissions.
 - Enable/disable modules via `build.args` in `docker/compose.yaml` (e.g., `CARTOGRAPHER: "YES"` or `CARTOGRAPHER: ""`). Rebuild affected images after changing a shared `docker_modules/` installer.
+- Use the documented `YES`/empty build arguments to gate optional release downloads so disabled modules skip their release endpoints.

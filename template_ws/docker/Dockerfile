@@ -196,32 +196,36 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 ARG CLAUDE_CODE=""
 ENV IS_SANDBOX=1
 ENV PATH="/home/$USERNAME/.local/bin:${PATH}"
-# Refresh the install layer when the latest Claude release changes.
-ADD https://downloads.claude.ai/claude-code-releases/latest /tmp/claude-code-latest-version
+# Use the local shell config as a cache marker when this module is disabled.
+ARG CLAUDE_CODE_RELEASE_SOURCE=${CLAUDE_CODE:+https://downloads.claude.ai/claude-code-releases/latest}
+ADD ${CLAUDE_CODE_RELEASE_SOURCE:-.bashrc} /tmp/claude-code-latest-version
 COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
      /install_claude_code.sh /tmp/install_claude_code.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_claude_code.sh && rm /tmp/install_claude_code.sh
 # Codex CLI configuration
 ARG CODEX=""
-# Refresh the install layer when the latest npm release changes.
-ADD https://registry.npmjs.org/@openai%2Fcodex/latest /tmp/openai-codex-latest.json
+# Use the local shell config as a cache marker when this module is disabled.
+ARG CODEX_RELEASE_SOURCE=${CODEX:+https://registry.npmjs.org/@openai%2Fcodex/latest}
+ADD ${CODEX_RELEASE_SOURCE:-.bashrc} /tmp/openai-codex-latest.json
 COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
      /install_codex.sh /tmp/install_codex.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_codex.sh && rm /tmp/install_codex.sh
 # OpenCode CLI configuration
 ARG OPENCODE=""
-# Refresh the install layer when the latest npm release changes.
-ADD https://registry.npmjs.org/opencode-ai/latest /tmp/opencode-latest.json
+# Use the local shell config as a cache marker when this module is disabled.
+ARG OPENCODE_RELEASE_SOURCE=${OPENCODE:+https://registry.npmjs.org/opencode-ai/latest}
+ADD ${OPENCODE_RELEASE_SOURCE:-.bashrc} /tmp/opencode-latest.json
 COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
      /install_opencode.sh /tmp/install_opencode.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_opencode.sh && rm /tmp/install_opencode.sh
 # Pi Coding Agent configuration
 ARG PI=""
-# Refresh the install layer when the latest npm release changes.
-ADD https://registry.npmjs.org/@earendil-works%2Fpi-coding-agent/latest /tmp/pi-coding-agent-latest.json
+# Use the local shell config as a cache marker when this module is disabled.
+ARG PI_RELEASE_SOURCE=${PI:+https://registry.npmjs.org/@earendil-works%2Fpi-coding-agent/latest}
+ADD ${PI_RELEASE_SOURCE:-.bashrc} /tmp/pi-coding-agent-latest.json
 COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
      /install_pi.sh /tmp/install_pi.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \

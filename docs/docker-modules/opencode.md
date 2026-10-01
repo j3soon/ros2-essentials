@@ -12,7 +12,7 @@ To enable OpenCode CLI, set the `OPENCODE` argument to `YES` in the `compose.yam
 
 ## Installation
 
-The module installs the latest `opencode-ai` npm package using Node.js 24. Docker checks npm release metadata during builds so a new release refreshes the install layer.
+The module installs the latest `opencode-ai` npm package using Node.js 24. Use `YES` to enable this agent and `""` to disable it. Enabled agents check release metadata during builds so a new release refreshes the install layer. Disabled agents use a local cache marker and skip the release download.
 
 ## Usage
 
