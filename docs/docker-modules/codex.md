@@ -8,7 +8,7 @@ Codex CLI for AI-assisted development directly inside workspace containers.
 
 To enable Codex CLI, set the `CODEX` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `template_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 
-> **Notice - Subscription required:** Codex is a third-party service that requires an active OpenAI account or subscription to use. This module only installs the CLI; you need an active subscription to use it.
+> **Notice - Subscription required:** Codex is a third-party service that requires an active OpenAI account or subscription to use. This module only installs the CLI. You need an active subscription to use it.
 
 ## Installation
 

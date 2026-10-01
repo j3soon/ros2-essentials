@@ -111,7 +111,7 @@ We have provided a script to create a new workspace. Please use it to avoid pote
 
 ### Adapting a workspace to your pipeline
 
-After creating a workspace, put your ROS 2 packages in its `src/` directory and declare package dependencies in each `package.xml`. Add image-level dependencies to `docker/Dockerfile`; use `docker_modules/` for installation steps shared by multiple workspaces. Set build arguments, runtime environment variables, and mounts in that workspace's `docker/compose.yaml`.
+After creating a workspace, put your ROS 2 packages in its `src/` directory and declare package dependencies in each `package.xml`. Add image-level dependencies to `docker/Dockerfile`. Use `docker_modules/` for installation steps shared by multiple workspaces. Set build arguments, runtime environment variables, and mounts in that workspace's `docker/compose.yaml`.
 
 The template's `docker/.bashrc` runs `rosdep install` when its rosdep cache is missing and runs `colcon build` when `install/setup.bash` is missing. If your pipeline controls dependency installation and builds, adjust these startup commands in your new workspace so opening a shell does not trigger them. Check the resolved configuration with `docker compose config` from the workspace's `docker/` directory before building.
 

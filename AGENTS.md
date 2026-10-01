@@ -39,7 +39,7 @@
 
 ## Agent Skills
 - Maintain skill content in `skills/`. The `.agents/skills`, `.codex/skills`, and `.claude/skills` directories are discovery links to it.
-- Update a canonical skill and its references together; keep discovery links valid.
+- Update a canonical skill and its references together. Keep discovery links valid.
 
 ## Commit & Pull Request Guidelines
 - Branch naming: `feat/<name>` or `fix/<name>`.
@@ -47,7 +47,7 @@
 - Commit messages must follow Conventional Commits. Keep the body short, explain the rationale, and include sources when relevant.
 - When `template_ws` changes require syncing other workspaces, make a separate minimal "unify" commit (preferred message: `feat: Unify workspaces style`).
 - If code/content is copied, include source and commit permalink in the commit message.
-- Check `git config user.name` and `git config user.email` before committing. Use the configured human identity as author and committer; if either is missing, ask the user. Never use a coding agent identity as author, committer, or co-author.
+- Check `git config user.name` and `git config user.email` before committing. Use the configured human identity as author and committer. If either is missing, ask the user. Never use a coding agent identity as author, committer, or co-author.
 - For commits created by a coding agent, include a validation paragraph naming checks and results. End the body with a separate plain `by <Harness> (<Model>)` line using the actual harness and full canonical lowercase model slug, such as `by Codex (gpt-5.6-sol)`. Verify the active model before committing if its slug is unclear.
 - The `by` line is the only agent attribution. Do not add co-author trailers or session links after it.
 - Build multi-paragraph commit messages with separate `git commit -m` arguments. Do not embed escaped `\\n` sequences.

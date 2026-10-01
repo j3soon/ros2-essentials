@@ -8,7 +8,7 @@ Claude Code CLI for AI-assisted development directly inside workspace containers
 
 To enable Claude Code CLI, set the `CLAUDE_CODE` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `template_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 
-> **Notice - Subscription required:** Claude Code is a third-party service that requires an active Anthropic account or subscription to use. This module only installs the CLI; you need an active subscription to use it.
+> **Notice - Subscription required:** Claude Code is a third-party service that requires an active Anthropic account or subscription to use. This module only installs the CLI. You need an active subscription to use it.
 
 ## Installation
 

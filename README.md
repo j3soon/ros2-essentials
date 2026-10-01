@@ -105,9 +105,9 @@ If you have trouble using a workspace, please [open an issue](https://github.com
 
 ## Pre-configured Modules
 
-The `Template default` column shows what `template_ws/docker/compose.yaml` enables. Other workspaces set their own build arguments; check their `docker/compose.yaml` files before building.
+The `Template default` column shows what `template_ws/docker/compose.yaml` enables. Other workspaces set their own build arguments. Check their `docker/compose.yaml` files before building.
 
-Edit the `build.args` section in the chosen workspace's `docker/compose.yaml` file and rebuild the image to add or remove modules. To disable Isaac Sim or Isaac Lab, explicitly set the corresponding version argument to `""`; omitting it uses the Dockerfile default.
+Edit the `build.args` section in the chosen workspace's `docker/compose.yaml` file and rebuild the image to add or remove modules. To disable Isaac Sim or Isaac Lab, explicitly set the corresponding version argument to `""`. Omitting it uses the Dockerfile default.
 For a quick enable helper, use `../scripts/enable_module.sh <MODULE>` from a workspace (or let it prompt for workspace/module selection) when executed outside of a workspace.
 
 | Module | x86_64 | Jetson | DGX Spark | Notes | Template default | Maintainer |
