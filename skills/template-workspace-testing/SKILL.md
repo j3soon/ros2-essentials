@@ -5,6 +5,10 @@ description: Test and generate proof for template_ws. Use when validating worksp
 
 # Template Workspace Testing
 
+For live RealSense RGB/depth PNGs and videos, use
+[realsense-capture](../realsense-capture/SKILL.md). It captures directly from the
+camera using the existing container and preserves 16-bit depth measurements.
+
 ## Build
 
 ```bash
