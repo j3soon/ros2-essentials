@@ -43,7 +43,12 @@ recording path.
 The Go2 Isaac Lab check runs two RSL-RL training iterations, verifies and
 copies `model_1.pt`, then loads the published pretrained policy with the Kit
 visualizer. It captures a screenshot and a 15-second X11 recording after the
-playback readiness marker. Use a local image that includes Isaac Lab 3.0.0-EA.
+playback readiness marker. The host needs `xdotool`, `xprop`, and `ffmpeg`. The runner
+requires one newly visible Isaac Lab window and captures that window. Keep it
+in the foreground throughout recording. Missing, ambiguous, hidden, or
+covered windows fail the proof. Inspect the screenshot and a video frame to
+confirm that Go2 and the terrain rendered.
+Use a local image that includes Isaac Lab 3.0.0-EA.
 The runner reuses it without rebuilding and leaves the Compose service running
 so the logs and checkpoint remain available inside the container.
 Its camera-following CLI overrides work in 3.0.0-EA but are deprecated. Use

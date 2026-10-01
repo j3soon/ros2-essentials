@@ -13,7 +13,11 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from proof_capture import capture_x11_screenshot, record_x11_video
+from proof_capture import (
+    capture_x11_screenshot,
+    record_x11_video,
+    require_x11_window_visible,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -77,10 +81,79 @@ def wait_for_marker(
     return False
 
 
+def visible_kit_windows(env: dict[str, str]) -> set[str]:
+    for command in ("xdotool", "xprop"):
+        if not shutil.which(command):
+            raise RuntimeError(f"Go2 visual proof requires {command} on the host.")
+    result = subprocess.run(
+        ["xdotool", "search", "--onlyvisible", "--name", "^Isaac Lab"],
+        env=env,
+        text=True,
+        capture_output=True,
+        timeout=10,
+    )
+    if result.returncode not in (0, 1):
+        raise RuntimeError("Cannot search for Isaac Lab windows on the X11 display.")
+    clients = subprocess.run(
+        ["xprop", "-root", "_NET_CLIENT_LIST"],
+        env=env,
+        text=True,
+        capture_output=True,
+        timeout=10,
+    )
+    if clients.returncode != 0 or "window id #" not in clients.stdout:
+        raise RuntimeError("Cannot list managed X11 windows for Isaac Lab proof.")
+    # Window-manager decorations can repeat the title. Keep application clients.
+    managed = {
+        str(int(value, 16)) for value in re.findall(r"0x[0-9a-fA-F]+", clients.stdout)
+    }
+    return set(result.stdout.splitlines()) & managed
+
+
+def prepare_kit_capture(
+    existing_windows: set[str], *, env: dict[str, str], x11_size: str
+) -> tuple[str, str]:
+    """Select the new playback window and fit capture dimensions to its bounds."""
+    deadline = time.monotonic() + 30
+    while True:
+        windows = visible_kit_windows(env) - existing_windows
+        if windows:
+            break
+        if time.monotonic() >= deadline:
+            raise RuntimeError("Go2 playback did not open a visible Isaac Lab window.")
+        time.sleep(1)
+    if len(windows) != 1:
+        raise RuntimeError("Multiple new Isaac Lab windows make Go2 proof ambiguous.")
+    window_id = windows.pop()
+    subprocess.run(
+        ["xdotool", "windowactivate", "--sync", window_id, "windowraise", window_id],
+        env=env,
+        check=True,
+        capture_output=True,
+        timeout=10,
+    )
+    require_x11_window_visible(window_id, display=env["DISPLAY"])
+    geometry = subprocess.check_output(
+        ["xdotool", "getwindowgeometry", "--shell", window_id],
+        env=env,
+        text=True,
+        timeout=10,
+    )
+    dimensions = dict(line.split("=", 1) for line in geometry.splitlines())
+    width, height = (int(value) for value in x11_size.split("x"))
+    width = min(width, int(dimensions["WIDTH"])) // 2 * 2
+    height = min(height, int(dimensions["HEIGHT"])) // 2 * 2
+    if width < 640 or height < 480:
+        raise RuntimeError("The Isaac Lab window is too small for Go2 visual proof.")
+    return window_id, f"{width}x{height}"
+
+
 def main() -> int:
     args = parse_args()
     if args.record_seconds < 1 or args.startup_timeout < 1:
         raise ValueError("--record-seconds and --startup-timeout must be positive.")
+    if not re.fullmatch(r"[1-9]\d*x[1-9]\d*", args.x11_size):
+        raise ValueError("--x11-size must be WIDTHxHEIGHT using positive integers.")
 
     docker_dir = REPO_ROOT / args.workspace / "docker"
     if not (docker_dir / "compose.yaml").is_file():
@@ -136,6 +209,7 @@ def main() -> int:
             return True
 
     try:
+        visible_kit_windows(env)
         if (
             not args.build
             and subprocess.run(
@@ -247,6 +321,7 @@ def main() -> int:
             'wait "$play_pid"\n'
         )
         play_log = artifact("playback_log", "play.log")
+        existing_windows = visible_kit_windows(env)
         print(
             f"$ docker compose exec -T {service} bash -c <Go2 playback>\nlog: {play_log}",
             flush=True,
@@ -266,25 +341,18 @@ def main() -> int:
                     "Pretrained Go2 playback did not reach policy readiness. See play.log."
                 )
             time.sleep(5)
-            if shutil.which("xdotool"):
-                windows = subprocess.run(
-                    ["xdotool", "search", "--name", "Isaac Lab"],
-                    env=env,
-                    text=True,
-                    capture_output=True,
-                )
-                if windows.returncode == 0 and windows.stdout.strip():
-                    subprocess.run(
-                        ["xdotool", "windowactivate", windows.stdout.splitlines()[-1]],
-                        env=env,
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL,
-                        timeout=10,
-                    )
+            window_id, capture_size = prepare_kit_capture(
+                existing_windows, env=env, x11_size=args.x11_size
+            )
+            summary["capture_window_id"] = window_id
+            summary["capture_size"] = capture_size
             screenshot = artifact("screenshot", "go2-rough.png")
             if (
                 capture_x11_screenshot(
-                    screenshot, display=args.display, x11_size=args.x11_size
+                    screenshot,
+                    display=args.display,
+                    x11_size=capture_size,
+                    window_id=window_id,
                 )
                 != 0
                 or screenshot.stat().st_size < 10_000
@@ -295,9 +363,10 @@ def main() -> int:
                 record_x11_video(
                     recording,
                     display=args.display,
-                    x11_size=args.x11_size,
+                    x11_size=capture_size,
                     seconds=args.record_seconds,
                     framerate=15,
+                    window_id=window_id,
                 )
                 != 0
                 or recording.stat().st_size < 100_000

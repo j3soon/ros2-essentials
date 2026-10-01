@@ -57,6 +57,21 @@ already-built local image by default and leaves the Compose container running
 for inspection. Its JSON summary points to the logs, checkpoint, screenshot,
 and video.
 
+Go2 proof requires host `xdotool`, `xprop`, and `ffmpeg`. It selects the newly visible
+Isaac Lab window and captures that window. Keep it in the foreground until
+recording finishes. The check fails if the window is missing, ambiguous,
+hidden, or covered by another active window. Inspect the screenshot and a
+video frame to confirm that Go2 and the terrain rendered.
+
+Run the capture regression tests without Docker or a display:
+
+```bash
+python3 tests/workspace_smoke/test_gui_capture.py -v
+```
+
+Set `WORKSPACE_SMOKE_X11_DISPLAY=:0` to include the live synthetic-window
+capture and occlusion check.
+
 Use `--no-gpu` when the host does not have a GPU mounted. In that mode, the
 runner allows `config`, `build`, `image-cli`, and `gui`, but rejects checks that
 start or inspect running Compose services, including `isaac-visual`.
