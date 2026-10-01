@@ -24,7 +24,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -32,7 +32,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -389,6 +389,8 @@
       
         
           
+        
+      
         
       
         
@@ -819,6 +821,34 @@
     
   
     OpenCode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/pi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pi Coding Agent
   
 
     
@@ -1779,7 +1809,7 @@
 </blockquote>
 <p>Quick test for gripper actuation:</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># true = open, false = close</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/rg2/command<span class="w"> </span>std_msgs/msg/Bool<span class="w"> </span><span class="s2">&quot;{data: true}&quot;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/rg2/command<span class="w"> </span>std_msgs/msg/Bool<span class="w"> </span><span class="s2">"{data: true}"</span>
 </span></code></pre></div>
 <p>After bringing up the robot, make sure to click <code>Play</code> in the UR interface to start the control loop.</p>
 <p>In the UR interface, go to <code>Home &gt; Program Robot &gt; Empty Program &gt; Program &gt; Structure &gt; URCaps &gt; External Control</code> and then click the Play button.</p>
@@ -1812,7 +1842,7 @@
 </span></code></pre></div>
 <p>You can control the robot arm by publishing target pose to the <code>/target_pose</code> topic.</p>
 <p>For application integration, it is recommended to refer to the <strong>servo control implementation within the ros node</strong>. To perform a quick test, please use the following command:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/target_pose<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="s2">&quot;{header: {frame_id: &#39;world&#39;, stamp: {sec: 0, nanosec: 0}}, pose: {position: {x: -0.3, y: 0.0, z: 0.5}, orientation: {x: -0.35, y: 0.01, z: 0.93, w: -0.05}}}&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/target_pose<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="s2">"{header: {frame_id: 'world', stamp: {sec: 0, nanosec: 0}}, pose: {position: {x: -0.3, y: 0.0, z: 0.5}, orientation: {x: -0.35, y: 0.01, z: 0.93, w: -0.05}}}"</span>
 </span></code></pre></div>
 <blockquote>
 <p>Note: This implementation does not account for singularities or collision avoidance and only supports linear paths between points. Consequently, it is ideal for high-density trajectory points. If your input points are sparse or require complex path planning and obstacle avoidance, please use the MoveIt planner instead.</p>
@@ -1996,7 +2026,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "navigation.expand", "navigation.indexes", "toc.follow", "navigation.top", "search.suggest", "search.share", "header.autohide", "announce.dismiss"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../javascripts/mathjax.js"></script>
       

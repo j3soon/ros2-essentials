@@ -24,7 +24,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -32,7 +32,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -389,6 +389,8 @@
       
         
           
+        
+      
         
       
         
@@ -832,6 +834,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-modules/pi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pi Coding Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1049,6 +1079,17 @@
     <span class="md-ellipsis">
       
         2. Configure settings.
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adapting-a-workspace-to-your-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adapting a workspace to your pipeline
       
     </span>
   </a>
@@ -1622,6 +1663,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#adapting-a-workspace-to-your-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adapting a workspace to your pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#3-open-the-workspace-folder-using-visual-studio-code" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1773,7 +1825,7 @@
     - Add the packages you need according to the comments inside.</li>
 <li><code>docker/compose.yaml</code>
     - By default, the Docker image is built according to your current computer's architecture. If you need to cross-compile, please modify the <code>platforms</code> parameter to your desired architecture and set up the basic environment.
-    - If you want to access the GPU in the container, please uncomment the lines accordingly.
+    - GPU access is enabled in the template. Adjust the device reservation for your workspace.
     - If you want to add any environment variables in the container, you can include them in the <code>environment</code> section, or you can use <code>export VARIABLE=/the/value</code> in <code>docker/.bashrc</code>.</li>
 <li><code>docker/.bashrc</code>
     - We will automatically compile the workspace in .bashrc. If you don't want this to happen, feel free to remove it. If you’re okay with it, remember to adjust the compilation commands according to your packages.</li>
@@ -1781,6 +1833,9 @@
     - Add the ros packages you need here.
     - <code>minimal_pkg</code> is the ROS2 package used to create a publisher and subscriber in both Python and C++. You can remove it if you don't need it.</li>
 </ul>
+<h3 id="adapting-a-workspace-to-your-pipeline">Adapting a workspace to your pipeline<a class="headerlink" href="#adapting-a-workspace-to-your-pipeline" title="Permanent link">&para;</a></h3>
+<p>After creating a workspace, put your ROS 2 packages in its <code>src/</code> directory and declare package dependencies in each <code>package.xml</code>. Add image-level dependencies to <code>docker/Dockerfile</code>. Use <code>docker_modules/</code> for installation steps shared by multiple workspaces. Set build arguments, runtime environment variables, and mounts in that workspace's <code>docker/compose.yaml</code>.</p>
+<p>The template's <code>docker/.bashrc</code> runs <code>rosdep install</code> when its rosdep cache is missing and runs <code>colcon build</code> when <code>install/setup.bash</code> is missing. If your pipeline controls dependency installation and builds, adjust these startup commands in your new workspace so opening a shell does not trigger them. Check the resolved configuration with <code>docker compose config</code> from the workspace's <code>docker/</code> directory before building.</p>
 <h3 id="3-open-the-workspace-folder-using-visual-studio-code">3. Open the workspace folder using Visual Studio Code.<a class="headerlink" href="#3-open-the-workspace-folder-using-visual-studio-code" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>Haven't set up the devcontainer yet ?</p>
@@ -1835,7 +1890,7 @@ Wishing you a productive and successful journey in your ROS development !</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 18, 2026 13:51:02 UTC">March 18, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 1, 2026 18:46:02 UTC">October 1, 2026</span>
   </span>
 
     
@@ -1981,7 +2036,7 @@ Wishing you a productive and successful journey in your ROS development !</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "navigation.expand", "navigation.indexes", "toc.follow", "navigation.top", "search.suggest", "search.share", "header.autohide", "announce.dismiss"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../javascripts/mathjax.js"></script>
       
