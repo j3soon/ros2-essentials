@@ -78,7 +78,11 @@ and unavailable release metadata endpoints. It also uses a local HTTP server
 and stub installers to verify that enabled agents check only their own
 endpoints, reuse install layers for unchanged releases, and rerun installation
 when release metadata changes. It covers enabled agents and empty or omitted
-disabled arguments. The Docker check needs a local `ubuntu:22.04` image.
+disabled arguments. The Docker check needs a native local Docker Engine and
+an existing `ubuntu:22.04` image in the `default` context. It explicitly uses
+that context and its built-in `default` builder so the builder can reach the
+loopback metadata server regardless of the selected Buildx builder, context,
+or `DOCKER_HOST` override.
 These checks are opt-in and stay outside `test_all.sh`.
 
 Agent switches use the documented `YES`/empty convention. Each release `ADD`

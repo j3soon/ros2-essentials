@@ -14,6 +14,9 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 ARTIFACTS = REPO_ROOT / "tests/workspace_smoke/artifacts/review-122/agent-releases"
+# The default context otherwise inherits an endpoint set through DOCKER_HOST.
+LOCAL_DOCKER_ENV = dict(os.environ)
+LOCAL_DOCKER_ENV.pop("DOCKER_HOST", None)
 AGENTS = {
     "CLAUDE_CODE": ("claude-code", "claude_code", "claude-code-latest-version"),
     "CODEX": ("codex", "codex", "openai-codex-latest.json"),
@@ -46,8 +49,12 @@ def build(
     dockerfile.write_text(content, encoding="utf-8")
     command = [
         "docker",
+        "--context",
+        "default",
         "buildx",
         "build",
+        "--builder",
+        "default",
         "--network=none",
         "--pull=false",
         "--progress=plain",
@@ -68,6 +75,7 @@ def build(
         result = subprocess.run(
             command,
             cwd=REPO_ROOT,
+            env=LOCAL_DOCKER_ENV,
             stdout=log,
             stderr=subprocess.STDOUT,
             timeout=120,
@@ -154,6 +162,8 @@ class ReleaseCacheTests(unittest.TestCase):
             return subprocess.check_output(
                 [
                     "docker",
+                    "--context",
+                    "default",
                     "run",
                     "--rm",
                     "--network=none",
@@ -163,6 +173,7 @@ class ReleaseCacheTests(unittest.TestCase):
                     "-c",
                     f"cat /installed-{flag} /install-token-{flag}",
                 ],
+                env=LOCAL_DOCKER_ENV,
                 text=True,
                 timeout=30,
             ).splitlines()
@@ -236,7 +247,8 @@ class ReleaseCacheTests(unittest.TestCase):
             server.server_close()
             thread.join(timeout=5)
             subprocess.run(
-                ["docker", "image", "rm", image],
+                ["docker", "--context", "default", "image", "rm", image],
+                env=LOCAL_DOCKER_ENV,
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
             )
