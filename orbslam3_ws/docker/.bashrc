@@ -1,3 +1,9 @@
+# Coding agent shortcuts
+alias claude-yolo="claude --allow-dangerously-skip-permissions --dangerously-skip-permissions"
+alias cl="claude-yolo"
+alias co="codex --yolo"
+alias op="opencode --auto"
+
 # Setup paths in `~/.profile` to allow unified environment variable across login/non-login shells
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then

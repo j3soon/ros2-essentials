@@ -218,6 +218,7 @@ nav:
     - docker-modules/claude-code.md
     - docker-modules/codex.md
     - docker-modules/opencode.md
+    - docker-modules/pi.md
   - Workspaces:
     - workspaces/index.md
     - template-ws/index.md

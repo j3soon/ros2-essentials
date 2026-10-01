@@ -55,20 +55,49 @@ docker compose down
 
 ### Isaac Lab Examples
 
-[Training](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html) [environments](https://isaac-sim.github.io/IsaacLab/main/source/overview/environments.html#comprehensive-list-of-environments) (`Isaac-Velocity-Flat-Unitree-Go2-v0`, `Isaac-Velocity-Rough-Unitree-Go2-v0`):
+[Training](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html) [environments](https://isaac-sim.github.io/IsaacLab/main/source/overview/environments.html#comprehensive-list-of-environments) (`Isaac-Velocity-Flat-UnitreeGo2`, `Isaac-Velocity-Rough-UnitreeGo2`):
 
 ```sh
 cd ~/IsaacLab
-./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task Isaac-Velocity-Rough-Unitree-Go2-v0 --headless
+./isaaclab.sh train --rl_library rsl_rl --task Isaac-Velocity-Rough-UnitreeGo2
 # or
-./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Isaac-Velocity-Rough-Unitree-Go2-v0 --headless
+./isaaclab.sh train --rl_library skrl --task Isaac-Velocity-Rough-UnitreeGo2
 ```
 
 Run [pre-trained model inference](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html):
 
 ```sh
 cd ~/IsaacLab
-./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/play.py --task Isaac-Velocity-Rough-Unitree-Go2-v0 --num_envs 32 --use_pretrained_checkpoint
+./isaaclab.sh play --rl_library rsl_rl --task Isaac-Velocity-Rough-UnitreeGo2 --num_envs 4 --checkpoint pretrained --viz kit
+```
+
+The Go2 task currently selects Newton MJWarp physics by default, including
+when `--viz kit` opens an Isaac Sim viewport. The published checkpoint may
+download on first use. Wait for `Policy playback is running` before judging
+the motion or recording the window.
+
+The default camera looks at the world origin, so Go2 may appear small or leave
+the viewport. For a custom task configuration, set the supported Kit camera
+configuration before launching the simulation:
+
+```python
+from isaaclab_visualizers.kit import KitVisualizerCfg
+
+env_cfg.sim.default_visualizer_cfg = KitVisualizerCfg(
+    eye=(3.0, 3.0, 2.0),
+    lookat=(0.0, 0.0, 0.0),
+    origin_type="asset",
+    origin_env_index=0,
+    origin_track_path="robot",
+)
+```
+
+The Go2 rough-terrain smoke check can train for two iterations and capture a
+playback video with a camera that follows the robot. Run it from the repository
+root after building the workspace image:
+
+```sh
+python3 tests/workspace_smoke/go2_rough_smoke.py --workspace go2_ws
 ```
 
 ### Champ Controller Demo
@@ -129,7 +158,7 @@ Run `~/isaacsim/isaac-sim.sh` and open `/home/ros2-essentials/go2_ws/src/isaacsi
 ![Go2 Isaac Sim scene opened](assets/01-isaac-sim-open-scene.png)
 ![Go2 Isaac Sim playback running](assets/02-isaac-sim-play.png)
 
-> Note: Currently will fall over after pressing Play in Isaac Sim 6.0.1. To be fixed.
+> Note: This scene was known to fall over after pressing Play in Isaac Sim 6.0.1. Revalidate its behavior with Isaac Sim 6.1.0.
 
 In another terminal, exec into the container:
 

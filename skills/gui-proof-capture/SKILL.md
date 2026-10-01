@@ -41,6 +41,9 @@ python3 tests/workspace_smoke/proof_capture.py record \
 ```
 
 The helper wakes the display with `xset` and captures with `ffmpeg -f x11grab`.
+Python callers can pass `window_id` to capture a specific application window.
+This requires `xdotool` and rejects hidden windows or a change of foreground
+window during recording. Go2 rough-terrain proof uses this guarded capture.
 For automated workspace demos, prefer
 `tests/workspace_smoke/doc_demo_smoke.py`; it already calls this helper and
 writes screenshot artifacts beside logs.

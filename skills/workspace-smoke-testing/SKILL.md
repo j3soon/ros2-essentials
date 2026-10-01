@@ -14,7 +14,7 @@ Use this as the router. For workspace-specific expectations, read the matching
 - Explicit workspace: pass `--workspace <name>_ws`.
 - Changed files: pass `--changed-from <base> --changed-to HEAD`, or pipe paths
   with `--changed-files-from -`.
-- Shared testing changes under `.agents/skills/`, `tests/workspace_smoke/`,
+- Shared testing changes under `skills/`, `tests/workspace_smoke/`,
   `docker_modules/`, or setup scripts select all workspaces.
 
 If the user has not chosen the validation depth and the run is expensive or
@@ -29,12 +29,15 @@ needed. If they only need a quick non-GUI check, prefer `image-cli`.
 - Isaac headless renderer proof: `python3 tests/workspace_smoke/run.py --workspace <ws> --level isaac-visual`
 - Isaac Lab deformable smoke: `python3 tests/workspace_smoke/run.py --workspace <ws> --level isaac-lab-deformable`
 - Documented GUI/Isaac proof: `python3 tests/workspace_smoke/doc_demo_smoke.py --workspace <ws> --summary-json tests/workspace_smoke/artifacts/<ws>-doc-demo.json`
+- Go2 rough-terrain training and inference proof: `python3 tests/workspace_smoke/go2_rough_smoke.py --workspace go2_ws`
 
-For Compose-backed smoke paths, always build locally and refuse registry pulls:
-`docker compose up -d --build --pull never`, then
-`docker compose exec <service> bash -lc ...`. Keep direct `docker run` only for
-cheap image CLI and Docker GPU preflight checks, and require those images to
-already exist locally.
+For a new image, build locally and refuse registry pulls with
+`docker compose up -d --build --pull never`. After a successful build, pass
+`--no-build` to `run.py` or `doc_demo_smoke.py` to reuse that image without
+rebuilding it. The Go2 rough-terrain runner reuses a local image by default
+and accepts `--build` when needed. The standalone Isaac GUI capture and
+deformable helpers also accept `--no-build`. Keep direct `docker run` only for
+cheap image CLI and Docker GPU preflight checks.
 
 For documented Isaac joint-command motion proofs, capture the whole sequence:
 open the stage with the timeline paused, validate the expected robot prim,
@@ -111,7 +114,7 @@ it to a git-tracked path before finishing:
 - Workspace-specific helpers: `tests/workspace_smoke/workspaces/<workspace>/`
 
 If a prompt teaches a reusable workflow rule, update the relevant skill in
-`.agents/skills/`. Skills should stay concise: point to the tracked script,
+`skills/`. Skills should stay concise: point to the tracked script,
 state readiness markers, capture/report expectations, and avoid embedding large
 script bodies.
 

@@ -105,13 +105,13 @@ Start Isaac Sim in GUI mode:
 ~/isaacsim/isaac-sim.sh
 ```
 
-> Alternatively, start Isaac Sim in [headless WebRTC mode](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/install_python.html#launching-isaac-sim-experiences):
+> Alternatively, start Isaac Sim in [headless WebRTC mode](https://docs.isaacsim.omniverse.nvidia.com/6.1.0/installation/install_python.html#launching-isaac-sim-experiences):
 > 
 > ```sh
 > isaac-sim.streaming.sh
 > ```
 >
-> and use the [WebRTC Streaming Client](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/manual_livestream_clients.html#isaac-sim-short-webrtc-streaming-client).
+> and use the [WebRTC Streaming Client](https://docs.isaacsim.omniverse.nvidia.com/6.1.0/installation/manual_livestream_clients.html#isaac-sim-short-webrtc-streaming-client).
 
 Open the file with OmniGraph we just generated in the bottom panel:
 

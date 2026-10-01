@@ -8,11 +8,11 @@ Codex CLI for AI-assisted development directly inside workspace containers.
 
 To enable Codex CLI, set the `CODEX` argument to `YES` in the `compose.yaml` file of your desired workspace (e.g., `template_ws/docker/compose.yaml`). After making these changes, rebuild the Docker image.
 
-> **Notice - Subscription required:** Codex is a third-party service that requires an active OpenAI account or subscription to use. This module only installs the CLI; you need an active subscription to use it.
+> **Notice - Subscription required:** Codex is a third-party service that requires an active OpenAI account or subscription to use. This module only installs the CLI. You need an active subscription to use it.
 
 ## Installation
 
-The module installs the Codex CLI (latest version) via npm during the Docker image build.
+The module installs the Codex CLI (latest version) via npm during the Docker image build. Use `YES` to enable this agent and `""` to disable it. Enabled agents check release metadata during builds so a new release refreshes the install layer. Disabled agents use a local cache marker and skip the release download.
 
 > Alternatively, if you want to install the Codex extension for your favorite IDE (e.g., [Codex for VSCode](https://marketplace.visualstudio.com/items?itemName=openai.chatgpt)), refer to the [Codex IDE extension](https://developers.openai.com/codex/ide/) for more details instead. This module doesn't need to be enabled if you just want to use the IDE extension.
 
@@ -42,6 +42,7 @@ If you want to run Codex CLI to run continuously without asking for permissions,
 
 ```sh
 codex --yolo
+# Equivalent shell shortcut: co
 ```
 
 > This is not the most secure way to run Codex CLI, but it's often good enough as it's inside a container.

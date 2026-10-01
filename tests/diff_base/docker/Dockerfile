@@ -105,8 +105,8 @@ RUN mkdir -p /home/$USERNAME/.cache/pip
 RUN mkdir /home/$USERNAME/.gazebo
 
 # Isaac Sim version configuration
-ARG ISAAC_SIM_VERSION=6.0.1
-# Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0-beta2/source/setup/installation/binaries_installation.html
+ARG ISAAC_SIM_VERSION=6.1.0
+# Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0/source/setup/installation/index.html#downloaded-isaac-sim-package
 ENV ISAACSIM_PATH="/home/$USERNAME/isaacsim"
 # Copy and run Isaac Sim installation script
 COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
@@ -120,15 +120,15 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
 ENV OMNI_USER=admin
 ENV OMNI_PASS=admin
 ENV OMNI_KIT_ACCEPT_EULA=YES
-# Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0-beta2/source/setup/installation/binaries_installation.html
+# Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0/source/setup/installation/index.html#downloaded-isaac-sim-package
 ENV ISAACSIM_PYTHON_EXE="${ISAACSIM_PATH}/python.sh"
 
 # Set TERM to prevent Isaac Lab error during docker build:
 #    'ansi+tabs': unknown terminal type.
 ENV TERM=xterm-256color
 # Isaac Lab version configuration
-ARG ISAAC_LAB_VERSION=3.0.0-beta2.patch1
-# Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0-beta2/source/policy_deployment/00_hover/hover_policy.html
+ARG ISAAC_LAB_VERSION=3.0.0-EA
+# Ref: https://isaac-sim.github.io/IsaacLab/release/3.0.0/index.html
 ENV ISAACLAB_PATH="/home/$USERNAME/IsaacLab"
 COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
      /install_isaac_lab.sh /tmp/install_isaac_lab.sh
@@ -194,24 +194,44 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     --mount=type=cache,target=/home/$USERNAME/.cache/pip,sharing=private,uid=$USER_UID,gid=$USER_UID \
     /tmp/install_newton_tools.sh && rm /tmp/install_newton_tools.sh
 
-# Claude Code CLI configuration (installed last since the installation is fast)
+# Claude Code CLI configuration
 ARG CLAUDE_CODE=""
+ENV IS_SANDBOX=1
+ENV PATH="/home/$USERNAME/.local/bin:${PATH}"
+# Use the local shell config as a cache marker when this module is disabled.
+ARG CLAUDE_CODE_RELEASE_SOURCE=${CLAUDE_CODE:+https://downloads.claude.ai/claude-code-releases/latest}
+ADD ${CLAUDE_CODE_RELEASE_SOURCE:-.bashrc} /tmp/claude-code-latest-version
 COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
      /install_claude_code.sh /tmp/install_claude_code.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_claude_code.sh && rm /tmp/install_claude_code.sh
 # Codex CLI configuration
 ARG CODEX=""
+# Use the local shell config as a cache marker when this module is disabled.
+ARG CODEX_RELEASE_SOURCE=${CODEX:+https://registry.npmjs.org/@openai%2Fcodex/latest}
+ADD ${CODEX_RELEASE_SOURCE:-.bashrc} /tmp/openai-codex-latest.json
 COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
      /install_codex.sh /tmp/install_codex.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_codex.sh && rm /tmp/install_codex.sh
 # OpenCode CLI configuration
 ARG OPENCODE=""
+# Use the local shell config as a cache marker when this module is disabled.
+ARG OPENCODE_RELEASE_SOURCE=${OPENCODE:+https://registry.npmjs.org/opencode-ai/latest}
+ADD ${OPENCODE_RELEASE_SOURCE:-.bashrc} /tmp/opencode-latest.json
 COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
      /install_opencode.sh /tmp/install_opencode.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_opencode.sh && rm /tmp/install_opencode.sh
+# Pi Coding Agent configuration
+ARG PI=""
+# Use the local shell config as a cache marker when this module is disabled.
+ARG PI_RELEASE_SOURCE=${PI:+https://registry.npmjs.org/@earendil-works%2Fpi-coding-agent/latest}
+ADD ${PI_RELEASE_SOURCE:-.bashrc} /tmp/pi-coding-agent-latest.json
+COPY --from=docker_modules --chown=$USERNAME:$USERNAME \
+     /install_pi.sh /tmp/install_pi.sh
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    /tmp/install_pi.sh && rm /tmp/install_pi.sh
 # TODO: Install more optional development tools here
 {PLACEHOLDER_MULTILINE}
 ENTRYPOINT []

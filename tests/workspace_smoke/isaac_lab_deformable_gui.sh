@@ -10,7 +10,15 @@ DISPLAY_VALUE="${DISPLAY:-:0}"
 LOG_PATH="${ISAAC_LAB_LOG_PATH:-$ARTIFACT_DIR/isaac-lab-deformable-kit-gui.log}"
 PID_PATH="${ISAAC_LAB_PID_PATH:-$ARTIFACT_DIR/isaac-lab-deformable-kit-gui.pid}"
 BUILD_OVERRIDE="$ARTIFACT_DIR/isaac-lab-deformable-no-registry-cache.compose.yaml"
-MODE="${1:-run}"
+MODE="run"
+NO_BUILD="false"
+for option in "$@"; do
+  case "$option" in
+    --detach) MODE="--detach" ;;
+    --no-build) NO_BUILD="true" ;;
+    *) echo "Unknown option: $option" >&2; exit 2 ;;
+  esac
+done
 
 LAB_COMMAND="cd /home/user/IsaacLab && ./isaaclab.sh -p scripts/tutorials/01_assets/run_deformable_object.py --viz kit"
 
@@ -32,7 +40,11 @@ services:
     build:
       cache_from: !reset []
 EOF
-docker compose -f compose.yaml -f "$BUILD_OVERRIDE" up -d --build --pull never
+if [ "$NO_BUILD" = "true" ]; then
+  docker compose -f compose.yaml -f "$BUILD_OVERRIDE" up -d --no-build --pull never
+else
+  docker compose -f compose.yaml -f "$BUILD_OVERRIDE" up -d --build --pull never
+fi
 
 printf -v exec_command "%q " docker compose exec "$SERVICE" bash -lc "$LAB_COMMAND"
 

@@ -92,5 +92,5 @@ To verify the Isaac Sim version in the proof:
 # Check in logs
 grep "Isaac Sim Full Version" tests/workspace_smoke/artifacts/<workspace>/isaac-gui.log
 
-# Expected output: [XX.Xs] Isaac Sim Full Version: 6.0.1-rc.7
+# Expected output: [XX.Xs] Isaac Sim Full Version: 6.1.0-rc.26
 ```

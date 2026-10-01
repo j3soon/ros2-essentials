@@ -101,13 +101,19 @@ We have provided a script to create a new workspace. Please use it to avoid pote
     - Add the packages you need according to the comments inside.
 - `docker/compose.yaml`
     - By default, the Docker image is built according to your current computer's architecture. If you need to cross-compile, please modify the `platforms` parameter to your desired architecture and set up the basic environment.
-    - If you want to access the GPU in the container, please uncomment the lines accordingly.
+    - GPU access is enabled in the template. Adjust the device reservation for your workspace.
     - If you want to add any environment variables in the container, you can include them in the `environment` section, or you can use `export VARIABLE=/the/value` in `docker/.bashrc`.
 - `docker/.bashrc`
     - We will automatically compile the workspace in .bashrc. If you don't want this to happen, feel free to remove it. If you’re okay with it, remember to adjust the compilation commands according to your packages.
 - `src`
     - Add the ros packages you need here.
     - `minimal_pkg` is the ROS2 package used to create a publisher and subscriber in both Python and C++. You can remove it if you don't need it.
+
+### Adapting a workspace to your pipeline
+
+After creating a workspace, put your ROS 2 packages in its `src/` directory and declare package dependencies in each `package.xml`. Add image-level dependencies to `docker/Dockerfile`. Use `docker_modules/` for installation steps shared by multiple workspaces. Set build arguments, runtime environment variables, and mounts in that workspace's `docker/compose.yaml`.
+
+The template's `docker/.bashrc` runs `rosdep install` when its rosdep cache is missing and runs `colcon build` when `install/setup.bash` is missing. If your pipeline controls dependency installation and builds, adjust these startup commands in your new workspace so opening a shell does not trigger them. Check the resolved configuration with `docker compose config` from the workspace's `docker/` directory before building.
 
 ### 3. Open the workspace folder using Visual Studio Code.
 

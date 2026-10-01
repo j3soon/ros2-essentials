@@ -10,5 +10,6 @@ touch "${HOME}/docker/.claude.json"
 mkdir -p "${HOME}/docker/.codex"
 mkdir -p "${HOME}/docker/.config/opencode"
 mkdir -p "${HOME}/docker/.local/share/opencode"
+mkdir -p "${HOME}/docker/.pi/agent"
 
 echo "Set up host environment files under ${HOME}/docker done."

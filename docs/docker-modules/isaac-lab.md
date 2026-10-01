@@ -2,7 +2,7 @@
 
 [![GitHub code](https://img.shields.io/badge/code-blue?logo=github&label=github)](https://github.com/j3soon/ros2-essentials/blob/main/docker_modules/install_isaac_lab.sh)
 
-Isaac Lab git install. The default is `3.0.0-beta2.patch1`; supported `ISAAC_LAB_VERSION` values are `2.3.0`, `2.3.2`, `3.0.0-beta2.patch1`, and `develop`.
+Isaac Lab git install. The default is `3.0.0-EA`. Supported `ISAAC_LAB_VERSION` values are `2.3.0`, `2.3.2`, `3.0.0-beta2.patch1`, `3.0.0-EA`, and `develop`.
 
 > See [Last tested](../last-tested.md) for the latest validation status.
 
@@ -24,16 +24,16 @@ build:
 
 `develop` clones `https://github.com/isaac-sim/IsaacLab.git` at `develop` into `~/IsaacLab`, links the installed Isaac Sim runtime via `_isaac_sim`, then runs `./isaaclab.sh --install`.
 
-[Quick test](https://isaac-sim.github.io/IsaacLab/main/source/deployment/docker.html#running-pre-built-isaac-lab-container):
+[Quick test](https://isaac-sim.github.io/IsaacLab/release/3.0.0/source/setup/installation/index.html):
 
 ```sh
 cd ~/IsaacLab
-./isaaclab.sh -p scripts/tutorials/00_sim/log_time.py --headless
+./isaaclab.sh -p scripts/tutorials/00_sim/log_time.py
 # View the logs and press Ctrl+C to stop
 # tail -f ~/IsaacLab/logs/docker_tutorial/log.txt
 ```
 
-[Deformable object tutorial](https://isaac-sim.github.io/IsaacLab/main/source/tutorials/01_assets/run_deformable_object.html):
+[Deformable object tutorial](https://isaac-sim.github.io/IsaacLab/release/3.0.0/source/tutorials/01_assets/run_deformable_object.html):
 
 ```sh
 cd ~/IsaacLab
@@ -41,28 +41,24 @@ cd ~/IsaacLab
 ```
 
 Use `--viz kit` for the Kit visualizer. On first launch, let the Kit window
-finish rendering the scene before judging the viewport; the setup logs may
-finish before the first visible frame appears.
+finish rendering the scene before judging the viewport. The first run may
+spend several minutes compiling shaders even after the startup log appears.
+If the desktop offers to close an unresponsive Kit window during that time,
+choose Wait while the process is still active. Later launches use the caches.
+Isaac Lab 3.0.0-EA also warns that `isaaclab.sh` will be replaced by
+`uv run isaaclab` in a future release.
 
-[Train Cartpole](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/rl_existing_scripts.html):
+[Train Cartpole](https://isaac-sim.github.io/IsaacLab/release/3.0.0/source/how-to/run_rl_training.html):
 
 ```sh
 cd ~/IsaacLab
-./isaaclab.sh -p scripts/reinforcement_learning/rl_games/train.py --task=Isaac-Cartpole-v0 --headless
+./isaaclab.sh train --rl_library rl_games --task Isaac-Cartpole
 # or
-./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Cartpole-v0 --headless
+./isaaclab.sh train --rl_library rsl_rl --task Isaac-Cartpole
 # or
-./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task=Isaac-Cartpole-v0 --headless
+./isaaclab.sh train --rl_library skrl --task Isaac-Cartpole
 ```
-
-> **On Host**:
-> 
-> Quick test using official Docker image:
-> 
-> ```sh
-> scripts/docker_run_official_isaac_lab.sh
-> ```
 
 ## Known Issues
 
-See [official known issues](https://isaac-sim.github.io/IsaacLab/main/source/refs/issues.html) for Isaac Lab.
+See [official known issues](https://isaac-sim.github.io/IsaacLab/release/3.0.0/source/refs/issues.html) for Isaac Lab.

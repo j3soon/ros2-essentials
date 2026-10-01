@@ -9,7 +9,7 @@
 ![Docker image version](https://img.shields.io/docker/v/j3soon/ros2-aloha-ws)
 ![Docker image size](https://img.shields.io/docker/image-size/j3soon/ros2-aloha-ws)
 
-> This workspace may only work with Isaac Sim 4.5.0, and require code update to support the latest version.  
+> The ALOHA Isaac scene was originally validated with Isaac Sim 4.5.0 and still needs workspace-specific revalidation with Isaac Sim 6.1.0.
 > (TODO: Update the code to support the latest Isaac Sim. Refer to the commit history of [turtlebot3-ws](../turtlebot3-ws/) for more details.)
 
 > See [Last tested](../last-tested.md) for the latest validation status.
